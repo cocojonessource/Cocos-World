@@ -7,11 +7,16 @@
 
   <style>
     :root {
-      --bg: #FFE4EC;
-      --nav: #FFD1DC;
-      --primary: #6B2FA3;
-      --secondary: #8B5FBF;
-      --white: #FFFFFF;
+      --pink-bg: #fdf3f6;
+      --pink-soft: #f8dfe7;
+      --pink-mid: #f3c9d7;
+      --pink-band: #f7e7ec;
+      --white: #ffffff;
+      --purple: #7a4ca5;
+      --purple-soft: #9a72bf;
+      --gold: #d7a33d;
+      --text: #6c4b7f;
+      --shadow: rgba(122, 76, 165, 0.12);
     }
 
     * {
@@ -20,9 +25,20 @@
 
     body {
       margin: 0;
+      background: var(--pink-bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      background: var(--bg);
-      color: var(--primary);
+      color: var(--purple);
+    }
+
+    p {
+      margin: 0;
+      line-height: 1.6;
     }
 
     a {
@@ -31,78 +47,293 @@
     }
 
     .topbar {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: var(--nav);
-      padding: 18px 30px;
+      background: var(--pink-soft);
+      padding: 20px 32px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(255,255,255,0.6);
     }
 
     .brand {
-      font-size: 28px;
-      font-weight: 700;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 34px;
+      color: var(--gold);
+      font-weight: normal;
+      letter-spacing: 0.5px;
     }
 
     .nav {
       display: flex;
       gap: 24px;
       flex-wrap: wrap;
-      font-family: Arial, sans-serif;
       font-size: 15px;
+      font-weight: 600;
+      color: var(--purple);
+    }
+
+    .nav a:hover {
+      color: var(--gold);
+    }
+
+    .page {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 36px 20px 60px;
+    }
+
+    .intro {
+      background: var(--white);
+      border-radius: 26px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px var(--shadow);
+      margin-bottom: 36px;
+    }
+
+    .intro-top {
+      background: var(--pink-soft);
+      padding: 50px 30px 35px;
+      text-align: center;
+    }
+
+    .intro-top h1 {
+      font-size: 58px;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    .intro-top p {
+      max-width: 760px;
+      margin: 0 auto;
+      font-size: 18px;
+      color: var(--text);
+    }
+
+    .intro-bottom {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 0;
+      align-items: stretch;
+    }
+
+    .intro-text {
+      padding: 42px 34px;
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+    }
+
+    .intro-text h2 {
+      font-size: 38px;
+      margin-bottom: 16px;
+      color: var(--purple);
+    }
+
+    .intro-text p {
+      font-size: 16px;
+      margin-bottom: 24px;
+    }
+
+    .button {
+      display: inline-block;
+      background: var(--gold);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .intro-image {
+      min-height: 380px;
+      background: var(--pink-band);
+    }
+
+    .intro-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .section {
+      background: var(--white);
+      border-radius: 26px;
+      box-shadow: 0 10px 30px var(--shadow);
+      padding: 30px;
+      margin-bottom: 36px;
+    }
+
+    .section-header {
+      margin-bottom: 24px;
+      text-align: center;
+    }
+
+    .section-header h2 {
+      font-size: 40px;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+
+    .section-header p {
+      max-width: 760px;
+      margin: 0 auto;
+      color: var(--text);
+      font-size: 16px;
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .feature-card {
+      background: var(--pink-band);
+      border-radius: 22px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px var(--shadow);
+    }
+
+    .feature-card img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .feature-body {
+      padding: 20px;
+      text-align: center;
+    }
+
+    .feature-body h3 {
+      font-size: 28px;
+      color: var(--purple);
+      margin-bottom: 10px;
+    }
+
+    .feature-body p {
+      font-size: 15px;
+      margin-bottom: 16px;
+    }
+
+    .explore-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 18px;
+    }
+
+    .explore-card {
+      background: var(--pink-band);
+      border-radius: 22px;
+      padding: 28px 20px;
+      text-align: center;
+      min-height: 180px;
+      box-shadow: 0 8px 20px var(--shadow);
+    }
+
+    .explore-card h3 {
+      font-size: 28px;
+      margin-bottom: 12px;
+      color: var(--purple);
+    }
+
+    .explore-card p {
+      font-size: 14px;
+      margin-bottom: 16px;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+
+    .gallery-item {
+      background: var(--pink-band);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px var(--shadow);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-caption {
+      padding: 14px;
+      font-size: 14px;
+      text-align: center;
+      color: var(--purple);
       font-weight: 600;
     }
 
-    .main {
-      min-height: calc(100vh - 76px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 20px;
-    }
-
-    .about-box {
-      max-width: 800px;
+    .footer {
+      background: var(--pink-soft);
+      border-radius: 24px;
+      padding: 30px;
       text-align: center;
-      background: rgba(255, 255, 255, 0.35);
-      padding: 50px 35px;
-      border-radius: 28px;
+      color: var(--text);
+      font-size: 14px;
     }
 
-    .about-box h1 {
-      margin: 0 0 16px 0;
-      font-size: 56px;
-      line-height: 1;
+    @media (max-width: 1100px) {
+      .featured-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .explore-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .gallery-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .intro-bottom {
+        grid-template-columns: 1fr;
+      }
     }
 
-    .about-box p {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      font-size: 18px;
-      line-height: 1.7;
-      color: var(--secondary);
-    }
-
-    @media (max-width: 768px) {
+    @media (max-width: 700px) {
       .topbar {
         flex-direction: column;
         align-items: flex-start;
-        padding: 16px 20px;
       }
 
       .brand {
-        font-size: 24px;
+        font-size: 28px;
       }
 
-      .about-box h1 {
+      .intro-top h1 {
         font-size: 40px;
       }
 
-      .about-box p {
-        font-size: 16px;
+      .intro-text h2 {
+        font-size: 30px;
+      }
+
+      .section-header h2 {
+        font-size: 32px;
+      }
+
+      .explore-grid,
+      .gallery-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -120,14 +351,141 @@
     </nav>
   </header>
 
-  <main class="main">
-    <div class="about-box">
-      <h1>Coco's World</h1>
-      <p>
-        A digital space for Coco Jones — music, visuals, moments, and more,
-        all in one place.
-      </p>
-    </div>
+  <main class="page">
+    <section class="intro">
+      <div class="intro-top">
+        <h1>Coco's World</h1>
+        <p>
+          A digital space for Coco Jones — music, visuals, moments, and more,
+          all in one place.
+        </p>
+      </div>
+
+      <div class="intro-bottom">
+        <div class="intro-text">
+          <div class="eyebrow">Welcome</div>
+          <h2>Step inside the world</h2>
+          <p>
+            This site is designed as a soft, curated archive of Coco Jones.
+            A place to explore her latest release, recent appearances,
+            favorite visuals, and current era all in one space.
+          </p>
+          <a href="#" class="button">Explore More</a>
+        </div>
+
+        <div class="intro-image">
+          <img src="hero.jpg" alt="Coco Jones" />
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>Featured Now</h2>
+        <p>
+          The newest release, the latest appearance, and what’s available now.
+        </p>
+      </div>
+
+      <div class="featured-grid">
+        <div class="feature-card">
+          <img src="slide1.jpg" alt="LUVAGIRL" />
+          <div class="feature-body">
+            <h3>LUVAGIRL</h3>
+            <p>Coco Jones’ latest release.</p>
+            <a href="#" class="button">Watch Now</a>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <img src="slide2.jpg" alt="Latest Appearance" />
+          <div class="feature-body">
+            <h3>Latest Appearance</h3>
+            <p>Coco’s most recent appearance — explore the full gallery.</p>
+            <a href="#" class="button">View Gallery</a>
+          </div>
+        </div>
+
+        <div class="feature-card">
+          <img src="slide3.jpg" alt="Available Now" />
+          <div class="feature-body">
+            <h3>Available Now</h3>
+            <p>My man, my man, my man.</p>
+            <a href="#" class="button">Shop Now</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>Explore</h2>
+        <p>
+          Clear sections to move through Coco’s World without the page feeling messy.
+        </p>
+      </div>
+
+      <div class="explore-grid">
+        <div class="explore-card">
+          <h3>Gallery</h3>
+          <p>Photos, appearances, and visual moments from across the years.</p>
+          <a href="#" class="button">Open</a>
+        </div>
+
+        <div class="explore-card">
+          <h3>Music</h3>
+          <p>Songs, projects, performances, and music-centered highlights.</p>
+          <a href="#" class="button">Listen</a>
+        </div>
+
+        <div class="explore-card">
+          <h3>Shop</h3>
+          <p>Current merch and era pieces, all connected back to the world.</p>
+          <a href="#" class="button">Browse</a>
+        </div>
+
+        <div class="explore-card">
+          <h3>World</h3>
+          <p>More of the atmosphere, updates, and the full feeling of the site.</p>
+          <a href="#" class="button">Enter</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <h2>Moments</h2>
+        <p>
+          A visual grid that can later become photoshoots, events, by-year archives, or recent highlights.
+        </p>
+      </div>
+
+      <div class="gallery-grid">
+        <div class="gallery-item">
+          <img src="slide1.jpg" alt="Moment 1" />
+          <div class="gallery-caption">Latest Release</div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="slide2.jpg" alt="Moment 2" />
+          <div class="gallery-caption">Recent Appearance</div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="slide3.jpg" alt="Moment 3" />
+          <div class="gallery-caption">Available Now</div>
+        </div>
+
+        <div class="gallery-item">
+          <img src="hero.jpg" alt="Moment 4" />
+          <div class="gallery-caption">Coco's World</div>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      Coco’s World — a soft archive of music, visuals, and moments.
+    </footer>
   </main>
 </body>
 </html>
