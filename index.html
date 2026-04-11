@@ -1,94 +1,471 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Coco’s World</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Coco's World</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #FFE4EC;
+      color: #6B2FA3;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 18px 32px;
+      background: #FFD1DC;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #6B2FA3;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a {
+      color: #6B2FA3;
+      font-weight: 600;
+      font-size: 16px;
+    }
+
+    .hero {
+      position: relative;
+      width: 100%;
+      height: 560px;
+      overflow: hidden;
+    }
+
+    .slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 1s ease-in-out;
+      pointer-events: none;
+    }
+
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      filter: brightness(70%);
+    }
+
+    .slide-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(255, 228, 236, 0.15), rgba(255, 228, 236, 0.05));
+    }
+
+    .slide-content {
+      position: absolute;
+      left: 70px;
+      bottom: 70px;
+      max-width: 520px;
+      z-index: 2;
+    }
+
+    .slide-content h1 {
+      margin: 0 0 12px 0;
+      font-size: 52px;
+      line-height: 1.05;
+      color: #ffffff;
+    }
+
+    .slide-content p {
+      margin: 0 0 22px 0;
+      font-size: 20px;
+      line-height: 1.4;
+      color: #fff7fb;
+    }
+
+    .hero-button {
+      display: inline-block;
+      background: #B14D9B;
+      color: white;
+      padding: 14px 24px;
+      border-radius: 999px;
+      font-weight: bold;
+      font-size: 16px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .hero-button:hover {
+      transform: translateY(-2px);
+      opacity: 0.92;
+    }
+
+    .dots {
+      position: absolute;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 3;
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.5);
+      cursor: pointer;
+      transition: transform 0.2s ease, background 0.2s ease;
+    }
+
+    .dot.active {
+      background: #ffffff;
+      transform: scale(1.15);
+    }
+
+    .section {
+      padding: 36px 28px;
+    }
+
+    .section h2 {
+      margin: 0 0 18px 0;
+      font-size: 30px;
+      color: #6B2FA3;
+    }
+
+    .row {
+      display: flex;
+      gap: 18px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      scroll-behavior: smooth;
+    }
+
+    .row::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    .row::-webkit-scrollbar-thumb {
+      background: #E7A9BF;
+      border-radius: 999px;
+    }
+
+    .card {
+      min-width: 240px;
+      background: #FFF0F5;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(107, 47, 163, 0.08);
+      flex-shrink: 0;
+    }
+
+    .card img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .card-body {
+      padding: 16px;
+    }
+
+    .card-title {
+      margin: 0 0 8px 0;
+      font-size: 20px;
+      color: #6B2FA3;
+      font-weight: bold;
+    }
+
+    .card-text {
+      margin: 0 0 14px 0;
+      font-size: 15px;
+      line-height: 1.4;
+      color: #7F4AAE;
+    }
+
+    .card-button {
+      display: inline-block;
+      background: #D76BA8;
+      color: white;
+      padding: 10px 16px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    .footer-space {
+      height: 30px;
+    }
+
+    @media (max-width: 768px) {
+      .navbar {
+        padding: 16px 18px;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+      }
+
+      .nav-links {
+        gap: 16px;
+      }
+
+      .hero {
+        height: 500px;
+      }
+
+      .slide-content {
+        left: 24px;
+        right: 24px;
+        bottom: 60px;
+        max-width: none;
+      }
+
+      .slide-content h1 {
+        font-size: 36px;
+      }
+
+      .slide-content p {
+        font-size: 17px;
+      }
+    }
+  </style>
 </head>
+<body>
 
-<body style="margin:0; font-family:sans-serif; background:#ffe4ec; color:#111;">
+  <div class="navbar">
+    <div class="logo">Coco's World</div>
 
-  <!-- NAV BAR -->
-  <div style="
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-    padding:15px 30px;
-    background:#ffd1dc;
-    font-weight:600;
-  ">
-    <div style="font-size:20px;">Coco’s World</div>
-
-    <div style="display:flex; gap:20px;">
-      <div>Home</div>
-      <div>Gallery</div>
-      <div>Music</div>
-      <div>Shop</div>
-      <div>World</div>
+    <div class="nav-links">
+      <a href="#">Home</a>
+      <a href="#">Gallery</a>
+      <a href="#">Music</a>
+      <a href="#">Shop</a>
+      <a href="#">World</a>
     </div>
   </div>
 
-  <!-- HERO BANNER -->
-  <div style="
-    width:100%;
-    height:450px;
-    overflow:hidden;
-  ">
-    <img src="hero.jpg" style="
-      width:100%;
-      height:100%;
-      object-fit:cover;
-    ">
+  <div class="hero">
+    <div class="slide active">
+      <img src="slide1.jpg" alt="LUVAGIRL">
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <h1>LUVAGIRL</h1>
+        <p>Coco Jones' latest release.</p>
+        <a class="hero-button" href="https://www.youtube.com/" target="_blank">Watch Now</a>
+      </div>
+    </div>
+
+    <div class="slide">
+      <img src="slide2.jpg" alt="Latest Appearance">
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <h1>Latest Appearance</h1>
+        <p>Coco’s most recent appearance — explore the full gallery.</p>
+        <a class="hero-button" href="#" target="_blank">View Gallery</a>
+      </div>
+    </div>
+
+    <div class="slide">
+      <img src="slide3.jpg" alt="Available Now">
+      <div class="slide-overlay"></div>
+      <div class="slide-content">
+        <h1>Available Now</h1>
+        <p>My man, my man, my man.</p>
+        <a class="hero-button" href="#" target="_blank">Shop Now</a>
+      </div>
+    </div>
+
+    <div class="dots">
+      <div class="dot active" onclick="showSlide(0)"></div>
+      <div class="dot" onclick="showSlide(1)"></div>
+      <div class="dot" onclick="showSlide(2)"></div>
+    </div>
   </div>
 
-  <!-- LATEST SECTION -->
-  <div style="padding:30px;">
+  <div class="section">
     <h2>Latest</h2>
+    <div class="row">
+      <div class="card">
+        <img src="slide1.jpg" alt="Latest Release">
+        <div class="card-body">
+          <p class="card-title">LUVAGIRL</p>
+          <p class="card-text">Coco’s latest release and current moment.</p>
+          <a class="card-button" href="https://www.youtube.com/" target="_blank">Watch</a>
+        </div>
+      </div>
 
-    <div style="
-      display:flex;
-      gap:20px;
-      overflow-x:auto;
-    ">
+      <div class="card">
+        <img src="slide2.jpg" alt="Recent Event">
+        <div class="card-body">
+          <p class="card-title">Recent Appearance</p>
+          <p class="card-text">See the newest event moments and more.</p>
+          <a class="card-button" href="#">View</a>
+        </div>
+      </div>
 
-      <div style="min-width:250px; height:140px; background:#fff0f5; border-radius:15px;"></div>
-      <div style="min-width:250px; height:140px; background:#fff0f5; border-radius:15px;"></div>
-      <div style="min-width:250px; height:140px; background:#fff0f5; border-radius:15px;"></div>
-
+      <div class="card">
+        <img src="slide3.jpg" alt="Merch">
+        <div class="card-body">
+          <p class="card-title">Available Now</p>
+          <p class="card-text">Lover girl merch and era pieces.</p>
+          <a class="card-button" href="#">Shop</a>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- MUSIC SECTION -->
-  <div style="padding:30px;">
+  <div class="section">
     <h2>Music</h2>
+    <div class="row">
+      <div class="card">
+        <img src="slide1.jpg" alt="Music 1">
+        <div class="card-body">
+          <p class="card-title">Singles</p>
+          <p class="card-text">Music videos, live clips, and latest tracks.</p>
+          <a class="card-button" href="#">Explore</a>
+        </div>
+      </div>
 
-    <div style="
-      display:flex;
-      gap:20px;
-      overflow-x:auto;
-    ">
+      <div class="card">
+        <img src="slide1.jpg" alt="Music 2">
+        <div class="card-body">
+          <p class="card-title">Performances</p>
+          <p class="card-text">Stage moments and standout appearances.</p>
+          <a class="card-button" href="#">Watch</a>
+        </div>
+      </div>
 
-      <div style="min-width:180px; height:240px; background:#fff0f5; border-radius:15px;"></div>
-      <div style="min-width:180px; height:240px; background:#fff0f5; border-radius:15px;"></div>
-      <div style="min-width:180px; height:240px; background:#fff0f5; border-radius:15px;"></div>
-
+      <div class="card">
+        <img src="slide1.jpg" alt="Music 3">
+        <div class="card-body">
+          <p class="card-title">Projects</p>
+          <p class="card-text">Albums, EPs, singles, and visuals in one place.</p>
+          <a class="card-button" href="#">View</a>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- GALLERY SECTION -->
-  <div style="padding:30px;">
+  <div class="section">
     <h2>Gallery</h2>
+    <div class="row">
+      <div class="card">
+        <img src="slide2.jpg" alt="Gallery 1">
+        <div class="card-body">
+          <p class="card-title">Latest Event</p>
+          <p class="card-text">Start with the newest appearance first.</p>
+          <a class="card-button" href="#">View</a>
+        </div>
+      </div>
 
-    <div style="
-      display:flex;
-      gap:20px;
-      overflow-x:auto;
-    ">
+      <div class="card">
+        <img src="slide2.jpg" alt="Gallery 2">
+        <div class="card-body">
+          <p class="card-title">Photoshoots</p>
+          <p class="card-text">Editorials, portraits, and polished visuals.</p>
+          <a class="card-button" href="#">Explore</a>
+        </div>
+      </div>
 
-      <div style="min-width:180px; height:240px; background:#fff0f5; border-radius:15px;"></div>
-      <div style="min-width:180px; height:240px; background:#fff0f5; border-radius:15px;"></div>
-      <div style="min-width:180px; height:240px; background:#fff0f5; border-radius:15px;"></div>
-
+      <div class="card">
+        <img src="slide2.jpg" alt="Gallery 3">
+        <div class="card-body">
+          <p class="card-title">By Year</p>
+          <p class="card-text">Browse Coco’s archive through each era and year.</p>
+          <a class="card-button" href="#">Open</a>
+        </div>
+      </div>
     </div>
   </div>
+
+  <div class="section">
+    <h2>Shop</h2>
+    <div class="row">
+      <div class="card">
+        <img src="slide3.jpg" alt="Shop 1">
+        <div class="card-body">
+          <p class="card-title">Lover Girl Merch</p>
+          <p class="card-text">Pieces from the current era and shop moments.</p>
+          <a class="card-button" href="#">Buy</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="slide3.jpg" alt="Shop 2">
+        <div class="card-body">
+          <p class="card-title">Featured Item</p>
+          <p class="card-text">Spotlight a key product here.</p>
+          <a class="card-button" href="#">Shop</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <img src="slide3.jpg" alt="Shop 3">
+        <div class="card-body">
+          <p class="card-title">More</p>
+          <p class="card-text">Expand this later with real links and products.</p>
+          <a class="card-button" href="#">View</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-space"></div>
+
+  <script>
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.dot');
+    let currentSlide = 0;
+    let slideInterval;
+
+    function showSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+        dots[i].classList.toggle('active', i === index);
+      });
+      currentSlide = index;
+      resetInterval();
+    }
+
+    function nextSlide() {
+      currentSlide = (currentSlide + 1) % slides.length;
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === currentSlide);
+        dots[i].classList.toggle('active', i === currentSlide);
+      });
+    }
+
+    function resetInterval() {
+      clearInterval(slideInterval);
+      slideInterval = setInterval(nextSlide, 5000);
+    }
+
+    slideInterval = setInterval(nextSlide, 5000);
+  </script>
 
 </body>
 </html>
