@@ -17,15 +17,10 @@
       --white: #FFFFFF;
       --shadow: rgba(107, 47, 163, 0.10);
       --shadow-strong: rgba(107, 47, 163, 0.16);
-      --border: rgba(107, 47, 163, 0.10);
     }
 
     * {
       box-sizing: border-box;
-    }
-
-    html {
-      scroll-behavior: smooth;
     }
 
     body {
@@ -123,73 +118,120 @@
       padding: 28px 20px 60px;
     }
 
-    .about-section {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 24px;
-      align-items: stretch;
-      margin-bottom: 28px;
-    }
-
-    .about-card,
-    .image-card {
-      background: rgba(255, 240, 245, 0.78);
-      border: 1px solid rgba(255,255,255,0.5);
-      border-radius: 30px;
-      box-shadow: 0 16px 34px var(--shadow);
-      overflow: hidden;
-    }
-
-    .about-card {
-      padding: 34px;
+    /* TOP SPOTLIGHT */
+    .hero-stack {
+      position: relative;
       display: flex;
       flex-direction: column;
-      justify-content: center;
+      align-items: center;
+      margin-bottom: 24px;
+      padding-top: 10px;
     }
 
-    .eyebrow {
+    .spotlight-top {
+      position: relative;
+      width: 100%;
+      max-width: 950px;
+      min-height: 520px;
+      border-radius: 36px;
+      overflow: hidden;
+      background:
+        radial-gradient(circle at center 22%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.68) 15%, rgba(255,255,255,0.22) 30%, transparent 48%),
+        linear-gradient(to bottom, rgba(255,240,245,0.96), rgba(255,228,236,0.88));
+      box-shadow: 0 18px 40px var(--shadow);
+      border: 1px solid rgba(255,255,255,0.55);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px 90px;
+    }
+
+    .spotlight-beam {
+      position: absolute;
+      top: -80px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 480px;
+      height: 430px;
+      background: radial-gradient(circle, rgba(255,255,255,0.86) 0%, rgba(255,255,255,0.22) 48%, transparent 72%);
+      filter: blur(10px);
+      pointer-events: none;
+    }
+
+    .spotlight-floor {
+      position: absolute;
+      bottom: 65px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 340px;
+      height: 58px;
+      border-radius: 999px;
+      background: radial-gradient(circle, rgba(212,168,87,0.34) 0%, rgba(212,168,87,0.12) 45%, transparent 75%);
+      filter: blur(8px);
+      pointer-events: none;
+    }
+
+    .spotlight-image {
+      position: relative;
+      z-index: 2;
+      max-height: 420px;
+      width: auto;
+      object-fit: contain;
+      filter: drop-shadow(0 12px 28px rgba(107,47,163,0.16));
+    }
+
+    .title-overlap {
+      position: relative;
+      z-index: 3;
+      margin-top: -48px;
+      background: rgba(255, 240, 245, 0.92);
+      border: 1px solid rgba(255,255,255,0.6);
+      box-shadow: 0 16px 32px var(--shadow);
+      border-radius: 28px;
+      padding: 24px 28px;
+      text-align: center;
+      max-width: 700px;
+      width: calc(100% - 40px);
+    }
+
+    .title-overlap h1 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(42px, 6vw, 74px);
+      line-height: 0.95;
+      color: var(--primary);
+    }
+
+    .title-overlap .eyebrow {
       display: inline-block;
+      margin-bottom: 10px;
       font-size: 12px;
       letter-spacing: 1.8px;
       text-transform: uppercase;
       font-weight: 700;
       color: var(--gold);
-      margin-bottom: 14px;
     }
 
-    .about-card h1 {
-      margin: 0 0 14px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(42px, 6vw, 70px);
-      line-height: 0.95;
-      color: var(--primary);
-    }
-
-    .about-card p {
-      margin: 0;
+    /* ABOUT TEXT */
+    .about-text {
+      margin: 26px auto 0;
+      max-width: 760px;
+      text-align: center;
       font-size: 17px;
-      line-height: 1.75;
+      line-height: 1.8;
       color: var(--secondary);
-      max-width: 680px;
     }
 
-    .image-card img {
-      width: 100%;
-      height: 100%;
-      min-height: 360px;
-      object-fit: cover;
-      display: block;
-      filter: brightness(0.92);
-    }
-
+    /* SEARCH */
     .search-section {
-      margin-bottom: 28px;
+      margin: 28px auto 34px;
+      max-width: 900px;
     }
 
     .search-card {
-      background: rgba(255,255,255,0.52);
-      border: 1px solid rgba(255,255,255,0.65);
-      border-radius: 22px;
+      background: rgba(255,255,255,0.56);
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 24px;
       padding: 18px;
       box-shadow: 0 12px 28px var(--shadow);
     }
@@ -199,6 +241,7 @@
       font-size: 14px;
       font-weight: 700;
       color: var(--secondary);
+      text-align: center;
     }
 
     .search-bar {
@@ -230,6 +273,7 @@
       cursor: pointer;
     }
 
+    /* SECTIONS */
     .section {
       margin-bottom: 30px;
     }
@@ -256,247 +300,10 @@
       font-size: 15px;
       line-height: 1.6;
       color: var(--secondary);
-      max-width: 620px;
+      max-width: 700px;
     }
 
-    .section-link {
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    .snapshot-grid {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .snapshot-card {
-      background: rgba(255, 240, 245, 0.86);
-      border: 1px solid rgba(255,255,255,0.5);
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: 0 14px 30px var(--shadow);
-      transition: transform 0.22s ease, box-shadow 0.22s ease;
-    }
-
-    .snapshot-card:hover,
-    .feed-card:hover,
-    .tool-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 36px var(--shadow-strong);
-    }
-
-    .snapshot-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      display: block;
-    }
-
-    .snapshot-body {
-      padding: 18px;
-    }
-
-    .card-label {
-      font-size: 11px;
-      letter-spacing: 1.4px;
-      text-transform: uppercase;
-      font-weight: 700;
-      color: var(--gold);
-      margin-bottom: 8px;
-    }
-
-    .card-title {
-      margin: 0 0 8px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 24px;
-      line-height: 1.05;
-      color: var(--primary);
-    }
-
-    .card-text {
-      margin: 0 0 14px;
-      font-size: 14px;
-      line-height: 1.6;
-      color: var(--secondary);
-      min-height: 44px;
-    }
-
-    .card-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      background: var(--accent);
-      color: var(--white);
-      padding: 10px 16px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 700;
-    }
-
-    .feed-grid {
-      display: grid;
-      grid-template-columns: 1.2fr 0.8fr;
-      gap: 18px;
-    }
-
-    .feed-card,
-    .calendar-card {
-      background: rgba(255, 240, 245, 0.82);
-      border: 1px solid rgba(255,255,255,0.5);
-      border-radius: 24px;
-      box-shadow: 0 14px 30px var(--shadow);
-      padding: 22px;
-      transition: transform 0.22s ease, box-shadow 0.22s ease;
-    }
-
-    .feed-list {
-      display: grid;
-      gap: 12px;
-      margin-top: 14px;
-    }
-
-    .feed-item {
-      background: rgba(255,255,255,0.52);
-      border-radius: 18px;
-      padding: 14px 16px;
-      border: 1px solid rgba(107, 47, 163, 0.08);
-    }
-
-    .feed-item strong {
-      display: block;
-      color: var(--primary);
-      margin-bottom: 4px;
-      font-size: 15px;
-    }
-
-    .feed-item span {
-      display: block;
-      color: var(--secondary);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    .feed-item small {
-      display: block;
-      margin-top: 8px;
-      color: var(--gold);
-      font-size: 12px;
-      font-weight: 700;
-    }
-
-    .calendar-list {
-      display: grid;
-      gap: 12px;
-      margin-top: 14px;
-    }
-
-    .calendar-item {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      background: rgba(255,255,255,0.48);
-      border-radius: 18px;
-      padding: 14px 16px;
-      border: 1px solid rgba(107, 47, 163, 0.08);
-    }
-
-    .calendar-date {
-      min-width: 58px;
-      text-align: center;
-      border-radius: 14px;
-      padding: 8px;
-      background: var(--white);
-      color: var(--accent);
-      font-weight: 700;
-      font-size: 13px;
-      line-height: 1.2;
-    }
-
-    .calendar-text strong {
-      display: block;
-      margin-bottom: 4px;
-      color: var(--primary);
-      font-size: 15px;
-    }
-
-    .calendar-text span {
-      color: var(--secondary);
-      font-size: 14px;
-      line-height: 1.5;
-    }
-
-    /* SPOTLIGHT */
-    .spotlight-section {
-      margin-bottom: 30px;
-    }
-
-    .spotlight-card {
-      position: relative;
-      min-height: 420px;
-      border-radius: 30px;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at center 30%, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.55) 18%, rgba(255,255,255,0.18) 32%, transparent 50%),
-        linear-gradient(to bottom, rgba(255,240,245,0.95), rgba(255,228,236,0.88));
-      border: 1px solid rgba(255,255,255,0.5);
-      box-shadow: 0 16px 34px var(--shadow);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 30px 20px;
-    }
-
-    .spotlight-beam {
-      position: absolute;
-      top: -120px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 420px;
-      height: 420px;
-      background: radial-gradient(circle, rgba(255,255,255,0.75) 0%, rgba(255,255,255,0.18) 45%, transparent 70%);
-      filter: blur(10px);
-      pointer-events: none;
-    }
-
-    .spotlight-floor {
-      position: absolute;
-      bottom: 38px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 320px;
-      height: 48px;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(212,168,87,0.38) 0%, rgba(212,168,87,0.14) 45%, transparent 75%);
-      filter: blur(6px);
-      pointer-events: none;
-    }
-
-    .spotlight-image {
-      position: relative;
-      z-index: 2;
-      max-height: 360px;
-      width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 12px 28px rgba(107,47,163,0.18));
-    }
-
-    .spotlight-caption {
-      position: absolute;
-      bottom: 18px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 3;
-      text-align: center;
-      font-size: 14px;
-      color: var(--secondary);
-      background: rgba(255,255,255,0.55);
-      padding: 10px 16px;
-      border-radius: 999px;
-      backdrop-filter: blur(8px);
-    }
-
+    /* EXPLORE */
     .tools-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -514,6 +321,11 @@
       flex-direction: column;
       justify-content: space-between;
       transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 36px var(--shadow-strong);
     }
 
     .tool-icon {
@@ -551,12 +363,6 @@
     }
 
     @media (max-width: 1100px) {
-      .about-section,
-      .feed-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .snapshot-grid,
       .tools-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
@@ -571,30 +377,36 @@
         font-size: 24px;
       }
 
-      .about-card {
-        padding: 24px;
+      .spotlight-top {
+        min-height: 390px;
+        padding-bottom: 80px;
       }
 
-      .snapshot-grid,
+      .spotlight-image {
+        max-height: 290px;
+      }
+
+      .spotlight-beam {
+        width: 300px;
+        height: 280px;
+      }
+
+      .spotlight-floor {
+        width: 220px;
+        bottom: 58px;
+      }
+
+      .title-overlap {
+        margin-top: -34px;
+        padding: 20px;
+      }
+
       .tools-grid {
         grid-template-columns: 1fr;
       }
 
-      .image-card img {
-        min-height: 260px;
-      }
-
-      .spotlight-card {
-        min-height: 340px;
-      }
-
-      .spotlight-image {
-        max-height: 270px;
-      }
-
-      .spotlight-beam {
-        width: 280px;
-        height: 280px;
+      .about-text {
+        font-size: 16px;
       }
     }
   </style>
@@ -621,19 +433,22 @@
   </header>
 
   <main class="page">
-    <section class="about-section">
-      <div class="about-card">
-        <span class="eyebrow">Digital Archive • Living Diary</span>
-        <h1>Coco's World</h1>
-        <p>
-          A modern digital diary for Coco Jones — music, visuals, updates, videos,
-          gallery archives, calendar moments, games, and curated deep dives, all in one place.
-        </p>
+    <section class="hero-stack">
+      <div class="spotlight-top">
+        <div class="spotlight-beam"></div>
+        <img class="spotlight-image" src="coco-cutout.png" alt="Coco spotlight image">
+        <div class="spotlight-floor"></div>
       </div>
 
-      <div class="image-card">
-        <img src="slide1.jpg" alt="Coco's World preview image">
+      <div class="title-overlap">
+        <span class="eyebrow">Digital Archive • Living Diary</span>
+        <h1>Coco's World</h1>
       </div>
+
+      <p class="about-text">
+        A modern digital diary for Coco Jones — music, visuals, updates, videos,
+        gallery archives, calendar moments, games, and curated deep dives, all in one place.
+      </p>
     </section>
 
     <section class="search-section">
@@ -649,153 +464,10 @@
     <section class="section">
       <div class="section-header">
         <div>
-          <h2 class="section-title">Latest Snapshot</h2>
-          <p class="section-subtitle">
-            Just the most important current things — no repeated sections, no clutter.
-          </p>
-        </div>
-      </div>
-
-      <div class="snapshot-grid">
-        <article class="snapshot-card">
-          <img src="slide1.jpg" alt="Latest release">
-          <div class="snapshot-body">
-            <div class="card-label">Latest Release</div>
-            <h3 class="card-title">LUVAGIRL</h3>
-            <p class="card-text">The newest release and easiest place for people to start.</p>
-            <a class="card-button" href="#">Listen Now</a>
-          </div>
-        </article>
-
-        <article class="snapshot-card">
-          <img src="slide2.jpg" alt="Latest appearance">
-          <div class="snapshot-body">
-            <div class="card-label">Latest Appearance</div>
-            <h3 class="card-title">Recent Event</h3>
-            <p class="card-text">Start with the latest public moment, then go deeper into the gallery.</p>
-            <a class="card-button" href="#">View Gallery</a>
-          </div>
-        </article>
-
-        <article class="snapshot-card">
-          <img src="slide3.jpg" alt="Latest merch">
-          <div class="snapshot-body">
-            <div class="card-label">Available Now</div>
-            <h3 class="card-title">Lover Girl Merch</h3>
-            <p class="card-text">A direct path to the current era’s merch and featured items.</p>
-            <a class="card-button" href="#">Shop Now</a>
-          </div>
-        </article>
-
-        <article class="snapshot-card">
-          <img src="slide1.jpg" alt="Latest video">
-          <div class="snapshot-body">
-            <div class="card-label">Latest Video</div>
-            <h3 class="card-title">Newest Coco Video</h3>
-            <p class="card-text">Highlight the newest official upload, interview, or performance clip.</p>
-            <a class="card-button" href="#">Watch</a>
-          </div>
-        </article>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="feed-grid">
-        <div class="feed-card">
-          <div class="section-header">
-            <div>
-              <h2 class="section-title">Updates Feed</h2>
-              <p class="section-subtitle">
-                Your update-account side of the site — quick news, current movement, and fan-relevant info.
-              </p>
-            </div>
-            <a class="section-link" href="#">All Updates</a>
-          </div>
-
-          <div class="feed-list">
-            <div class="feed-item">
-              <strong>New Coco appearance added</strong>
-              <span>Photos and details from her most recent event are now in the gallery.</span>
-              <small>2 hours ago</small>
-            </div>
-
-            <div class="feed-item">
-              <strong>Latest video linked</strong>
-              <span>The newest performance/interview/video is now available on the videos page.</span>
-              <small>Today</small>
-            </div>
-
-            <div class="feed-item">
-              <strong>Music page updated</strong>
-              <span>Streaming links and release information were refreshed for the current era.</span>
-              <small>This week</small>
-            </div>
-          </div>
-        </div>
-
-        <div class="calendar-card">
-          <div class="section-header">
-            <div>
-              <h2 class="section-title">Coco Calendar</h2>
-              <p class="section-subtitle">
-                A quick visual of what’s coming up.
-              </p>
-            </div>
-          </div>
-
-          <div class="calendar-list">
-            <div class="calendar-item">
-              <div class="calendar-date">APR<br>14</div>
-              <div class="calendar-text">
-                <strong>Appearance</strong>
-                <span>Add event name, city, or media appearance here.</span>
-              </div>
-            </div>
-
-            <div class="calendar-item">
-              <div class="calendar-date">APR<br>18</div>
-              <div class="calendar-text">
-                <strong>Release / Promo</strong>
-                <span>Use this for drops, announcements, interviews, or performances.</span>
-              </div>
-            </div>
-
-            <div class="calendar-item">
-              <div class="calendar-date">APR<br>22</div>
-              <div class="calendar-text">
-                <strong>Fan Update</strong>
-                <span>Any date you want visitors to keep track of can live here.</span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="spotlight-section">
-      <div class="section-header">
-        <div>
-          <h2 class="section-title">Spotlight</h2>
-          <p class="section-subtitle">
-            A central visual moment so the homepage feels less flat and more alive.
-          </p>
-        </div>
-      </div>
-
-      <div class="spotlight-card">
-        <div class="spotlight-beam"></div>
-        <img class="spotlight-image" src="coco-cutout.png" alt="Coco spotlight image">
-        <div class="spotlight-floor"></div>
-        <div class="spotlight-caption">Upload a transparent PNG named <strong>coco-cutout.png</strong></div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-header">
-        <div>
           <h2 class="section-title">Explore</h2>
           <p class="section-subtitle">
-            These are the real destinations of the site, instead of repeating them again and again on the homepage.
+            Start anywhere — browse the archive, listen to music, watch videos, check updates,
+            track events, play games, or dive into Coco’s story.
           </p>
         </div>
       </div>
