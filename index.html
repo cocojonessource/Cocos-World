@@ -8,38 +8,21 @@
   <style>
     :root {
       --bg: #FFE4EC;
-      --bg-soft: #FFF0F5;
       --nav: #FFD1DC;
       --primary: #6B2FA3;
       --secondary: #8B5FBF;
-      --accent: #D76BA8;
       --white: #FFFFFF;
-      --white-soft: #FFF7FB;
-      --shadow: rgba(107, 47, 163, 0.10);
-      --shadow-strong: rgba(107, 47, 163, 0.18);
-      --border: rgba(107, 47, 163, 0.10);
     }
 
     * {
       box-sizing: border-box;
     }
 
-    html {
-      scroll-behavior: smooth;
-    }
-
     body {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      background:
-        radial-gradient(circle at top, rgba(255,255,255,0.45), transparent 35%),
-        linear-gradient(to bottom, #fff6fa 0%, var(--bg) 18%, #ffeaf1 100%);
+      background: var(--bg);
       color: var(--primary);
-    }
-
-    img {
-      display: block;
-      max-width: 100%;
     }
 
     a {
@@ -51,918 +34,100 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      backdrop-filter: blur(12px);
-      background: rgba(255, 209, 220, 0.78);
-      border-bottom: 1px solid rgba(255,255,255,0.45);
-    }
-
-    .topbar-inner {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 18px 24px;
+      background: var(--nav);
+      padding: 18px 30px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       gap: 20px;
     }
 
     .brand {
       font-size: 28px;
       font-weight: 700;
-      letter-spacing: 0.4px;
-      color: var(--primary);
-      white-space: nowrap;
     }
 
     .nav {
       display: flex;
+      gap: 24px;
       flex-wrap: wrap;
-      gap: 22px;
       font-family: Arial, sans-serif;
       font-size: 15px;
       font-weight: 600;
-      color: var(--primary);
     }
 
-    .nav a {
-      position: relative;
-      opacity: 0.95;
-      transition: opacity 0.2s ease;
-    }
-
-    .nav a:hover {
-      opacity: 1;
-    }
-
-    .nav a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -4px;
-      width: 100%;
-      height: 2px;
-      background: var(--accent);
-      transform: scaleX(0);
-      transform-origin: center;
-      transition: transform 0.25s ease;
-    }
-
-    .nav a:hover::after {
-      transform: scaleX(1);
-    }
-
-    .hero {
-      position: relative;
-      width: 100%;
-      min-height: 76vh;
-      overflow: hidden;
-      background: #f8d9e6;
-    }
-
-    .hero-slide {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity 1.1s ease-in-out;
-      pointer-events: none;
-    }
-
-    .hero-slide.active {
-      opacity: 1;
-      pointer-events: auto;
-      z-index: 2;
-    }
-
-    .hero-slide img {
-      width: 100%;
-      height: 100%;
-      min-height: 76vh;
-      object-fit: cover;
-      filter: brightness(0.72) saturate(1.02);
-    }
-
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to right, rgba(74, 17, 110, 0.38) 0%, rgba(74, 17, 110, 0.12) 38%, rgba(255, 228, 236, 0.06) 100%),
-        linear-gradient(to top, rgba(255, 228, 236, 0.16), transparent 40%);
-    }
-
-    .hero-content-wrap {
-      position: absolute;
-      inset: 0;
-      z-index: 4;
+    .main {
+      min-height: calc(100vh - 76px);
       display: flex;
-      align-items: flex-end;
-    }
-
-    .hero-content {
-      max-width: 1400px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 0 24px 72px;
-    }
-
-    .hero-copy {
-      max-width: 560px;
-      color: var(--white);
-      animation: fadeUp 0.9s ease;
-    }
-
-    .eyebrow {
-      font-family: Arial, sans-serif;
-      font-size: 13px;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      color: rgba(255,255,255,0.82);
-      margin-bottom: 14px;
-    }
-
-    .hero-title {
-      margin: 0 0 14px;
-      font-size: clamp(44px, 6vw, 78px);
-      line-height: 0.96;
-      font-weight: 700;
-      text-shadow: 0 6px 28px rgba(0,0,0,0.18);
-    }
-
-    .hero-description {
-      margin: 0 0 26px;
-      font-family: Arial, sans-serif;
-      font-size: clamp(17px, 2vw, 21px);
-      line-height: 1.5;
-      color: var(--white-soft);
-      max-width: 520px;
-    }
-
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .hero-button {
-      display: inline-flex;
       align-items: center;
       justify-content: center;
-      min-width: 140px;
-      padding: 14px 24px;
-      border-radius: 999px;
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-      font-weight: 700;
-      transition: transform 0.22s ease, box-shadow 0.22s ease, opacity 0.22s ease;
-      box-shadow: 0 10px 24px rgba(107, 47, 163, 0.24);
+      padding: 40px 20px;
     }
 
-    .hero-button.primary {
-      background: var(--accent);
-      color: var(--white);
-    }
-
-    .hero-button.secondary {
-      background: rgba(255,255,255,0.18);
-      border: 1px solid rgba(255,255,255,0.34);
-      color: var(--white);
-      backdrop-filter: blur(8px);
-      box-shadow: none;
-    }
-
-    .hero-button:hover {
-      transform: translateY(-2px);
-      opacity: 0.96;
-    }
-
-    .hero-dots {
-      position: absolute;
-      left: 50%;
-      bottom: 26px;
-      transform: translateX(-50%);
-      z-index: 5;
-      display: flex;
-      gap: 10px;
-      align-items: center;
-    }
-
-    .hero-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.45);
-      border: none;
-      cursor: pointer;
-      transition: transform 0.22s ease, background 0.22s ease, width 0.22s ease;
-    }
-
-    .hero-dot.active {
-      width: 28px;
-      background: var(--white);
-    }
-
-    .section {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 56px 24px 0;
-    }
-
-    .section-header {
-      display: flex;
-      align-items: end;
-      justify-content: space-between;
-      gap: 16px;
-      margin-bottom: 22px;
-    }
-
-    .section-title {
-      margin: 0;
-      font-size: clamp(30px, 4vw, 42px);
-      line-height: 1;
-      color: var(--primary);
-    }
-
-    .section-subtitle {
-      margin: 10px 0 0;
-      font-family: Arial, sans-serif;
-      color: var(--secondary);
-      font-size: 15px;
-      line-height: 1.5;
-      max-width: 540px;
-    }
-
-    .section-link {
-      font-family: Arial, sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--accent);
-      white-space: nowrap;
-    }
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 22px;
-    }
-
-    .feature-card {
-      position: relative;
-      min-height: 380px;
-      border-radius: 28px;
-      overflow: hidden;
-      background: var(--bg-soft);
-      box-shadow: 0 18px 40px var(--shadow);
-      border: 1px solid rgba(255,255,255,0.55);
-      transition: transform 0.25s ease, box-shadow 0.25s ease;
-    }
-
-    .feature-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 24px 46px var(--shadow-strong);
-    }
-
-    .feature-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      min-height: 380px;
-      filter: brightness(0.84);
-    }
-
-    .feature-card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(58, 17, 92, 0.72), transparent 56%);
-    }
-
-    .feature-content {
-      position: absolute;
-      inset: auto 0 0 0;
-      z-index: 2;
-      padding: 22px;
-      color: var(--white);
-    }
-
-    .feature-title {
-      margin: 0 0 8px;
-      font-size: 28px;
-      line-height: 1;
-    }
-
-    .feature-text {
-      margin: 0 0 16px;
-      font-family: Arial, sans-serif;
-      font-size: 15px;
-      line-height: 1.45;
-      color: rgba(255,255,255,0.94);
-    }
-
-    .mini-button {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 16px;
-      border-radius: 999px;
-      font-family: Arial, sans-serif;
-      font-size: 13px;
-      font-weight: 700;
-      background: rgba(255,255,255,0.18);
-      border: 1px solid rgba(255,255,255,0.34);
-      color: var(--white);
-      backdrop-filter: blur(6px);
-    }
-
-    .rail {
-      display: flex;
-      gap: 18px;
-      overflow-x: auto;
-      padding-bottom: 12px;
-      scroll-behavior: smooth;
-    }
-
-    .rail::-webkit-scrollbar {
-      height: 10px;
-    }
-
-    .rail::-webkit-scrollbar-thumb {
-      background: #ebadc3;
-      border-radius: 999px;
-    }
-
-    .rail-card {
-      flex: 0 0 300px;
-      background: rgba(255, 240, 245, 0.88);
-      border-radius: 24px;
-      overflow: hidden;
-      box-shadow: 0 12px 30px var(--shadow);
-      border: 1px solid rgba(255,255,255,0.5);
-      backdrop-filter: blur(6px);
-      transition: transform 0.22s ease, box-shadow 0.22s ease;
-    }
-
-    .rail-card:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 18px 38px var(--shadow-strong);
-    }
-
-    .rail-card img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-    }
-
-    .rail-body {
-      padding: 18px;
-    }
-
-    .rail-label {
-      font-family: Arial, sans-serif;
-      font-size: 11px;
-      letter-spacing: 1.6px;
-      text-transform: uppercase;
-      color: var(--accent);
-      font-weight: 700;
-      margin-bottom: 8px;
-    }
-
-    .rail-title {
-      margin: 0 0 8px;
-      font-size: 24px;
-      line-height: 1.02;
-      color: var(--primary);
-    }
-
-    .rail-text {
-      margin: 0 0 14px;
-      font-family: Arial, sans-serif;
-      font-size: 14px;
-      line-height: 1.5;
-      color: var(--secondary);
-      min-height: 42px;
-    }
-
-    .rail-link {
-      display: inline-flex;
-      align-items: center;
-      font-family: Arial, sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    .realms {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
-    }
-
-    .realm-card {
-      background: rgba(255, 240, 245, 0.78);
-      border-radius: 26px;
-      padding: 28px 22px;
-      min-height: 220px;
-      border: 1px solid rgba(255,255,255,0.5);
-      box-shadow: 0 12px 28px var(--shadow);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: transform 0.22s ease, box-shadow 0.22s ease;
-    }
-
-    .realm-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 18px 40px var(--shadow-strong);
-    }
-
-    .realm-name {
-      margin: 0 0 10px;
-      font-size: 30px;
-      line-height: 1;
-    }
-
-    .realm-description {
-      margin: 0 0 18px;
-      font-family: Arial, sans-serif;
-      font-size: 14px;
-      line-height: 1.5;
-      color: var(--secondary);
-    }
-
-    .realm-link {
-      font-family: Arial, sans-serif;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--accent);
-    }
-
-    .footer {
-      max-width: 1400px;
-      margin: 0 auto;
-      padding: 70px 24px 42px;
+    .about-box {
+      max-width: 800px;
       text-align: center;
+      background: rgba(255, 255, 255, 0.35);
+      padding: 50px 35px;
+      border-radius: 28px;
     }
 
-    .footer-line {
-      width: 100%;
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(107,47,163,0.18), transparent);
-      margin-bottom: 26px;
+    .about-box h1 {
+      margin: 0 0 16px 0;
+      font-size: 56px;
+      line-height: 1;
     }
 
-    .footer-text {
+    .about-box p {
       margin: 0;
       font-family: Arial, sans-serif;
-      font-size: 14px;
+      font-size: 18px;
+      line-height: 1.7;
       color: var(--secondary);
     }
 
-    @keyframes fadeUp {
-      from {
-        opacity: 0;
-        transform: translateY(18px);
-      }
-      to {
-        opacity: 1;
-        transform: translateY(0);
-      }
-    }
-
-    @media (max-width: 1100px) {
-      .feature-grid {
-        grid-template-columns: 1fr;
-      }
-
-      .realms {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .hero {
-        min-height: 70vh;
-      }
-
-      .hero-slide img {
-        min-height: 70vh;
-      }
-    }
-
-    @media (max-width: 760px) {
-      .topbar-inner {
+    @media (max-width: 768px) {
+      .topbar {
         flex-direction: column;
         align-items: flex-start;
+        padding: 16px 20px;
       }
 
       .brand {
         font-size: 24px;
       }
 
-      .nav {
-        gap: 16px;
+      .about-box h1 {
+        font-size: 40px;
       }
 
-      .hero,
-      .hero-slide img {
-        min-height: 82vh;
-      }
-
-      .hero-content {
-        padding: 0 18px 74px;
-      }
-
-      .hero-copy {
-        max-width: 100%;
-      }
-
-      .hero-description {
-        max-width: 100%;
-      }
-
-      .section {
-        padding: 44px 18px 0;
-      }
-
-      .section-header {
-        flex-direction: column;
-        align-items: flex-start;
-      }
-
-      .realms {
-        grid-template-columns: 1fr;
-      }
-
-      .rail-card {
-        flex-basis: 260px;
+      .about-box p {
+        font-size: 16px;
       }
     }
   </style>
 </head>
 <body>
   <header class="topbar">
-    <div class="topbar-inner">
-      <div class="brand">Coco's World</div>
+    <div class="brand">Coco's World</div>
 
-      <nav class="nav">
-        <a href="#featured">Home</a>
-        <a href="#now">Now</a>
-        <a href="#moments">Moments</a>
-        <a href="#realms">Explore</a>
-        <a href="#sound">Sound</a>
-      </nav>
-    </div>
+    <nav class="nav">
+      <a href="#">Home</a>
+      <a href="#">Gallery</a>
+      <a href="#">Music</a>
+      <a href="#">Shop</a>
+      <a href="#">World</a>
+    </nav>
   </header>
 
-  <section class="hero" id="top">
-    <div class="hero-slide active">
-      <img src="slide1.jpg" alt="LUVAGIRL" />
-      <div class="hero-overlay"></div>
+  <main class="main">
+    <div class="about-box">
+      <h1>Coco's World</h1>
+      <p>
+        A digital space for Coco Jones — music, visuals, moments, and more,
+        all in one place.
+      </p>
     </div>
-
-    <div class="hero-slide">
-      <img src="slide2.jpg" alt="Latest Appearance" />
-      <div class="hero-overlay"></div>
-    </div>
-
-    <div class="hero-slide">
-      <img src="slide3.jpg" alt="Available Now" />
-      <div class="hero-overlay"></div>
-    </div>
-
-    <div class="hero-content-wrap">
-      <div class="hero-content">
-        <div class="hero-copy">
-          <div class="eyebrow" id="heroEyebrow">Now Entering</div>
-          <h1 class="hero-title" id="heroTitle">LUVAGIRL</h1>
-          <p class="hero-description" id="heroDescription">Coco Jones' latest release.</p>
-
-          <div class="hero-actions">
-            <a class="hero-button primary" id="heroButton" href="#" target="_blank" rel="noopener noreferrer">Watch Now</a>
-            <a class="hero-button secondary" href="#featured">Explore</a>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="hero-dots">
-      <button class="hero-dot active" aria-label="Slide 1"></button>
-      <button class="hero-dot" aria-label="Slide 2"></button>
-      <button class="hero-dot" aria-label="Slide 3"></button>
-    </div>
-  </section>
-
-  <section class="section" id="featured">
-    <div class="section-header">
-      <div>
-        <h2 class="section-title">Featured</h2>
-        <p class="section-subtitle">A softer entrance into Coco’s World — current music, the latest moments, and the era in motion.</p>
-      </div>
-    </div>
-
-    <div class="feature-grid">
-      <article class="feature-card">
-        <img src="slide1.jpg" alt="LUVAGIRL feature" />
-        <div class="feature-content">
-          <h3 class="feature-title">LUVAGIRL</h3>
-          <p class="feature-text">Coco Jones’ latest release.</p>
-          <a class="mini-button" href="#" target="_blank" rel="noopener noreferrer">Watch Now</a>
-        </div>
-      </article>
-
-      <article class="feature-card">
-        <img src="slide2.jpg" alt="Latest appearance feature" />
-        <div class="feature-content">
-          <h3 class="feature-title">Latest Appearance</h3>
-          <p class="feature-text">Coco’s most recent appearance — explore the full gallery.</p>
-          <a class="mini-button" href="#">View Gallery</a>
-        </div>
-      </article>
-
-      <article class="feature-card">
-        <img src="slide3.jpg" alt="Available now feature" />
-        <div class="feature-content">
-          <h3 class="feature-title">Available Now</h3>
-          <p class="feature-text">My man, my man, my man.</p>
-          <a class="mini-button" href="#">Shop Now</a>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section class="section" id="now">
-    <div class="section-header">
-      <div>
-        <h2 class="section-title">Now</h2>
-        <p class="section-subtitle">What’s current, what’s recent, and where to start first.</p>
-      </div>
-      <a class="section-link" href="#">See More</a>
-    </div>
-
-    <div class="rail">
-      <article class="rail-card">
-        <img src="slide1.jpg" alt="Latest release card" />
-        <div class="rail-body">
-          <div class="rail-label">Latest Release</div>
-          <h3 class="rail-title">LUVAGIRL</h3>
-          <p class="rail-text">The newest release, centered and easy to find.</p>
-          <a class="rail-link" href="#" target="_blank" rel="noopener noreferrer">Watch</a>
-        </div>
-      </article>
-
-      <article class="rail-card">
-        <img src="slide2.jpg" alt="Latest event card" />
-        <div class="rail-body">
-          <div class="rail-label">Latest Appearance</div>
-          <h3 class="rail-title">New Event Gallery</h3>
-          <p class="rail-text">Start with the newest appearance, then move deeper into the archive.</p>
-          <a class="rail-link" href="#">View</a>
-        </div>
-      </article>
-
-      <article class="rail-card">
-        <img src="slide3.jpg" alt="Merch card" />
-        <div class="rail-body">
-          <div class="rail-label">Available Now</div>
-          <h3 class="rail-title">Lover Girl Merch</h3>
-          <p class="rail-text">A soft storefront moment inside the world, not separate from it.</p>
-          <a class="rail-link" href="#">Shop</a>
-        </div>
-      </article>
-
-      <article class="rail-card">
-        <img src="slide2.jpg" alt="Social card" />
-        <div class="rail-body">
-          <div class="rail-label">Recent</div>
-          <h3 class="rail-title">Latest Moments</h3>
-          <p class="rail-text">Use this space later for socials, quick updates, or spotlight posts.</p>
-          <a class="rail-link" href="#">Open</a>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section class="section" id="moments">
-    <div class="section-header">
-      <div>
-        <h2 class="section-title">Moments</h2>
-        <p class="section-subtitle">Photos, appearances, visuals, and all the pieces that make the archive feel alive instead of static.</p>
-      </div>
-      <a class="section-link" href="#">Open Gallery</a>
-    </div>
-
-    <div class="rail">
-      <article class="rail-card">
-        <img src="slide2.jpg" alt="Gallery latest" />
-        <div class="rail-body">
-          <div class="rail-label">Gallery</div>
-          <h3 class="rail-title">Latest Appearance</h3>
-          <p class="rail-text">Lead visitors into the newest event first.</p>
-          <a class="rail-link" href="#">View</a>
-        </div>
-      </article>
-
-      <article class="rail-card">
-        <img src="slide2.jpg" alt="By year card" />
-        <div class="rail-body">
-          <div class="rail-label">Archive</div>
-          <h3 class="rail-title">By Year</h3>
-          <p class="rail-text">Break the gallery down by year, then by era if you want more detail.</p>
-          <a class="rail-link" href="#">Browse</a>
-        </div>
-      </article>
-
-      <article class="rail-card">
-        <img src="slide2.jpg" alt="Photoshoots card" />
-        <div class="rail-body">
-          <div class="rail-label">Visuals</div>
-          <h3 class="rail-title">Photoshoots</h3>
-          <p class="rail-text">Editorial work, portraiture, campaigns, and polished visuals.</p>
-          <a class="rail-link" href="#">Enter</a>
-        </div>
-      </article>
-
-      <article class="rail-card">
-        <img src="slide2.jpg" alt="Behind the scenes card" />
-        <div class="rail-body">
-          <div class="rail-label">More</div>
-          <h3 class="rail-title">Behind the Scenes</h3>
-          <p class="rail-text">A place for softer pieces that expand the world instead of crowding it.</p>
-          <a class="rail-link" href="#">See</a>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <section class="section" id="realms">
-    <div class="section-header">
-      <div>
-        <h2 class="section-title">Explore the World</h2>
-        <p class="section-subtitle">Rename the site’s sections so they feel like destinations instead of tabs.</p>
-      </div>
-    </div>
-
-    <div class="realms">
-      <article class="realm-card">
-        <div>
-          <h3 class="realm-name">Sound</h3>
-          <p class="realm-description">Music, performances, releases, and the emotional center of the era.</p>
-        </div>
-        <a class="realm-link" href="#sound">Open Sound</a>
-      </article>
-
-      <article class="realm-card">
-        <div>
-          <h3 class="realm-name">Moments</h3>
-          <p class="realm-description">The visual archive — events, photoshoots, appearances, and everything remembered.</p>
-        </div>
-        <a class="realm-link" href="#moments">Open Moments</a>
-      </article>
-
-      <article class="realm-card">
-        <div>
-          <h3 class="realm-name">Collection</h3>
-          <p class="realm-description">Merch and era pieces presented like part of the world, not just a shop page.</p>
-        </div>
-        <a class="realm-link" href="#">Open Collection</a>
-      </article>
-
-      <article class="realm-card">
-        <div>
-          <h3 class="realm-name">Now</h3>
-          <p class="realm-description">Current updates, latest highlights, and the cleanest place for new visitors to begin.</p>
-        </div>
-        <a class="realm-link" href="#now">Open Now</a>
-      </article>
-    </div>
-  </section>
-
-  <section class="section" id="sound">
-    <div class="section-header">
-      <div>
-        <h2 class="section-title">Sound</h2>
-        <p class="section-subtitle">A music-first rail that can later hold real links to videos, songs, performances, and project pages.</p>
-      </div>
-      <a class="section-link" href="#">Open Music</a>
-    </div>
-
-    <div class="rail">
-      <article class="rail-card">
-        <img src="slide1.jpg" alt="Singles card" />
-        <div class="rail-body">
-          <div class="rail-label">Music</div>
-          <h3 class="rail-title">Singles</h3>
-          <p class="rail-text">Lead with the latest single and keep older releases easy to reach.</p>
-          <a class="rail-link" href="#">Explore</a>
-        </div>
-      </article>
-
-      <article class="rail-card">
-        <img src="slide1.jpg" alt="Performances card" />
-        <div class="rail-body">
-          <div class="rail-label">Stage</div>
-          <h3 class="rail-title">Performances</h3>
-          <p class="rail-text">A rail for live stages, standout clips, and big moments.</p>
-          <a class="rail-link" href="#">Watch</a>
-        </div>
-      </article>
-
-      <article class="rail-card">
-        <img src="slide1.jpg" alt="Projects card" />
-        <div class="rail-body">
-          <div class="rail-label">Projects</div>
-          <h3 class="rail-title">Projects</h3>
-          <p class="rail-text">EPs, albums, singles, and visuals held together in one place.</p>
-          <a class="rail-link" href="#">View</a>
-        </div>
-      </article>
-
-      <article class="rail-card">
-        <img src="slide1.jpg" alt="Videos card" />
-        <div class="rail-body">
-          <div class="rail-label">Video</div>
-          <h3 class="rail-title">Music Videos</h3>
-          <p class="rail-text">A direct pathway from discovery into watching.</p>
-          <a class="rail-link" href="#">Play</a>
-        </div>
-      </article>
-    </div>
-  </section>
-
-  <footer class="footer">
-    <div class="footer-line"></div>
-    <p class="footer-text">Coco’s World — a softer, curated archive in motion.</p>
-  </footer>
-
-  <script>
-    const heroSlides = document.querySelectorAll(".hero-slide");
-    const heroDots = document.querySelectorAll(".hero-dot");
-    const heroTitle = document.getElementById("heroTitle");
-    const heroDescription = document.getElementById("heroDescription");
-    const heroButton = document.getElementById("heroButton");
-    const heroEyebrow = document.getElementById("heroEyebrow");
-
-    const slideData = [
-      {
-        eyebrow: "Now Entering",
-        title: "LUVAGIRL",
-        description: "Coco Jones' latest release.",
-        buttonText: "Watch Now",
-        buttonLink: "#"
-      },
-      {
-        eyebrow: "Latest Moment",
-        title: "Latest Appearance",
-        description: "Coco’s most recent appearance — explore the full gallery.",
-        buttonText: "View Gallery",
-        buttonLink: "#"
-      },
-      {
-        eyebrow: "Available Now",
-        title: "Available Now",
-        description: "My man, my man, my man.",
-        buttonText: "Shop Now",
-        buttonLink: "#"
-      }
-    ];
-
-    let currentSlide = 0;
-    let slideTimer;
-
-    function renderSlide(index) {
-      heroSlides.forEach((slide, i) => {
-        slide.classList.toggle("active", i === index);
-      });
-
-      heroDots.forEach((dot, i) => {
-        dot.classList.toggle("active", i === index);
-      });
-
-      heroEyebrow.textContent = slideData[index].eyebrow;
-      heroTitle.textContent = slideData[index].title;
-      heroDescription.textContent = slideData[index].description;
-      heroButton.textContent = slideData[index].buttonText;
-      heroButton.href = slideData[index].buttonLink;
-
-      currentSlide = index;
-    }
-
-    function nextSlide() {
-      const next = (currentSlide + 1) % slideData.length;
-      renderSlide(next);
-    }
-
-    function resetTimer() {
-      clearInterval(slideTimer);
-      slideTimer = setInterval(nextSlide, 5500);
-    }
-
-    heroDots.forEach((dot, index) => {
-      dot.addEventListener("click", () => {
-        renderSlide(index);
-        resetTimer();
-      });
-    });
-
-    renderSlide(0);
-    resetTimer();
-  </script>
+  </main>
 </body>
 </html>
