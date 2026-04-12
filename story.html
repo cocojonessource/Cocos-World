@@ -6,6 +6,16 @@
   <title>Coco's World — Story</title>
 
   <style>
+    .shape-guide {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 400px;
+  transform: translate(-50%, -50%);
+  opacity: 0.25;
+  pointer-events: none;
+  z-index: 1;
+}
     :root {
       --bg: #ffe8f1;
       --bg-2: #ffd8e8;
@@ -615,6 +625,7 @@ body {
         </div>
 
         <div class="story-stage">
+          <img src="heart-guide.png" class="shape-guide">      
           <div class="sparkles" aria-hidden="true">
             <span class="sparkle s3" style="left: 10%; top: 16%;"></span>
             <span class="sparkle s2" style="left: 19%; top: 30%;"></span>
