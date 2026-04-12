@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Viewer | Coco's World</title>
+
+  <style>
+    :root {
+      --bg: #FFE4EC;
+      --nav: #FFD1DC;
+      --primary: #6B2FA3;
+      --secondary: #8B5FBF;
+      --accent: #D76BA8;
+      --gold: #D4A857;
+      --white: #FFFFFF;
+      --shadow: rgba(107, 47, 163, 0.10);
+      --shadow-strong: rgba(107, 47, 163, 0.16);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.45), transparent 30%),
+        linear-gradient(to bottom, #fff8fb 0%, var(--bg) 20%, #ffeaf1 100%);
+      color: var(--primary);
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 209, 220, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.45);
+    }
+
+    .topbar-inner {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .anchor-home {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: var(--white);
+      border: 1px solid rgba(212, 168, 87, 0.45);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--gold);
+      box-shadow: 0 6px 16px rgba(212, 168, 87, 0.14);
+      flex-shrink: 0;
+    }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .page {
+      max-width: 1500px;
+      margin: 0 auto;
+      padding: 24px 20px 40px;
+    }
+
+    .viewer-top {
+      display: grid;
+      grid-template-columns: 220px 1fr 280px;
+      gap: 18px;
+      align-items: start;
+      margin-bottom: 18px;
+    }
+
+    .panel {
+      background: rgba(255, 240, 245, 0.84);
+      border: 1px solid rgba(255,255,255,0.55);
+      border-radius: 26px;
+      box-shadow: 0 14px 30px var(--shadow);
+    }
+
+    .left-panel,
+    .right-panel {
+      padding: 18px;
+      min-height: 620px;
+    }
+
+    .main-viewer {
+      padding: 18px;
+    }
+
+    .panel-title {
+      margin: 0 0 14px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .side-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .side-item {
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: 18px;
+      padding: 12px 14px;
+      font-size: 14px;
+      line-height: 1.5;
+      color: var(--secondary);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .side-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px var(--shadow);
+    }
+
+    .side-item strong {
+      display: block;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .viewer-frame {
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.65);
+      border-radius: 24px;
+      padding: 18px;
+      min-height: 620px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .viewer-image-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 500px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.65);
+    }
+
+    .viewer-image-wrap img {
+      max-width: 100%;
+      max-height: 520px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .viewer-caption {
+      padding-top: 14px;
+    }
+
+    .viewer-caption h2 {
+      margin: 0 0 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 34px;
+      line-height: 1;
+    }
+
+    .viewer-caption p {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--secondary);
+    }
+
+    .meta-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .meta-item {
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: 18px;
+      padding: 12px 14px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--secondary);
+    }
+
+    .meta-item strong {
+      display: block;
+      color: var(--primary);
+      margin-bottom: 4px;
+    }
+
+    .thumb-strip {
+      margin-top: 18px;
+    }
+
+    .thumb-title {
+      margin: 0 0 12px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .thumb-row {
+      display: flex;
+      gap: 14px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+    }
+
+    .thumb-row::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .thumb-row::-webkit-scrollbar-thumb {
+      background: var(--accent);
+      border-radius: 999px;
+    }
+
+    .thumb {
+      flex: 0 0 140px;
+      height: 180px;
+      border-radius: 18px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.55);
+      border: 2px solid transparent;
+      cursor: pointer;
+      box-shadow: 0 10px 24px var(--shadow);
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .thumb.active {
+      border-color: var(--accent);
+    }
+
+    .thumb:hover {
+      transform: translateY(-3px);
+    }
+
+    .thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .search-section {
+      margin-bottom: 18px;
+    }
+
+    .search-card {
+      background: rgba(255,255,255,0.58);
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 22px;
+      padding: 16px;
+      box-shadow: 0 12px 28px var(--shadow);
+    }
+
+    .search-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .search-bar input {
+      flex: 1;
+      min-width: 220px;
+      border: 1px solid rgba(107, 47, 163, 0.14);
+      background: var(--white);
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-size: 15px;
+      color: var(--primary);
+      outline: none;
+    }
+
+    .search-bar button {
+      border: none;
+      background: var(--accent);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1200px) {
+      .viewer-top {
+        grid-template-columns: 1fr;
+      }
+
+      .left-panel,
+      .right-panel,
+      .main-viewer {
+        min-height: auto;
+      }
+
+      .viewer-frame {
+        min-height: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <a class="anchor-home" href="index.html">⚓</a>
+        <span>Coco's World</span>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="#">Music</a>
+        <a href="#">Videos</a>
+        <a href="#">Updates</a>
+        <a href="#">Calendar</a>
+        <a href="#">Games</a>
+        <a href="#">Story</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="search-section">
+      <div class="search-card">
+        <div class="search-bar">
+          <input type="text" placeholder="Search within this gallery folder..." />
+          <button>Search</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="viewer-top">
+      <aside class="panel left-panel">
+        <h2 class="panel-title">Folder View</h2>
+        <div class="side-list">
+          <div class="side-item">
+            <strong>Current Folder</strong>
+            2025 / Lover Girl / Appearances
+          </div>
+          <div class="side-item">
+            <strong>Nearby Folder</strong>
+            2025 / Lover Girl / BTS
+          </div>
+          <div class="side-item">
+            <strong>Previous Folder</strong>
+            2024 / Performances
+          </div>
+          <div class="side-item">
+            <strong>Next Folder</strong>
+            2025 / Magazines
+          </div>
+          <div class="side-item">
+            <strong>Back to Gallery Home</strong>
+            Use this panel later for quick jumps.
+          </div>
+        </div>
+      </aside>
+
+      <section class="panel main-viewer">
+        <div class="viewer-frame">
+          <div class="viewer-image-wrap">
+            <img id="mainImage" src="slide1.jpg" alt="Selected Coco photo">
+          </div>
+
+          <div class="viewer-caption">
+            <h2 id="mainTitle">Selected Photo</h2>
+            <p id="mainText">
+              This is the image you are currently viewing. This layout is the one that should feel like
+              “you are looking at this photo right now,” not the gallery home screen.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel right-panel">
+        <h2 class="panel-title">Photo Info</h2>
+        <div class="meta-list">
+          <div class="meta-item">
+            <strong>Year</strong>
+            2025
+          </div>
+          <div class="meta-item">
+            <strong>Era / Folder</strong>
+            Lover Girl / Appearances
+          </div>
+          <div class="meta-item">
+            <strong>Credit</strong>
+            Photographer / source goes here
+          </div>
+          <div class="meta-item">
+            <strong>Tags</strong>
+            appearance, glam, pink, event, current era
+          </div>
+          <div class="meta-item">
+            <strong>Original</strong>
+            Add “view original” link later
+          </div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="thumb-strip">
+      <h2 class="thumb-title">More From This Folder</h2>
+
+      <div class="thumb-row">
+        <div class="thumb active" data-title="Selected Photo" data-text="This is the currently selected image in the folder.">
+          <img src="slide1.jpg" alt="Thumb 1">
+        </div>
+
+        <div class="thumb" data-title="Second Photo" data-text="Another photo from this same folder or event.">
+          <img src="slide2.jpg" alt="Thumb 2">
+        </div>
+
+        <div class="thumb" data-title="Third Photo" data-text="This strip can hold the surrounding photos in the selected set.">
+          <img src="slide3.jpg" alt="Thumb 3">
+        </div>
+
+        <div class="thumb" data-title="Fourth Photo" data-text="Later this can become a real thumbnail navigator.">
+          <img src="slide1.jpg" alt="Thumb 4">
+        </div>
+
+        <div class="thumb" data-title="Fifth Photo" data-text="Use this area to keep the viewer feeling active and browsable.">
+          <img src="slide2.jpg" alt="Thumb 5">
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const thumbs = document.querySelectorAll('.thumb');
+    const mainImage = document.getElementById('mainImage');
+    const mainTitle = document.getElementById('mainTitle');
+    const mainText = document.getElementById('mainText');
+
+    thumbs.forEach(thumb => {
+      thumb.addEventListener('click', () => {
+        thumbs.forEach(t => t.classList.remove('active'));
+        thumb.classList.add('active');
+
+        const img = thumb.querySelector('img');
+        mainImage.src = img.src;
+        mainTitle.textContent = thumb.dataset.title || 'Selected Photo';
+        mainText.textContent = thumb.dataset.text || '';
+      });
+    });
+  </script>
+</body>
+</html>
