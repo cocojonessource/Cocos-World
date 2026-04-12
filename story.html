@@ -29,22 +29,27 @@
       box-sizing: border-box;
     }
 
-    html, body {
-      margin: 0;
-      min-height: 100%;
-      font-family: Arial, sans-serif;
-      background:
-        radial-gradient(circle at 12% 18%, rgba(255,255,255,0.5), transparent 18%),
-        radial-gradient(circle at 84% 12%, rgba(255,255,255,0.28), transparent 18%),
-        radial-gradient(circle at 68% 72%, rgba(255,255,255,0.16), transparent 20%),
-        linear-gradient(to bottom, var(--bg) 0%, var(--bg-2) 48%, var(--bg-3) 100%);
-      color: var(--text-deep);
-      overflow-x: hidden;
-      opacity: 0;
-      transform: translateY(12px);
-      filter: blur(4px);
-      transition: opacity 0.55s ease, transform 0.55s ease, filter 0.55s ease;
-    }
+    html {
+  margin: 0;
+  min-height: 100%;
+}
+
+body {
+  margin: 0;
+  min-height: 100%;
+  font-family: Arial, sans-serif;
+  background:
+    radial-gradient(circle at 12% 18%, rgba(255,255,255,0.5), transparent 18%),
+    radial-gradient(circle at 84% 12%, rgba(255,255,255,0.28), transparent 18%),
+    radial-gradient(circle at 68% 72%, rgba(255,255,255,0.16), transparent 20%),
+    linear-gradient(to bottom, var(--bg) 0%, var(--bg-2) 48%, var(--bg-3) 100%);
+  color: var(--text-deep);
+  overflow-x: hidden;
+  opacity: 0;
+  transform: translateY(12px);
+  filter: blur(4px);
+  transition: opacity 0.55s ease, transform 0.55s ease, filter 0.55s ease;
+}
 
     body.page-ready {
       opacity: 1;
