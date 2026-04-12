@@ -3,40 +3,32 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Coco's World — Story</title>
+  <title>Coco's World</title>
 
   <style>
     :root {
-      --bg-1: #fff1f6;
-      --bg-2: #ffdce9;
-      --bg-3: #f7c9dc;
-      --panel: rgba(66, 36, 92, 0.82);
-      --panel-border: rgba(255,255,255,0.18);
-      --text: #fff8fc;
-      --muted: #f3ddeb;
-      --gold: #ffd978;
-      --gold-2: #ffefb0;
-      --line-off: rgba(255, 235, 192, 0.22);
-      --line-on: #ffd978;
-      --accent: #ffc7df;
-      --deep: #5f347e;
-      --deep-2: #7a4b97;
+      --bg: #FFE4EC;
+      --nav: #FFD1DC;
+      --primary: #6B2FA3;
+      --secondary: #8B5FBF;
+      --accent: #D76BA8;
+      --gold: #D4A857;
+      --white: #FFFFFF;
+      --shadow: rgba(107, 47, 163, 0.10);
+      --shadow-strong: rgba(107, 47, 163, 0.18);
     }
 
     * {
       box-sizing: border-box;
     }
 
-    html, body {
+    body {
       margin: 0;
-      min-height: 100%;
       font-family: Arial, sans-serif;
-      color: var(--text);
       background:
-        radial-gradient(circle at 15% 15%, rgba(255,255,255,0.5), transparent 20%),
-        radial-gradient(circle at 80% 10%, rgba(255,255,255,0.28), transparent 18%),
-        radial-gradient(circle at 50% 70%, rgba(255,255,255,0.18), transparent 20%),
-        linear-gradient(to bottom, var(--bg-1) 0%, var(--bg-2) 42%, var(--bg-3) 100%);
+        radial-gradient(circle at top, rgba(255,255,255,0.45), transparent 30%),
+        linear-gradient(to bottom, #fff8fb 0%, var(--bg) 20%, #ffeaf1 100%);
+      color: var(--primary);
       overflow-x: hidden;
     }
 
@@ -49,8 +41,8 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(255, 227, 238, 0.72);
-      backdrop-filter: blur(12px);
+      background: rgba(255, 209, 220, 0.92);
+      backdrop-filter: blur(10px);
       border-bottom: 1px solid rgba(255,255,255,0.45);
     }
 
@@ -72,21 +64,21 @@
       font-family: Georgia, "Times New Roman", serif;
       font-size: 28px;
       font-weight: 700;
-      color: var(--deep);
+      color: var(--primary);
     }
 
     .anchor-home {
       width: 40px;
       height: 40px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.85);
-      border: 1px solid rgba(255,255,255,0.6);
+      background: var(--white);
+      border: 1px solid rgba(212, 168, 87, 0.45);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-size: 20px;
-      color: #d2912f;
-      box-shadow: 0 6px 16px rgba(95, 52, 126, 0.12);
+      color: var(--gold);
+      box-shadow: 0 6px 16px rgba(212, 168, 87, 0.14);
       flex-shrink: 0;
     }
 
@@ -96,752 +88,737 @@
       flex-wrap: wrap;
       font-size: 15px;
       font-weight: 600;
-      color: var(--deep);
     }
 
     .nav a {
       position: relative;
-      opacity: 0.9;
+      color: var(--primary);
     }
 
-    .nav a:hover,
-    .nav a.active {
-      color: var(--deep-2);
-      opacity: 1;
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.22s ease;
+    }
+
+    .nav a:hover::after {
+      transform: scaleX(1);
     }
 
     .page {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 34px 20px 40px;
+      padding: 34px 20px 60px;
     }
 
-    .hero {
+    .hero-gallery {
+      margin-bottom: 34px;
       text-align: center;
-      margin-bottom: 26px;
     }
 
-    .eyebrow {
-      display: inline-block;
-      margin-bottom: 10px;
-      padding: 9px 16px;
-      border-radius: 999px;
-      background: rgba(95, 52, 126, 0.1);
-      border: 1px solid rgba(95, 52, 126, 0.14);
-      font-size: 13px;
-      color: var(--deep);
-      font-weight: 700;
-    }
-
-    .title {
-      margin: 0 0 10px;
+    .hero-title {
+      margin: 0 0 14px;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(46px, 7vw, 84px);
-      line-height: 0.96;
-      color: #fffafc;
-      text-shadow: 0 8px 24px rgba(95, 52, 126, 0.18);
+      font-size: clamp(48px, 7vw, 86px);
+      line-height: 0.95;
+      color: var(--primary);
     }
 
-    .subtitle {
-      max-width: 860px;
-      margin: 0 auto;
+    .hero-description {
+      max-width: 760px;
+      margin: 0 auto 18px;
+      text-align: center;
       font-size: 17px;
       line-height: 1.8;
-      color: var(--deep);
+      color: var(--secondary);
     }
 
-    .story-layout {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 24px;
-      align-items: stretch;
-    }
-
-    .constellation-card,
-    .panel-card {
-      background: var(--panel);
-      border: 1px solid var(--panel-border);
-      border-radius: 30px;
-      box-shadow: 0 18px 40px rgba(84, 39, 110, 0.18);
-      backdrop-filter: blur(8px);
-    }
-
-    .constellation-card {
-      position: relative;
-      min-height: 720px;
-      overflow: hidden;
-    }
-
-    .constellation-header {
-      position: absolute;
-      top: 24px;
-      left: 24px;
-      right: 24px;
-      z-index: 5;
-    }
-
-    .constellation-heading {
-      margin: 0 0 8px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 31px;
-      color: #fffafc;
-    }
-
-    .constellation-copy {
-      margin: 0;
-      max-width: 540px;
-      font-size: 14px;
-      line-height: 1.75;
-      color: var(--muted);
-    }
-
-    .story-stage {
+    /* curved screen-wide conveyor */
+    .flow-wrap {
       position: relative;
       width: 100%;
-      height: 720px;
+      height: 390px;
+      margin: 0 auto 16px;
+      overflow: hidden;
+      perspective: 1200px;
     }
 
-    .sparkles {
+    .flow-card {
       position: absolute;
-      inset: 0;
-      z-index: 1;
-      pointer-events: none;
+      top: 0;
+      left: 0;
+      width: 210px;
+      height: 290px;
+      border-radius: 24px;
+      overflow: hidden;
+      background: rgba(255, 240, 245, 0.95);
+      border: 1px solid rgba(255,255,255,0.65);
+      box-shadow: 0 14px 30px var(--shadow);
+      transition: box-shadow 0.2s ease;
+      cursor: pointer;
+      will-change: transform;
     }
 
-    .sparkle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.85);
-      box-shadow: 0 0 8px rgba(255,255,255,0.65);
-      animation: twinkle 2.4s ease-in-out infinite;
+    .flow-card:hover {
+      box-shadow: 0 20px 40px var(--shadow-strong);
     }
 
-    .sparkle.s2 { width: 3px; height: 3px; animation-duration: 3.2s; }
-    .sparkle.s3 { width: 5px; height: 5px; animation-duration: 2.8s; }
-
-    @keyframes twinkle {
-      0%, 100% { opacity: 0.25; transform: scale(0.9); }
-      50% { opacity: 1; transform: scale(1.2); }
-    }
-
-    .story-svg {
-      position: absolute;
-      inset: 0;
+    .flow-card img {
       width: 100%;
       height: 100%;
-      z-index: 2;
+      object-fit: cover;
+      display: block;
     }
 
-    .story-line-base {
-      stroke: var(--line-off);
-      stroke-width: 3;
-      fill: none;
-      stroke-linecap: round;
-    }
-
-    .story-line {
-      stroke: var(--line-on);
-      stroke-width: 3.5;
-      fill: none;
-      stroke-linecap: round;
-      stroke-dasharray: 240;
-      stroke-dashoffset: 240;
-      transition: stroke-dashoffset 0.9s ease;
-    }
-
-    .story-line.visible {
-      stroke-dashoffset: 0;
-    }
-
-    .story-node {
+    .flow-fade-left,
+    .flow-fade-right {
       position: absolute;
-      z-index: 4;
-      width: 26px;
-      height: 26px;
-      border: none;
-      border-radius: 999px;
-      cursor: pointer;
-      background:
-        radial-gradient(circle at center, #fffef7 0%, var(--gold-2) 42%, var(--gold) 74%, #f1b84f 100%);
-      box-shadow:
-        0 0 0 5px rgba(255,255,255,0.08),
-        0 0 18px rgba(255, 217, 120, 0.95),
-        0 0 34px rgba(255, 217, 120, 0.4);
-      transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .story-node:hover {
-      transform: scale(1.08);
-    }
-
-    .story-node.locked {
-      opacity: 0.5;
-      cursor: not-allowed;
-      filter: grayscale(0.15);
-    }
-
-    .story-node.active {
-      transform: scale(1.13);
-      box-shadow:
-        0 0 0 5px rgba(255,255,255,0.12),
-        0 0 22px rgba(255, 239, 176, 1),
-        0 0 42px rgba(255, 217, 120, 0.62);
-    }
-
-    .story-node.final {
-      width: 32px;
-      height: 32px;
-      background:
-        radial-gradient(circle at center, #fffefa 0%, #ffefb6 35%, #ffd978 65%, #ffc7df 100%);
-    }
-
-    .node-label {
-      position: absolute;
-      z-index: 4;
-      font-size: 13px;
-      font-weight: 700;
-      color: #fffafc;
-      text-shadow: 0 3px 12px rgba(0,0,0,0.35);
-      white-space: nowrap;
+      top: 0;
+      width: 110px;
+      height: 100%;
+      z-index: 20;
       pointer-events: none;
     }
 
-    .start-tag {
-      position: absolute;
-      z-index: 6;
-      padding: 10px 15px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 800;
-      background: rgba(255, 217, 120, 0.14);
-      border: 1px solid rgba(255, 217, 120, 0.32);
-      color: var(--gold-2);
-      box-shadow: 0 0 16px rgba(255, 217, 120, 0.15);
-      animation: floatTag 1.8s ease-in-out infinite;
+    .flow-fade-left {
+      left: 0;
+      background: linear-gradient(to right, rgba(255, 232, 239, 0.95), rgba(255, 232, 239, 0));
     }
 
-    .start-tag::after {
-      content: " ↓";
+    .flow-fade-right {
+      right: 0;
+      background: linear-gradient(to left, rgba(255, 232, 239, 0.95), rgba(255, 232, 239, 0));
+    }
+
+    .search-section {
+      margin: 0 auto 34px;
+      max-width: 900px;
+    }
+
+    .search-card {
+      background: rgba(255,255,255,0.56);
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 12px 28px var(--shadow);
+    }
+
+    .search-label {
+      margin-bottom: 12px;
       font-size: 14px;
-    }
-
-    @keyframes floatTag {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
-    }
-
-    .panel-card {
-      padding: 28px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      min-height: 720px;
-    }
-
-    .panel-top {
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-    }
-
-    .panel-kicker {
-      font-size: 13px;
       font-weight: 700;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      color: var(--accent);
+      color: var(--secondary);
+      text-align: center;
     }
 
-    .panel-title {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(34px, 4vw, 52px);
-      line-height: 0.96;
-      color: #fffafc;
-    }
-
-    .panel-copy {
-      margin: 0;
-      font-size: 16px;
-      line-height: 1.85;
-      color: var(--muted);
-    }
-
-    .panel-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 2px;
-    }
-
-    .chip {
-      padding: 10px 14px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #fffafc;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .panel-bottom {
-      margin-top: 22px;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      align-items: flex-start;
-    }
-
-    .progress {
-      font-size: 14px;
-      color: var(--muted);
-    }
-
-    .button-row {
+    .search-bar {
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
     }
 
-    .story-btn {
+    .search-bar input {
+      flex: 1;
+      min-width: 220px;
+      border: 1px solid rgba(107, 47, 163, 0.14);
+      background: var(--white);
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-size: 15px;
+      color: var(--primary);
+      outline: none;
+    }
+
+    .search-bar button {
+      border: none;
+      background: var(--accent);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1;
+      color: var(--primary);
+    }
+
+    .section-subtitle {
+      margin: 8px 0 0;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--secondary);
+      max-width: 700px;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .tool-card {
+      background: rgba(255, 240, 245, 0.82);
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 24px;
+      box-shadow: 0 14px 30px var(--shadow);
+      padding: 24px;
+      min-height: 210px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 36px var(--shadow-strong);
+    }
+
+    .tool-icon {
+      font-size: 24px;
+      margin-bottom: 12px;
+      color: var(--gold);
+    }
+
+    .tool-card h3 {
+      margin: 0 0 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      line-height: 1;
+      color: var(--primary);
+    }
+
+    .tool-card p {
+      margin: 0 0 16px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--secondary);
+    }
+
+    .tool-link {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px 20px 10px;
+      color: var(--secondary);
+      font-size: 14px;
+    }
+
+    .lightbox {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(37, 16, 53, 0.78);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox-inner {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
+    .lightbox img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 40px;
+      height: 40px;
       border: none;
       border-radius: 999px;
-      padding: 14px 20px;
-      font-size: 14px;
-      font-weight: 800;
+      background: var(--white);
+      color: var(--primary);
+      font-size: 20px;
       cursor: pointer;
-      transition: transform 0.2s ease, opacity 0.2s ease;
-    }
-
-    .story-btn:hover {
-      transform: translateY(-1px);
-    }
-
-    .story-btn:disabled {
-      opacity: 0.45;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    .primary-btn {
-      background: linear-gradient(135deg, #ffd978, #ffc7df);
-      color: #3b214f;
-      box-shadow: 0 10px 24px rgba(255, 199, 223, 0.2);
-    }
-
-    .secondary-btn {
-      background: rgba(255,255,255,0.08);
-      color: #fffafc;
-      border: 1px solid rgba(255,255,255,0.12);
+      box-shadow: 0 10px 24px rgba(0,0,0,0.16);
     }
 
     @media (max-width: 1100px) {
-      .story-layout {
-        grid-template-columns: 1fr;
+      .tools-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .panel-card,
-      .constellation-card {
-        min-height: auto;
+      .flow-wrap {
+        height: 340px;
       }
 
-      .panel-card {
-        min-height: 360px;
+      .flow-card {
+        width: 170px;
+        height: 240px;
       }
     }
 
     @media (max-width: 700px) {
-      .topbar-inner {
-        align-items: flex-start;
-      }
+  .topbar-inner {
+    align-items: flex-start;
+  }
 
-      .brand {
-        font-size: 24px;
-      }
+  .brand {
+    font-size: 24px;
+  }
 
-      .page {
-        padding: 24px 14px 28px;
-      }
+  .page {
+    padding: 24px 16px 50px;
+  }
 
-      .subtitle {
-        font-size: 15px;
-      }
+  .hero-gallery {
+    margin-bottom: 26px;
+  }
 
-      .constellation-card {
-        min-height: 620px;
-      }
+  .hero-title {
+    font-size: clamp(40px, 13vw, 58px);
+  }
 
-      .story-stage {
-        height: 620px;
-      }
+  .hero-description {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
 
-      .constellation-header {
-        top: 18px;
-        left: 18px;
-        right: 18px;
-      }
+  .flow-wrap {
+    height: 320px;
+    margin: 0 auto 12px;
+    overflow: hidden;
+    perspective: 1400px;
+  }
 
-      .constellation-heading {
-        font-size: 25px;
-      }
+  .flow-card {
+    width: 132px;
+    height: 192px;
+    left: 50%;
+    top: 50%;
+    transform-origin: center center;
+  }
 
-      .constellation-copy {
-        font-size: 13px;
-      }
+  .flow-fade-left,
+  .flow-fade-right {
+    width: 18px;
+    opacity: 0.22;
+  }
 
-      .panel-card {
-        padding: 22px 18px;
-        min-height: 320px;
-      }
+  .search-section {
+    margin-bottom: 26px;
+  }
 
-      .panel-copy {
-        font-size: 15px;
-      }
+  .search-card {
+    padding: 16px;
+    border-radius: 20px;
+  }
 
-      .node-label {
-        font-size: 11px;
-      }
+  .search-bar {
+    flex-direction: column;
+  }
 
-      .story-node {
-        width: 22px;
-        height: 22px;
-      }
+  .search-bar input,
+  .search-bar button {
+    width: 100%;
+  }
 
-      .story-node.final {
-        width: 26px;
-        height: 26px;
-      }
+  .tools-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    overflow: visible;
+    padding-bottom: 0;
+  }
 
-      .start-tag {
-        font-size: 11px;
-        padding: 8px 12px;
-      }
-    }
+  .tool-card {
+    min-width: 0;
+    flex: initial;
+    min-height: 190px;
+  }
+}
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
-        <a class="anchor-home" href="index.html">⚓</a>
+        <a class="anchor-home" href="#">⚓</a>
         <span>Coco's World</span>
       </div>
 
       <nav class="nav">
-        <a href="index.html">Home</a>
+        <a href="#">Home</a>
         <a href="gallery.html">Gallery</a>
         <a href="#">Music</a>
         <a href="#">Videos</a>
         <a href="#">Updates</a>
         <a href="#">Calendar</a>
         <a href="#">Games</a>
-        <a href="story.html" class="active">Story</a>
+        <a href="story.html">Story</a></a>
       </nav>
     </div>
   </header>
 
   <main class="page">
-    <section class="hero">
-      <div class="eyebrow">An anchor constellation timeline</div>
-      <h1 class="title">Her Story</h1>
-      <p class="subtitle">
-        Follow the path point by point. Each star opens a chapter in Coco’s journey,
-        from early life to the legacy still being written.
+    <section class="hero-gallery">
+      <h1 class="hero-title">Coco's World</h1>
+
+      <p class="hero-description">
+        A modern digital diary for Coco Jones — music, visuals, updates, videos,
+        gallery archives, calendar moments, games, and curated deep dives, all in one place.
       </p>
+
+      <div class="flow-wrap" id="flowWrap">
+        <div class="flow-fade-left"></div>
+        <div class="flow-fade-right"></div>
+
+        <div class="flow-card"><img src="card1.jpg" alt="Coco card 1"></div>
+        <div class="flow-card"><img src="card2.jpg" alt="Coco card 2"></div>
+        <div class="flow-card"><img src="card3.jpg" alt="Coco card 3"></div>
+        <div class="flow-card"><img src="card4.jpg" alt="Coco card 4"></div>
+        <div class="flow-card"><img src="card5.jpg" alt="Coco card 5"></div>
+        <div class="flow-card"><img src="card6.jpg" alt="Coco card 6"></div>
+        <div class="flow-card"><img src="card7.jpg" alt="Coco card 7"></div>
+        <div class="flow-card"><img src="card8.jpg" alt="Coco card 8"></div>
+        <div class="flow-card"><img src="card9.jpg" alt="Coco card 9"></div>
+        <div class="flow-card"><img src="card10.jpg" alt="Coco card 10"></div>
+      </div>
     </section>
 
-    <section class="story-layout">
-      <div class="constellation-card">
-        <div class="constellation-header">
-          <h2 class="constellation-heading">Start at the first star</h2>
-          <p class="constellation-copy">
-            The first run follows a guided path. Once you finish the full story, every point stays unlocked.
-          </p>
+    <section class="search-section">
+      <div class="search-card">
+        <div class="search-label">Search the archive, gallery, music, videos, or updates</div>
+        <div class="search-bar">
+          <input type="text" placeholder="Search by era, year, event, magazine, video, song..." />
+          <button>Search</button>
         </div>
+      </div>
+    </section>
 
-        <div class="story-stage">
-          <div class="sparkles" aria-hidden="true">
-            <span class="sparkle s3" style="left: 10%; top: 16%;"></span>
-            <span class="sparkle s2" style="left: 18%; top: 28%;"></span>
-            <span class="sparkle" style="left: 29%; top: 12%;"></span>
-            <span class="sparkle s3" style="left: 40%; top: 20%;"></span>
-            <span class="sparkle" style="left: 53%; top: 14%;"></span>
-            <span class="sparkle s2" style="left: 71%; top: 18%;"></span>
-            <span class="sparkle" style="left: 84%; top: 24%;"></span>
-            <span class="sparkle s3" style="left: 77%; top: 54%;"></span>
-            <span class="sparkle s2" style="left: 62%; top: 78%;"></span>
-            <span class="sparkle" style="left: 22%; top: 73%;"></span>
-            <span class="sparkle s3" style="left: 13%; top: 53%;"></span>
-            <span class="sparkle" style="left: 87%; top: 72%;"></span>
-          </div>
-
-          <svg class="story-svg" viewBox="0 0 1000 720" preserveAspectRatio="none" aria-hidden="true">
-            <!-- base anchor lines -->
-            <line class="story-line-base" x1="500" y1="120" x2="500" y2="235"></line>
-            <line class="story-line-base" x1="500" y1="235" x2="360" y2="305"></line>
-            <line class="story-line-base" x1="500" y1="235" x2="640" y2="305"></line>
-            <line class="story-line-base" x1="500" y1="235" x2="500" y2="430"></line>
-            <line class="story-line-base" x1="500" y1="430" x2="500" y2="535"></line>
-            <line class="story-line-base" x1="500" y1="535" x2="330" y2="605"></line>
-            <line class="story-line-base" x1="500" y1="535" x2="670" y2="605"></line>
-            <path class="story-line-base" d="M330 605 Q500 675 670 605"></path>
-
-            <!-- animated path -->
-            <line id="line1" class="story-line" x1="500" y1="120" x2="500" y2="235"></line>
-            <line id="line2" class="story-line" x1="500" y1="235" x2="360" y2="305"></line>
-            <line id="line3" class="story-line" x1="360" y1="305" x2="640" y2="305"></line>
-            <line id="line4" class="story-line" x1="640" y1="305" x2="500" y2="430"></line>
-            <line id="line5" class="story-line" x1="500" y1="430" x2="500" y2="535"></line>
-            <line id="line6" class="story-line" x1="500" y1="535" x2="330" y2="605"></line>
-            <line id="line7" class="story-line" x1="330" y1="605" x2="670" y2="605"></line>
-          </svg>
-
-          <div class="start-tag" style="left: 54%; top: 8%;">Start here</div>
-
-          <button class="story-node" id="star1" style="left: 47.5%; top: 13%;" aria-label="Early Life"></button>
-          <div class="node-label" style="left: 42.5%; top: 7.5%;">Early Life</div>
-
-          <button class="story-node locked" id="star2" style="left: 33%; top: 27%;" aria-label="Disney Era"></button>
-          <div class="node-label" style="left: 26.5%; top: 31.5%;">Disney Era</div>
-
-          <button class="story-node locked" id="star3" style="left: 61%; top: 27%;" aria-label="Independent Era"></button>
-          <div class="node-label" style="left: 53.5%; top: 20.5%;">Independent Era</div>
-
-          <button class="story-node locked" id="star4" style="left: 47.5%; top: 45%;" aria-label="Internet Sensation"></button>
-          <div class="node-label" style="left: 52.5%; top: 48.5%;">Internet Sensation</div>
-
-          <button class="story-node locked" id="star5" style="left: 47.5%; top: 60.5%;" aria-label="Renaissance"></button>
-          <div class="node-label" style="left: 52%; top: 64%;">Renaissance</div>
-
-          <button class="story-node locked" id="star6" style="left: 28.5%; top: 72.5%;" aria-label="Award-Winning Artist"></button>
-          <div class="node-label" style="left: 16%; top: 78.5%;">Award-Winning Artist</div>
-
-          <button class="story-node locked final" id="star7" style="left: 64.5%; top: 71.8%;" aria-label="Building a Legacy"></button>
-          <div class="node-label" style="left: 60%; top: 78.5%;">Building a Legacy</div>
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Explore</h2>
+          <p class="section-subtitle">
+            Start anywhere — browse the archive, listen to music, watch videos, check updates,
+            track events, play games, or dive into Coco’s story.
+          </p>
         </div>
       </div>
 
-      <aside class="panel-card">
-        <div class="panel-top">
-          <div class="panel-kicker" id="panelKicker">Chapter 1</div>
-          <h2 class="panel-title" id="panelTitle">Early Life</h2>
-          <p class="panel-copy" id="panelCopy">Source has to write this part...</p>
-
-          <div class="panel-meta">
-            <div class="chip" id="panelChip1">Unlocked</div>
-            <div class="chip" id="panelChip2">Anchor Point 1 of 7</div>
+      <div class="tools-grid">
+        <article class="tool-card">
+          <div>
+            <div class="tool-icon">📸</div>
+            <h3>Gallery</h3>
+            <p>Organized archive with tags, years, categories, subfolders, and credits.</p>
           </div>
-        </div>
+          <a class="tool-link" href="#">Open Gallery</a>
+        </article>
 
-        <div class="panel-bottom">
-          <div class="progress" id="panelProgress">1 / 7 chapters revealed</div>
-
-          <div class="button-row">
-            <button class="story-btn primary-btn" id="nextBtn">Reveal next point</button>
-            <button class="story-btn secondary-btn" id="replayBtn">Replay Story Path</button>
+        <article class="tool-card">
+          <div>
+            <div class="tool-icon">🎵</div>
+            <h3>Music</h3>
+            <p>Streaming links, releases, projects, music videos, and listening paths.</p>
           </div>
-        </div>
-      </aside>
+          <a class="tool-link" href="#">Open Music</a>
+        </article>
+
+        <article class="tool-card">
+          <div>
+            <div class="tool-icon">🎬</div>
+            <h3>Videos</h3>
+            <p>Newest uploads, interviews, performances, and official video pathways.</p>
+          </div>
+          <a class="tool-link" href="#">Open Videos</a>
+        </article>
+
+        <article class="tool-card">
+          <div>
+            <div class="tool-icon">📰</div>
+            <h3>Updates</h3>
+            <p>A news-style page for your Coco updates and current site activity.</p>
+          </div>
+          <a class="tool-link" href="#">Open Updates</a>
+        </article>
+
+        <article class="tool-card">
+          <div>
+            <div class="tool-icon">🗓️</div>
+            <h3>Calendar</h3>
+            <p>Track appearances, releases, events, and important dates in one place.</p>
+          </div>
+          <a class="tool-link" href="#">Open Calendar</a>
+        </article>
+
+        <article class="tool-card">
+          <div>
+            <div class="tool-icon">🎮</div>
+            <h3>Games</h3>
+            <p>Mini experiences like the Lover Girl game and future fan-made extras.</p>
+          </div>
+          <a class="tool-link" href="#">Open Games</a>
+        </article>
+
+        <article class="tool-card">
+          <div>
+            <div class="tool-icon">🔎</div>
+            <h3>Deep Dive</h3>
+            <p>Choose an era and get a curated path to understand that chapter of her career.</p>
+          </div>
+          <a class="tool-link" href="#">Start a Deep Dive</a>
+        </article>
+
+        <article class="tool-card">
+          <div>
+            <div class="tool-icon">📖</div>
+            <h3>Story</h3>
+            <p>A summary space for who Coco is, where she started, and how each era connects.</p>
+          </div>
+          <a class="tool-link" href="#">Open Story</a>
+        </article>
+      </div>
     </section>
+
+    <div class="footer">
+      Coco’s World — archive, diary, media hub, and fan world in one.
+    </div>
   </main>
 
-  <script>
-    const chapters = [
-      {
-        title: "Early Life",
-        chapter: "Chapter 1",
-        copy: "Source has to write this part..."
-      },
-      {
-        title: "Disney Era",
-        chapter: "Chapter 2",
-        copy: "Source has to write this part..."
-      },
-      {
-        title: "Independent Era",
-        chapter: "Chapter 3",
-        copy: "Source has to write this part..."
-      },
-      {
-        title: "Internet Sensation",
-        chapter: "Chapter 4",
-        copy: "Source has to write this part..."
-      },
-      {
-        title: "Renaissance",
-        chapter: "Chapter 5",
-        copy: "Source has to write this part..."
-      },
-      {
-        title: "Award-Winning Artist",
-        chapter: "Chapter 6",
-        copy: "Source has to write this part..."
-      },
-      {
-        title: "Building a Legacy",
-        chapter: "Chapter 7",
-        copy: "Source has to write this part..."
-      }
-    ];
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightboxClose">×</button>
+      <img id="lightboxImage" src="" alt="Expanded Coco image">
+    </div>
+  </div>
 
-    const stars = [
-      document.getElementById("star1"),
-      document.getElementById("star2"),
-      document.getElementById("star3"),
-      document.getElementById("star4"),
-      document.getElementById("star5"),
-      document.getElementById("star6"),
-      document.getElementById("star7")
-    ];
+ <script>
+  const flowWrap = document.getElementById('flowWrap');
+  const cards = Array.from(document.querySelectorAll('.flow-card'));
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  const lightboxClose = document.getElementById('lightboxClose');
 
-    const lines = [
-      document.getElementById("line1"),
-      document.getElementById("line2"),
-      document.getElementById("line3"),
-      document.getElementById("line4"),
-      document.getElementById("line5"),
-      document.getElementById("line6"),
-      document.getElementById("line7")
-    ];
+  let paused = false;
+  let speed = 0.8;
+  let mobileAngleOffset = 0;
+  let animationFrameId = null;
 
-    const panelKicker = document.getElementById("panelKicker");
-    const panelTitle = document.getElementById("panelTitle");
-    const panelCopy = document.getElementById("panelCopy");
-    const panelProgress = document.getElementById("panelProgress");
-    const panelChip1 = document.getElementById("panelChip1");
-    const panelChip2 = document.getElementById("panelChip2");
-    const nextBtn = document.getElementById("nextBtn");
-    const replayBtn = document.getElementById("replayBtn");
+  function isMobileView() {
+    return window.innerWidth <= 700;
+  }
 
-    let unlockedIndex = 0;
-    let activeIndex = 0;
-    let completed = false;
-    let isReplaying = false;
+  function getActiveCards() {
+    return isMobileView() ? cards.slice(0, 5) : cards;
+  }
 
-    function sleep(ms) {
-      return new Promise(resolve => setTimeout(resolve, ms));
-    }
+  function applyCardVisibility() {
+    const activeCards = getActiveCards();
+    const activeSet = new Set(activeCards);
 
-    function updatePanel(index) {
-      const item = chapters[index];
-      panelKicker.textContent = item.chapter;
-      panelTitle.textContent = item.title;
-      panelCopy.textContent = item.copy;
-      panelChip2.textContent = `Anchor Point ${index + 1} of ${chapters.length}`;
-
-      if (completed) {
-        panelChip1.textContent = "All points unlocked";
-        panelProgress.textContent = "7 / 7 chapters revealed";
+    cards.forEach((card) => {
+      if (activeSet.has(card)) {
+        card.style.display = 'block';
       } else {
-        panelChip1.textContent = index <= unlockedIndex ? "Unlocked" : "Locked";
-        panelProgress.textContent = `${unlockedIndex + 1} / ${chapters.length} chapters revealed`;
+        card.style.display = 'none';
       }
-    }
+    });
+  }
 
-    function updateStars() {
-      stars.forEach((star, index) => {
-        star.classList.toggle("active", index === activeIndex);
+  function getCardWidth() {
+    if (isMobileView()) return 132;
+    return window.innerWidth <= 1100 ? 170 : 210;
+  }
 
-        if (completed) {
-          star.classList.remove("locked");
-        } else {
-          star.classList.toggle("locked", index > unlockedIndex);
-        }
+  function getCardHeight() {
+    if (isMobileView()) return 192;
+    return window.innerWidth <= 1100 ? 240 : 290;
+  }
+
+  function setupCards() {
+    const activeCards = getActiveCards();
+    const gap = 26;
+    const cardWidth = getCardWidth();
+
+    applyCardVisibility();
+
+    if (isMobileView()) {
+      const step = (Math.PI * 2) / activeCards.length;
+
+      activeCards.forEach((card, index) => {
+        card.dataset.angle = index * step;
+        card.dataset.x = '';
       });
+
+      mobileAngleOffset = -0.3;
+      return;
     }
 
-    function setLineProgress(visibleCount) {
-      lines.forEach((line, index) => {
-        line.classList.toggle("visible", index < visibleCount);
+    activeCards.forEach((card, index) => {
+      card.dataset.x = index * (cardWidth + gap);
+      card.dataset.angle = '';
+      card.style.display = 'block';
+    });
+  }
+
+  function renderCards() {
+    const wrapWidth = flowWrap.clientWidth;
+    const cardWidth = getCardWidth();
+    const cardHeight = getCardHeight();
+    const activeCards = getActiveCards();
+
+    if (isMobileView()) {
+      const radiusX = Math.min(wrapWidth * 0.32, 108);
+      const radiusY = 70;
+      const centerYOffset = -22;
+
+      if (!paused) {
+        mobileAngleOffset += 0.009;
+      }
+
+      activeCards.forEach((card) => {
+        const baseAngle = parseFloat(card.dataset.angle || 0);
+        const angle = baseAngle + mobileAngleOffset;
+
+        const x = Math.sin(angle) * radiusX;
+        const y = Math.cos(angle) * radiusY + centerYOffset;
+
+        const depth = (y - centerYOffset + radiusY) / (radiusY * 2);
+        const scale = 0.78 + depth * 0.24;
+        const opacity = 0.55 + depth * 0.45;
+        const rotateY = x / 9;
+        const zIndex = Math.floor(depth * 1000);
+
+        card.style.width = `${cardWidth}px`;
+        card.style.height = `${cardHeight}px`;
+        card.style.left = '50%';
+        card.style.top = '50%';
+        card.style.transform = `
+          translate(-50%, -50%)
+          translate3d(${x}px, ${y}px, 0)
+          rotateY(${rotateY}deg)
+          scale(${scale})
+        `;
+        card.style.opacity = opacity;
+        card.style.zIndex = zIndex;
       });
+
+      animationFrameId = requestAnimationFrame(renderCards);
+      return;
     }
 
-    function finishStory() {
-      completed = true;
-      unlockedIndex = stars.length - 1;
-      activeIndex = stars.length - 1;
-      updateStars();
-      updatePanel(activeIndex);
-      nextBtn.disabled = true;
-      nextBtn.textContent = "All points revealed";
-    }
+    const centerX = wrapWidth / 2;
 
-    function revealNext() {
-      if (isReplaying || completed) return;
+    activeCards.forEach((card) => {
+      let x = parseFloat(card.dataset.x);
 
-      if (unlockedIndex >= stars.length - 1) {
-        finishStory();
-        return;
+      if (!paused) {
+        x -= speed;
       }
 
-      lines[unlockedIndex].classList.add("visible");
-      unlockedIndex += 1;
-      activeIndex = unlockedIndex;
-
-      updateStars();
-      updatePanel(activeIndex);
-
-      if (unlockedIndex >= stars.length - 1) {
-        finishStory();
-      }
-    }
-
-    async function replayStoryPath() {
-      if (isReplaying) return;
-
-      isReplaying = true;
-      nextBtn.disabled = true;
-      replayBtn.disabled = true;
-
-      completed = false;
-      unlockedIndex = 0;
-      activeIndex = 0;
-      setLineProgress(0);
-      updateStars();
-      updatePanel(0);
-
-      await sleep(700);
-
-      for (let i = 0; i < lines.length; i++) {
-        activeIndex = i;
-        updateStars();
-        updatePanel(i);
-        await sleep(800);
-
-        lines[i].classList.add("visible");
-        await sleep(950);
-
-        unlockedIndex = i + 1;
-        activeIndex = i + 1;
-        updateStars();
-        updatePanel(activeIndex);
-        await sleep(900);
+      if (x < -cardWidth - 40) {
+        const maxX = Math.max(...activeCards.map(c => parseFloat(c.dataset.x)));
+        x = maxX + cardWidth + 26;
       }
 
-      finishStory();
+      card.dataset.x = x;
 
-      replayBtn.disabled = false;
-      isReplaying = false;
-    }
+      const cardCenter = x + cardWidth / 2;
+      const dist = Math.abs(cardCenter - centerX);
+      const ratio = Math.min(dist / (wrapWidth / 2), 1);
 
-    stars.forEach((star, index) => {
-      star.addEventListener("click", () => {
-        if (isReplaying) return;
-        if (!completed && index > unlockedIndex) return;
+      const scale = 0.82 + (ratio * 0.28);
+      const y = 26 + (1 - ratio) * 52;
+      const rotateY = ((cardCenter - centerX) / centerX) * 18;
+      const opacity = 0.72 + (ratio * 0.28);
 
-        activeIndex = index;
-        updateStars();
-        updatePanel(index);
-      });
+      card.style.width = `${cardWidth}px`;
+      card.style.height = `${cardHeight}px`;
+      card.style.left = '0';
+      card.style.top = '0';
+      card.style.transform = `
+        translate3d(${x}px, ${y}px, 0)
+        rotateY(${rotateY}deg)
+        scale(${scale})
+      `;
+      card.style.opacity = opacity;
+      card.style.zIndex = Math.floor(ratio * 1000);
     });
 
-    nextBtn.addEventListener("click", revealNext);
-    replayBtn.addEventListener("click", replayStoryPath);
+    animationFrameId = requestAnimationFrame(renderCards);
+  }
 
-    updateStars();
-    updatePanel(0);
-  </script>
+  function restartAnimation() {
+    if (animationFrameId) {
+      cancelAnimationFrame(animationFrameId);
+    }
+
+    setupCards();
+    renderCards();
+  }
+
+  flowWrap.addEventListener('mouseenter', () => paused = true);
+  flowWrap.addEventListener('mouseleave', () => paused = false);
+
+  cards.forEach(card => {
+    const img = card.querySelector('img');
+    img.addEventListener('click', () => {
+      lightboxImage.src = img.src;
+      lightbox.classList.add('active');
+    });
+  });
+
+  lightboxClose.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+  });
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      lightbox.classList.remove('active');
+    }
+  });
+
+  window.addEventListener('resize', restartAnimation);
+
+  setupCards();
+  renderCards();
+</script>
 </body>
 </html>
