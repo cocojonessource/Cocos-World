@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coco's World — Story</title>
+
+  <style>
+    :root {
+      --bg-top: #120f25;
+      --bg-bottom: #24163f;
+      --star: #fff6cf;
+      --star-glow: rgba(255, 246, 207, 0.75);
+      --line: rgba(255, 255, 255, 0.6);
+      --line-done: #f6d58c;
+      --panel: rgba(10, 10, 24, 0.82);
+      --panel-border: rgba(255, 255, 255, 0.12);
+      --text: #ffffff;
+      --muted: #d8d0f0;
+      --accent: #ffd978;
+      --accent-2: #ffb6d9;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      min-height: 100%;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08), transparent 18%),
+        radial-gradient(circle at 75% 15%, rgba(255,255,255,0.08), transparent 14%),
+        radial-gradient(circle at 65% 65%, rgba(255,255,255,0.06), transparent 18%),
+        linear-gradient(to bottom, var(--bg-top), var(--bg-bottom));
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(12px);
+      background: rgba(10, 8, 24, 0.55);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .topbar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 28px;
+      font-weight: 700;
+      font-family: Georgia, "Times New Roman", serif;
+    }
+
+    .anchor-home {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.14);
+      box-shadow: 0 0 18px rgba(255,255,255,0.08);
+      flex-shrink: 0;
+    }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 15px;
+      font-weight: 600;
+      color: #f2ebff;
+    }
+
+    .nav a {
+      opacity: 0.85;
+      transition: opacity 0.2s ease;
+    }
+
+    .nav a:hover,
+    .nav a.active {
+      opacity: 1;
+      color: var(--accent);
+    }
+
+    .page {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 34px 20px 40px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.1);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      color: var(--muted);
+    }
+
+    .title {
+      margin: 0 0 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(42px, 7vw, 82px);
+      line-height: 0.96;
+    }
+
+    .subtitle {
+      max-width: 860px;
+      margin: 0 auto;
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--muted);
+    }
+
+    .story-layout {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 24px;
+      align-items: stretch;
+      margin-top: 28px;
+    }
+
+    .constellation-card,
+    .panel-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 28px;
+      box-shadow: 0 18px 40px rgba(0,0,0,0.18);
+      backdrop-filter: blur(8px);
+    }
+
+    .constellation-card {
+      position: relative;
+      min-height: 640px;
+      overflow: hidden;
+    }
+
+    .constellation-header {
+      position: absolute;
+      top: 24px;
+      left: 24px;
+      right: 24px;
+      z-index: 3;
+    }
+
+    .constellation-heading {
+      margin: 0 0 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      color: #fff;
+    }
+
+    .constellation-copy {
+      margin: 0;
+      max-width: 520px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .story-stage {
+      position: relative;
+      width: 100%;
+      height: 640px;
+    }
+
+    .story-svg {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+    }
+
+    .story-line {
+      stroke: var(--line);
+      stroke-width: 3;
+      fill: none;
+      stroke-linecap: round;
+      stroke-dasharray: 220;
+      stroke-dashoffset: 220;
+      transition: stroke-dashoffset 0.9s ease, stroke 0.35s ease;
+    }
+
+    .story-line.visible {
+      stroke-dashoffset: 0;
+      stroke: var(--line-done);
+    }
+
+    .story-node {
+      position: absolute;
+      z-index: 2;
+      width: 24px;
+      height: 24px;
+      border: none;
+      border-radius: 999px;
+      cursor: pointer;
+      background:
+        radial-gradient(circle at center, #fffdf4 0%, #fff1ae 45%, #ffd978 70%, #f1b64f 100%);
+      box-shadow:
+        0 0 0 4px rgba(255,255,255,0.08),
+        0 0 16px var(--star-glow),
+        0 0 28px rgba(255, 224, 136, 0.35);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+
+    .story-node:hover {
+      transform: scale(1.08);
+    }
+
+    .story-node.locked {
+      opacity: 0.5;
+      cursor: not-allowed;
+      filter: grayscale(0.15);
+    }
+
+    .story-node.active {
+      transform: scale(1.12);
+      box-shadow:
+        0 0 0 5px rgba(255,255,255,0.1),
+        0 0 20px rgba(255, 241, 173, 0.95),
+        0 0 36px rgba(255, 217, 120, 0.55);
+    }
+
+    .story-node.final {
+      width: 30px;
+      height: 30px;
+      background:
+        radial-gradient(circle at center, #fffefa 0%, #ffeeb7 35%, #ffd978 65%, #ffb6d9 100%);
+    }
+
+    .node-label {
+      position: absolute;
+      z-index: 2;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.45);
+      white-space: nowrap;
+    }
+
+    .start-tag {
+      position: absolute;
+      z-index: 2;
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      background: rgba(255, 217, 120, 0.12);
+      border: 1px solid rgba(255, 217, 120, 0.3);
+      color: var(--accent);
+      box-shadow: 0 0 14px rgba(255, 217, 120, 0.12);
+      animation: floatTag 1.8s ease-in-out infinite;
+    }
+
+    .start-tag::after {
+      content: "↘";
+      margin-left: 8px;
+      font-size: 14px;
+    }
+
+    @keyframes floatTag {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-4px); }
+    }
+
+    .panel-card {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 640px;
+    }
+
+    .panel-top {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .panel-kicker {
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--accent-2);
+    }
+
+    .panel-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 0.95;
+    }
+
+    .panel-copy {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--muted);
+    }
+
+    .panel-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+
+    .chip {
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 700;
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .panel-bottom {
+      margin-top: 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .progress {
+      font-size: 14px;
+      color: var(--muted);
+    }
+
+    .next-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 14px 20px;
+      background: linear-gradient(135deg, #ffd978, #ffb6d9);
+      color: #24163f;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(255, 182, 217, 0.2);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .next-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .next-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    @media (max-width: 980px) {
+      .story-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .constellation-card,
+      .panel-card {
+        min-height: auto;
+      }
+
+      .panel-card {
+        min-height: 320px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .topbar-inner {
+        align-items: flex-start;
+      }
+
+      .brand {
+        font-size: 24px;
+      }
+
+      .page {
+        padding: 26px 14px 28px;
+      }
+
+      .subtitle {
+        font-size: 15px;
+      }
+
+      .constellation-card {
+        min-height: 520px;
+      }
+
+      .story-stage {
+        height: 520px;
+      }
+
+      .constellation-header {
+        top: 18px;
+        left: 18px;
+        right: 18px;
+      }
+
+      .constellation-heading {
+        font-size: 24px;
+      }
+
+      .constellation-copy {
+        font-size: 13px;
+        max-width: 100%;
+      }
+
+      .panel-card {
+        padding: 22px 18px;
+      }
+
+      .panel-copy {
+        font-size: 15px;
+      }
+
+      .node-label {
+        font-size: 11px;
+      }
+
+      .story-node {
+        width: 20px;
+        height: 20px;
+      }
+
+      .story-node.final {
+        width: 24px;
+        height: 24px;
+      }
+
+      .start-tag {
+        font-size: 11px;
+        padding: 8px 12px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <a class="anchor-home" href="index.html">⚓</a>
+        <span>Coco's World</span>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="#">Music</a>
+        <a href="#">Videos</a>
+        <a href="#">Updates</a>
+        <a href="#">Calendar</a>
+        <a href="#">Games</a>
+        <a href="story.html" class="active">Story</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <div class="eyebrow">An anchor constellation timeline</div>
+      <h1 class="title">Her Story</h1>
+      <p class="subtitle">
+        Follow the path point by point. Each star opens a chapter in Coco’s journey,
+        from early life to the legacy still being written.
+      </p>
+    </section>
+
+    <section class="story-layout">
+      <div class="constellation-card">
+        <div class="constellation-header">
+          <h2 class="constellation-heading">Start at the first star</h2>
+          <p class="constellation-copy">
+            This is a guided path. Click each point in order and the next line will draw forward.
+          </p>
+        </div>
+
+        <div class="story-stage">
+          <svg class="story-svg" viewBox="0 0 1000 640" preserveAspectRatio="none" aria-hidden="true">
+            <line id="line1" class="story-line" x1="150" y1="500" x2="300" y2="340"></line>
+            <line id="line2" class="story-line" x1="300" y1="340" x2="500" y2="220"></line>
+            <line id="line3" class="story-line" x1="500" y1="220" x2="670" y2="305"></line>
+            <line id="line4" class="story-line" x1="670" y1="305" x2="545" y2="430"></line>
+            <line id="line5" class="story-line" x1="545" y1="430" x2="420" y2="555"></line>
+            <line id="line6" class="story-line" x1="420" y1="555" x2="760" y2="520"></line>
+          </svg>
+
+          <div class="start-tag" style="left: 8%; top: 74%;">Start here</div>
+
+          <button class="story-node" id="star1" style="left: 14%; top: 76%;" aria-label="Early Life"></button>
+          <div class="node-label" style="left: 8%; top: 82%;">Early Life</div>
+
+          <button class="story-node locked" id="star2" style="left: 29%; top: 51%;" aria-label="Disney Era"></button>
+          <div class="node-label" style="left: 24%; top: 45%;">Disney Era</div>
+
+          <button class="story-node locked" id="star3" style="left: 49%; top: 32%;" aria-label="Independent Era"></button>
+          <div class="node-label" style="left: 43%; top: 25%;">Independent Era</div>
+
+          <button class="story-node locked" id="star4" style="left: 66%; top: 45%;" aria-label="Internet Sensation"></button>
+          <div class="node-label" style="left: 62%; top: 50%;">Internet Sensation</div>
+
+          <button class="story-node locked" id="star5" style="left: 53%; top: 64%;" aria-label="Renaissance"></button>
+          <div class="node-label" style="left: 48%; top: 70%;">Renaissance</div>
+
+          <button class="story-node locked" id="star6" style="left: 40%; top: 84%;" aria-label="Award-Winning Artist"></button>
+          <div class="node-label" style="left: 31%; top: 90%;">Award-Winning Artist</div>
+
+          <button class="story-node locked final" id="star7" style="left: 75%; top: 79%;" aria-label="Building a Legacy"></button>
+          <div class="node-label" style="left: 69%; top: 86%;">Building a Legacy</div>
+        </div>
+      </div>
+
+      <aside class="panel-card">
+        <div class="panel-top">
+          <div class="panel-kicker">Chapter 1</div>
+          <h2 class="panel-title" id="panelTitle">Early Life</h2>
+          <p class="panel-copy" id="panelCopy">Source has to write this part...</p>
+
+          <div class="panel-meta">
+            <div class="chip" id="panelChip1">Unlocked</div>
+            <div class="chip" id="panelChip2">Anchor Point 1 of 7</div>
+          </div>
+        </div>
+
+        <div class="panel-bottom">
+          <div class="progress" id="panelProgress">1 / 7 chapters revealed</div>
+          <button class="next-btn" id="nextBtn">Reveal next point</button>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <script>
+    const chapters = [
+      {
+        title: "Early Life",
+        chapter: "Chapter 1",
+        copy: "Source has to write this part..."
+      },
+      {
+        title: "Disney Era",
+        chapter: "Chapter 2",
+        copy: "Source has to write this part..."
+      },
+      {
+        title: "Independent Era",
+        chapter: "Chapter 3",
+        copy: "Source has to write this part..."
+      },
+      {
+        title: "Internet Sensation",
+        chapter: "Chapter 4",
+        copy: "Source has to write this part..."
+      },
+      {
+        title: "Renaissance",
+        chapter: "Chapter 5",
+        copy: "Source has to write this part..."
+      },
+      {
+        title: "Award-Winning Artist",
+        chapter: "Chapter 6",
+        copy: "Source has to write this part..."
+      },
+      {
+        title: "Building a Legacy",
+        chapter: "Chapter 7",
+        copy: "Source has to write this part..."
+      }
+    ];
+
+    const stars = [
+      document.getElementById("star1"),
+      document.getElementById("star2"),
+      document.getElementById("star3"),
+      document.getElementById("star4"),
+      document.getElementById("star5"),
+      document.getElementById("star6"),
+      document.getElementById("star7")
+    ];
+
+    const lines = [
+      document.getElementById("line1"),
+      document.getElementById("line2"),
+      document.getElementById("line3"),
+      document.getElementById("line4"),
+      document.getElementById("line5"),
+      document.getElementById("line6")
+    ];
+
+    const panelTitle = document.getElementById("panelTitle");
+    const panelCopy = document.getElementById("panelCopy");
+    const panelProgress = document.getElementById("panelProgress");
+    const panelChip1 = document.getElementById("panelChip1");
+    const panelChip2 = document.getElementById("panelChip2");
+    const nextBtn = document.getElementById("nextBtn");
+    const panelKicker = document.querySelector(".panel-kicker");
+
+    let unlockedIndex = 0;
+    let activeIndex = 0;
+
+    function updatePanel(index) {
+      const item = chapters[index];
+      panelKicker.textContent = item.chapter;
+      panelTitle.textContent = item.title;
+      panelCopy.textContent = item.copy;
+      panelProgress.textContent = `${unlockedIndex + 1} / ${chapters.length} chapters revealed`;
+      panelChip1.textContent = index <= unlockedIndex ? "Unlocked" : "Locked";
+      panelChip2.textContent = `Anchor Point ${index + 1} of ${chapters.length}`;
+    }
+
+    function updateStars() {
+      stars.forEach((star, index) => {
+        star.classList.toggle("active", index === activeIndex);
+        star.classList.toggle("locked", index > unlockedIndex);
+      });
+    }
+
+    function revealNext() {
+      if (unlockedIndex >= stars.length - 1) {
+        nextBtn.disabled = true;
+        nextBtn.textContent = "All points revealed";
+        return;
+      }
+
+      lines[unlockedIndex].classList.add("visible");
+      unlockedIndex += 1;
+      activeIndex = unlockedIndex;
+
+      updateStars();
+      updatePanel(activeIndex);
+
+      if (unlockedIndex >= stars.length - 1) {
+        nextBtn.disabled = true;
+        nextBtn.textContent = "All points revealed";
+      }
+    }
+
+    stars.forEach((star, index) => {
+      star.addEventListener("click", () => {
+        if (index > unlockedIndex) return;
+        activeIndex = index;
+        updateStars();
+        updatePanel(index);
+      });
+    });
+
+    nextBtn.addEventListener("click", revealNext);
+
+    updateStars();
+    updatePanel(0);
+  </script>
+</body>
+</html>
