@@ -420,26 +420,24 @@
   }
 
   .flow-wrap {
-    height: 360px;
-    margin: 0 auto 8px;
+    height: 320px;
+    margin: 0 auto 12px;
     overflow: hidden;
     perspective: 1400px;
   }
 
   .flow-card {
-    width: 140px;
-    height: 205px;
+    width: 132px;
+    height: 192px;
     left: 50%;
     top: 50%;
-    margin-left: -70px;
-    margin-top: -102.5px;
     transform-origin: center center;
   }
 
   .flow-fade-left,
   .flow-fade-right {
-    width: 20px;
-    opacity: 0.35;
+    width: 18px;
+    opacity: 0.22;
   }
 
   .search-section {
@@ -461,21 +459,16 @@
   }
 
   .tools-grid {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr;
     gap: 16px;
-    overflow-x: auto;
-    padding-bottom: 10px;
-    scroll-snap-type: x mandatory;
-  }
-
-  .tools-grid::-webkit-scrollbar {
-    display: none;
+    overflow: visible;
+    padding-bottom: 0;
   }
 
   .tool-card {
-    min-width: 86%;
-    flex: 0 0 86%;
-    scroll-snap-align: center;
+    min-width: 0;
+    flex: initial;
     min-height: 190px;
   }
 }
@@ -652,65 +645,85 @@
     return window.innerWidth <= 700;
   }
 
+  function getActiveCards() {
+    return isMobileView() ? cards.slice(0, 5) : cards;
+  }
+
+  function applyCardVisibility() {
+    const activeCards = getActiveCards();
+    const activeSet = new Set(activeCards);
+
+    cards.forEach((card) => {
+      if (activeSet.has(card)) {
+        card.style.display = 'block';
+      } else {
+        card.style.display = 'none';
+      }
+    });
+  }
+
   function getCardWidth() {
-    if (isMobileView()) return 140;
+    if (isMobileView()) return 132;
     return window.innerWidth <= 1100 ? 170 : 210;
   }
 
   function getCardHeight() {
-    if (isMobileView()) return 205;
+    if (isMobileView()) return 192;
     return window.innerWidth <= 1100 ? 240 : 290;
   }
 
   function setupCards() {
+    const activeCards = getActiveCards();
     const gap = 26;
     const cardWidth = getCardWidth();
 
-    if (isMobileView()) {
-      const step = (Math.PI * 2) / cards.length;
+    applyCardVisibility();
 
-      cards.forEach((card, index) => {
+    if (isMobileView()) {
+      const step = (Math.PI * 2) / activeCards.length;
+
+      activeCards.forEach((card, index) => {
         card.dataset.angle = index * step;
         card.dataset.x = '';
       });
 
-      mobileAngleOffset = 0;
+      mobileAngleOffset = -0.3;
       return;
     }
 
-    cards.forEach((card, index) => {
+    activeCards.forEach((card, index) => {
       card.dataset.x = index * (cardWidth + gap);
       card.dataset.angle = '';
+      card.style.display = 'block';
     });
   }
 
   function renderCards() {
     const wrapWidth = flowWrap.clientWidth;
-    const wrapHeight = flowWrap.clientHeight;
     const cardWidth = getCardWidth();
     const cardHeight = getCardHeight();
+    const activeCards = getActiveCards();
 
     if (isMobileView()) {
-      const centerX = wrapWidth / 2;
-      const centerY = wrapHeight / 2;
-      const radiusX = Math.min(wrapWidth * 0.34, 125);
-      const radiusY = 68;
+      const radiusX = Math.min(wrapWidth * 0.18, 62);
+      const radiusY = 44;
+      const centerYOffset = 6;
 
       if (!paused) {
-        mobileAngleOffset += 0.012;
+        mobileAngleOffset += 0.009;
       }
 
-      cards.forEach((card) => {
+      activeCards.forEach((card) => {
         const baseAngle = parseFloat(card.dataset.angle || 0);
         const angle = baseAngle + mobileAngleOffset;
 
         const x = Math.sin(angle) * radiusX;
-        const y = Math.cos(angle) * radiusY;
+        const y = Math.cos(angle) * radiusY + centerYOffset;
 
-        const depth = (y + radiusY) / (radiusY * 2);
-        const scale = 0.72 + depth * 0.42;
-        const opacity = 0.42 + depth * 0.58;
-        const rotateY = x / 12;
+        const depth = (y - centerYOffset + radiusY) / (radiusY * 2);
+        const scale = 0.78 + depth * 0.24;
+        const opacity = 0.55 + depth * 0.45;
+        const rotateY = x / 9;
         const zIndex = Math.floor(depth * 1000);
 
         card.style.width = `${cardWidth}px`;
@@ -718,7 +731,8 @@
         card.style.left = '50%';
         card.style.top = '50%';
         card.style.transform = `
-          translate3d(calc(-50% + ${x}px), calc(-50% + ${y}px), 0)
+          translate(-50%, -50%)
+          translate3d(${x}px, ${y}px, 0)
           rotateY(${rotateY}deg)
           scale(${scale})
         `;
@@ -732,7 +746,7 @@
 
     const centerX = wrapWidth / 2;
 
-    cards.forEach((card) => {
+    activeCards.forEach((card) => {
       let x = parseFloat(card.dataset.x);
 
       if (!paused) {
@@ -740,7 +754,7 @@
       }
 
       if (x < -cardWidth - 40) {
-        const maxX = Math.max(...cards.map(c => parseFloat(c.dataset.x)));
+        const maxX = Math.max(...activeCards.map(c => parseFloat(c.dataset.x)));
         x = maxX + cardWidth + 26;
       }
 
