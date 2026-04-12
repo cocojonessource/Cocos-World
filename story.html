@@ -308,57 +308,71 @@
       fill: none;
       stroke-linecap: round;
       stroke-linejoin: round;
-      opacity: 0.98;
-      filter: drop-shadow(0 0 0 rgba(255, 217, 120, 0));
+      stroke-dasharray: 100;
+      stroke-dashoffset: 100;
+      opacity: 0;
+      filter:
+        drop-shadow(0 0 2px rgba(255, 217, 120, 0.55))
+        drop-shadow(0 0 6px rgba(255, 217, 120, 0.35));
       transition:
         stroke-dashoffset 0.9s ease,
-        filter 0.6s ease,
-        stroke-width 0.6s ease;
+        opacity 0.25s ease,
+        filter 0.4s ease,
+        stroke-width 0.4s ease;
     }
 
     .story-line.visible {
-      filter:
-        drop-shadow(0 0 4px rgba(255, 217, 120, 0.85))
-        drop-shadow(0 0 10px rgba(255, 217, 120, 0.65))
-        drop-shadow(0 0 20px rgba(255, 217, 120, 0.38));
-      stroke-width: 4.5;
-    }
-
-    .line-sparkles {
-      opacity: 0;
-      transition: opacity 0.5s ease;
-      pointer-events: none;
-    }
-
-    .line-sparkles.visible {
+      stroke-dashoffset: 0;
       opacity: 1;
-    }
-
-    .line-sparkles circle {
-      fill: #fff7d9;
+      stroke-width: 4.5;
       filter:
-        drop-shadow(0 0 4px rgba(255,255,255,0.9))
-        drop-shadow(0 0 10px rgba(255, 217, 120, 0.85));
-      animation: constellationTwinkle 2.6s ease-in-out infinite;
-      transform-origin: center;
+        drop-shadow(0 0 4px rgba(255, 240, 185, 0.95))
+        drop-shadow(0 0 10px rgba(255, 217, 120, 0.8))
+        drop-shadow(0 0 18px rgba(255, 217, 120, 0.55));
+      animation: lineGlow 2.2s ease-in-out infinite;
     }
 
-    .line-sparkles circle.s2 {
-      animation-duration: 3.4s;
-    }
-
-    .line-sparkles circle.s3 {
-      animation-duration: 2.1s;
-    }
-
-    @keyframes constellationTwinkle {
+    @keyframes lineGlow {
       0%, 100% {
-        opacity: 0.28;
-        transform: scale(0.82);
+        filter:
+          drop-shadow(0 0 4px rgba(255, 240, 185, 0.95))
+          drop-shadow(0 0 10px rgba(255, 217, 120, 0.8))
+          drop-shadow(0 0 18px rgba(255, 217, 120, 0.55));
+      }
+      50% {
+        filter:
+          drop-shadow(0 0 5px rgba(255, 248, 220, 1))
+          drop-shadow(0 0 14px rgba(255, 217, 120, 0.95))
+          drop-shadow(0 0 24px rgba(255, 217, 120, 0.75));
+      }
+    }
+
+    .line-spark {
+      fill: #fff9d8;
+      opacity: 0;
+      transform-origin: center;
+      filter:
+        drop-shadow(0 0 4px rgba(255, 240, 185, 1))
+        drop-shadow(0 0 10px rgba(255, 217, 120, 0.8));
+      transition: opacity 0.35s ease;
+    }
+
+    .line-spark.visible {
+      opacity: 1;
+      animation: lineTwinkle 2.4s ease-in-out infinite;
+    }
+
+    .line-spark.s1 { animation-delay: 0s; }
+    .line-spark.s2 { animation-delay: 0.5s; }
+    .line-spark.s3 { animation-delay: 1s; }
+    .line-spark.s4 { animation-delay: 1.4s; }
+
+    @keyframes lineTwinkle {
+      0%, 100% {
+        opacity: 0.2;
       }
       50% {
         opacity: 1;
-        transform: scale(1.22);
       }
     }
 
@@ -631,7 +645,7 @@
       }
 
       .shape-guide {
-        width: 340px;
+        width: 320px;
       }
     }
   </style>
@@ -695,83 +709,68 @@
 
           <svg class="story-svg" viewBox="0 0 1000 720" preserveAspectRatio="none" aria-hidden="true">
             <!-- faint base path -->
-            <line class="story-line-base" x1="500" y1="250" x2="500" y2="378"></line>
-            <line class="story-line-base" x1="500" y1="380" x2="500" y2="549"></line>
-            <path class="story-line-base" d="M500 549 Q610 605 750 430"></path>
-            <path class="story-line-base" d="M750 430 Q520 690 250 430"></path>
-            <line class="story-line-base" x1="250" y1="430" x2="330" y2="380"></line>
-            <line class="story-line-base" x1="330" y1="380" x2="640" y2="380"></line>
+            <line class="story-line-base" x1="500" y1="250" x2="500" y2="366"></line>
+            <line class="story-line-base" x1="500" y1="370" x2="500" y2="535"></line>
+            <path class="story-line-base" d="M500 535 Q395 520 245 425"></path>
+            <path class="story-line-base" d="M245 425 Q275 350 345 350"></path>
+            <line class="story-line-base" x1="345" y1="350" x2="650" y2="350"></line>
+            <path class="story-line-base" d="M650 350 Q705 350 745 410"></path>
 
-            <!-- animated lines -->
-            <line id="line1" class="story-line" x1="500" y1="250" x2="500" y2="378"></line>
-            <line id="line2" class="story-line" x1="500" y1="380" x2="500" y2="549"></line>
-            <path id="line3" class="story-line" d="M500 549 Q610 605 750 430"></path>
-            <path id="line4" class="story-line" d="M750 430 Q520 690 250 430"></path>
-            <line id="line5" class="story-line" x1="250" y1="430" x2="330" y2="380"></line>
-            <line id="line6" class="story-line" x1="330" y1="380" x2="640" y2="380"></line>
+            <!-- animated path -->
+            <line id="line1" class="story-line" pathLength="100" x1="500" y1="250" x2="500" y2="366"></line>
+            <line id="line2" class="story-line" pathLength="100" x1="500" y1="370" x2="500" y2="535"></line>
+            <path id="line3" class="story-line" pathLength="100" d="M500 535 Q395 520 245 425"></path>
+            <path id="line4" class="story-line" pathLength="100" d="M245 425 Q275 350 345 350"></path>
+            <line id="line5" class="story-line" pathLength="100" x1="345" y1="350" x2="650" y2="350"></line>
+            <path id="line6" class="story-line" pathLength="100" d="M650 350 Q705 350 745 410"></path>
 
-            <!-- sparkle groups -->
-            <g id="sparkleLine1" class="line-sparkles">
-              <circle cx="500" cy="282" r="2.5"></circle>
-              <circle class="s2" cx="500" cy="322" r="2"></circle>
-              <circle class="s3" cx="500" cy="356" r="3"></circle>
-            </g>
+            <!-- line sparkles -->
+            <circle class="line-spark s1" data-line="1" cx="500" cy="282" r="3"></circle>
+            <circle class="line-spark s2" data-line="1" cx="500" cy="320" r="2"></circle>
+            <circle class="line-spark s3" data-line="1" cx="500" cy="350" r="4"></circle>
 
-            <g id="sparkleLine2" class="line-sparkles">
-              <circle cx="500" cy="418" r="2.5"></circle>
-              <circle class="s2" cx="500" cy="470" r="2"></circle>
-              <circle class="s3" cx="500" cy="525" r="3"></circle>
-            </g>
+            <circle class="line-spark s1" data-line="2" cx="500" cy="415" r="3"></circle>
+            <circle class="line-spark s2" data-line="2" cx="500" cy="462" r="2"></circle>
+            <circle class="line-spark s4" data-line="2" cx="500" cy="505" r="4"></circle>
 
-            <g id="sparkleLine3" class="line-sparkles">
-              <circle cx="545" cy="575" r="2.4"></circle>
-              <circle class="s2" cx="610" cy="575" r="2"></circle>
-              <circle class="s3" cx="690" cy="520" r="3"></circle>
-              <circle class="s2" cx="735" cy="455" r="2"></circle>
-            </g>
+            <circle class="line-spark s1" data-line="3" cx="448" cy="522" r="2"></circle>
+            <circle class="line-spark s2" data-line="3" cx="392" cy="503" r="4"></circle>
+            <circle class="line-spark s3" data-line="3" cx="330" cy="472" r="2.5"></circle>
+            <circle class="line-spark s4" data-line="3" cx="278" cy="442" r="4"></circle>
 
-            <g id="sparkleLine4" class="line-sparkles">
-              <circle cx="690" cy="500" r="2.4"></circle>
-              <circle class="s2" cx="595" cy="610" r="2"></circle>
-              <circle class="s3" cx="500" cy="650" r="3"></circle>
-              <circle class="s2" cx="390" cy="610" r="2"></circle>
-              <circle cx="300" cy="505" r="2.4"></circle>
-            </g>
+            <circle class="line-spark s1" data-line="4" cx="260" cy="400" r="2"></circle>
+            <circle class="line-spark s2" data-line="4" cx="284" cy="376" r="4"></circle>
+            <circle class="line-spark s3" data-line="4" cx="316" cy="358" r="2.5"></circle>
 
-            <g id="sparkleLine5" class="line-sparkles">
-              <circle cx="270" cy="418" r="2.5"></circle>
-              <circle class="s2" cx="292" cy="404" r="2"></circle>
-              <circle class="s3" cx="315" cy="390" r="3"></circle>
-            </g>
+            <circle class="line-spark s1" data-line="5" cx="420" cy="350" r="2"></circle>
+            <circle class="line-spark s2" data-line="5" cx="500" cy="350" r="4"></circle>
+            <circle class="line-spark s3" data-line="5" cx="580" cy="350" r="2.5"></circle>
 
-            <g id="sparkleLine6" class="line-sparkles">
-              <circle cx="390" cy="380" r="2.5"></circle>
-              <circle class="s2" cx="470" cy="380" r="2"></circle>
-              <circle class="s3" cx="560" cy="380" r="3"></circle>
-              <circle class="s2" cx="620" cy="380" r="2"></circle>
-            </g>
+            <circle class="line-spark s1" data-line="6" cx="675" cy="352" r="2"></circle>
+            <circle class="line-spark s2" data-line="6" cx="705" cy="367" r="4"></circle>
+            <circle class="line-spark s4" data-line="6" cx="730" cy="392" r="2.5"></circle>
           </svg>
 
           <button class="story-node active available" id="star1" style="left: 48%; top: 33%;" aria-label="Early Life"></button>
-          <div class="node-label" style="left: 36%; top: 19%;">Early Life</div>
+          <div class="node-label" style="left: 39%; top: 26.5%;">Early Life</div>
 
           <button class="story-node locked" id="star2" style="left: 48%; top: 49.15%;" aria-label="Disney Era"></button>
-          <div class="node-label" style="left: 20%; top: 45%;">Disney Era</div>
+          <div class="node-label" style="left: 40%; top: 42.5%;">Disney Era</div>
 
           <button class="story-node locked" id="star3" style="left: 48%; top: 73%;" aria-label="Independent Era"></button>
-          <div class="node-label" style="left: 33%; top: 63%;">Independent Era</div>
-
-          <button class="story-node locked final" id="star4" style="left: 73%; top: 56%;" aria-label="Internet Sensation"></button>
-          <div class="node-label" style="left: 63%; top: 64%;">Internet Sensation</div>
+          <div class="node-label" style="left: 38%; top: 66.5%;">Independent Era</div>
 
           <button class="story-node locked" id="star5" style="left: 23%; top: 57%;" aria-label="Renaissance"></button>
-          <div class="node-label" style="left: 74%; top: 45%;">Renaissance</div>
+          <div class="node-label" style="left: 16%; top: 50.5%;">Renaissance</div>
 
           <button class="story-node locked" id="star6" style="left: 33%; top: 49%;" aria-label="Award-Winning Artist"></button>
-          <div class="node-label" style="left: 57.5%; top: 19%;">Award-Winning Artist</div>
+          <div class="node-label" style="left: 20%; top: 42%;">Award-Winning Artist</div>
 
           <button class="story-node locked" id="star7" style="left: 64%; top: 49%;" aria-label="Building a Legacy"></button>
-          <div class="node-label" style="left: 49%; top: 9.5%;">Building a Legacy</div>
+          <div class="node-label" style="left: 58%; top: 42%;">Building a Legacy</div>
+
+          <button class="story-node locked final" id="star4" style="left: 73%; top: 56%;" aria-label="Internet Sensation"></button>
+          <div class="node-label" style="left: 66%; top: 49.8%;">Internet Sensation</div>
         </div>
       </div>
 
@@ -816,20 +815,20 @@
       { title: "Early Life", chapter: "Chapter 1", copy: "Source has to write this part..." },
       { title: "Disney Era", chapter: "Chapter 2", copy: "Source has to write this part..." },
       { title: "Independent Era", chapter: "Chapter 3", copy: "Source has to write this part..." },
-      { title: "Internet Sensation", chapter: "Chapter 4", copy: "Source has to write this part..." },
-      { title: "Renaissance", chapter: "Chapter 5", copy: "Source has to write this part..." },
-      { title: "Award-Winning Artist", chapter: "Chapter 6", copy: "Source has to write this part..." },
-      { title: "Building a Legacy", chapter: "Chapter 7", copy: "Source has to write this part..." }
+      { title: "Renaissance", chapter: "Chapter 4", copy: "Source has to write this part..." },
+      { title: "Award-Winning Artist", chapter: "Chapter 5", copy: "Source has to write this part..." },
+      { title: "Building a Legacy", chapter: "Chapter 6", copy: "Source has to write this part..." },
+      { title: "Internet Sensation", chapter: "Chapter 7", copy: "Source has to write this part..." }
     ];
 
     const stars = [
       document.getElementById("star1"),
       document.getElementById("star2"),
       document.getElementById("star3"),
-      document.getElementById("star4"),
       document.getElementById("star5"),
       document.getElementById("star6"),
-      document.getElementById("star7")
+      document.getElementById("star7"),
+      document.getElementById("star4")
     ];
 
     const lines = [
@@ -841,13 +840,13 @@
       document.getElementById("line6")
     ];
 
-    const sparkleGroups = [
-      document.getElementById("sparkleLine1"),
-      document.getElementById("sparkleLine2"),
-      document.getElementById("sparkleLine3"),
-      document.getElementById("sparkleLine4"),
-      document.getElementById("sparkleLine5"),
-      document.getElementById("sparkleLine6")
+    const lineEffects = [
+      [document.getElementById("line1"), ...document.querySelectorAll('[data-line="1"]')],
+      [document.getElementById("line2"), ...document.querySelectorAll('[data-line="2"]')],
+      [document.getElementById("line3"), ...document.querySelectorAll('[data-line="3"]')],
+      [document.getElementById("line4"), ...document.querySelectorAll('[data-line="4"]')],
+      [document.getElementById("line5"), ...document.querySelectorAll('[data-line="5"]')],
+      [document.getElementById("line6"), ...document.querySelectorAll('[data-line="6"]')]
     ];
 
     const panelKicker = document.getElementById("panelKicker");
@@ -866,14 +865,6 @@
 
     function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    function initializeLineAnimation() {
-      lines.forEach((line) => {
-        const length = line.getTotalLength();
-        line.style.strokeDasharray = length;
-        line.style.strokeDashoffset = length;
-      });
     }
 
     function updatePanel(index) {
@@ -895,15 +886,17 @@
     function updateButtons() {
       nextBtn.disabled = isReplaying || completed || activeIndex >= chapters.length - 1;
       nextBtn.textContent = completed ? "All points revealed" : "Reveal Next Point";
+
       replayBtn.disabled = isReplaying;
       replayBtn.textContent = isReplaying ? "Replaying..." : "Replay Story Path";
     }
 
     function updateLines() {
-      lines.forEach((line, index) => {
-        const show = index < highestUnlocked;
-        line.classList.toggle("visible", show);
-        sparkleGroups[index].classList.toggle("visible", show);
+      lineEffects.forEach((items, index) => {
+        const shouldShow = index < highestUnlocked;
+        items.forEach(item => {
+          item.classList.toggle("visible", shouldShow);
+        });
       });
     }
 
@@ -911,4 +904,175 @@
       stars.forEach((star, index) => {
         star.classList.toggle("active", index === activeIndex);
 
-        if (completed
+        if (completed) {
+          star.classList.remove("locked");
+          star.classList.remove("available");
+          return;
+        }
+
+        if (index <= highestUnlocked) {
+          star.classList.remove("locked");
+        } else {
+          star.classList.add("locked");
+        }
+
+        star.classList.toggle("available", index === highestUnlocked);
+      });
+    }
+
+    function completeStory() {
+      completed = true;
+      highestUnlocked = chapters.length - 1;
+      activeIndex = Math.min(activeIndex, chapters.length - 1);
+      updateLines();
+      updateStars();
+      updatePanel(activeIndex);
+      updateButtons();
+    }
+
+    function refreshUI() {
+      updateLines();
+      updateStars();
+      updatePanel(activeIndex);
+      updateButtons();
+    }
+
+    async function progressToNext() {
+      if (isReplaying || completed) return;
+      if (activeIndex >= chapters.length - 1) return;
+
+      const current = activeIndex;
+      const next = current + 1;
+
+      lines[current].classList.add("visible");
+      document.querySelectorAll(`[data-line="${current + 1}"]`).forEach(item => {
+        item.classList.add("visible");
+      });
+
+      await sleep(900);
+
+      highestUnlocked = Math.max(highestUnlocked, next);
+      activeIndex = next;
+
+      if (next === chapters.length - 1) {
+        completeStory();
+        return;
+      }
+
+      refreshUI();
+    }
+
+    stars.forEach((star, index) => {
+      star.addEventListener("click", async () => {
+        if (isReplaying) return;
+
+        if (completed) {
+          activeIndex = index;
+          refreshUI();
+          return;
+        }
+
+        if (index > highestUnlocked) return;
+
+        if (index < highestUnlocked) {
+          activeIndex = index;
+          refreshUI();
+          return;
+        }
+
+        if (index === activeIndex && index < chapters.length - 1) {
+          await progressToNext();
+          return;
+        }
+
+        activeIndex = index;
+        refreshUI();
+      });
+    });
+
+    nextBtn.addEventListener("click", async () => {
+      await progressToNext();
+    });
+
+    replayBtn.addEventListener("click", async () => {
+      if (isReplaying) return;
+
+      isReplaying = true;
+      completed = false;
+      activeIndex = 0;
+      highestUnlocked = 0;
+
+      lineEffects.forEach(items => {
+        items.forEach(item => item.classList.remove("visible"));
+      });
+
+      refreshUI();
+      await sleep(450);
+
+      for (let i = 0; i < lines.length; i++) {
+        activeIndex = i;
+        refreshUI();
+        await sleep(500);
+
+        lines[i].classList.add("visible");
+        document.querySelectorAll(`[data-line="${i + 1}"]`).forEach(item => {
+          item.classList.add("visible");
+        });
+
+        await sleep(900);
+
+        highestUnlocked = i + 1;
+        activeIndex = i + 1;
+        refreshUI();
+        await sleep(520);
+      }
+
+      completeStory();
+      isReplaying = false;
+      refreshUI();
+    });
+
+    function handlePageTransitions() {
+      const links = document.querySelectorAll('a[href]');
+      links.forEach(link => {
+        const href = link.getAttribute('href');
+
+        if (
+          !href ||
+          href.startsWith('#') ||
+          href.startsWith('mailto:') ||
+          href.startsWith('tel:') ||
+          href.startsWith('javascript:')
+        ) {
+          return;
+        }
+
+        link.addEventListener('click', (event) => {
+          const target = link.getAttribute('target');
+          if (target === '_blank') return;
+
+          const url = new URL(href, window.location.href);
+          if (url.origin !== window.location.origin) return;
+
+          event.preventDefault();
+          document.body.classList.remove('page-ready');
+          document.body.classList.add('page-leaving');
+
+          setTimeout(() => {
+            window.location.href = url.href;
+          }, 360);
+        });
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      requestAnimationFrame(() => {
+        document.body.classList.add('page-ready');
+      });
+
+      handlePageTransitions();
+      refreshUI();
+    });
+  </script>
+</body>
+</html>
