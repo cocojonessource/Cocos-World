@@ -29,7 +29,6 @@
         radial-gradient(circle at top, rgba(255,255,255,0.45), transparent 30%),
         linear-gradient(to bottom, #fff8fb 0%, var(--bg) 20%, #ffeaf1 100%);
       color: var(--primary);
-      overflow-x: hidden;
     }
 
     a {
@@ -115,88 +114,120 @@
     .page {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 34px 20px 60px;
+      padding: 28px 20px 60px;
     }
 
-    .hero-gallery {
-      margin-bottom: 34px;
-      text-align: center;
-    }
-
-    .hero-title {
-      margin: 0 0 14px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(48px, 7vw, 86px);
-      line-height: 0.95;
-      color: var(--primary);
-    }
-
-    .hero-description {
-      max-width: 760px;
-      margin: 0 auto 18px;
-      text-align: center;
-      font-size: 17px;
-      line-height: 1.8;
-      color: var(--secondary);
-    }
-
-    /* curved screen-wide conveyor */
-    .flow-wrap {
+    /* HERO */
+    .hero {
       position: relative;
       width: 100%;
-      height: 390px;
-      margin: 0 auto 16px;
+      height: 540px;
+      border-radius: 30px;
       overflow: hidden;
-      perspective: 1200px;
+      box-shadow: 0 18px 40px var(--shadow);
+      margin-bottom: 30px;
+      background: #f7d6e4;
     }
 
-    .flow-card {
+    .slide {
       position: absolute;
-      top: 0;
-      left: 0;
-      width: 210px;
-      height: 290px;
-      border-radius: 24px;
-      overflow: hidden;
-      background: rgba(255, 240, 245, 0.95);
-      border: 1px solid rgba(255,255,255,0.65);
-      box-shadow: 0 14px 30px var(--shadow);
-      transition: box-shadow 0.2s ease;
-      cursor: pointer;
-      will-change: transform;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.9s ease-in-out;
+      pointer-events: none;
     }
 
-    .flow-card:hover {
-      box-shadow: 0 20px 40px var(--shadow-strong);
+    .slide.active {
+      opacity: 1;
+      pointer-events: auto;
     }
 
-    .flow-card img {
+    .slide img {
       width: 100%;
       height: 100%;
       object-fit: cover;
       display: block;
+      filter: brightness(0.72);
     }
 
-    .flow-fade-left,
-    .flow-fade-right {
+    .slide-overlay {
       position: absolute;
-      top: 0;
-      width: 110px;
-      height: 100%;
-      z-index: 20;
-      pointer-events: none;
+      inset: 0;
+      background:
+        linear-gradient(to right, rgba(68, 22, 99, 0.52) 0%, rgba(68, 22, 99, 0.22) 35%, rgba(255, 228, 236, 0.08) 100%);
     }
 
-    .flow-fade-left {
-      left: 0;
-      background: linear-gradient(to right, rgba(255, 232, 239, 0.95), rgba(255, 232, 239, 0));
+    .hero-content {
+      position: absolute;
+      left: 48px;
+      bottom: 48px;
+      z-index: 5;
+      max-width: 560px;
+      color: var(--white);
     }
 
-    .flow-fade-right {
-      right: 0;
-      background: linear-gradient(to left, rgba(255, 232, 239, 0.95), rgba(255, 232, 239, 0));
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.85);
+      margin-bottom: 12px;
     }
 
+    .hero-title {
+      margin: 0 0 12px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(42px, 6vw, 72px);
+      line-height: 0.95;
+    }
+
+    .hero-text {
+      margin: 0 0 22px;
+      font-size: 17px;
+      line-height: 1.7;
+      color: rgba(255,255,255,0.95);
+    }
+
+    .hero-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent);
+      color: var(--white);
+      padding: 13px 20px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.15);
+    }
+
+    .hero-dots {
+      position: absolute;
+      left: 50%;
+      bottom: 20px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 6;
+    }
+
+    .hero-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(255,255,255,0.45);
+      cursor: pointer;
+      transition: all 0.22s ease;
+    }
+
+    .hero-dot.active {
+      width: 28px;
+      background: var(--white);
+    }
+
+    /* SEARCH */
     .search-section {
       margin: 0 auto 34px;
       max-width: 900px;
@@ -247,6 +278,7 @@
       cursor: pointer;
     }
 
+    /* EXPLORE */
     .section {
       margin-bottom: 30px;
     }
@@ -334,61 +366,9 @@
       font-size: 14px;
     }
 
-    .lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(37, 16, 53, 0.78);
-      z-index: 3000;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .lightbox.active {
-      display: flex;
-    }
-
-    .lightbox-inner {
-      position: relative;
-      max-width: 90vw;
-      max-height: 90vh;
-    }
-
-    .lightbox img {
-      max-width: 100%;
-      max-height: 90vh;
-      border-radius: 20px;
-      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
-    }
-
-    .lightbox-close {
-      position: absolute;
-      top: -14px;
-      right: -14px;
-      width: 40px;
-      height: 40px;
-      border: none;
-      border-radius: 999px;
-      background: var(--white);
-      color: var(--primary);
-      font-size: 20px;
-      cursor: pointer;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.16);
-    }
-
     @media (max-width: 1100px) {
       .tools-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .flow-wrap {
-        height: 340px;
-      }
-
-      .flow-card {
-        width: 170px;
-        height: 240px;
       }
     }
 
@@ -401,26 +381,23 @@
         font-size: 24px;
       }
 
-      .tools-grid {
-        grid-template-columns: 1fr;
+      .hero {
+        height: 480px;
       }
 
-      .hero-description {
+      .hero-content {
+        left: 22px;
+        right: 22px;
+        bottom: 44px;
+        max-width: none;
+      }
+
+      .hero-text {
         font-size: 16px;
       }
 
-      .flow-wrap {
-        height: 300px;
-      }
-
-      .flow-card {
-        width: 135px;
-        height: 195px;
-      }
-
-      .flow-fade-left,
-      .flow-fade-right {
-        width: 45px;
+      .tools-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -429,12 +406,12 @@
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
-        <a class="anchor-home" href="#">⚓</a>
+        <a class="anchor-home" href="index.html">⚓</a>
         <span>Coco's World</span>
       </div>
 
       <nav class="nav">
-        <a href="#">Home</a>
+        <a href="index.html">Home</a>
         <a href="gallery.html">Gallery</a>
         <a href="#">Music</a>
         <a href="#">Videos</a>
@@ -447,28 +424,33 @@
   </header>
 
   <main class="page">
-    <section class="hero-gallery">
-      <h1 class="hero-title">Coco's World</h1>
+    <section class="hero">
+      <div class="slide active">
+        <img src="slide1.jpg" alt="LUVAGIRL">
+        <div class="slide-overlay"></div>
+      </div>
 
-      <p class="hero-description">
-        A modern digital diary for Coco Jones — music, visuals, updates, videos,
-        gallery archives, calendar moments, games, and curated deep dives, all in one place.
-      </p>
+      <div class="slide">
+        <img src="slide2.jpg" alt="Latest Appearance">
+        <div class="slide-overlay"></div>
+      </div>
 
-      <div class="flow-wrap" id="flowWrap">
-        <div class="flow-fade-left"></div>
-        <div class="flow-fade-right"></div>
+      <div class="slide">
+        <img src="slide3.jpg" alt="Available Now">
+        <div class="slide-overlay"></div>
+      </div>
 
-        <div class="flow-card"><img src="card1.jpg" alt="Coco card 1"></div>
-        <div class="flow-card"><img src="card2.jpg" alt="Coco card 2"></div>
-        <div class="flow-card"><img src="card3.jpg" alt="Coco card 3"></div>
-        <div class="flow-card"><img src="card4.jpg" alt="Coco card 4"></div>
-        <div class="flow-card"><img src="card5.jpg" alt="Coco card 5"></div>
-        <div class="flow-card"><img src="card6.jpg" alt="Coco card 6"></div>
-        <div class="flow-card"><img src="card7.jpg" alt="Coco card 7"></div>
-        <div class="flow-card"><img src="card8.jpg" alt="Coco card 8"></div>
-        <div class="flow-card"><img src="card9.jpg" alt="Coco card 9"></div>
-        <div class="flow-card"><img src="card10.jpg" alt="Coco card 10"></div>
+      <div class="hero-content">
+        <div class="hero-eyebrow" id="heroEyebrow">Now Playing</div>
+        <h1 class="hero-title" id="heroTitle">LUVAGIRL</h1>
+        <p class="hero-text" id="heroText">Coco Jones’ latest release.</p>
+        <a class="hero-button" id="heroButton" href="#">Watch Now</a>
+      </div>
+
+      <div class="hero-dots">
+        <button class="hero-dot active" aria-label="Slide 1"></button>
+        <button class="hero-dot" aria-label="Slide 2"></button>
+        <button class="hero-dot" aria-label="Slide 3"></button>
       </div>
     </section>
 
@@ -500,7 +482,7 @@
             <h3>Gallery</h3>
             <p>Organized archive with tags, years, categories, subfolders, and credits.</p>
           </div>
-          <a class="tool-link" href="#">Open Gallery</a>
+          <a class="tool-link" href="gallery.html">Open Gallery</a>
         </article>
 
         <article class="tool-card">
@@ -573,112 +555,78 @@
     </div>
   </main>
 
-  <div class="lightbox" id="lightbox">
-    <div class="lightbox-inner">
-      <button class="lightbox-close" id="lightboxClose">×</button>
-      <img id="lightboxImage" src="" alt="Expanded Coco image">
-    </div>
-  </div>
-
   <script>
-    const flowWrap = document.getElementById('flowWrap');
-    const cards = Array.from(document.querySelectorAll('.flow-card'));
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImage = document.getElementById('lightboxImage');
-    const lightboxClose = document.getElementById('lightboxClose');
+    const slides = document.querySelectorAll('.slide');
+    const dots = document.querySelectorAll('.hero-dot');
+    const heroEyebrow = document.getElementById('heroEyebrow');
+    const heroTitle = document.getElementById('heroTitle');
+    const heroText = document.getElementById('heroText');
+    const heroButton = document.getElementById('heroButton');
 
-    let paused = false;
-    let speed = 0.8;
-
-    function getCardWidth() {
-      return window.innerWidth <= 700 ? 135 : window.innerWidth <= 1100 ? 170 : 210;
-    }
-
-    function getCardHeight() {
-      return window.innerWidth <= 700 ? 195 : window.innerWidth <= 1100 ? 240 : 290;
-    }
-
-    function setupCards() {
-      const wrapWidth = flowWrap.clientWidth;
-      const gap = 26;
-      const cardWidth = getCardWidth();
-      cards.forEach((card, index) => {
-        card.dataset.x = index * (cardWidth + gap);
-      });
-    }
-
-    function renderCards() {
-      const wrapWidth = flowWrap.clientWidth;
-      const wrapHeight = flowWrap.clientHeight;
-      const cardWidth = getCardWidth();
-      const cardHeight = getCardHeight();
-      const centerX = wrapWidth / 2;
-      const usableWidth = wrapWidth + cardWidth + 40;
-
-      cards.forEach(card => {
-        let x = parseFloat(card.dataset.x);
-
-        if (!paused) {
-          x -= speed;
-        }
-
-        if (x < -cardWidth - 40) {
-          const maxX = Math.max(...cards.map(c => parseFloat(c.dataset.x)));
-          x = maxX + cardWidth + 26;
-        }
-
-        card.dataset.x = x;
-
-        const cardCenter = x + cardWidth / 2;
-        const dist = Math.abs(cardCenter - centerX);
-        const ratio = Math.min(dist / (wrapWidth / 2), 1);
-
-        /* middle dips back, sides come forward */
-        const scale = 0.82 + (ratio * 0.28);
-        const y = 26 + (1 - ratio) * 52;
-        const rotateY = ((cardCenter - centerX) / centerX) * 18;
-        const opacity = 0.72 + (ratio * 0.28);
-        const z = Math.round(ratio * 100);
-
-        card.style.width = `${cardWidth}px`;
-        card.style.height = `${cardHeight}px`;
-        card.style.transform = `
-          translate3d(${x}px, ${y}px, ${z}px)
-          rotateY(${rotateY}deg)
-          scale(${scale})
-        `;
-        card.style.opacity = opacity;
-        card.style.zIndex = Math.floor(ratio * 1000);
-      });
-
-      requestAnimationFrame(renderCards);
-    }
-
-    flowWrap.addEventListener('mouseenter', () => paused = true);
-    flowWrap.addEventListener('mouseleave', () => paused = false);
-
-    cards.forEach(card => {
-      const img = card.querySelector('img');
-      img.addEventListener('click', () => {
-        lightboxImage.src = img.src;
-        lightbox.classList.add('active');
-      });
-    });
-
-    lightboxClose.addEventListener('click', () => {
-      lightbox.classList.remove('active');
-    });
-
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) {
-        lightbox.classList.remove('active');
+    const slideData = [
+      {
+        eyebrow: 'Now Playing',
+        title: 'LUVAGIRL',
+        text: 'Coco Jones’ latest release.',
+        button: 'Watch Now',
+        link: '#'
+      },
+      {
+        eyebrow: 'Latest Moment',
+        title: 'Latest Appearance',
+        text: 'Coco’s most recent appearance — explore the full gallery.',
+        button: 'View Gallery',
+        link: 'gallery.html'
+      },
+      {
+        eyebrow: 'Available Now',
+        title: 'Available Now',
+        text: 'My man, my man, my man.',
+        button: 'Shop Now',
+        link: '#'
       }
+    ];
+
+    let current = 0;
+    let interval;
+
+    function renderSlide(index) {
+      slides.forEach((slide, i) => {
+        slide.classList.toggle('active', i === index);
+      });
+
+      dots.forEach((dot, i) => {
+        dot.classList.toggle('active', i === index);
+      });
+
+      heroEyebrow.textContent = slideData[index].eyebrow;
+      heroTitle.textContent = slideData[index].title;
+      heroText.textContent = slideData[index].text;
+      heroButton.textContent = slideData[index].button;
+      heroButton.href = slideData[index].link;
+
+      current = index;
+    }
+
+    function nextSlide() {
+      const next = (current + 1) % slideData.length;
+      renderSlide(next);
+    }
+
+    function resetInterval() {
+      clearInterval(interval);
+      interval = setInterval(nextSlide, 5000);
+    }
+
+    dots.forEach((dot, index) => {
+      dot.addEventListener('click', () => {
+        renderSlide(index);
+        resetInterval();
+      });
     });
 
-    window.addEventListener('resize', setupCards);
-
-    setupCards();
-    renderCards();
+    renderSlide(0);
+    resetInterval();
   </script>
 </body>
 </html>
