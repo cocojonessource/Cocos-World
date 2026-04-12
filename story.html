@@ -7,20 +7,22 @@
 
   <style>
     :root {
-      --bg-1: #fff1f6;
-      --bg-2: #ffdce9;
-      --bg-3: #f7c9dc;
-      --panel: rgba(66, 36, 92, 0.82);
-      --panel-border: rgba(255,255,255,0.18);
-      --text: #fff8fc;
-      --muted: #f3ddeb;
+      --bg: #ffe8f1;
+      --bg-2: #ffd8e8;
+      --bg-3: #f8c7dc;
+      --text-deep: #6b2fa3;
+      --text-soft: #7f4aa9;
+      --panel: rgba(98, 58, 128, 0.88);
+      --panel-border: rgba(255, 255, 255, 0.18);
+      --panel-text: #fff8fd;
+      --panel-muted: #f3dff0;
       --gold: #ffd978;
-      --gold-2: #ffefb0;
-      --line-off: rgba(255, 235, 192, 0.22);
+      --gold-soft: #fff0b8;
+      --line-off: rgba(255, 245, 210, 0.22);
       --line-on: #ffd978;
-      --accent: #ffc7df;
-      --deep: #5f347e;
-      --deep-2: #7a4b97;
+      --chip: rgba(255, 255, 255, 0.1);
+      --chip-border: rgba(255, 255, 255, 0.12);
+      --shadow: rgba(107, 47, 163, 0.15);
     }
 
     * {
@@ -31,13 +33,29 @@
       margin: 0;
       min-height: 100%;
       font-family: Arial, sans-serif;
-      color: var(--text);
       background:
-        radial-gradient(circle at 15% 15%, rgba(255,255,255,0.5), transparent 20%),
-        radial-gradient(circle at 80% 10%, rgba(255,255,255,0.28), transparent 18%),
-        radial-gradient(circle at 50% 70%, rgba(255,255,255,0.18), transparent 20%),
-        linear-gradient(to bottom, var(--bg-1) 0%, var(--bg-2) 42%, var(--bg-3) 100%);
+        radial-gradient(circle at 12% 18%, rgba(255,255,255,0.5), transparent 18%),
+        radial-gradient(circle at 84% 12%, rgba(255,255,255,0.28), transparent 18%),
+        radial-gradient(circle at 68% 72%, rgba(255,255,255,0.16), transparent 20%),
+        linear-gradient(to bottom, var(--bg) 0%, var(--bg-2) 48%, var(--bg-3) 100%);
+      color: var(--text-deep);
       overflow-x: hidden;
+      opacity: 0;
+      transform: translateY(12px);
+      filter: blur(4px);
+      transition: opacity 0.55s ease, transform 0.55s ease, filter 0.55s ease;
+    }
+
+    body.page-ready {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    body.page-leaving {
+      opacity: 0;
+      transform: translateY(-10px);
+      filter: blur(4px);
     }
 
     a {
@@ -49,7 +67,7 @@
       position: sticky;
       top: 0;
       z-index: 1000;
-      background: rgba(255, 227, 238, 0.72);
+      background: rgba(255, 227, 238, 0.82);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid rgba(255,255,255,0.45);
     }
@@ -72,21 +90,21 @@
       font-family: Georgia, "Times New Roman", serif;
       font-size: 28px;
       font-weight: 700;
-      color: var(--deep);
+      color: var(--text-deep);
     }
 
     .anchor-home {
       width: 40px;
       height: 40px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.85);
-      border: 1px solid rgba(255,255,255,0.6);
+      background: rgba(255,255,255,0.88);
+      border: 1px solid rgba(255,255,255,0.65);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       font-size: 20px;
-      color: #d2912f;
-      box-shadow: 0 6px 16px rgba(95, 52, 126, 0.12);
+      color: #d89e3f;
+      box-shadow: 0 6px 16px rgba(107, 47, 163, 0.12);
       flex-shrink: 0;
     }
 
@@ -96,24 +114,24 @@
       flex-wrap: wrap;
       font-size: 15px;
       font-weight: 600;
-      color: var(--deep);
+      color: var(--text-deep);
     }
 
     .nav a {
       position: relative;
-      opacity: 0.9;
+      opacity: 0.92;
     }
 
     .nav a:hover,
     .nav a.active {
-      color: var(--deep-2);
+      color: #8b5fbf;
       opacity: 1;
     }
 
     .page {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 34px 20px 40px;
+      padding: 34px 20px 42px;
     }
 
     .hero {
@@ -126,10 +144,10 @@
       margin-bottom: 10px;
       padding: 9px 16px;
       border-radius: 999px;
-      background: rgba(95, 52, 126, 0.1);
-      border: 1px solid rgba(95, 52, 126, 0.14);
+      background: rgba(107, 47, 163, 0.08);
+      border: 1px solid rgba(107, 47, 163, 0.12);
       font-size: 13px;
-      color: var(--deep);
+      color: var(--text-deep);
       font-weight: 700;
     }
 
@@ -138,8 +156,8 @@
       font-family: Georgia, "Times New Roman", serif;
       font-size: clamp(46px, 7vw, 84px);
       line-height: 0.96;
-      color: #fffafc;
-      text-shadow: 0 8px 24px rgba(95, 52, 126, 0.18);
+      color: var(--text-deep);
+      text-shadow: 0 8px 24px rgba(255,255,255,0.26);
     }
 
     .subtitle {
@@ -147,12 +165,12 @@
       margin: 0 auto;
       font-size: 17px;
       line-height: 1.8;
-      color: var(--deep);
+      color: var(--text-soft);
     }
 
     .story-layout {
       display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
+      grid-template-columns: 1.12fr 0.88fr;
       gap: 24px;
       align-items: stretch;
     }
@@ -162,7 +180,7 @@
       background: var(--panel);
       border: 1px solid var(--panel-border);
       border-radius: 30px;
-      box-shadow: 0 18px 40px rgba(84, 39, 110, 0.18);
+      box-shadow: 0 18px 40px var(--shadow);
       backdrop-filter: blur(8px);
     }
 
@@ -184,15 +202,15 @@
       margin: 0 0 8px;
       font-family: Georgia, "Times New Roman", serif;
       font-size: 31px;
-      color: #fffafc;
+      color: var(--panel-text);
     }
 
     .constellation-copy {
       margin: 0;
-      max-width: 540px;
+      max-width: 560px;
       font-size: 14px;
       line-height: 1.75;
-      color: var(--muted);
+      color: var(--panel-muted);
     }
 
     .story-stage {
@@ -201,11 +219,21 @@
       height: 720px;
     }
 
-    .sparkles {
+    .sparkles,
+    .panel-sparkles {
       position: absolute;
       inset: 0;
-      z-index: 1;
       pointer-events: none;
+    }
+
+    .sparkles {
+      z-index: 1;
+    }
+
+    .panel-sparkles {
+      z-index: 0;
+      overflow: hidden;
+      border-radius: 30px;
     }
 
     .sparkle {
@@ -213,17 +241,32 @@
       width: 4px;
       height: 4px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.85);
+      background: rgba(255,255,255,0.88);
       box-shadow: 0 0 8px rgba(255,255,255,0.65);
-      animation: twinkle 2.4s ease-in-out infinite;
+      animation: twinkle 2.6s ease-in-out infinite;
     }
 
-    .sparkle.s2 { width: 3px; height: 3px; animation-duration: 3.2s; }
-    .sparkle.s3 { width: 5px; height: 5px; animation-duration: 2.8s; }
+    .sparkle.s2 {
+      width: 3px;
+      height: 3px;
+      animation-duration: 3.2s;
+    }
+
+    .sparkle.s3 {
+      width: 5px;
+      height: 5px;
+      animation-duration: 2.9s;
+    }
 
     @keyframes twinkle {
-      0%, 100% { opacity: 0.25; transform: scale(0.9); }
-      50% { opacity: 1; transform: scale(1.2); }
+      0%, 100% {
+        opacity: 0.25;
+        transform: scale(0.9);
+      }
+      50% {
+        opacity: 1;
+        transform: scale(1.15);
+      }
     }
 
     .story-svg {
@@ -239,16 +282,18 @@
       stroke-width: 3;
       fill: none;
       stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .story-line {
       stroke: var(--line-on);
-      stroke-width: 3.5;
+      stroke-width: 4;
       fill: none;
       stroke-linecap: round;
-      stroke-dasharray: 240;
-      stroke-dashoffset: 240;
-      transition: stroke-dashoffset 0.9s ease;
+      stroke-linejoin: round;
+      stroke-dasharray: 220;
+      stroke-dashoffset: 220;
+      transition: stroke-dashoffset 0.8s ease;
     }
 
     .story-line.visible {
@@ -264,12 +309,12 @@
       border-radius: 999px;
       cursor: pointer;
       background:
-        radial-gradient(circle at center, #fffef7 0%, var(--gold-2) 42%, var(--gold) 74%, #f1b84f 100%);
+        radial-gradient(circle at center, #fffef7 0%, var(--gold-soft) 42%, var(--gold) 72%, #efb44e 100%);
       box-shadow:
         0 0 0 5px rgba(255,255,255,0.08),
         0 0 18px rgba(255, 217, 120, 0.95),
-        0 0 34px rgba(255, 217, 120, 0.4);
-      transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+        0 0 34px rgba(255, 217, 120, 0.38);
+      transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
     }
 
     .story-node:hover {
@@ -277,24 +322,46 @@
     }
 
     .story-node.locked {
-      opacity: 0.5;
+      opacity: 0.42;
       cursor: not-allowed;
-      filter: grayscale(0.15);
+      filter: grayscale(0.2);
+      box-shadow:
+        0 0 0 5px rgba(255,255,255,0.04),
+        0 0 10px rgba(255, 217, 120, 0.25);
+    }
+
+    .story-node.available {
+      animation: pulseGlow 1.8s ease-in-out infinite;
     }
 
     .story-node.active {
       transform: scale(1.13);
       box-shadow:
-        0 0 0 5px rgba(255,255,255,0.12),
-        0 0 22px rgba(255, 239, 176, 1),
-        0 0 42px rgba(255, 217, 120, 0.62);
+        0 0 0 5px rgba(255,255,255,0.14),
+        0 0 24px rgba(255, 240, 185, 1),
+        0 0 44px rgba(255, 217, 120, 0.65);
     }
 
     .story-node.final {
       width: 32px;
       height: 32px;
       background:
-        radial-gradient(circle at center, #fffefa 0%, #ffefb6 35%, #ffd978 65%, #ffc7df 100%);
+        radial-gradient(circle at center, #fffefa 0%, #ffefb8 35%, #ffd978 64%, #ffc8df 100%);
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow:
+          0 0 0 5px rgba(255,255,255,0.08),
+          0 0 18px rgba(255, 217, 120, 0.95),
+          0 0 34px rgba(255, 217, 120, 0.38);
+      }
+      50% {
+        box-shadow:
+          0 0 0 6px rgba(255,255,255,0.12),
+          0 0 26px rgba(255, 240, 185, 1),
+          0 0 42px rgba(255, 217, 120, 0.6);
+      }
     }
 
     .node-label {
@@ -302,42 +369,29 @@
       z-index: 4;
       font-size: 13px;
       font-weight: 700;
-      color: #fffafc;
+      color: var(--panel-text);
       text-shadow: 0 3px 12px rgba(0,0,0,0.35);
       white-space: nowrap;
       pointer-events: none;
     }
 
-    .start-tag {
-      position: absolute;
-      z-index: 6;
-      padding: 10px 15px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 800;
-      background: rgba(255, 217, 120, 0.14);
-      border: 1px solid rgba(255, 217, 120, 0.32);
-      color: var(--gold-2);
-      box-shadow: 0 0 16px rgba(255, 217, 120, 0.15);
-      animation: floatTag 1.8s ease-in-out infinite;
-    }
-
-    .start-tag::after {
-      content: " ↓";
-      font-size: 14px;
-    }
-
-    @keyframes floatTag {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-4px); }
-    }
-
     .panel-card {
+      position: relative;
       padding: 28px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
       min-height: 720px;
+      overflow: hidden;
+    }
+
+    .panel-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 100%;
     }
 
     .panel-top {
@@ -351,7 +405,7 @@
       font-weight: 700;
       letter-spacing: 0.05em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: #ffd9e9;
     }
 
     .panel-title {
@@ -359,14 +413,14 @@
       font-family: Georgia, "Times New Roman", serif;
       font-size: clamp(34px, 4vw, 52px);
       line-height: 0.96;
-      color: #fffafc;
+      color: var(--panel-text);
     }
 
     .panel-copy {
       margin: 0;
       font-size: 16px;
       line-height: 1.85;
-      color: var(--muted);
+      color: var(--panel-muted);
     }
 
     .panel-meta {
@@ -381,9 +435,9 @@
       border-radius: 999px;
       font-size: 13px;
       font-weight: 700;
-      color: #fffafc;
-      background: rgba(255,255,255,0.08);
-      border: 1px solid rgba(255,255,255,0.08);
+      color: var(--panel-text);
+      background: var(--chip);
+      border: 1px solid var(--chip-border);
     }
 
     .panel-bottom {
@@ -396,7 +450,7 @@
 
     .progress {
       font-size: 14px;
-      color: var(--muted);
+      color: var(--panel-muted);
     }
 
     .button-row {
@@ -426,14 +480,14 @@
     }
 
     .primary-btn {
-      background: linear-gradient(135deg, #ffd978, #ffc7df);
-      color: #3b214f;
+      background: linear-gradient(135deg, #ffd978, #ffc8df);
+      color: #43255b;
       box-shadow: 0 10px 24px rgba(255, 199, 223, 0.2);
     }
 
     .secondary-btn {
       background: rgba(255,255,255,0.08);
-      color: #fffafc;
+      color: var(--panel-text);
       border: 1px solid rgba(255,255,255,0.12);
     }
 
@@ -442,8 +496,8 @@
         grid-template-columns: 1fr;
       }
 
-      .panel-card,
-      .constellation-card {
+      .constellation-card,
+      .panel-card {
         min-height: auto;
       }
 
@@ -513,11 +567,6 @@
         width: 26px;
         height: 26px;
       }
-
-      .start-tag {
-        font-size: 11px;
-        padding: 8px 12px;
-      }
     }
   </style>
 </head>
@@ -544,103 +593,109 @@
 
   <main class="page">
     <section class="hero">
-      <div class="eyebrow">An anchor constellation timeline</div>
-      <h1 class="title">Her Story</h1>
+      <div class="eyebrow">A guided constellation chapter path</div>
+      <h1 class="title">Coco’s Star Path</h1>
       <p class="subtitle">
-        Follow the path point by point. Each star opens a chapter in Coco’s journey,
-        from early life to the legacy still being written.
+        Trace the glowing path through the chapters, turning points, and milestones that shaped Coco’s journey.
       </p>
     </section>
 
     <section class="story-layout">
       <div class="constellation-card">
         <div class="constellation-header">
-          <h2 class="constellation-heading">Start at the first star</h2>
+          <h2 class="constellation-heading">Follow the heart-shaped path</h2>
           <p class="constellation-copy">
-            The first run follows a guided path. Once you finish the full story, every point stays unlocked.
+            Move chapter by chapter. Each step unlocks the next star, and once the full path is complete, every point stays open to revisit.
           </p>
         </div>
 
         <div class="story-stage">
           <div class="sparkles" aria-hidden="true">
             <span class="sparkle s3" style="left: 10%; top: 16%;"></span>
-            <span class="sparkle s2" style="left: 18%; top: 28%;"></span>
-            <span class="sparkle" style="left: 29%; top: 12%;"></span>
-            <span class="sparkle s3" style="left: 40%; top: 20%;"></span>
-            <span class="sparkle" style="left: 53%; top: 14%;"></span>
-            <span class="sparkle s2" style="left: 71%; top: 18%;"></span>
-            <span class="sparkle" style="left: 84%; top: 24%;"></span>
-            <span class="sparkle s3" style="left: 77%; top: 54%;"></span>
-            <span class="sparkle s2" style="left: 62%; top: 78%;"></span>
-            <span class="sparkle" style="left: 22%; top: 73%;"></span>
-            <span class="sparkle s3" style="left: 13%; top: 53%;"></span>
-            <span class="sparkle" style="left: 87%; top: 72%;"></span>
+            <span class="sparkle s2" style="left: 19%; top: 30%;"></span>
+            <span class="sparkle" style="left: 30%; top: 14%;"></span>
+            <span class="sparkle s3" style="left: 43%; top: 20%;"></span>
+            <span class="sparkle" style="left: 57%; top: 14%;"></span>
+            <span class="sparkle s2" style="left: 72%; top: 20%;"></span>
+            <span class="sparkle s3" style="left: 85%; top: 31%;"></span>
+            <span class="sparkle" style="left: 82%; top: 58%;"></span>
+            <span class="sparkle s2" style="left: 62%; top: 80%;"></span>
+            <span class="sparkle s3" style="left: 34%; top: 76%;"></span>
+            <span class="sparkle" style="left: 16%; top: 55%;"></span>
+            <span class="sparkle s2" style="left: 89%; top: 72%;"></span>
           </div>
 
           <svg class="story-svg" viewBox="0 0 1000 720" preserveAspectRatio="none" aria-hidden="true">
-            <!-- base anchor lines -->
-            <line class="story-line-base" x1="500" y1="120" x2="500" y2="235"></line>
-            <line class="story-line-base" x1="500" y1="235" x2="360" y2="305"></line>
-            <line class="story-line-base" x1="500" y1="235" x2="640" y2="305"></line>
-            <line class="story-line-base" x1="500" y1="235" x2="500" y2="430"></line>
-            <line class="story-line-base" x1="500" y1="430" x2="500" y2="535"></line>
-            <line class="story-line-base" x1="500" y1="535" x2="330" y2="605"></line>
-            <line class="story-line-base" x1="500" y1="535" x2="670" y2="605"></line>
-            <path class="story-line-base" d="M330 605 Q500 675 670 605"></path>
+            <!-- faint base path -->
+            <line class="story-line-base" x1="350" y1="210" x2="245" y2="305"></line>
+            <line class="story-line-base" x1="245" y1="305" x2="365" y2="430"></line>
+            <line class="story-line-base" x1="365" y1="430" x2="500" y2="560"></line>
+            <line class="story-line-base" x1="500" y1="560" x2="635" y2="430"></line>
+            <line class="story-line-base" x1="635" y1="430" x2="755" y2="305"></line>
+            <line class="story-line-base" x1="755" y1="305" x2="650" y2="210"></line>
 
-            <!-- animated path -->
-            <line id="line1" class="story-line" x1="500" y1="120" x2="500" y2="235"></line>
-            <line id="line2" class="story-line" x1="500" y1="235" x2="360" y2="305"></line>
-            <line id="line3" class="story-line" x1="360" y1="305" x2="640" y2="305"></line>
-            <line id="line4" class="story-line" x1="640" y1="305" x2="500" y2="430"></line>
-            <line id="line5" class="story-line" x1="500" y1="430" x2="500" y2="535"></line>
-            <line id="line6" class="story-line" x1="500" y1="535" x2="330" y2="605"></line>
-            <line id="line7" class="story-line" x1="330" y1="605" x2="670" y2="605"></line>
+            <!-- animated lines -->
+            <line id="line1" class="story-line" x1="350" y1="210" x2="245" y2="305"></line>
+            <line id="line2" class="story-line" x1="245" y1="305" x2="365" y2="430"></line>
+            <line id="line3" class="story-line" x1="365" y1="430" x2="500" y2="560"></line>
+            <line id="line4" class="story-line" x1="500" y1="560" x2="635" y2="430"></line>
+            <line id="line5" class="story-line" x1="635" y1="430" x2="755" y2="305"></line>
+            <line id="line6" class="story-line" x1="755" y1="305" x2="650" y2="210"></line>
           </svg>
 
-          <div class="start-tag" style="left: 54%; top: 8%;">Start here</div>
+          <button class="story-node active available" id="star1" style="left: 42.3%; top: 25%;" aria-label="Early Life"></button>
+          <div class="node-label" style="left: 36%; top: 19%;">Early Life</div>
 
-          <button class="story-node" id="star1" style="left: 47.5%; top: 13%;" aria-label="Early Life"></button>
-          <div class="node-label" style="left: 42.5%; top: 7.5%;">Early Life</div>
+          <button class="story-node locked" id="star2" style="left: 27%; top: 40%;" aria-label="Disney Era"></button>
+          <div class="node-label" style="left: 20%; top: 45%;">Disney Era</div>
 
-          <button class="story-node locked" id="star2" style="left: 33%; top: 27%;" aria-label="Disney Era"></button>
-          <div class="node-label" style="left: 26.5%; top: 31.5%;">Disney Era</div>
+          <button class="story-node locked" id="star3" style="left: 44.5%; top: 58%;" aria-label="Independent Era"></button>
+          <div class="node-label" style="left: 33%; top: 63%;">Independent Era</div>
 
-          <button class="story-node locked" id="star3" style="left: 61%; top: 27%;" aria-label="Independent Era"></button>
-          <div class="node-label" style="left: 53.5%; top: 20.5%;">Independent Era</div>
+          <button class="story-node locked final" id="star4" style="left: 62.3%; top: 58%;" aria-label="Internet Sensation"></button>
+          <div class="node-label" style="left: 63%; top: 64%;">Internet Sensation</div>
 
-          <button class="story-node locked" id="star4" style="left: 47.5%; top: 45%;" aria-label="Internet Sensation"></button>
-          <div class="node-label" style="left: 52.5%; top: 48.5%;">Internet Sensation</div>
+          <button class="story-node locked" id="star5" style="left: 79%; top: 40%;" aria-label="Renaissance"></button>
+          <div class="node-label" style="left: 74%; top: 45%;">Renaissance</div>
 
-          <button class="story-node locked" id="star5" style="left: 47.5%; top: 60.5%;" aria-label="Renaissance"></button>
-          <div class="node-label" style="left: 52%; top: 64%;">Renaissance</div>
+          <button class="story-node locked" id="star6" style="left: 66.2%; top: 25%;" aria-label="Award-Winning Artist"></button>
+          <div class="node-label" style="left: 57.5%; top: 19%;">Award-Winning Artist</div>
 
-          <button class="story-node locked" id="star6" style="left: 28.5%; top: 72.5%;" aria-label="Award-Winning Artist"></button>
-          <div class="node-label" style="left: 16%; top: 78.5%;">Award-Winning Artist</div>
-
-          <button class="story-node locked final" id="star7" style="left: 64.5%; top: 71.8%;" aria-label="Building a Legacy"></button>
-          <div class="node-label" style="left: 60%; top: 78.5%;">Building a Legacy</div>
+          <button class="story-node locked" id="star7" style="left: 54.2%; top: 16%;" aria-label="Building a Legacy"></button>
+          <div class="node-label" style="left: 49%; top: 9.5%;">Building a Legacy</div>
         </div>
       </div>
 
       <aside class="panel-card">
-        <div class="panel-top">
-          <div class="panel-kicker" id="panelKicker">Chapter 1</div>
-          <h2 class="panel-title" id="panelTitle">Early Life</h2>
-          <p class="panel-copy" id="panelCopy">Source has to write this part...</p>
-
-          <div class="panel-meta">
-            <div class="chip" id="panelChip1">Unlocked</div>
-            <div class="chip" id="panelChip2">Anchor Point 1 of 7</div>
-          </div>
+        <div class="panel-sparkles" aria-hidden="true">
+          <span class="sparkle s2" style="left: 12%; top: 12%;"></span>
+          <span class="sparkle" style="left: 82%; top: 11%;"></span>
+          <span class="sparkle s3" style="left: 88%; top: 28%;"></span>
+          <span class="sparkle s2" style="left: 16%; top: 42%;"></span>
+          <span class="sparkle" style="left: 76%; top: 54%;"></span>
+          <span class="sparkle s3" style="left: 24%; top: 76%;"></span>
+          <span class="sparkle s2" style="left: 68%; top: 84%;"></span>
         </div>
 
-        <div class="panel-bottom">
-          <div class="progress" id="panelProgress">1 / 7 chapters revealed</div>
+        <div class="panel-content">
+          <div class="panel-top">
+            <div class="panel-kicker" id="panelKicker">Chapter 1</div>
+            <h2 class="panel-title" id="panelTitle">Early Life</h2>
+            <p class="panel-copy" id="panelCopy">Source has to write this part...</p>
 
-          <div class="button-row">
-            <button class="story-btn primary-btn" id="nextBtn">Reveal next point</button>
-            <button class="story-btn secondary-btn" id="replayBtn">Replay Story Path</button>
+            <div class="panel-meta">
+              <div class="chip" id="panelChip1">Current point</div>
+              <div class="chip" id="panelChip2">Star 1 of 7</div>
+            </div>
+          </div>
+
+          <div class="panel-bottom">
+            <div class="progress" id="panelProgress">1 / 7 points available</div>
+
+            <div class="button-row">
+              <button class="story-btn primary-btn" id="nextBtn">Reveal Next Point</button>
+              <button class="story-btn secondary-btn" id="replayBtn">Replay Story Path</button>
+            </div>
           </div>
         </div>
       </aside>
@@ -649,41 +704,13 @@
 
   <script>
     const chapters = [
-      {
-        title: "Early Life",
-        chapter: "Chapter 1",
-        copy: "Source has to write this part..."
-      },
-      {
-        title: "Disney Era",
-        chapter: "Chapter 2",
-        copy: "Source has to write this part..."
-      },
-      {
-        title: "Independent Era",
-        chapter: "Chapter 3",
-        copy: "Source has to write this part..."
-      },
-      {
-        title: "Internet Sensation",
-        chapter: "Chapter 4",
-        copy: "Source has to write this part..."
-      },
-      {
-        title: "Renaissance",
-        chapter: "Chapter 5",
-        copy: "Source has to write this part..."
-      },
-      {
-        title: "Award-Winning Artist",
-        chapter: "Chapter 6",
-        copy: "Source has to write this part..."
-      },
-      {
-        title: "Building a Legacy",
-        chapter: "Chapter 7",
-        copy: "Source has to write this part..."
-      }
+      { title: "Early Life", chapter: "Chapter 1", copy: "Source has to write this part..." },
+      { title: "Disney Era", chapter: "Chapter 2", copy: "Source has to write this part..." },
+      { title: "Independent Era", chapter: "Chapter 3", copy: "Source has to write this part..." },
+      { title: "Internet Sensation", chapter: "Chapter 4", copy: "Source has to write this part..." },
+      { title: "Renaissance", chapter: "Chapter 5", copy: "Source has to write this part..." },
+      { title: "Award-Winning Artist", chapter: "Chapter 6", copy: "Source has to write this part..." },
+      { title: "Building a Legacy", chapter: "Chapter 7", copy: "Source has to write this part..." }
     ];
 
     const stars = [
@@ -702,8 +729,7 @@
       document.getElementById("line3"),
       document.getElementById("line4"),
       document.getElementById("line5"),
-      document.getElementById("line6"),
-      document.getElementById("line7")
+      document.getElementById("line6")
     ];
 
     const panelKicker = document.getElementById("panelKicker");
@@ -715,8 +741,8 @@
     const nextBtn = document.getElementById("nextBtn");
     const replayBtn = document.getElementById("replayBtn");
 
-    let unlockedIndex = 0;
     let activeIndex = 0;
+    let highestUnlocked = 0;
     let completed = false;
     let isReplaying = false;
 
@@ -729,15 +755,33 @@
       panelKicker.textContent = item.chapter;
       panelTitle.textContent = item.title;
       panelCopy.textContent = item.copy;
-      panelChip2.textContent = `Anchor Point ${index + 1} of ${chapters.length}`;
+      panelChip2.textContent = `Star ${index + 1} of ${chapters.length}`;
 
       if (completed) {
         panelChip1.textContent = "All points unlocked";
-        panelProgress.textContent = "7 / 7 chapters revealed";
+        panelProgress.textContent = `${chapters.length} / ${chapters.length} points available`;
       } else {
-        panelChip1.textContent = index <= unlockedIndex ? "Unlocked" : "Locked";
-        panelProgress.textContent = `${unlockedIndex + 1} / ${chapters.length} chapters revealed`;
+        panelChip1.textContent = "Current point";
+        panelProgress.textContent = `${highestUnlocked + 1} / ${chapters.length} points available`;
       }
+    }
+
+    function updateButtons() {
+      nextBtn.disabled = isReplaying || completed || activeIndex >= chapters.length - 1;
+      if (completed) {
+        nextBtn.textContent = "All points revealed";
+      } else {
+        nextBtn.textContent = "Reveal Next Point";
+      }
+
+      replayBtn.disabled = isReplaying;
+      replayBtn.textContent = isReplaying ? "Replaying..." : "Replay Story Path";
+    }
+
+    function updateLines() {
+      lines.forEach((line, index) => {
+        line.classList.toggle("visible", index < highestUnlocked);
+      });
     }
 
     function updateStars() {
@@ -746,102 +790,161 @@
 
         if (completed) {
           star.classList.remove("locked");
-        } else {
-          star.classList.toggle("locked", index > unlockedIndex);
+          star.classList.remove("available");
+          return;
         }
+
+        if (index <= highestUnlocked) {
+          star.classList.remove("locked");
+        } else {
+          star.classList.add("locked");
+        }
+
+        star.classList.toggle("available", index === highestUnlocked);
       });
     }
 
-    function setLineProgress(visibleCount) {
-      lines.forEach((line, index) => {
-        line.classList.toggle("visible", index < visibleCount);
-      });
-    }
-
-    function finishStory() {
+    function completeStory() {
       completed = true;
-      unlockedIndex = stars.length - 1;
-      activeIndex = stars.length - 1;
+      highestUnlocked = chapters.length - 1;
+      activeIndex = Math.min(activeIndex, chapters.length - 1);
+      updateLines();
       updateStars();
       updatePanel(activeIndex);
-      nextBtn.disabled = true;
-      nextBtn.textContent = "All points revealed";
+      updateButtons();
     }
 
-    function revealNext() {
-      if (isReplaying || completed) return;
+    function refreshUI() {
+      updateLines();
+      updateStars();
+      updatePanel(activeIndex);
+      updateButtons();
+    }
 
-      if (unlockedIndex >= stars.length - 1) {
-        finishStory();
+    async function progressToNext() {
+      if (isReplaying || completed) return;
+      if (activeIndex >= chapters.length - 1) return;
+
+      const current = activeIndex;
+      const next = current + 1;
+
+      lines[current].classList.add("visible");
+      await sleep(760);
+
+      highestUnlocked = Math.max(highestUnlocked, next);
+      activeIndex = next;
+
+      if (next === chapters.length - 1) {
+        completeStory();
         return;
       }
 
-      lines[unlockedIndex].classList.add("visible");
-      unlockedIndex += 1;
-      activeIndex = unlockedIndex;
-
-      updateStars();
-      updatePanel(activeIndex);
-
-      if (unlockedIndex >= stars.length - 1) {
-        finishStory();
-      }
-    }
-
-    async function replayStoryPath() {
-      if (isReplaying) return;
-
-      isReplaying = true;
-      nextBtn.disabled = true;
-      replayBtn.disabled = true;
-
-      completed = false;
-      unlockedIndex = 0;
-      activeIndex = 0;
-      setLineProgress(0);
-      updateStars();
-      updatePanel(0);
-
-      await sleep(700);
-
-      for (let i = 0; i < lines.length; i++) {
-        activeIndex = i;
-        updateStars();
-        updatePanel(i);
-        await sleep(800);
-
-        lines[i].classList.add("visible");
-        await sleep(950);
-
-        unlockedIndex = i + 1;
-        activeIndex = i + 1;
-        updateStars();
-        updatePanel(activeIndex);
-        await sleep(900);
-      }
-
-      finishStory();
-
-      replayBtn.disabled = false;
-      isReplaying = false;
+      refreshUI();
     }
 
     stars.forEach((star, index) => {
-      star.addEventListener("click", () => {
+      star.addEventListener("click", async () => {
         if (isReplaying) return;
-        if (!completed && index > unlockedIndex) return;
+
+        if (completed) {
+          activeIndex = index;
+          refreshUI();
+          return;
+        }
+
+        if (index > highestUnlocked) return;
+
+        if (index < highestUnlocked) {
+          activeIndex = index;
+          refreshUI();
+          return;
+        }
+
+        if (index === activeIndex && index < chapters.length - 1) {
+          await progressToNext();
+          return;
+        }
 
         activeIndex = index;
-        updateStars();
-        updatePanel(index);
+        refreshUI();
       });
     });
 
-    nextBtn.addEventListener("click", revealNext);
-    replayBtn.addEventListener("click", replayStoryPath);
+    nextBtn.addEventListener("click", async () => {
+      await progressToNext();
+    });
 
-    updateStars();
-    updatePanel(0);
+    replayBtn.addEventListener("click", async () => {
+      if (isReplaying) return;
+
+      isReplaying = true;
+      completed = false;
+      activeIndex = 0;
+      highestUnlocked = 0;
+      refreshUI();
+
+      await sleep(450);
+
+      for (let i = 0; i < lines.length; i++) {
+        activeIndex = i;
+        refreshUI();
+        await sleep(620);
+
+        lines[i].classList.add("visible");
+        await sleep(760);
+
+        highestUnlocked = i + 1;
+        activeIndex = i + 1;
+        refreshUI();
+        await sleep(760);
+      }
+
+      completeStory();
+      isReplaying = false;
+      refreshUI();
+    });
+
+    function handlePageTransitions() {
+      const links = document.querySelectorAll('a[href]');
+      links.forEach(link => {
+        const href = link.getAttribute('href');
+
+        if (
+          !href ||
+          href.startsWith('#') ||
+          href.startsWith('mailto:') ||
+          href.startsWith('tel:') ||
+          href.startsWith('javascript:')
+        ) {
+          return;
+        }
+
+        link.addEventListener('click', (event) => {
+          const target = link.getAttribute('target');
+          if (target === '_blank') return;
+
+          const url = new URL(href, window.location.href);
+          if (url.origin !== window.location.origin) return;
+
+          event.preventDefault();
+          document.body.classList.remove('page-ready');
+          document.body.classList.add('page-leaving');
+
+          setTimeout(() => {
+            window.location.href = url.href;
+          }, 360);
+        });
+      });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      requestAnimationFrame(() => {
+        document.body.classList.add('page-ready');
+      });
+
+      handlePageTransitions();
+      refreshUI();
+    });
   </script>
 </body>
 </html>
