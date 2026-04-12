@@ -115,96 +115,18 @@
     .page {
       max-width: 1400px;
       margin: 0 auto;
-      padding: 28px 20px 60px;
+      padding: 34px 20px 60px;
     }
 
-    /* TOP SPOTLIGHT */
-    .hero-stack {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-bottom: 24px;
-      padding-top: 10px;
-    }
-
-    .spotlight-top {
-      position: relative;
-      width: 100%;
-      max-width: 950px;
-      min-height: 520px;
-      border-radius: 36px;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at center 22%, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.68) 15%, rgba(255,255,255,0.22) 30%, transparent 48%),
-        linear-gradient(to bottom, rgba(255,240,245,0.96), rgba(255,228,236,0.88));
-      box-shadow: 0 18px 40px var(--shadow);
-      border: 1px solid rgba(255,255,255,0.55);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 30px 20px 90px;
-    }
-
-    .spotlight-beam {
-      position: absolute;
-      top: -80px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 480px;
-      height: 430px;
-      background: radial-gradient(circle, rgba(255,255,255,0.86) 0%, rgba(255,255,255,0.22) 48%, transparent 72%);
-      filter: blur(10px);
-      pointer-events: none;
-    }
-
-    .spotlight-floor {
-      position: absolute;
-      bottom: 65px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 340px;
-      height: 58px;
-      border-radius: 999px;
-      background: radial-gradient(circle, rgba(212,168,87,0.34) 0%, rgba(212,168,87,0.12) 45%, transparent 75%);
-      filter: blur(8px);
-      pointer-events: none;
-    }
-
-    .spotlight-image {
-      position: relative;
-      z-index: 2;
-      max-height: 420px;
-      width: auto;
-      object-fit: contain;
-      filter: drop-shadow(0 12px 28px rgba(107,47,163,0.16));
-    }
-
-    .title-overlap {
-      position: relative;
-      z-index: 3;
-      margin-top: -48px;
-      background: rgba(255, 240, 245, 0.92);
-      border: 1px solid rgba(255,255,255,0.6);
-      box-shadow: 0 16px 32px var(--shadow);
-      border-radius: 28px;
-      padding: 24px 28px;
+    .hero-text {
       text-align: center;
-      max-width: 700px;
-      width: calc(100% - 40px);
+      max-width: 860px;
+      margin: 0 auto 28px;
     }
 
-    .title-overlap h1 {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(42px, 6vw, 74px);
-      line-height: 0.95;
-      color: var(--primary);
-    }
-
-    .title-overlap .eyebrow {
+    .hero-text .eyebrow {
       display: inline-block;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
       font-size: 12px;
       letter-spacing: 1.8px;
       text-transform: uppercase;
@@ -212,19 +134,23 @@
       color: var(--gold);
     }
 
-    /* ABOUT TEXT */
-    .about-text {
-      margin: 26px auto 0;
-      max-width: 760px;
-      text-align: center;
+    .hero-text h1 {
+      margin: 0 0 14px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(48px, 7vw, 86px);
+      line-height: 0.95;
+      color: var(--primary);
+    }
+
+    .hero-text p {
+      margin: 0;
       font-size: 17px;
       line-height: 1.8;
       color: var(--secondary);
     }
 
-    /* SEARCH */
     .search-section {
-      margin: 28px auto 34px;
+      margin: 0 auto 34px;
       max-width: 900px;
     }
 
@@ -273,7 +199,6 @@
       cursor: pointer;
     }
 
-    /* SECTIONS */
     .section {
       margin-bottom: 30px;
     }
@@ -303,7 +228,6 @@
       max-width: 700px;
     }
 
-    /* EXPLORE */
     .tools-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -377,35 +301,11 @@
         font-size: 24px;
       }
 
-      .spotlight-top {
-        min-height: 390px;
-        padding-bottom: 80px;
-      }
-
-      .spotlight-image {
-        max-height: 290px;
-      }
-
-      .spotlight-beam {
-        width: 300px;
-        height: 280px;
-      }
-
-      .spotlight-floor {
-        width: 220px;
-        bottom: 58px;
-      }
-
-      .title-overlap {
-        margin-top: -34px;
-        padding: 20px;
-      }
-
       .tools-grid {
         grid-template-columns: 1fr;
       }
 
-      .about-text {
+      .hero-text p {
         font-size: 16px;
       }
     }
@@ -433,19 +333,10 @@
   </header>
 
   <main class="page">
-    <section class="hero-stack">
-      <div class="spotlight-top">
-        <div class="spotlight-beam"></div>
-        <img class="spotlight-image" src="coco-cutout.png" alt="Coco spotlight image">
-        <div class="spotlight-floor"></div>
-      </div>
-
-      <div class="title-overlap">
-        <span class="eyebrow">Digital Archive • Living Diary</span>
-        <h1>Coco's World</h1>
-      </div>
-
-      <p class="about-text">
+    <section class="hero-text">
+      <span class="eyebrow">Digital Archive • Living Diary</span>
+      <h1>Coco's World</h1>
+      <p>
         A modern digital diary for Coco Jones — music, visuals, updates, videos,
         gallery archives, calendar moments, games, and curated deep dives, all in one place.
       </p>
