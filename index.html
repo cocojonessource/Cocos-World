@@ -393,36 +393,92 @@
     }
 
     @media (max-width: 700px) {
-      .topbar-inner {
-        align-items: flex-start;
-      }
+  .topbar-inner {
+    align-items: flex-start;
+  }
 
-      .brand {
-        font-size: 24px;
-      }
+  .brand {
+    font-size: 24px;
+  }
 
-      .tools-grid {
-        grid-template-columns: 1fr;
-      }
+  .page {
+    padding: 24px 16px 50px;
+  }
 
-      .hero-description {
-        font-size: 16px;
-      }
+  .hero-gallery {
+    margin-bottom: 26px;
+  }
 
-      .flow-wrap {
-        height: 300px;
-      }
+  .hero-title {
+    font-size: clamp(40px, 13vw, 58px);
+  }
 
-      .flow-card {
-        width: 135px;
-        height: 195px;
-      }
+  .hero-description {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 20px;
+  }
 
-      .flow-fade-left,
-      .flow-fade-right {
-        width: 45px;
-      }
-    }
+  .flow-wrap {
+    height: 360px;
+    margin: 0 auto 8px;
+    overflow: hidden;
+    perspective: 1400px;
+  }
+
+  .flow-card {
+    width: 140px;
+    height: 205px;
+    left: 50%;
+    top: 50%;
+    margin-left: -70px;
+    margin-top: -102.5px;
+    transform-origin: center center;
+  }
+
+  .flow-fade-left,
+  .flow-fade-right {
+    width: 20px;
+    opacity: 0.35;
+  }
+
+  .search-section {
+    margin-bottom: 26px;
+  }
+
+  .search-card {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .search-bar {
+    flex-direction: column;
+  }
+
+  .search-bar input,
+  .search-bar button {
+    width: 100%;
+  }
+
+  .tools-grid {
+    display: flex;
+    gap: 16px;
+    overflow-x: auto;
+    padding-bottom: 10px;
+    scroll-snap-type: x mandatory;
+  }
+
+  .tools-grid::-webkit-scrollbar {
+    display: none;
+  }
+
+  .tool-card {
+    min-width: 86%;
+    flex: 0 0 86%;
+    scroll-snap-align: center;
+    min-height: 190px;
+  }
+}
   </style>
 </head>
 <body>
@@ -580,105 +636,175 @@
     </div>
   </div>
 
-  <script>
-    const flowWrap = document.getElementById('flowWrap');
-    const cards = Array.from(document.querySelectorAll('.flow-card'));
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImage = document.getElementById('lightboxImage');
-    const lightboxClose = document.getElementById('lightboxClose');
+ <script>
+  const flowWrap = document.getElementById('flowWrap');
+  const cards = Array.from(document.querySelectorAll('.flow-card'));
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImage = document.getElementById('lightboxImage');
+  const lightboxClose = document.getElementById('lightboxClose');
 
-    let paused = false;
-    let speed = 0.8;
+  let paused = false;
+  let speed = 0.8;
+  let mobileAngleOffset = 0;
+  let animationFrameId = null;
 
-    function getCardWidth() {
-      return window.innerWidth <= 700 ? 135 : window.innerWidth <= 1100 ? 170 : 210;
-    }
+  function isMobileView() {
+    return window.innerWidth <= 700;
+  }
 
-    function getCardHeight() {
-      return window.innerWidth <= 700 ? 195 : window.innerWidth <= 1100 ? 240 : 290;
-    }
+  function getCardWidth() {
+    if (isMobileView()) return 140;
+    return window.innerWidth <= 1100 ? 170 : 210;
+  }
 
-    function setupCards() {
-      const wrapWidth = flowWrap.clientWidth;
-      const gap = 26;
-      const cardWidth = getCardWidth();
+  function getCardHeight() {
+    if (isMobileView()) return 205;
+    return window.innerWidth <= 1100 ? 240 : 290;
+  }
+
+  function setupCards() {
+    const gap = 26;
+    const cardWidth = getCardWidth();
+
+    if (isMobileView()) {
+      const step = (Math.PI * 2) / cards.length;
+
       cards.forEach((card, index) => {
-        card.dataset.x = index * (cardWidth + gap);
+        card.dataset.angle = index * step;
+        card.dataset.x = '';
       });
+
+      mobileAngleOffset = 0;
+      return;
     }
 
-    function renderCards() {
-      const wrapWidth = flowWrap.clientWidth;
-      const wrapHeight = flowWrap.clientHeight;
-      const cardWidth = getCardWidth();
-      const cardHeight = getCardHeight();
+    cards.forEach((card, index) => {
+      card.dataset.x = index * (cardWidth + gap);
+      card.dataset.angle = '';
+    });
+  }
+
+  function renderCards() {
+    const wrapWidth = flowWrap.clientWidth;
+    const wrapHeight = flowWrap.clientHeight;
+    const cardWidth = getCardWidth();
+    const cardHeight = getCardHeight();
+
+    if (isMobileView()) {
       const centerX = wrapWidth / 2;
-      const usableWidth = wrapWidth + cardWidth + 40;
+      const centerY = wrapHeight / 2;
+      const radiusX = Math.min(wrapWidth * 0.34, 125);
+      const radiusY = 68;
 
-      cards.forEach(card => {
-        let x = parseFloat(card.dataset.x);
+      if (!paused) {
+        mobileAngleOffset += 0.012;
+      }
 
-        if (!paused) {
-          x -= speed;
-        }
+      cards.forEach((card) => {
+        const baseAngle = parseFloat(card.dataset.angle || 0);
+        const angle = baseAngle + mobileAngleOffset;
 
-        if (x < -cardWidth - 40) {
-          const maxX = Math.max(...cards.map(c => parseFloat(c.dataset.x)));
-          x = maxX + cardWidth + 26;
-        }
+        const x = Math.sin(angle) * radiusX;
+        const y = Math.cos(angle) * radiusY;
 
-        card.dataset.x = x;
-
-        const cardCenter = x + cardWidth / 2;
-        const dist = Math.abs(cardCenter - centerX);
-        const ratio = Math.min(dist / (wrapWidth / 2), 1);
-
-        /* middle dips back, sides come forward */
-        const scale = 0.82 + (ratio * 0.28);
-        const y = 26 + (1 - ratio) * 52;
-        const rotateY = ((cardCenter - centerX) / centerX) * 18;
-        const opacity = 0.72 + (ratio * 0.28);
-        const z = Math.round(ratio * 100);
+        const depth = (y + radiusY) / (radiusY * 2);
+        const scale = 0.72 + depth * 0.42;
+        const opacity = 0.42 + depth * 0.58;
+        const rotateY = x / 12;
+        const zIndex = Math.floor(depth * 1000);
 
         card.style.width = `${cardWidth}px`;
         card.style.height = `${cardHeight}px`;
+        card.style.left = '50%';
+        card.style.top = '50%';
         card.style.transform = `
-          translate3d(${x}px, ${y}px, ${z}px)
+          translate3d(calc(-50% + ${x}px), calc(-50% + ${y}px), 0)
           rotateY(${rotateY}deg)
           scale(${scale})
         `;
         card.style.opacity = opacity;
-        card.style.zIndex = Math.floor(ratio * 1000);
+        card.style.zIndex = zIndex;
       });
 
-      requestAnimationFrame(renderCards);
+      animationFrameId = requestAnimationFrame(renderCards);
+      return;
     }
 
-    flowWrap.addEventListener('mouseenter', () => paused = true);
-    flowWrap.addEventListener('mouseleave', () => paused = false);
+    const centerX = wrapWidth / 2;
 
-    cards.forEach(card => {
-      const img = card.querySelector('img');
-      img.addEventListener('click', () => {
-        lightboxImage.src = img.src;
-        lightbox.classList.add('active');
-      });
-    });
+    cards.forEach((card) => {
+      let x = parseFloat(card.dataset.x);
 
-    lightboxClose.addEventListener('click', () => {
-      lightbox.classList.remove('active');
-    });
-
-    lightbox.addEventListener('click', (e) => {
-      if (e.target === lightbox) {
-        lightbox.classList.remove('active');
+      if (!paused) {
+        x -= speed;
       }
+
+      if (x < -cardWidth - 40) {
+        const maxX = Math.max(...cards.map(c => parseFloat(c.dataset.x)));
+        x = maxX + cardWidth + 26;
+      }
+
+      card.dataset.x = x;
+
+      const cardCenter = x + cardWidth / 2;
+      const dist = Math.abs(cardCenter - centerX);
+      const ratio = Math.min(dist / (wrapWidth / 2), 1);
+
+      const scale = 0.82 + (ratio * 0.28);
+      const y = 26 + (1 - ratio) * 52;
+      const rotateY = ((cardCenter - centerX) / centerX) * 18;
+      const opacity = 0.72 + (ratio * 0.28);
+
+      card.style.width = `${cardWidth}px`;
+      card.style.height = `${cardHeight}px`;
+      card.style.left = '0';
+      card.style.top = '0';
+      card.style.transform = `
+        translate3d(${x}px, ${y}px, 0)
+        rotateY(${rotateY}deg)
+        scale(${scale})
+      `;
+      card.style.opacity = opacity;
+      card.style.zIndex = Math.floor(ratio * 1000);
     });
 
-    window.addEventListener('resize', setupCards);
+    animationFrameId = requestAnimationFrame(renderCards);
+  }
+
+  function restartAnimation() {
+    if (animationFrameId) {
+      cancelAnimationFrame(animationFrameId);
+    }
 
     setupCards();
     renderCards();
-  </script>
+  }
+
+  flowWrap.addEventListener('mouseenter', () => paused = true);
+  flowWrap.addEventListener('mouseleave', () => paused = false);
+
+  cards.forEach(card => {
+    const img = card.querySelector('img');
+    img.addEventListener('click', () => {
+      lightboxImage.src = img.src;
+      lightbox.classList.add('active');
+    });
+  });
+
+  lightboxClose.addEventListener('click', () => {
+    lightbox.classList.remove('active');
+  });
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) {
+      lightbox.classList.remove('active');
+    }
+  });
+
+  window.addEventListener('resize', restartAnimation);
+
+  setupCards();
+  renderCards();
+</script>
 </body>
 </html>
