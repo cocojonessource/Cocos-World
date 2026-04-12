@@ -22,30 +22,32 @@
       box-sizing: border-box;
     }
 
-   body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background:
-    radial-gradient(circle at top, rgba(255,255,255,0.45), transparent 30%),
-    linear-gradient(to bottom, #fff8fb 0%, var(--bg) 20%, #ffeaf1 100%);
-  color: var(--primary);
-  overflow-x: hidden;
-  opacity: 0;
-  transform: translateY(12px);
-  filter: blur(4px);
-  transition: opacity 0.55s ease, transform 0.55s ease, filter 0.55s ease;
-}
-body.page-ready {
-  opacity: 1;
-  transform: translateY(0);
-  filter: blur(0);
-}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.45), transparent 30%),
+        linear-gradient(to bottom, #fff8fb 0%, var(--bg) 20%, #ffeaf1 100%);
+      color: var(--primary);
+      overflow-x: hidden;
+      opacity: 0;
+      transform: translateY(12px);
+      filter: blur(4px);
+      transition: opacity 0.55s ease, transform 0.55s ease, filter 0.55s ease;
+    }
 
-body.page-leaving {
-  opacity: 0;
-  transform: translateY(-10px);
-  filter: blur(4px);
-}
+    body.page-ready {
+      opacity: 1;
+      transform: translateY(0);
+      filter: blur(0);
+    }
+
+    body.page-leaving {
+      opacity: 0;
+      transform: translateY(-10px);
+      filter: blur(4px);
+    }
+
     a {
       color: inherit;
       text-decoration: none;
@@ -154,7 +156,6 @@ body.page-leaving {
       color: var(--secondary);
     }
 
-    /* curved screen-wide conveyor */
     .flow-wrap {
       position: relative;
       width: 100%;
@@ -407,104 +408,104 @@ body.page-leaving {
     }
 
     @media (max-width: 700px) {
-  .topbar-inner {
-    align-items: flex-start;
-  }
+      .topbar-inner {
+        align-items: flex-start;
+      }
 
-  .brand {
-    font-size: 24px;
-  }
+      .brand {
+        font-size: 24px;
+      }
 
-  .page {
-    padding: 24px 16px 50px;
-  }
+      .page {
+        padding: 24px 16px 50px;
+      }
 
-  .hero-gallery {
-    margin-bottom: 26px;
-  }
+      .hero-gallery {
+        margin-bottom: 26px;
+      }
 
-  .hero-title {
-    font-size: clamp(40px, 13vw, 58px);
-  }
+      .hero-title {
+        font-size: clamp(40px, 13vw, 58px);
+      }
 
-  .hero-description {
-    font-size: 16px;
-    line-height: 1.7;
-    margin-bottom: 20px;
-  }
+      .hero-description {
+        font-size: 16px;
+        line-height: 1.7;
+        margin-bottom: 20px;
+      }
 
-  .flow-wrap {
-    height: 320px;
-    margin: 0 auto 12px;
-    overflow: hidden;
-    perspective: 1400px;
-  }
+      .flow-wrap {
+        height: 320px;
+        margin: 0 auto 12px;
+        overflow: hidden;
+        perspective: 1400px;
+      }
 
-  .flow-card {
-    width: 132px;
-    height: 192px;
-    left: 50%;
-    top: 50%;
-    transform-origin: center center;
-  }
+      .flow-card {
+        width: 132px;
+        height: 192px;
+        left: 50%;
+        top: 50%;
+        transform-origin: center center;
+      }
 
-  .flow-fade-left,
-  .flow-fade-right {
-    width: 18px;
-    opacity: 0.22;
-  }
+      .flow-fade-left,
+      .flow-fade-right {
+        width: 18px;
+        opacity: 0.22;
+      }
 
-  .search-section {
-    margin-bottom: 26px;
-  }
+      .search-section {
+        margin-bottom: 26px;
+      }
 
-  .search-card {
-    padding: 16px;
-    border-radius: 20px;
-  }
+      .search-card {
+        padding: 16px;
+        border-radius: 20px;
+      }
 
-  .search-bar {
-    flex-direction: column;
-  }
+      .search-bar {
+        flex-direction: column;
+      }
 
-  .search-bar input,
-  .search-bar button {
-    width: 100%;
-  }
+      .search-bar input,
+      .search-bar button {
+        width: 100%;
+      }
 
-  .tools-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 16px;
-    overflow: visible;
-    padding-bottom: 0;
-  }
+      .tools-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 16px;
+        overflow: visible;
+        padding-bottom: 0;
+      }
 
-  .tool-card {
-    min-width: 0;
-    flex: initial;
-    min-height: 190px;
-  }
-}
+      .tool-card {
+        min-width: 0;
+        flex: initial;
+        min-height: 190px;
+      }
+    }
   </style>
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
-        <a class="anchor-home" href="#">⚓</a>
+        <a class="anchor-home" href="index.html">⚓</a>
         <span>Coco's World</span>
       </div>
 
       <nav class="nav">
-        <a href="#">Home</a>
+        <a href="index.html">Home</a>
         <a href="gallery.html">Gallery</a>
         <a href="#">Music</a>
         <a href="#">Videos</a>
         <a href="#">Updates</a>
         <a href="#">Calendar</a>
         <a href="#">Games</a>
-        <a href="story.html">Story</a></a>
+        <a href="story.html">Story</a>
       </nav>
     </div>
   </header>
@@ -626,7 +627,7 @@ body.page-leaving {
             <h3>Story</h3>
             <p>A summary space for who Coco is, where she started, and how each era connects.</p>
           </div>
-          <a class="tool-link" href="#">Open Story</a>
+          <a class="tool-link" href="story.html">Open Story</a>
         </article>
       </div>
     </section>
@@ -643,237 +644,237 @@ body.page-leaving {
     </div>
   </div>
 
- <script>
-  const flowWrap = document.getElementById('flowWrap');
-  const cards = Array.from(document.querySelectorAll('.flow-card'));
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImage = document.getElementById('lightboxImage');
-  const lightboxClose = document.getElementById('lightboxClose');
+  <script>
+    const flowWrap = document.getElementById('flowWrap');
+    const cards = Array.from(document.querySelectorAll('.flow-card'));
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxClose = document.getElementById('lightboxClose');
 
-  let paused = false;
-  let speed = 0.8;
-  let mobileAngleOffset = 0;
-  let animationFrameId = null;
+    let paused = false;
+    let speed = 0.8;
+    let mobileAngleOffset = 0;
+    let animationFrameId = null;
 
-  function isMobileView() {
-    return window.innerWidth <= 700;
-  }
-
-  function getActiveCards() {
-    return isMobileView() ? cards.slice(0, 5) : cards;
-  }
-
-  function applyCardVisibility() {
-    const activeCards = getActiveCards();
-    const activeSet = new Set(activeCards);
-
-    cards.forEach((card) => {
-      if (activeSet.has(card)) {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
-      }
-    });
-  }
-
-  function getCardWidth() {
-    if (isMobileView()) return 132;
-    return window.innerWidth <= 1100 ? 170 : 210;
-  }
-
-  function getCardHeight() {
-    if (isMobileView()) return 192;
-    return window.innerWidth <= 1100 ? 240 : 290;
-  }
-
-  function setupCards() {
-    const activeCards = getActiveCards();
-    const gap = 26;
-    const cardWidth = getCardWidth();
-
-    applyCardVisibility();
-
-    if (isMobileView()) {
-      const step = (Math.PI * 2) / activeCards.length;
-
-      activeCards.forEach((card, index) => {
-        card.dataset.angle = index * step;
-        card.dataset.x = '';
-      });
-
-      mobileAngleOffset = -0.3;
-      return;
+    function isMobileView() {
+      return window.innerWidth <= 700;
     }
 
-    activeCards.forEach((card, index) => {
-      card.dataset.x = index * (cardWidth + gap);
-      card.dataset.angle = '';
-      card.style.display = 'block';
-    });
-  }
+    function getActiveCards() {
+      return isMobileView() ? cards.slice(0, 5) : cards;
+    }
 
-  function renderCards() {
-    const wrapWidth = flowWrap.clientWidth;
-    const cardWidth = getCardWidth();
-    const cardHeight = getCardHeight();
-    const activeCards = getActiveCards();
+    function applyCardVisibility() {
+      const activeCards = getActiveCards();
+      const activeSet = new Set(activeCards);
 
-    if (isMobileView()) {
-      const radiusX = Math.min(wrapWidth * 0.32, 108);
-      const radiusY = 70;
-      const centerYOffset = -22;
+      cards.forEach((card) => {
+        if (activeSet.has(card)) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
 
-      if (!paused) {
-        mobileAngleOffset += 0.009;
+    function getCardWidth() {
+      if (isMobileView()) return 132;
+      return window.innerWidth <= 1100 ? 170 : 210;
+    }
+
+    function getCardHeight() {
+      if (isMobileView()) return 192;
+      return window.innerWidth <= 1100 ? 240 : 290;
+    }
+
+    function setupCards() {
+      const activeCards = getActiveCards();
+      const gap = 26;
+      const cardWidth = getCardWidth();
+
+      applyCardVisibility();
+
+      if (isMobileView()) {
+        const step = (Math.PI * 2) / activeCards.length;
+
+        activeCards.forEach((card, index) => {
+          card.dataset.angle = index * step;
+          card.dataset.x = '';
+        });
+
+        mobileAngleOffset = -0.3;
+        return;
       }
 
+      activeCards.forEach((card, index) => {
+        card.dataset.x = index * (cardWidth + gap);
+        card.dataset.angle = '';
+        card.style.display = 'block';
+      });
+    }
+
+    function renderCards() {
+      const wrapWidth = flowWrap.clientWidth;
+      const cardWidth = getCardWidth();
+      const cardHeight = getCardHeight();
+      const activeCards = getActiveCards();
+
+      if (isMobileView()) {
+        const radiusX = Math.min(wrapWidth * 0.32, 108);
+        const radiusY = 70;
+        const centerYOffset = -22;
+
+        if (!paused) {
+          mobileAngleOffset += 0.009;
+        }
+
+        activeCards.forEach((card) => {
+          const baseAngle = parseFloat(card.dataset.angle || 0);
+          const angle = baseAngle + mobileAngleOffset;
+
+          const x = Math.sin(angle) * radiusX;
+          const y = Math.cos(angle) * radiusY + centerYOffset;
+
+          const depth = (y - centerYOffset + radiusY) / (radiusY * 2);
+          const scale = 0.78 + depth * 0.24;
+          const opacity = 0.55 + depth * 0.45;
+          const rotateY = x / 9;
+          const zIndex = Math.floor(depth * 1000);
+
+          card.style.width = `${cardWidth}px`;
+          card.style.height = `${cardHeight}px`;
+          card.style.left = '50%';
+          card.style.top = '50%';
+          card.style.transform = `
+            translate(-50%, -50%)
+            translate3d(${x}px, ${y}px, 0)
+            rotateY(${rotateY}deg)
+            scale(${scale})
+          `;
+          card.style.opacity = opacity;
+          card.style.zIndex = zIndex;
+        });
+
+        animationFrameId = requestAnimationFrame(renderCards);
+        return;
+      }
+
+      const centerX = wrapWidth / 2;
+
       activeCards.forEach((card) => {
-        const baseAngle = parseFloat(card.dataset.angle || 0);
-        const angle = baseAngle + mobileAngleOffset;
+        let x = parseFloat(card.dataset.x);
 
-        const x = Math.sin(angle) * radiusX;
-        const y = Math.cos(angle) * radiusY + centerYOffset;
+        if (!paused) {
+          x -= speed;
+        }
 
-        const depth = (y - centerYOffset + radiusY) / (radiusY * 2);
-        const scale = 0.78 + depth * 0.24;
-        const opacity = 0.55 + depth * 0.45;
-        const rotateY = x / 9;
-        const zIndex = Math.floor(depth * 1000);
+        if (x < -cardWidth - 40) {
+          const maxX = Math.max(...activeCards.map(c => parseFloat(c.dataset.x)));
+          x = maxX + cardWidth + 26;
+        }
+
+        card.dataset.x = x;
+
+        const cardCenter = x + cardWidth / 2;
+        const dist = Math.abs(cardCenter - centerX);
+        const ratio = Math.min(dist / (wrapWidth / 2), 1);
+
+        const scale = 0.82 + (ratio * 0.28);
+        const y = 26 + (1 - ratio) * 52;
+        const rotateY = ((cardCenter - centerX) / centerX) * 18;
+        const opacity = 0.72 + (ratio * 0.28);
 
         card.style.width = `${cardWidth}px`;
         card.style.height = `${cardHeight}px`;
-        card.style.left = '50%';
-        card.style.top = '50%';
+        card.style.left = '0';
+        card.style.top = '0';
         card.style.transform = `
-          translate(-50%, -50%)
           translate3d(${x}px, ${y}px, 0)
           rotateY(${rotateY}deg)
           scale(${scale})
         `;
         card.style.opacity = opacity;
-        card.style.zIndex = zIndex;
+        card.style.zIndex = Math.floor(ratio * 1000);
       });
 
       animationFrameId = requestAnimationFrame(renderCards);
-      return;
     }
 
-    const centerX = wrapWidth / 2;
-
-    activeCards.forEach((card) => {
-      let x = parseFloat(card.dataset.x);
-
-      if (!paused) {
-        x -= speed;
+    function restartAnimation() {
+      if (animationFrameId) {
+        cancelAnimationFrame(animationFrameId);
       }
 
-      if (x < -cardWidth - 40) {
-        const maxX = Math.max(...activeCards.map(c => parseFloat(c.dataset.x)));
-        x = maxX + cardWidth + 26;
-      }
-
-      card.dataset.x = x;
-
-      const cardCenter = x + cardWidth / 2;
-      const dist = Math.abs(cardCenter - centerX);
-      const ratio = Math.min(dist / (wrapWidth / 2), 1);
-
-      const scale = 0.82 + (ratio * 0.28);
-      const y = 26 + (1 - ratio) * 52;
-      const rotateY = ((cardCenter - centerX) / centerX) * 18;
-      const opacity = 0.72 + (ratio * 0.28);
-
-      card.style.width = `${cardWidth}px`;
-      card.style.height = `${cardHeight}px`;
-      card.style.left = '0';
-      card.style.top = '0';
-      card.style.transform = `
-        translate3d(${x}px, ${y}px, 0)
-        rotateY(${rotateY}deg)
-        scale(${scale})
-      `;
-      card.style.opacity = opacity;
-      card.style.zIndex = Math.floor(ratio * 1000);
-    });
-
-    animationFrameId = requestAnimationFrame(renderCards);
-  }
-
-  function restartAnimation() {
-    if (animationFrameId) {
-      cancelAnimationFrame(animationFrameId);
+      setupCards();
+      renderCards();
     }
 
-    setupCards();
-    renderCards();
-  }
+    flowWrap.addEventListener('mouseenter', () => paused = true);
+    flowWrap.addEventListener('mouseleave', () => paused = false);
 
-  flowWrap.addEventListener('mouseenter', () => paused = true);
-  flowWrap.addEventListener('mouseleave', () => paused = false);
-
-  cards.forEach(card => {
-    const img = card.querySelector('img');
-    img.addEventListener('click', () => {
-      lightboxImage.src = img.src;
-      lightbox.classList.add('active');
+    cards.forEach(card => {
+      const img = card.querySelector('img');
+      img.addEventListener('click', () => {
+        lightboxImage.src = img.src;
+        lightbox.classList.add('active');
+      });
     });
-  });
 
-  lightboxClose.addEventListener('click', () => {
-    lightbox.classList.remove('active');
-  });
-
-  lightbox.addEventListener('click', (e) => {
-    if (e.target === lightbox) {
+    lightboxClose.addEventListener('click', () => {
       lightbox.classList.remove('active');
-    }
-  });
-
- window.addEventListener('resize', setupCards);
-
-function handlePageTransitions() {
-  const links = document.querySelectorAll('a[href]');
-
-  links.forEach(link => {
-    const href = link.getAttribute('href');
-
-    if (
-      !href ||
-      href.startsWith('#') ||
-      href.startsWith('mailto:') ||
-      href.startsWith('tel:') ||
-      href.startsWith('javascript:')
-    ) {
-      return;
-    }
-
-    link.addEventListener('click', (event) => {
-      const target = link.getAttribute('target');
-      if (target === '_blank') return;
-
-      const url = new URL(href, window.location.href);
-      if (url.origin !== window.location.origin) return;
-
-      event.preventDefault();
-      document.body.classList.remove('page-ready');
-      document.body.classList.add('page-leaving');
-
-      setTimeout(() => {
-        window.location.href = url.href;
-      }, 360);
     });
-  });
-}
 
-window.addEventListener('DOMContentLoaded', () => {
-  requestAnimationFrame(() => {
-    document.body.classList.add('page-ready');
-  });
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('active');
+      }
+    });
 
-  setupCards();
-  renderCards();
-  handlePageTransitions();
-});
-</script>
+    function handlePageTransitions() {
+      const links = document.querySelectorAll('a[href]');
+
+      links.forEach(link => {
+        const href = link.getAttribute('href');
+
+        if (
+          !href ||
+          href.startsWith('#') ||
+          href.startsWith('mailto:') ||
+          href.startsWith('tel:') ||
+          href.startsWith('javascript:')
+        ) {
+          return;
+        }
+
+        link.addEventListener('click', (event) => {
+          const target = link.getAttribute('target');
+          if (target === '_blank') return;
+
+          const url = new URL(href, window.location.href);
+          if (url.origin !== window.location.origin) return;
+
+          event.preventDefault();
+          document.body.classList.remove('page-ready');
+          document.body.classList.add('page-leaving');
+
+          setTimeout(() => {
+            window.location.href = url.href;
+          }, 360);
+        });
+      });
+    }
+
+    window.addEventListener('resize', restartAnimation);
+
+    window.addEventListener('DOMContentLoaded', () => {
+      requestAnimationFrame(() => {
+        document.body.classList.add('page-ready');
+      });
+
+      setupCards();
+      renderCards();
+      handlePageTransitions();
+    });
+  </script>
 </body>
 </html>
