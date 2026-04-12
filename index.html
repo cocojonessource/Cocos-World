@@ -3,9 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Gallery</title>
+  <title>Coco's World</title>
 
   <style>
+    :root {
+      --bg: #FFE4EC;
+      --nav: #FFD1DC;
+      --primary: #6B2FA3;
+      --secondary: #8B5FBF;
+      --accent: #D76BA8;
+      --gold: #D4A857;
+      --white: #FFFFFF;
+      --shadow: rgba(107, 47, 163, 0.10);
+      --shadow-strong: rgba(107, 47, 163, 0.18);
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -13,216 +25,660 @@
     body {
       margin: 0;
       font-family: Arial, sans-serif;
-      background: #f6f4ff;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.45), transparent 30%),
+        linear-gradient(to bottom, #fff8fb 0%, var(--bg) 20%, #ffeaf1 100%);
+      color: var(--primary);
+      overflow-x: hidden;
     }
 
-    .cards-section {
-      width: 100%;
-      padding: 60px 24px;
-      position: relative;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    .cards-heading {
-      text-align: center;
-      font-size: 2rem;
-      margin-bottom: 32px;
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 209, 220, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.45);
     }
 
-    /* DESKTOP GRID */
-    .cards-track {
-      display: grid;
-      grid-template-columns: repeat(5, 1fr);
+    .topbar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       gap: 20px;
+      flex-wrap: wrap;
     }
 
-    .card {
-      background: white;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .anchor-home {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: var(--white);
+      border: 1px solid rgba(212, 168, 87, 0.45);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--gold);
+      box-shadow: 0 6px 16px rgba(212, 168, 87, 0.14);
+      flex-shrink: 0;
+    }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .nav a {
+      position: relative;
+      color: var(--primary);
+    }
+
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.22s ease;
+    }
+
+    .nav a:hover::after {
+      transform: scaleX(1);
+    }
+
+    .page {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 34px 20px 60px;
+    }
+
+    .hero-gallery {
+      margin-bottom: 34px;
+      text-align: center;
+    }
+
+    .hero-title {
+      margin: 0 0 14px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(48px, 7vw, 86px);
+      line-height: 0.95;
+      color: var(--primary);
+    }
+
+    .hero-description {
+      max-width: 760px;
+      margin: 0 auto 18px;
+      text-align: center;
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--secondary);
+    }
+
+    /* curved screen-wide conveyor */
+    .flow-wrap {
+      position: relative;
+      width: 100%;
+      height: 390px;
+      margin: 0 auto 16px;
+      overflow: hidden;
+      perspective: 1200px;
+    }
+
+    .flow-card {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 210px;
+      height: 290px;
       border-radius: 24px;
-      padding: 20px;
-      min-height: 220px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+      overflow: hidden;
+      background: rgba(255, 240, 245, 0.95);
+      border: 1px solid rgba(255,255,255,0.65);
+      box-shadow: 0 14px 30px var(--shadow);
+      transition: box-shadow 0.2s ease;
+      cursor: pointer;
+      will-change: transform;
+    }
+
+    .flow-card:hover {
+      box-shadow: 0 20px 40px var(--shadow-strong);
+    }
+
+    .flow-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .flow-fade-left,
+    .flow-fade-right {
+      position: absolute;
+      top: 0;
+      width: 110px;
+      height: 100%;
+      z-index: 20;
+      pointer-events: none;
+    }
+
+    .flow-fade-left {
+      left: 0;
+      background: linear-gradient(to right, rgba(255, 232, 239, 0.95), rgba(255, 232, 239, 0));
+    }
+
+    .flow-fade-right {
+      right: 0;
+      background: linear-gradient(to left, rgba(255, 232, 239, 0.95), rgba(255, 232, 239, 0));
+    }
+
+    .search-section {
+      margin: 0 auto 34px;
+      max-width: 900px;
+    }
+
+    .search-card {
+      background: rgba(255,255,255,0.56);
+      border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 24px;
+      padding: 18px;
+      box-shadow: 0 12px 28px var(--shadow);
+    }
+
+    .search-label {
+      margin-bottom: 12px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--secondary);
+      text-align: center;
+    }
+
+    .search-bar {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .search-bar input {
+      flex: 1;
+      min-width: 220px;
+      border: 1px solid rgba(107, 47, 163, 0.14);
+      background: var(--white);
+      border-radius: 999px;
+      padding: 14px 18px;
+      font-size: 15px;
+      color: var(--primary);
+      outline: none;
+    }
+
+    .search-bar button {
+      border: none;
+      background: var(--accent);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 14px 22px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .section {
+      margin-bottom: 30px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1;
+      color: var(--primary);
+    }
+
+    .section-subtitle {
+      margin: 8px 0 0;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--secondary);
+      max-width: 700px;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .tool-card {
+      background: rgba(255, 240, 245, 0.82);
+      border: 1px solid rgba(255,255,255,0.5);
+      border-radius: 24px;
+      box-shadow: 0 14px 30px var(--shadow);
+      padding: 24px;
+      min-height: 210px;
       display: flex;
       flex-direction: column;
-      justify-content: flex-end;
+      justify-content: space-between;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
     }
 
-    .card-number {
-      font-size: 0.8rem;
-      opacity: 0.6;
-      margin-bottom: 6px;
+    .tool-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 36px var(--shadow-strong);
     }
 
-    .card-title {
-      font-size: 1.1rem;
-      font-weight: bold;
-      margin: 0 0 6px;
+    .tool-icon {
+      font-size: 24px;
+      margin-bottom: 12px;
+      color: var(--gold);
     }
 
-    .card-text {
-      font-size: 0.9rem;
-      opacity: 0.8;
-      margin: 0;
+    .tool-card h3 {
+      margin: 0 0 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      line-height: 1;
+      color: var(--primary);
     }
 
-    .carousel-btn {
+    .tool-card p {
+      margin: 0 0 16px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: var(--secondary);
+    }
+
+    .tool-link {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 20px 20px 10px;
+      color: var(--secondary);
+      font-size: 14px;
+    }
+
+    .lightbox {
       display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(37, 16, 53, 0.78);
+      z-index: 3000;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
     }
 
-    /* TABLET */
-    @media (max-width: 1024px) {
-      .cards-track {
-        grid-template-columns: repeat(3, 1fr);
+    .lightbox.active {
+      display: flex;
+    }
+
+    .lightbox-inner {
+      position: relative;
+      max-width: 90vw;
+      max-height: 90vh;
+    }
+
+    .lightbox img {
+      max-width: 100%;
+      max-height: 90vh;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+    }
+
+    .lightbox-close {
+      position: absolute;
+      top: -14px;
+      right: -14px;
+      width: 40px;
+      height: 40px;
+      border: none;
+      border-radius: 999px;
+      background: var(--white);
+      color: var(--primary);
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.16);
+    }
+
+    @media (max-width: 1100px) {
+      .tools-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .flow-wrap {
+        height: 340px;
+      }
+
+      .flow-card {
+        width: 170px;
+        height: 240px;
       }
     }
 
-    /* MOBILE CAROUSEL */
-    @media (max-width: 768px) {
-
-      .cards-section {
-        padding: 40px 0;
+    @media (max-width: 700px) {
+      .topbar-inner {
+        align-items: flex-start;
       }
 
-      .cards-heading {
-        padding: 0 16px;
+      .brand {
+        font-size: 24px;
       }
 
-      .cards-track {
-        display: flex;
-        overflow-x: auto;
-        gap: 16px;
-        scroll-snap-type: x mandatory;
-        padding: 0 16px 16px;
+      .tools-grid {
+        grid-template-columns: 1fr;
       }
 
-      .cards-track::-webkit-scrollbar {
-        display: none;
+      .hero-description {
+        font-size: 16px;
       }
 
-      .card {
-        flex: 0 0 85%;
-        min-width: 85%;
-        scroll-snap-align: center;
+      .flow-wrap {
+        height: 300px;
       }
 
-      .carousel-btn {
-        display: flex;
-        position: absolute;
-        top: 60%;
-        transform: translateY(-50%);
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        border: none;
-        background: white;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        font-size: 20px;
-        align-items: center;
-        justify-content: center;
-        cursor: pointer;
+      .flow-card {
+        width: 135px;
+        height: 195px;
       }
 
-      .prev {
-        left: 5px;
-      }
-
-      .next {
-        right: 5px;
+      .flow-fade-left,
+      .flow-fade-right {
+        width: 45px;
       }
     }
   </style>
 </head>
-
 <body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <a class="anchor-home" href="#">⚓</a>
+        <span>Coco's World</span>
+      </div>
 
-<section class="cards-section">
-  <h2 class="cards-heading">My Cards</h2>
-
-  <button class="carousel-btn prev">‹</button>
-
-  <div class="cards-track" id="track">
-
-    <div class="card">
-      <div class="card-number">01</div>
-      <div class="card-title">Card One</div>
-      <p class="card-text">Text</p>
+      <nav class="nav">
+        <a href="#">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="#">Music</a>
+        <a href="#">Videos</a>
+        <a href="#">Updates</a>
+        <a href="#">Calendar</a>
+        <a href="#">Games</a>
+        <a href="#">Story</a>
+      </nav>
     </div>
+  </header>
 
-    <div class="card">
-      <div class="card-number">02</div>
-      <div class="card-title">Card Two</div>
-      <p class="card-text">Text</p>
+  <main class="page">
+    <section class="hero-gallery">
+      <h1 class="hero-title">Coco's World</h1>
+
+      <p class="hero-description">
+        A modern digital diary for Coco Jones — music, visuals, updates, videos,
+        gallery archives, calendar moments, games, and curated deep dives, all in one place.
+      </p>
+
+      <div class="flow-wrap" id="flowWrap">
+        <div class="flow-fade-left"></div>
+        <div class="flow-fade-right"></div>
+
+        <div class="flow-card"><img src="card1.jpg" alt="Coco card 1"></div>
+        <div class="flow-card"><img src="card2.jpg" alt="Coco card 2"></div>
+        <div class="flow-card"><img src="card3.jpg" alt="Coco card 3"></div>
+        <div class="flow-card"><img src="card4.jpg" alt="Coco card 4"></div>
+        <div class="flow-card"><img src="card5.jpg" alt="Coco card 5"></div>
+        <div class="flow-card"><img src="card6.jpg" alt="Coco card 6"></div>
+        <div class="flow-card"><img src="card7.jpg" alt="Coco card 7"></div>
+        <div class="flow-card"><img src="card8.jpg" alt="Coco card 8"></div>
+        <div class="flow-card"><img src="card9.jpg" alt="Coco card 9"></div>
+        <div class="flow-card"><img src="card10.jpg" alt="Coco card 10"></div>
+      </div>
+    </section>
+
+    <section class="search-section">
+      <div class="search-card">
+        <div class="search-label">Search the archive, gallery, music, videos, or updates</div>
+        <div class="search-bar">
+          <input type="text" placeholder="Search by era, year, event, magazine, video, song..." />
+          <button>Search</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">Explore</h2>
+          <p class="section-subtitle">
+            Start anywhere — browse the archive, listen to music, watch videos, check updates,
+            track events, play games, or dive into Coco’s story.
+          </p>
+        </div>
+      </div>
+
+      <div class="tools-grid">
+        <article class="tool-card">
+          <div>
+            <div class="tool-icon">📸</div>
+            <h3>Gallery</h3>
+            <p>Organized archive with tags, years, categories, subfolders, and credits.</p>
+          </div>
+          <a class="tool-link" href="#">Open Gallery</a>
+        </article>
+
+        <article class="tool-card">
+          <div>
+            <div class="tool-icon">🎵</div>
+            <h3>Music</h3>
+            <p>Streaming links, releases, projects, music videos, and listening paths.</p>
+          </div>
+          <a class="tool-link" href="#">Open Music</a>
+        </article>
+
+        <article class="tool-card">
+          <div>
+            <div class="tool-icon">🎬</div>
+            <h3>Videos</h3>
+            <p>Newest uploads, interviews, performances, and official video pathways.</p>
+          </div>
+          <a class="tool-link" href="#">Open Videos</a>
+        </article>
+
+        <article class="tool-card">
+          <div>
+            <div class="tool-icon">📰</div>
+            <h3>Updates</h3>
+            <p>A news-style page for your Coco updates and current site activity.</p>
+          </div>
+          <a class="tool-link" href="#">Open Updates</a>
+        </article>
+
+        <article class="tool-card">
+          <div>
+            <div class="tool-icon">🗓️</div>
+            <h3>Calendar</h3>
+            <p>Track appearances, releases, events, and important dates in one place.</p>
+          </div>
+          <a class="tool-link" href="#">Open Calendar</a>
+        </article>
+
+        <article class="tool-card">
+          <div>
+            <div class="tool-icon">🎮</div>
+            <h3>Games</h3>
+            <p>Mini experiences like the Lover Girl game and future fan-made extras.</p>
+          </div>
+          <a class="tool-link" href="#">Open Games</a>
+        </article>
+
+        <article class="tool-card">
+          <div>
+            <div class="tool-icon">🔎</div>
+            <h3>Deep Dive</h3>
+            <p>Choose an era and get a curated path to understand that chapter of her career.</p>
+          </div>
+          <a class="tool-link" href="#">Start a Deep Dive</a>
+        </article>
+
+        <article class="tool-card">
+          <div>
+            <div class="tool-icon">📖</div>
+            <h3>Story</h3>
+            <p>A summary space for who Coco is, where she started, and how each era connects.</p>
+          </div>
+          <a class="tool-link" href="#">Open Story</a>
+        </article>
+      </div>
+    </section>
+
+    <div class="footer">
+      Coco’s World — archive, diary, media hub, and fan world in one.
     </div>
+  </main>
 
-    <div class="card">
-      <div class="card-number">03</div>
-      <div class="card-title">Card Three</div>
-      <p class="card-text">Text</p>
+  <div class="lightbox" id="lightbox">
+    <div class="lightbox-inner">
+      <button class="lightbox-close" id="lightboxClose">×</button>
+      <img id="lightboxImage" src="" alt="Expanded Coco image">
     </div>
-
-    <div class="card">
-      <div class="card-number">04</div>
-      <div class="card-title">Card Four</div>
-      <p class="card-text">Text</p>
-    </div>
-
-    <div class="card">
-      <div class="card-number">05</div>
-      <div class="card-title">Card Five</div>
-      <p class="card-text">Text</p>
-    </div>
-
-    <div class="card">
-      <div class="card-number">06</div>
-      <div class="card-title">Card Six</div>
-      <p class="card-text">Text</p>
-    </div>
-
-    <div class="card">
-      <div class="card-number">07</div>
-      <div class="card-title">Card Seven</div>
-      <p class="card-text">Text</p>
-    </div>
-
-    <div class="card">
-      <div class="card-number">08</div>
-      <div class="card-title">Card Eight</div>
-      <p class="card-text">Text</p>
-    </div>
-
-    <div class="card">
-      <div class="card-number">09</div>
-      <div class="card-title">Card Nine</div>
-      <p class="card-text">Text</p>
-    </div>
-
-    <div class="card">
-      <div class="card-number">10</div>
-      <div class="card-title">Card Ten</div>
-      <p class="card-text">Text</p>
-    </div>
-
   </div>
 
-  <button class="carousel-btn next">›</button>
-</section>
+  <script>
+    const flowWrap = document.getElementById('flowWrap');
+    const cards = Array.from(document.querySelectorAll('.flow-card'));
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightboxImage');
+    const lightboxClose = document.getElementById('lightboxClose');
 
-<script>
-  const track = document.getElementById("track");
-  const prev = document.querySelector(".prev");
-  const next = document.querySelector(".next");
+    let paused = false;
+    let speed = 0.8;
 
-  function scrollAmount() {
-    return track.querySelector(".card").offsetWidth + 16;
-  }
+    function getCardWidth() {
+      return window.innerWidth <= 700 ? 135 : window.innerWidth <= 1100 ? 170 : 210;
+    }
 
-  prev.onclick = () => {
-    track.scrollBy({ left: -scrollAmount(), behavior: "smooth" });
-  };
+    function getCardHeight() {
+      return window.innerWidth <= 700 ? 195 : window.innerWidth <= 1100 ? 240 : 290;
+    }
 
-  next.onclick = () => {
-    track.scrollBy({ left: scrollAmount(), behavior: "smooth" });
-  };
-</script>
+    function setupCards() {
+      const wrapWidth = flowWrap.clientWidth;
+      const gap = 26;
+      const cardWidth = getCardWidth();
+      cards.forEach((card, index) => {
+        card.dataset.x = index * (cardWidth + gap);
+      });
+    }
 
+    function renderCards() {
+      const wrapWidth = flowWrap.clientWidth;
+      const wrapHeight = flowWrap.clientHeight;
+      const cardWidth = getCardWidth();
+      const cardHeight = getCardHeight();
+      const centerX = wrapWidth / 2;
+      const usableWidth = wrapWidth + cardWidth + 40;
+
+      cards.forEach(card => {
+        let x = parseFloat(card.dataset.x);
+
+        if (!paused) {
+          x -= speed;
+        }
+
+        if (x < -cardWidth - 40) {
+          const maxX = Math.max(...cards.map(c => parseFloat(c.dataset.x)));
+          x = maxX + cardWidth + 26;
+        }
+
+        card.dataset.x = x;
+
+        const cardCenter = x + cardWidth / 2;
+        const dist = Math.abs(cardCenter - centerX);
+        const ratio = Math.min(dist / (wrapWidth / 2), 1);
+
+        /* middle dips back, sides come forward */
+        const scale = 0.82 + (ratio * 0.28);
+        const y = 26 + (1 - ratio) * 52;
+        const rotateY = ((cardCenter - centerX) / centerX) * 18;
+        const opacity = 0.72 + (ratio * 0.28);
+        const z = Math.round(ratio * 100);
+
+        card.style.width = `${cardWidth}px`;
+        card.style.height = `${cardHeight}px`;
+        card.style.transform = `
+          translate3d(${x}px, ${y}px, ${z}px)
+          rotateY(${rotateY}deg)
+          scale(${scale})
+        `;
+        card.style.opacity = opacity;
+        card.style.zIndex = Math.floor(ratio * 1000);
+      });
+
+      requestAnimationFrame(renderCards);
+    }
+
+    flowWrap.addEventListener('mouseenter', () => paused = true);
+    flowWrap.addEventListener('mouseleave', () => paused = false);
+
+    cards.forEach(card => {
+      const img = card.querySelector('img');
+      img.addEventListener('click', () => {
+        lightboxImage.src = img.src;
+        lightbox.classList.add('active');
+      });
+    });
+
+    lightboxClose.addEventListener('click', () => {
+      lightbox.classList.remove('active');
+    });
+
+    lightbox.addEventListener('click', (e) => {
+      if (e.target === lightbox) {
+        lightbox.classList.remove('active');
+      }
+    });
+
+    window.addEventListener('resize', setupCards);
+
+    setupCards();
+    renderCards();
+  </script>
 </body>
 </html>
