@@ -806,8 +806,8 @@
     <div class="featured-hero-overlay">
       <div class="featured-badge">FEATURED</div>
       <h2 class="featured-kicker">CocoStream Spotlight</h2>
-      <h3 class="featured-title">Featured Coco Interview or Performance</h3>
-      <p class="featured-copy">
+      <h3 class="featured-title" id="featuredTitle">Featured Coco Interview or Performance</h3>
+      <p class="featured-copy" id="featuredCopy">
         A standout Coco moment — performances, interviews, and visual eras all in one watch space.
       </p>
 
@@ -827,7 +827,24 @@
     </div>
   </section>
 
-  <div class="stream-shell">
+  <div class="stream-shell"> 
+    <article class="player-card">
+  <div class="player-frame">
+    <iframe
+      id="mainPlayer"
+      src="https://www.youtube.com/embed/0Lhs1WEjloo?rel=0"
+      allowfullscreen>
+    </iframe>
+  </div>
+
+  <div class="player-meta">
+    <div class="eyebrow">Now Playing</div>
+    <h2 class="player-title" id="mainVideoTitle">Featured Coco Video</h2>
+    <p class="player-description" id="mainVideoDescription">
+      Your main featured video.
+    </p>
+  </div>
+</article>
         </article>
 
         <aside class="sidebar-card">
@@ -839,12 +856,12 @@
           <div class="playlist" id="playlist">
             <div
               class="playlist-item active"
-              data-video-id="https://youtu.be/0Lhs1WEjloo?si=Wx982POABHQ_qqH2"
+              data-video-id="https://youtu.be/0Lhs1WEjloo"
               data-title="Featured Coco Interview or Performance"
               data-description="Put your main featured video here — a standout performance, interview, live session, or career moment that you want centered first when people enter the page."
             >
               <div class="playlist-thumb">
-                <img src="https://img.youtube.com/vi/ScMzIvxBSi4/hqdefault.jpg" alt="Featured video thumbnail">
+                <img src="https://img.youtube.com/vi/0Lhs1WEjloo/hqdefault.jpg"> alt="Featured video thumbnail">
               </div>
               <div class="playlist-content">
                 <h4>Featured Coco Interview or Performance</h4>
