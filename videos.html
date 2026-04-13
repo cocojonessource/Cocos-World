@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CocoStream | Coco's World</title>
+
+  <style>
+    :root {
+      --bg: #FFE4EC;
+      --nav: #FFD1DC;
+      --primary: #6B2FA3;
+      --secondary: #8B5FBF;
+      --accent: #D76BA8;
+      --gold: #D4A857;
+      --white: #FFFFFF;
+      --lavender-bg: #EEE6FF;
+      --lavender-card: #F6F0FF;
+      --shadow: rgba(107, 47, 163, 0.10);
+      --shadow-strong: rgba(107, 47, 163, 0.18);
+      --border-soft: rgba(255,255,255,0.55);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.45), transparent 30%),
+        linear-gradient(to bottom, #fff8fb 0%, var(--bg) 20%, #ffeaf1 100%);
+      color: var(--primary);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 209, 220, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.45);
+    }
+
+    .topbar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .anchor-home {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: var(--white);
+      border: 1px solid rgba(212, 168, 87, 0.45);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--gold);
+      box-shadow: 0 6px 16px rgba(212, 168, 87, 0.14);
+      flex-shrink: 0;
+    }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 15px;
+      font-weight: 600;
+    }
+
+    .nav a {
+      position: relative;
+      color: var(--primary);
+    }
+
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.22s ease;
+    }
+
+    .nav a:hover::after,
+    .nav a.active::after {
+      transform: scaleX(1);
+    }
+
+    .page {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 34px 20px 60px;
+    }
+
+    .hero {
+      margin-bottom: 28px;
+    }
+
+    .hero-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 18px;
+    }
+
+    .hero-title-wrap {
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .hero-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(40px, 6vw, 74px);
+      line-height: 0.95;
+      color: var(--primary);
+    }
+
+    .mode-hint {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--secondary);
+      letter-spacing: 0.02em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      white-space: nowrap;
+    }
+
+    .mode-hint::after {
+      content: "→";
+      font-size: 18px;
+      color: var(--gold);
+    }
+
+    .mode-switch {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 10px 24px var(--shadow);
+    }
+
+    .mode-label {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--secondary);
+      min-width: 88px;
+      text-align: center;
+    }
+
+    .switch {
+      position: relative;
+      width: 68px;
+      height: 36px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      cursor: pointer;
+      background: linear-gradient(135deg, #f6bfd1, #e6c9ff);
+      border-radius: 999px;
+      transition: 0.28s ease;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55);
+    }
+
+    .slider::before {
+      content: "";
+      position: absolute;
+      height: 28px;
+      width: 28px;
+      left: 4px;
+      top: 4px;
+      border-radius: 50%;
+      background: var(--white);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      transition: 0.28s ease;
+    }
+
+    .switch input:checked + .slider::before {
+      transform: translateX(32px);
+    }
+
+    .hero-description {
+      max-width: 950px;
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--secondary);
+    }
+
+    .mode-panel {
+      display: none;
+      animation: fadeIn 0.35s ease;
+    }
+
+    .mode-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* STREAM MODE */
+    .stream-shell {
+      display: grid;
+      grid-template-columns: minmax(0, 1.65fr) minmax(280px, 0.75fr);
+      gap: 24px;
+      align-items: start;
+      margin-top: 24px;
+    }
+
+    .player-card,
+    .sidebar-card,
+    .video-card,
+    .press-card,
+    .press-preview-card {
+      background: rgba(255,255,255,0.62);
+      border: 1px solid var(--border-soft);
+      border-radius: 26px;
+      box-shadow: 0 14px 30px var(--shadow);
+      overflow: hidden;
+    }
+
+    .player-frame {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+
+    .player-frame iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .player-meta {
+      padding: 22px 22px 24px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 12px;
+    }
+
+    .player-title {
+      margin: 0 0 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 3vw, 40px);
+      line-height: 1.05;
+      color: var(--primary);
+    }
+
+    .player-description {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.75;
+      color: var(--secondary);
+    }
+
+    .sidebar-card {
+      padding: 20px;
+    }
+
+    .sidebar-title {
+      margin: 0 0 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      color: var(--primary);
+    }
+
+    .sidebar-copy {
+      margin: 0 0 18px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--secondary);
+    }
+
+    .playlist {
+      display: grid;
+      gap: 14px;
+    }
+
+    .playlist-item {
+      display: grid;
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 12px;
+      align-items: stretch;
+      padding: 10px;
+      border-radius: 18px;
+      background: rgba(255, 240, 245, 0.86);
+      border: 1px solid rgba(255,255,255,0.62);
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+    }
+
+    .playlist-item:hover,
+    .playlist-item.active {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 22px var(--shadow);
+      border-color: rgba(212, 168, 87, 0.55);
+    }
+
+    .playlist-thumb {
+      position: relative;
+      width: 100%;
+      height: 76px;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #e8d7f6;
+    }
+
+    .playlist-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .playlist-content {
+      min-width: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .playlist-content h4 {
+      margin: 0 0 6px;
+      font-size: 15px;
+      line-height: 1.35;
+      color: var(--primary);
+    }
+
+    .playlist-content p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--secondary);
+    }
+
+    .section-block {
+      margin-top: 30px;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1;
+      color: var(--primary);
+    }
+
+    .section-subtitle {
+      margin: 8px 0 0;
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--secondary);
+      max-width: 760px;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .video-card {
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+      cursor: pointer;
+    }
+
+    .video-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 36px var(--shadow-strong);
+    }
+
+    .video-thumb {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #e8d7f6;
+      overflow: hidden;
+    }
+
+    .video-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-info {
+      padding: 16px 16px 18px;
+    }
+
+    .video-info h3 {
+      margin: 0 0 8px;
+      font-size: 18px;
+      line-height: 1.35;
+      color: var(--primary);
+    }
+
+    .video-info p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--secondary);
+    }
+
+    /* PRESS MODE */
+    .press-mode {
+      margin-top: 24px;
+      background: linear-gradient(to bottom, #f2e9ff 0%, var(--lavender-bg) 100%);
+      border: 1px solid rgba(255,255,255,0.62);
+      border-radius: 30px;
+      box-shadow: 0 16px 34px var(--shadow);
+      padding: 26px;
+    }
+
+    .press-intro {
+      max-width: 980px;
+      margin-bottom: 22px;
+    }
+
+    .press-intro h2 {
+      margin: 0 0 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(30px, 4vw, 46px);
+      color: var(--primary);
+    }
+
+    .press-intro p {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.8;
+      color: #8b4bb3;
+    }
+
+    .press-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .press-card {
+      background: rgba(255,255,255,0.72);
+      min-height: 620px;
+    }
+
+    .press-frame {
+      width: 100%;
+      height: 100%;
+      min-height: 620px;
+      border: 0;
+      display: block;
+      background: var(--white);
+    }
+
+    .press-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 20px;
+    }
+
+    .press-preview-card {
+      background: rgba(255,255,255,0.76);
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 240px;
+    }
+
+    .press-preview-card h3 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 24px;
+      line-height: 1.15;
+      color: var(--accent);
+    }
+
+    .press-preview-card p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--secondary);
+    }
+
+    .press-link {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 30px 20px 10px;
+      color: var(--secondary);
+      font-size: 14px;
+    }
+.featured-hero {
+  position: relative;
+  min-height: 430px;
+  border-radius: 30px;
+  overflow: hidden;
+  margin-bottom: 24px;
+  background-image:
+    linear-gradient(to right, rgba(45, 17, 73, 0.82) 0%, rgba(45, 17, 73, 0.58) 42%, rgba(45, 17, 73, 0.18) 100%),
+    url('https://img.youtube.com/vi/ScMzIvxBSi4/maxresdefault.jpg');
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 18px 38px var(--shadow);
+  border: 1px solid rgba(255,255,255,0.5);
+  display: flex;
+  align-items: flex-end;
+}
+
+.featured-hero-overlay {
+  width: 100%;
+  max-width: 760px;
+  padding: 36px 32px;
+  color: var(--white);
+}
+
+.featured-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  background: rgba(212, 168, 87, 0.92);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.featured-kicker {
+  margin: 0 0 10px;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #ffdff0;
+}
+
+.featured-title {
+  margin: 0 0 14px;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(34px, 5vw, 56px);
+  line-height: 0.98;
+  color: var(--white);
+}
+
+.featured-copy {
+  margin: 0;
+  max-width: 620px;
+  font-size: 16px;
+  line-height: 1.8;
+  color: rgba(255,255,255,0.9);
+}
+
+.featured-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+}
+
+.hero-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 700;
+  border: none;
+  cursor: pointer;
+}
+
+.hero-btn-primary {
+  background: var(--accent);
+  color: var(--white);
+  box-shadow: 0 8px 20px rgba(215, 107, 168, 0.28);
+}
+
+.hero-btn-secondary {
+  background: rgba(255,255,255,0.16);
+  color: var(--white);
+  border: 1px solid rgba(255,255,255,0.35);
+  backdrop-filter: blur(6px);
+}
+
+@media (max-width: 700px) {
+  .featured-hero {
+    min-height: 360px;
+    background-position: center;
+  }
+
+  .featured-hero-overlay {
+    padding: 24px 18px;
+  }
+
+  .featured-copy {
+    font-size: 15px;
+    line-height: 1.7;
+  }
+}
+    @media (max-width: 1100px) {
+      .stream-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .video-grid,
+      .press-preview-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .press-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .topbar-inner {
+        align-items: flex-start;
+      }
+
+      .brand {
+        font-size: 24px;
+      }
+
+      .hero-top,
+      .hero-title-wrap {
+        align-items: flex-start;
+      }
+
+      .mode-hint {
+        white-space: normal;
+      }
+
+      .mode-switch {
+        width: 100%;
+        justify-content: center;
+      }
+
+      .playlist-item {
+        grid-template-columns: 100px minmax(0, 1fr);
+      }
+
+      .video-grid,
+      .press-preview-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .press-mode {
+        padding: 18px;
+      }
+
+      .press-card,
+      .press-frame {
+        min-height: 500px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <a class="anchor-home" href="index.html">⚓</a>
+        <span>Coco's World</span>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="music.html">Music</a>
+        <a href="videos.html" class="active">Videos</a>
+        <a href="updates.html">Updates</a>
+        <a href="calendar.html">Calendar</a>
+        <a href="games.html">Games</a>
+        <a href="story.html">Story</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <div class="hero-top">
+        <div class="hero-title-wrap">
+          <h1 class="hero-title" id="modeTitle">CocoStream</h1>
+
+          <div class="mode-hint" id="modeHint">read mode</div>
+
+          <div class="mode-switch">
+            <span class="mode-label" id="leftModeLabel">Watch Mode</span>
+
+            <label class="switch" aria-label="Toggle between CocoStream and CocoPress">
+              <input type="checkbox" id="modeToggle" />
+              <span class="slider"></span>
+            </label>
+
+            <span class="mode-label" id="rightModeLabel">Read Mode</span>
+          </div>
+        </div>
+      </div>
+
+      <p class="hero-description" id="modeDescription">
+        A watch-first media space for performances, interviews, appearances, and video moments — pulled from YouTube, but played right here inside Coco’s World.
+      </p>
+    </section>
+
+    <!-- WATCH MODE -->
+   <section class="mode-panel active" id="streamPanel">
+
+  <section class="featured-hero" id="featuredHero">
+    <div class="featured-hero-overlay">
+      <div class="featured-badge">FEATURED</div>
+      <h2 class="featured-kicker">CocoStream Spotlight</h2>
+      <h3 class="featured-title">Featured Coco Interview or Performance</h3>
+      <p class="featured-copy">
+        A standout Coco moment — performances, interviews, and visual eras all in one watch space.
+      </p>
+
+      <div class="featured-actions">
+        <button
+          class="hero-btn hero-btn-primary"
+          id="heroPlayBtn"
+          type="button"
+        >
+          Play Now
+        </button>
+
+        <a class="hero-btn hero-btn-secondary" href="#moreToWatch">
+          Browse More
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <div class="stream-shell">
+        </article>
+
+        <aside class="sidebar-card">
+          <h3 class="sidebar-title">Up Next</h3>
+          <p class="sidebar-copy">
+            A curated watch path for Coco’s interviews, performances, press stops, and visual moments.
+          </p>
+
+          <div class="playlist" id="playlist">
+            <div
+              class="playlist-item active"
+              data-video-id="https://youtu.be/0Lhs1WEjloo?si=Wx982POABHQ_qqH2"
+              data-title="Featured Coco Interview or Performance"
+              data-description="Put your main featured video here — a standout performance, interview, live session, or career moment that you want centered first when people enter the page."
+            >
+              <div class="playlist-thumb">
+                <img src="https://img.youtube.com/vi/ScMzIvxBSi4/hqdefault.jpg" alt="Featured video thumbnail">
+              </div>
+              <div class="playlist-content">
+                <h4>Featured Coco Interview or Performance</h4>
+                <p>Main feature at the top of the page.</p>
+              </div>
+            </div>
+
+            <div
+              class="playlist-item"
+              data-video-id="ysz5S6PUM-U"
+              data-title="Coco Interview Placeholder"
+              data-description="Use this slot for a thoughtful sit-down, magazine interview, podcast segment, or press conversation."
+            >
+              <div class="playlist-thumb">
+                <img src="https://img.youtube.com/vi/ysz5S6PUM-U/hqdefault.jpg" alt="Interview thumbnail">
+              </div>
+              <div class="playlist-content">
+                <h4>Coco Interview Placeholder</h4>
+                <p>Written-media companion or talk segment.</p>
+              </div>
+            </div>
+
+            <div
+              class="playlist-item"
+              data-video-id="aqz-KE-bpKQ"
+              data-title="Performance Placeholder"
+              data-description="Use this slot for a live performance, TV stage, acoustic moment, or special appearance."
+            >
+              <div class="playlist-thumb">
+                <img src="https://img.youtube.com/vi/aqz-KE-bpKQ/hqdefault.jpg" alt="Performance thumbnail">
+              </div>
+              <div class="playlist-content">
+                <h4>Performance Placeholder</h4>
+                <p>Live stage and showcase moment.</p>
+              </div>
+            </div>
+
+            <div
+              class="playlist-item"
+              data-video-id="dQw4w9WgXcQ"
+              data-title="Behind the Scenes Placeholder"
+              data-description="Use this slot for behind-the-scenes videos, vlogs, rehearsals, or lighter fan-facing content."
+            >
+              <div class="playlist-thumb">
+                <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Behind the scenes thumbnail">
+              </div>
+              <div class="playlist-content">
+                <h4>Behind the Scenes Placeholder</h4>
+                <p>Casual and intimate video moments.</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <section class="section-block" id="moreToWatch">
+        <div class="section-header">
+          <div>
+            <h2 class="section-title">More to Watch</h2>
+            <p class="section-subtitle">
+              A cleaner Netflix-meets-Crunchyroll grid for performances, interviews, appearances, and visual eras.
+            </p>
+          </div>
+        </div>
+
+        <div class="video-grid">
+          <article
+            class="video-card"
+            data-video-id="ScMzIvxBSi4"
+            data-title="Featured Coco Interview or Performance"
+            data-description="Put your main featured video here — a standout performance, interview, live session, or career moment that you want centered first when people enter the page."
+          >
+            <div class="video-thumb">
+              <img src="https://img.youtube.com/vi/ScMzIvxBSi4/maxresdefault.jpg" alt="Featured video">
+            </div>
+            <div class="video-info">
+              <h3>Featured Coco Interview or Performance</h3>
+              <p>Main watch-page feature.</p>
+            </div>
+          </article>
+
+          <article
+            class="video-card"
+            data-video-id="ysz5S6PUM-U"
+            data-title="Coco Interview Placeholder"
+            data-description="Use this slot for a thoughtful sit-down, magazine interview, podcast segment, or press conversation."
+          >
+            <div class="video-thumb">
+              <img src="https://img.youtube.com/vi/ysz5S6PUM-U/maxresdefault.jpg" alt="Interview video">
+            </div>
+            <div class="video-info">
+              <h3>Coco Interview Placeholder</h3>
+              <p>Best for in-depth conversation and personality.</p>
+            </div>
+          </article>
+
+          <article
+            class="video-card"
+            data-video-id="aqz-KE-bpKQ"
+            data-title="Performance Placeholder"
+            data-description="Use this slot for a live performance, TV stage, acoustic moment, or special appearance."
+          >
+            <div class="video-thumb">
+              <img src="https://img.youtube.com/vi/aqz-KE-bpKQ/maxresdefault.jpg" alt="Performance video">
+            </div>
+            <div class="video-info">
+              <h3>Performance Placeholder</h3>
+              <p>Best for stage moments and vocal highlights.</p>
+            </div>
+          </article>
+
+          <article
+            class="video-card"
+            data-video-id="dQw4w9WgXcQ"
+            data-title="Behind the Scenes Placeholder"
+            data-description="Use this slot for behind-the-scenes videos, vlogs, rehearsals, or lighter fan-facing content."
+          >
+            <div class="video-thumb">
+              <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/maxresdefault.jpg" alt="Behind the scenes">
+            </div>
+            <div class="video-info">
+              <h3>Behind the Scenes Placeholder</h3>
+              <p>Best for intimacy and fan connection.</p>
+            </div>
+          </article>
+
+          <article
+            class="video-card"
+            data-video-id="M7lc1UVf-VE"
+            data-title="Press Appearance Placeholder"
+            data-description="Use this slot for TV guest spots, panel moments, red carpet interviews, or promo appearances."
+          >
+            <div class="video-thumb">
+              <img src="https://img.youtube.com/vi/M7lc1UVf-VE/maxresdefault.jpg" alt="Press appearance">
+            </div>
+            <div class="video-info">
+              <h3>Press Appearance Placeholder</h3>
+              <p>Best for promo-cycle media runs.</p>
+            </div>
+          </article>
+
+          <article
+            class="video-card"
+            data-video-id="e-ORhEE9VVg"
+            data-title="Visual Era Placeholder"
+            data-description="Use this slot for official uploads, campaign visuals, or music-video-adjacent content."
+          >
+            <div class="video-thumb">
+              <img src="https://img.youtube.com/vi/e-ORhEE9VVg/maxresdefault.jpg" alt="Visual era">
+            </div>
+            <div class="video-info">
+              <h3>Visual Era Placeholder</h3>
+              <p>Best for era-building and visuals.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+    </section>
+
+    <!-- READ MODE -->
+    <section class="mode-panel" id="pressPanel">
+      <div class="press-mode">
+        <div class="press-intro">
+          <h2>CocoPress</h2>
+          <p>
+            Some of Coco’s most insightful moments live in written media — the interviews where there’s more room for nuance, reflection, and detail. CocoPress is a softer reading space for magazine features, profiles, and press that deserve to be sat with, not skimmed.
+          </p>
+        </div>
+
+        <div class="press-grid">
+          <article class="press-card">
+            <iframe
+              class="press-frame"
+              src="https://example.com"
+              title="Embedded article 1">
+            </iframe>
+          </article>
+
+          <article class="press-card">
+            <iframe
+              class="press-frame"
+              src="https://example.com"
+              title="Embedded article 2">
+            </iframe>
+          </article>
+        </div>
+
+        <div class="press-preview-grid">
+          <article class="press-preview-card">
+            <div class="eyebrow">Feature</div>
+            <h3>Magazine Interview Title</h3>
+            <p>
+              Use this as a fallback card for articles that do not allow embeds. Add a short description about why the interview matters.
+            </p>
+            <a class="press-link" href="https://example.com" target="_blank" rel="noopener noreferrer">Read Article</a>
+          </article>
+
+          <article class="press-preview-card">
+            <div class="eyebrow">Profile</div>
+            <h3>Cover Story Title</h3>
+            <p>
+              Great for long-form profiles, thoughtful Q&amp;As, and deeper written media where Coco’s perspective really comes through.
+            </p>
+            <a class="press-link" href="https://example.com" target="_blank" rel="noopener noreferrer">Read Article</a>
+          </article>
+
+          <article class="press-preview-card">
+            <div class="eyebrow">Press</div>
+            <h3>Written Media Highlight</h3>
+            <p>
+              Another fallback slot for articles that cannot be embedded directly into the page but still deserve to live in CocoPress.
+            </p>
+            <a class="press-link" href="https://example.com" target="_blank" rel="noopener noreferrer">Read Article</a>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <div class="footer">
+      Coco’s World — watch the moments, read the insight, stay in the world.
+    </div>
+  </main>
+
+  <script>
+    const modeToggle = document.getElementById('modeToggle');
+    const streamPanel = document.getElementById('streamPanel');
+    const pressPanel = document.getElementById('pressPanel');
+    const modeTitle = document.getElementById('modeTitle');
+    const modeHint = document.getElementById('modeHint');
+    const modeDescription = document.getElementById('modeDescription');
+
+    const mainPlayer = document.getElementById('mainPlayer');
+    const mainVideoTitle = document.getElementById('mainVideoTitle');
+    const mainVideoDescription = document.getElementById('mainVideoDescription');
+
+    const playlistItems = Array.from(document.querySelectorAll('.playlist-item'));
+    const videoCards = Array.from(document.querySelectorAll('.video-card'));
+    const featuredHero = document.getElementById('featuredHero');
+    const heroPlayBtn = document.getElementById('heroPlayBtn');
+    const featuredTitle = document.getElementById('featuredTitle');
+    const featuredCopy = document.getElementById('featuredCopy');
+
+    function setMode() {
+      const pressMode = modeToggle.checked;
+
+      if (pressMode) {
+        streamPanel.classList.remove('active');
+        pressPanel.classList.add('active');
+        modeTitle.textContent = 'CocoPress';
+        modeHint.textContent = 'watch mode';
+        modeDescription.textContent =
+          'A lavender reading room for written features, profiles, and interviews — because some of Coco’s most insightful media moments happen on the page.';
+      } else {
+        pressPanel.classList.remove('active');
+        streamPanel.classList.add('active');
+        modeTitle.textContent = 'CocoStream';
+        modeHint.textContent = 'read mode';
+        modeDescription.textContent =
+          'A watch-first media space for performances, interviews, appearances, and video moments — pulled from YouTube, but played right here inside Coco’s World.';
+      }
+    }
+
+    function updateMainVideo(videoId, title, description) {
+      mainPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+      mainVideoTitle.textContent = title;
+      mainVideoDescription.textContent = description;
+
+      playlistItems.forEach(item => {
+        item.classList.toggle('active', item.dataset.videoId === videoId);
+      });
+      featuredHero.style.backgroundImage = `
+  linear-gradient(to right, rgba(45, 17, 73, 0.82) 0%, rgba(45, 17, 73, 0.58) 42%, rgba(45, 17, 73, 0.18) 100%),
+  url('https://img.youtube.com/vi/${videoId}/maxresdefault.jpg')
+`;
+
+featuredTitle.textContent = title;
+featuredCopy.textContent = description;
+
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    }
+
+    playlistItems.forEach(item => {
+      item.addEventListener('click', () => {
+        updateMainVideo(
+          item.dataset.videoId,
+          item.dataset.title,
+          item.dataset.description
+        );
+      });
+    });
+
+    videoCards.forEach(card => {
+      card.addEventListener('click', () => {
+        updateMainVideo(
+          card.dataset.videoId,
+          card.dataset.title,
+          card.dataset.description
+        );
+      });
+    });
+heroPlayBtn.addEventListener('click', () => {
+  document.querySelector('.player-card').scrollIntoView({
+    behavior: 'smooth',
+    block: 'start'
+  });
+
+  mainPlayer.src = mainPlayer.src.includes('autoplay=1')
+    ? mainPlayer.src
+    : mainPlayer.src.replace('?rel=0', '?autoplay=1&rel=0');
+});
+    modeToggle.addEventListener('change', setMode);
+    setMode();
+  </script>
+</body>
+</html>
