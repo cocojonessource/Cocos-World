@@ -274,20 +274,14 @@
       animation-duration: 2.9s;
     }
 
-    .sparkle.s4 {
-      width: 2px;
-      height: 2px;
-      animation-duration: 3.6s;
-    }
-
     @keyframes twinkle {
       0%, 100% {
-        opacity: 0.22;
-        transform: scale(0.85);
+        opacity: 0.25;
+        transform: scale(0.9);
       }
       50% {
         opacity: 1;
-        transform: scale(1.25);
+        transform: scale(1.15);
       }
     }
 
@@ -369,14 +363,13 @@
     }
 
     .line-spark.s1 { animation-delay: 0s; }
-    .line-spark.s2 { animation-delay: 0.45s; }
-    .line-spark.s3 { animation-delay: 0.9s; }
-    .line-spark.s4 { animation-delay: 1.35s; }
-    .line-spark.s5 { animation-delay: 1.8s; }
+    .line-spark.s2 { animation-delay: 0.5s; }
+    .line-spark.s3 { animation-delay: 1s; }
+    .line-spark.s4 { animation-delay: 1.4s; }
 
     @keyframes lineTwinkle {
       0%, 100% {
-        opacity: 0.18;
+        opacity: 0.2;
       }
       50% {
         opacity: 1;
@@ -400,29 +393,6 @@
       transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
     }
 
-    .story-node::before,
-    .story-node::after {
-      content: "";
-      position: absolute;
-      inset: -6px;
-      border-radius: 999px;
-      pointer-events: none;
-      opacity: 0;
-    }
-
-    .story-node::before {
-      background: radial-gradient(circle, rgba(255,248,220,0.55) 0%, rgba(255,217,120,0.18) 45%, rgba(255,217,120,0) 72%);
-      filter: blur(2px);
-    }
-
-    .story-node::after {
-      inset: -11px;
-      border: 1px solid rgba(255, 240, 185, 0.45);
-      box-shadow:
-        0 0 10px rgba(255, 240, 185, 0.55),
-        0 0 20px rgba(255, 217, 120, 0.35);
-    }
-
     .story-node:hover {
       transform: scale(1.08);
     }
@@ -436,30 +406,8 @@
         0 0 10px rgba(255, 217, 120, 0.25);
     }
 
-    .story-node.unlocked:not(.active):not(.locked) {
-      animation: anchorBlinkSoft 2.4s ease-in-out infinite;
-    }
-
-    .story-node.unlocked:not(.active):not(.locked)::before {
-      opacity: 1;
-      animation: haloBlinkSoft 2.6s ease-in-out infinite;
-    }
-
     .story-node.available {
-      animation: anchorBlinkStrong 1.55s ease-in-out infinite;
-    }
-
-    .story-node.available::before,
-    .story-node.available::after {
-      opacity: 1;
-    }
-
-    .story-node.available::before {
-      animation: haloBlinkStrong 1.55s ease-in-out infinite;
-    }
-
-    .story-node.available::after {
-      animation: ringBlink 1.9s ease-in-out infinite;
+      animation: pulseGlow 1.8s ease-in-out infinite;
     }
 
     .story-node.active {
@@ -470,19 +418,6 @@
         0 0 44px rgba(255, 217, 120, 0.65);
     }
 
-    .story-node.active::before,
-    .story-node.active::after {
-      opacity: 1;
-    }
-
-    .story-node.active::before {
-      animation: haloBlinkStrong 1.4s ease-in-out infinite;
-    }
-
-    .story-node.active::after {
-      animation: ringBlink 1.6s ease-in-out infinite;
-    }
-
     .story-node.final {
       width: 32px;
       height: 32px;
@@ -490,33 +425,7 @@
         radial-gradient(circle at center, #fffefa 0%, #ffefb8 35%, #ffd978 64%, #ffc8df 100%);
     }
 
-    @keyframes anchorBlinkSoft {
-      0%, 100% {
-        box-shadow:
-          0 0 0 5px rgba(255,255,255,0.08),
-          0 0 16px rgba(255, 217, 120, 0.68),
-          0 0 28px rgba(255, 217, 120, 0.24);
-      }
-      50% {
-        box-shadow:
-          0 0 0 6px rgba(255,255,255,0.12),
-          0 0 24px rgba(255, 240, 185, 0.92),
-          0 0 38px rgba(255, 217, 120, 0.48);
-      }
-    }
-
-    @keyframes haloBlinkSoft {
-      0%, 100% {
-        transform: scale(0.95);
-        opacity: 0.35;
-      }
-      50% {
-        transform: scale(1.08);
-        opacity: 0.75;
-      }
-    }
-
-    @keyframes anchorBlinkStrong {
+    @keyframes pulseGlow {
       0%, 100% {
         box-shadow:
           0 0 0 5px rgba(255,255,255,0.08),
@@ -525,31 +434,9 @@
       }
       50% {
         box-shadow:
-          0 0 0 7px rgba(255,255,255,0.18),
-          0 0 30px rgba(255, 248, 220, 1),
-          0 0 46px rgba(255, 217, 120, 0.78);
-      }
-    }
-
-    @keyframes haloBlinkStrong {
-      0%, 100% {
-        transform: scale(0.9);
-        opacity: 0.45;
-      }
-      50% {
-        transform: scale(1.18);
-        opacity: 1;
-      }
-    }
-
-    @keyframes ringBlink {
-      0%, 100% {
-        transform: scale(0.96);
-        opacity: 0.18;
-      }
-      50% {
-        transform: scale(1.18);
-        opacity: 0.82;
+          0 0 0 6px rgba(255,255,255,0.12),
+          0 0 26px rgba(255, 240, 185, 1),
+          0 0 42px rgba(255, 217, 120, 0.6);
       }
     }
 
@@ -818,78 +705,50 @@
             <span class="sparkle s3" style="left: 34%; top: 76%;"></span>
             <span class="sparkle" style="left: 16%; top: 55%;"></span>
             <span class="sparkle s2" style="left: 89%; top: 72%;"></span>
-
-            <span class="sparkle s4" style="left: 7%; top: 10%;"></span>
-            <span class="sparkle s2" style="left: 14%; top: 22%;"></span>
-            <span class="sparkle s3" style="left: 24%; top: 10%;"></span>
-            <span class="sparkle s4" style="left: 37%; top: 12%;"></span>
-            <span class="sparkle s2" style="left: 49%; top: 9%;"></span>
-            <span class="sparkle s4" style="left: 63%; top: 11%;"></span>
-            <span class="sparkle s3" style="left: 78%; top: 16%;"></span>
-            <span class="sparkle s4" style="left: 92%; top: 25%;"></span>
-            <span class="sparkle s2" style="left: 74%; top: 43%;"></span>
-            <span class="sparkle s4" style="left: 67%; top: 55%;"></span>
-            <span class="sparkle s3" style="left: 91%; top: 53%;"></span>
-            <span class="sparkle s2" style="left: 85%; top: 66%;"></span>
-            <span class="sparkle s4" style="left: 73%; top: 78%;"></span>
-            <span class="sparkle s3" style="left: 52%; top: 86%;"></span>
-            <span class="sparkle s2" style="left: 42%; top: 70%;"></span>
-            <span class="sparkle s4" style="left: 28%; top: 66%;"></span>
-            <span class="sparkle s3" style="left: 18%; top: 71%;"></span>
-            <span class="sparkle s2" style="left: 9%; top: 46%;"></span>
-            <span class="sparkle s4" style="left: 26%; top: 38%;"></span>
-            <span class="sparkle s2" style="left: 59%; top: 31%;"></span>
           </div>
 
           <svg class="story-svg" viewBox="0 0 1000 720" preserveAspectRatio="none" aria-hidden="true">
             <!-- faint base path -->
             <line class="story-line-base" x1="500" y1="250" x2="500" y2="366"></line>
             <line class="story-line-base" x1="500" y1="370" x2="500" y2="535"></line>
-            <line class="story-line-base" x1="500" y1="535" x2="650" y2="350"></line>
-            <path class="story-line-base" d="M650 350 Q505 575 245 425"></path>
-            <path class="story-line-base" d="M245 425 Q280 360 345 350"></path>
-            <line class="story-line-base" x1="345" y1="350" x2="755" y2="425"></line>
+            <path class="story-line-base" d="M500 535 Q395 600 245 425"></path>
+            <path class="story-line-base" d="M500 530 Q605 600 755 425"></path>
+            <line class="story-line-base" x1="350" y1="370" x2="515" y2="370"></line>
+            <path class="story-line-base" x1="345" y1="350" x2="650" y2="350"></line>
 
             <!-- animated path -->
             <line id="line1" class="story-line" pathLength="100" x1="500" y1="250" x2="500" y2="366"></line>
             <line id="line2" class="story-line" pathLength="100" x1="500" y1="370" x2="500" y2="535"></line>
-            <line id="line3" class="story-line" pathLength="100" x1="500" y1="535" x2="650" y2="350"></line>
-            <path id="line4" class="story-line" pathLength="100" d="M650 350 Q505 575 245 425"></path>
-            <path id="line5" class="story-line" pathLength="100" d="M245 425 Q280 360 345 350"></path>
-            <line id="line6" class="story-line" pathLength="100" x1="345" y1="350" x2="755" y2="425"></line>
+            <path id="line3" class="story-line" pathLength="100" d="M500 535 Q395 520 245 425"></path>
+            <path id="line4" class="story-line" pathLength="100" d="M500 535 Q395 600 755 425"></path>
+            <line id="line5" class="story-line" pathLength="100" x1="345 y1="370" x2="650" y2="350"></line>
+            <path id="line6" class="story-line" pathLength="100" x1="345 y1="370" x2="650" y2="350"></line>
 
             <!-- line sparkles -->
             <circle class="line-spark s1" data-line="1" cx="500" cy="282" r="3"></circle>
             <circle class="line-spark s2" data-line="1" cx="500" cy="320" r="2"></circle>
             <circle class="line-spark s3" data-line="1" cx="500" cy="350" r="4"></circle>
-            <circle class="line-spark s5" data-line="1" cx="500" cy="300" r="2.5"></circle>
 
             <circle class="line-spark s1" data-line="2" cx="500" cy="415" r="3"></circle>
             <circle class="line-spark s2" data-line="2" cx="500" cy="462" r="2"></circle>
             <circle class="line-spark s4" data-line="2" cx="500" cy="505" r="4"></circle>
-            <circle class="line-spark s5" data-line="2" cx="500" cy="438" r="2.5"></circle>
 
-            <circle class="line-spark s1" data-line="3" cx="530" cy="497" r="2"></circle>
-            <circle class="line-spark s2" data-line="3" cx="565" cy="455" r="4"></circle>
-            <circle class="line-spark s3" data-line="3" cx="610" cy="405" r="2.5"></circle>
-            <circle class="line-spark s5" data-line="3" cx="632" cy="378" r="3"></circle>
+            <circle class="line-spark s1" data-line="3" cx="448" cy="522" r="2"></circle>
+            <circle class="line-spark s2" data-line="3" cx="392" cy="503" r="4"></circle>
+            <circle class="line-spark s3" data-line="3" cx="330" cy="472" r="2.5"></circle>
+            <circle class="line-spark s4" data-line="3" cx="278" cy="442" r="4"></circle>
 
-            <circle class="line-spark s1" data-line="4" cx="592" cy="410" r="2"></circle>
-            <circle class="line-spark s2" data-line="4" cx="525" cy="470" r="4"></circle>
-            <circle class="line-spark s3" data-line="4" cx="445" cy="505" r="2.5"></circle>
-            <circle class="line-spark s4" data-line="4" cx="360" cy="488" r="4"></circle>
-            <circle class="line-spark s5" data-line="4" cx="290" cy="450" r="2.5"></circle>
+            <circle class="line-spark s1" data-line="4" cx="260" cy="400" r="2"></circle>
+            <circle class="line-spark s2" data-line="4" cx="284" cy="376" r="4"></circle>
+            <circle class="line-spark s3" data-line="4" cx="316" cy="358" r="2.5"></circle>
 
-            <circle class="line-spark s1" data-line="5" cx="260" cy="405" r="2"></circle>
-            <circle class="line-spark s2" data-line="5" cx="283" cy="381" r="4"></circle>
-            <circle class="line-spark s3" data-line="5" cx="314" cy="362" r="2.5"></circle>
-            <circle class="line-spark s5" data-line="5" cx="333" cy="353" r="3"></circle>
+            <circle class="line-spark s1" data-line="5" cx="420" cy="350" r="2"></circle>
+            <circle class="line-spark s2" data-line="5" cx="500" cy="350" r="4"></circle>
+            <circle class="line-spark s3" data-line="5" cx="580" cy="350" r="2.5"></circle>
 
-            <circle class="line-spark s1" data-line="6" cx="430" cy="365" r="2"></circle>
-            <circle class="line-spark s2" data-line="6" cx="515" cy="381" r="4"></circle>
-            <circle class="line-spark s3" data-line="6" cx="602" cy="396" r="2.5"></circle>
-            <circle class="line-spark s4" data-line="6" cx="690" cy="412" r="4"></circle>
-            <circle class="line-spark s5" data-line="6" cx="735" cy="420" r="2.5"></circle>
+            <circle class="line-spark s1" data-line="6" cx="675" cy="352" r="2"></circle>
+            <circle class="line-spark s2" data-line="6" cx="705" cy="367" r="4"></circle>
+            <circle class="line-spark s4" data-line="6" cx="730" cy="392" r="2.5"></circle>
           </svg>
 
           <button class="story-node active available" id="star1" style="left: 48%; top: 33%;" aria-label="Early Life"></button>
@@ -924,14 +783,6 @@
           <span class="sparkle" style="left: 76%; top: 54%;"></span>
           <span class="sparkle s3" style="left: 24%; top: 76%;"></span>
           <span class="sparkle s2" style="left: 68%; top: 84%;"></span>
-          <span class="sparkle s4" style="left: 9%; top: 24%;"></span>
-          <span class="sparkle s3" style="left: 27%; top: 18%;"></span>
-          <span class="sparkle s4" style="left: 62%; top: 17%;"></span>
-          <span class="sparkle s2" style="left: 79%; top: 38%;"></span>
-          <span class="sparkle s4" style="left: 11%; top: 61%;"></span>
-          <span class="sparkle s3" style="left: 44%; top: 68%;"></span>
-          <span class="sparkle s4" style="left: 86%; top: 71%;"></span>
-          <span class="sparkle s2" style="left: 53%; top: 89%;"></span>
         </div>
 
         <div class="panel-content">
@@ -961,24 +812,24 @@
 
   <script>
     const chapters = [
-  { title: "Early Life", chapter: "Chapter 1", copy: "Source has to write this part..." },
-  { title: "Disney Era", chapter: "Chapter 2", copy: "Source has to write this part..." },
-  { title: "Independent Era", chapter: "Chapter 3", copy: "Source has to write this part..." },
-  { title: "Building a Legacy", chapter: "Chapter 4", copy: "Source has to write this part..." },
-  { title: "Renaissance", chapter: "Chapter 5", copy: "Source has to write this part..." },
-  { title: "Award-Winning Artist", chapter: "Chapter 6", copy: "Source has to write this part..." },
-  { title: "Internet Sensation", chapter: "Chapter 7", copy: "Source has to write this part..." }
-];
+      { title: "Early Life", chapter: "Chapter 1", copy: "Source has to write this part..." },
+      { title: "Disney Era", chapter: "Chapter 2", copy: "Source has to write this part..." },
+      { title: "Independent Era", chapter: "Chapter 3", copy: "Source has to write this part..." },
+      { title: "Renaissance", chapter: "Chapter 4", copy: "Source has to write this part..." },
+      { title: "Award-Winning Artist", chapter: "Chapter 5", copy: "Source has to write this part..." },
+      { title: "Building a Legacy", chapter: "Chapter 6", copy: "Source has to write this part..." },
+      { title: "Internet Sensation", chapter: "Chapter 7", copy: "Source has to write this part..." }
+    ];
 
     const stars = [
-  document.getElementById("star1"),
-  document.getElementById("star2"),
-  document.getElementById("star3"),
-  document.getElementById("star7"),
-  document.getElementById("star5"),
-  document.getElementById("star6"),
-  document.getElementById("star4")
-];
+      document.getElementById("star1"),
+      document.getElementById("star2"),
+      document.getElementById("star3"),
+      document.getElementById("star5"),
+      document.getElementById("star6"),
+      document.getElementById("star7"),
+      document.getElementById("star4")
+    ];
 
     const lines = [
       document.getElementById("line1"),
@@ -1056,16 +907,13 @@
         if (completed) {
           star.classList.remove("locked");
           star.classList.remove("available");
-          star.classList.add("unlocked");
           return;
         }
 
         if (index <= highestUnlocked) {
           star.classList.remove("locked");
-          star.classList.add("unlocked");
         } else {
           star.classList.add("locked");
-          star.classList.remove("unlocked");
         }
 
         star.classList.toggle("available", index === highestUnlocked);
