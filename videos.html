@@ -7,6 +7,970 @@
 
   <style>
     :root {
+      --pink-bg: #ffe4ec;
+      --pink-bg-soft: #fff8fb;
+      --pink-nav: rgba(255, 209, 220, 0.92);
+
+      --lavender-bg: #eee6ff;
+      --lavender-bg-soft: #f7f2ff;
+      --lavender-nav: rgba(234, 224, 255, 0.92);
+
+      --primary: #6b2fa3;
+      --secondary: #8b5fbf;
+      --accent: #d76ba8;
+      --gold: #d4a857;
+      --white: #ffffff;
+
+      --shadow: rgba(107, 47, 163, 0.12);
+      --shadow-strong: rgba(107, 47, 163, 0.2);
+      --border-soft: rgba(255, 255, 255, 0.55);
+
+      --page-bg:
+        radial-gradient(circle at top, rgba(255,255,255,0.45), transparent 30%),
+        linear-gradient(to bottom, var(--pink-bg-soft) 0%, var(--pink-bg) 20%, #ffeaf1 100%);
+      --topbar-bg: var(--pink-nav);
+      --card-bg: rgba(255,255,255,0.62);
+      --row-bg: rgba(255,255,255,0.58);
+    }
+
+    body.press-mode {
+      --page-bg:
+        radial-gradient(circle at top, rgba(255,255,255,0.45), transparent 30%),
+        linear-gradient(to bottom, var(--lavender-bg-soft) 0%, var(--lavender-bg) 20%, #f0e8ff 100%);
+      --topbar-bg: var(--lavender-nav);
+      --card-bg: rgba(255,255,255,0.68);
+      --row-bg: rgba(255,255,255,0.62);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--primary);
+      background: var(--page-bg);
+      overflow-x: hidden;
+      transition: background 0.35s ease, color 0.2s ease;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: var(--topbar-bg);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.45);
+      transition: background 0.35s ease;
+    }
+
+    .topbar-inner {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .anchor-home {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: var(--white);
+      border: 1px solid rgba(212, 168, 87, 0.45);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--gold);
+      box-shadow: 0 6px 16px rgba(212, 168, 87, 0.14);
+      flex-shrink: 0;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .browse-btn {
+      border: none;
+      background: var(--accent);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(215, 107, 168, 0.24);
+      transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+    }
+
+    .browse-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(215, 107, 168, 0.28);
+    }
+
+    .browse-btn.hidden {
+      display: none;
+    }
+
+    .mode-switch-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 10px 24px var(--shadow);
+    }
+
+    .mode-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--secondary);
+      min-width: 76px;
+      text-align: center;
+    }
+
+    .switch {
+      position: relative;
+      width: 68px;
+      height: 36px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      cursor: pointer;
+      background: linear-gradient(135deg, #f6bfd1, #e6c9ff);
+      border-radius: 999px;
+      transition: 0.28s ease;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55);
+    }
+
+    .slider::before {
+      content: "";
+      position: absolute;
+      height: 28px;
+      width: 28px;
+      left: 4px;
+      top: 4px;
+      border-radius: 50%;
+      background: var(--white);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      transition: 0.28s ease;
+    }
+
+    .switch input:checked + .slider::before {
+      transform: translateX(32px);
+    }
+
+    .page {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 28px 20px 60px;
+    }
+
+    .mode-panel {
+      display: none;
+      animation: fadeIn 0.28s ease;
+    }
+
+    .mode-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .page-head {
+      margin-bottom: 22px;
+    }
+
+    .page-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(40px, 6vw, 74px);
+      line-height: 0.95;
+      color: var(--primary);
+    }
+
+    .page-copy {
+      margin: 14px 0 0;
+      max-width: 940px;
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--secondary);
+    }
+
+    .featured-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(320px, 0.8fr);
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 30px;
+    }
+
+    .featured-player-card,
+    .featured-info-card,
+    .row-shell,
+    .article-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-soft);
+      border-radius: 28px;
+      box-shadow: 0 14px 30px var(--shadow);
+      overflow: hidden;
+      transition: background 0.35s ease;
+    }
+
+    .featured-player {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+
+    .featured-player iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .featured-info-card {
+      position: relative;
+      padding: 28px 26px 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      min-height: 100%;
+      color: var(--white);
+      background:
+        linear-gradient(to bottom, rgba(45, 17, 73, 0.72) 0%, rgba(45, 17, 73, 0.34) 100%),
+        url('https://img.youtube.com/vi/0Lhs1WEjloo/maxresdefault.jpg');
+      background-position: center;
+      background-size: cover;
+    }
+
+    .featured-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      margin-bottom: 14px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(212, 168, 87, 0.92);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .featured-kicker {
+      margin: 0 0 10px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #ffe2f0;
+    }
+
+    .featured-title {
+      margin: 0 0 12px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.02;
+      color: var(--white);
+    }
+
+    .featured-copy {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.92);
+      max-width: 520px;
+    }
+
+    .now-playing {
+      margin: 16px 0 0;
+      font-size: 14px;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.95);
+      font-weight: 700;
+    }
+
+    .featured-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hero-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .hero-btn-primary {
+      background: var(--accent);
+      color: var(--white);
+      box-shadow: 0 10px 22px rgba(215, 107, 168, 0.26);
+    }
+
+    .hero-btn-secondary {
+      background: rgba(255,255,255,0.16);
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.34);
+      backdrop-filter: blur(6px);
+    }
+
+    .library {
+      display: grid;
+      gap: 24px;
+    }
+
+    .row-section {
+      display: grid;
+      gap: 12px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1;
+      color: var(--primary);
+    }
+
+    .section-copy {
+      margin: 7px 0 0;
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--secondary);
+      max-width: 760px;
+    }
+
+    .row-shell {
+      padding: 18px;
+      background: var(--row-bg);
+    }
+
+    .video-row {
+      display: flex;
+      gap: 16px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+      scroll-snap-type: x proximity;
+    }
+
+    .video-row::-webkit-scrollbar {
+      height: 10px;
+    }
+
+    .video-row::-webkit-scrollbar-thumb {
+      background: rgba(107, 47, 163, 0.18);
+      border-radius: 999px;
+    }
+
+    .video-card {
+      flex: 0 0 280px;
+      scroll-snap-align: start;
+      cursor: pointer;
+      border-radius: 20px;
+      overflow: hidden;
+      background: rgba(255,255,255,0.84);
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 12px 24px rgba(107, 47, 163, 0.1);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+
+    .video-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 18px 30px var(--shadow-strong);
+      border-color: rgba(212, 168, 87, 0.45);
+    }
+
+    .video-thumb {
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      display: block;
+      object-fit: cover;
+      background: #ddd;
+    }
+
+    .video-meta {
+      padding: 14px 14px 16px;
+    }
+
+    .video-meta h3 {
+      margin: 0 0 8px;
+      font-size: 16px;
+      line-height: 1.35;
+      color: var(--primary);
+    }
+
+    .video-meta p {
+      margin: 0;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--secondary);
+    }
+
+    .press-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+      margin-top: 24px;
+    }
+
+    .article-card {
+      display: flex;
+      flex-direction: column;
+      min-height: 100%;
+      background: rgba(255,255,255,0.78);
+    }
+
+    .article-image {
+      width: 100%;
+      aspect-ratio: 16 / 10;
+      object-fit: cover;
+      display: block;
+      background: #ddd;
+    }
+
+    .article-meta {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      flex: 1;
+    }
+
+    .article-tag {
+      display: inline-flex;
+      width: fit-content;
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(212, 168, 87, 0.14);
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .article-meta h3 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 24px;
+      line-height: 1.12;
+      color: var(--accent);
+    }
+
+    .article-meta p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--secondary);
+    }
+
+    .article-link {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 30px 20px 10px;
+      color: var(--secondary);
+      font-size: 14px;
+    }
+
+    @media (max-width: 1200px) {
+      .press-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .featured-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .topbar-inner {
+        align-items: flex-start;
+      }
+
+      .brand {
+        font-size: 24px;
+      }
+
+      .topbar-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .mode-switch-wrap {
+        gap: 8px;
+        padding: 8px 10px;
+      }
+
+      .mode-label {
+        min-width: 64px;
+        font-size: 12px;
+      }
+
+      .page {
+        padding: 24px 16px 50px;
+      }
+
+      .page-copy {
+        font-size: 15px;
+      }
+
+      .featured-info-card {
+        padding: 20px 18px;
+      }
+
+      .row-shell {
+        padding: 14px;
+      }
+
+      .video-card {
+        flex-basis: 230px;
+      }
+
+      .press-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <a class="anchor-home" href="index.html">⚓</a>
+        <span id="topTitle">CocoStream</span>
+      </div>
+
+      <div class="topbar-actions">
+        <button class="browse-btn" id="browseBtn" type="button">Browse</button>
+
+        <div class="mode-switch-wrap">
+          <span class="mode-label">Watch</span>
+
+          <label class="switch" aria-label="Toggle between CocoStream and CocoPress">
+            <input type="checkbox" id="modeToggle" />
+            <span class="slider"></span>
+          </label>
+
+          <span class="mode-label">Press</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="mode-panel active" id="watchPanel">
+      <div class="page-head">
+        <h1 class="page-title">CocoStream</h1>
+        <p class="page-copy">
+          A watch-first media library for performances, interviews, appearances, and era-based viewing paths — with a featured player at the top and scrollable rows underneath.
+        </p>
+      </div>
+
+      <section class="featured-grid">
+        <article class="featured-player-card">
+          <div class="featured-player">
+            <iframe
+              id="mainPlayer"
+              src="https://www.youtube.com/embed/0Lhs1WEjloo?rel=0"
+              title="Featured Coco video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </article>
+
+        <aside class="featured-info-card" id="featuredInfoCard">
+          <div class="featured-badge">Featured</div>
+          <p class="featured-kicker">CocoStream Spotlight</p>
+          <h2 class="featured-title" id="featuredTitle">Featured Coco Video</h2>
+          <p class="featured-copy" id="featuredCopy">
+            A standout Coco moment at the top of the page, with the player living directly on site and the rest of the library scrolling underneath.
+          </p>
+          <p class="now-playing" id="nowPlaying">Now Playing: Featured Coco Video</p>
+
+          <div class="featured-actions">
+            <button class="hero-btn hero-btn-primary" id="heroPlayBtn" type="button">Play Now</button>
+            <button class="hero-btn hero-btn-secondary" id="heroLibraryBtn" type="button">Open Library</button>
+          </div>
+        </aside>
+      </section>
+
+      <section class="library" id="watchLibrary">
+        <section class="row-section">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Interviews</h2>
+              <p class="section-copy">
+                Scroll through interview highlights from your Coco Jones interview playlist.
+              </p>
+            </div>
+          </div>
+
+          <div class="row-shell">
+            <div class="video-row">
+              <article class="video-card" data-video-id="0Lhs1WEjloo" data-title="Coco Jones Interview Spotlight" data-description="A featured sit-down moment from the interview shelf.">
+                <img class="video-thumb" src="https://img.youtube.com/vi/0Lhs1WEjloo/hqdefault.jpg" alt="Coco Jones Interview Spotlight">
+                <div class="video-meta">
+                  <h3>Coco Jones Interview Spotlight</h3>
+                  <p>Press conversation and artist insight.</p>
+                </div>
+              </article>
+
+              <article class="video-card" data-video-id="ysz5S6PUM-U" data-title="Interview Feature One" data-description="A placeholder interview card for the row layout.">
+                <img class="video-thumb" src="https://img.youtube.com/vi/ysz5S6PUM-U/hqdefault.jpg" alt="Interview Feature One">
+                <div class="video-meta">
+                  <h3>Interview Feature One</h3>
+                  <p>Q&amp;A and era commentary.</p>
+                </div>
+              </article>
+
+              <article class="video-card" data-video-id="M7lc1UVf-VE" data-title="Interview Feature Two" data-description="Another interview-style placeholder in the row.">
+                <img class="video-thumb" src="https://img.youtube.com/vi/M7lc1UVf-VE/hqdefault.jpg" alt="Interview Feature Two">
+                <div class="video-meta">
+                  <h3>Interview Feature Two</h3>
+                  <p>Media stop and artist reflection.</p>
+                </div>
+              </article>
+
+              <article class="video-card" data-video-id="aqz-KE-bpKQ" data-title="Interview Feature Three" data-description="A fourth card to make the row feel full and scrollable.">
+                <img class="video-thumb" src="https://img.youtube.com/vi/aqz-KE-bpKQ/hqdefault.jpg" alt="Interview Feature Three">
+                <div class="video-meta">
+                  <h3>Interview Feature Three</h3>
+                  <p>Longer-form discussion energy.</p>
+                </div>
+              </article>
+
+              <article class="video-card" data-video-id="e-ORhEE9VVg" data-title="Interview Feature Four" data-description="A fifth card for row density and layout testing.">
+                <img class="video-thumb" src="https://img.youtube.com/vi/e-ORhEE9VVg/hqdefault.jpg" alt="Interview Feature Four">
+                <div class="video-meta">
+                  <h3>Interview Feature Four</h3>
+                  <p>Thoughtful press and media appearance.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+
+        <section class="row-section">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Why Not More?</h2>
+              <p class="section-copy">
+                A second shelf for era content so you can judge the row density and scroll feel.
+              </p>
+            </div>
+          </div>
+
+          <div class="row-shell">
+            <div class="video-row">
+              <article class="video-card" data-video-id="ScMzIvxBSi4" data-title="Why Not More? Era Feature" data-description="A featured era card for this shelf.">
+                <img class="video-thumb" src="https://img.youtube.com/vi/ScMzIvxBSi4/hqdefault.jpg" alt="Why Not More Era Feature">
+                <div class="video-meta">
+                  <h3>Why Not More? Era Feature</h3>
+                  <p>Era visual or promo moment.</p>
+                </div>
+              </article>
+
+              <article class="video-card" data-video-id="dQw4w9WgXcQ" data-title="Why Not More? Feature Two" data-description="Second mock card for the row experience.">
+                <img class="video-thumb" src="https://img.youtube.com/vi/dQw4w9WgXcQ/hqdefault.jpg" alt="Why Not More Feature Two">
+                <div class="video-meta">
+                  <h3>Why Not More? Feature Two</h3>
+                  <p>Campaign content and rollout beat.</p>
+                </div>
+              </article>
+
+              <article class="video-card" data-video-id="aqz-KE-bpKQ" data-title="Why Not More? Feature Three" data-description="Third mock card for horizontal scroll.">
+                <img class="video-thumb" src="https://img.youtube.com/vi/aqz-KE-bpKQ/hqdefault.jpg" alt="Why Not More Feature Three">
+                <div class="video-meta">
+                  <h3>Why Not More? Feature Three</h3>
+                  <p>Performance clip or appearance.</p>
+                </div>
+              </article>
+
+              <article class="video-card" data-video-id="ysz5S6PUM-U" data-title="Why Not More? Feature Four" data-description="Fourth mock card for layout balance.">
+                <img class="video-thumb" src="https://img.youtube.com/vi/ysz5S6PUM-U/hqdefault.jpg" alt="Why Not More Feature Four">
+                <div class="video-meta">
+                  <h3>Why Not More? Feature Four</h3>
+                  <p>Interview-adjacent promo content.</p>
+                </div>
+              </article>
+
+              <article class="video-card" data-video-id="M7lc1UVf-VE" data-title="Why Not More? Feature Five" data-description="Fifth mock card so the shelf feels more full.">
+                <img class="video-thumb" src="https://img.youtube.com/vi/M7lc1UVf-VE/hqdefault.jpg" alt="Why Not More Feature Five">
+                <div class="video-meta">
+                  <h3>Why Not More? Feature Five</h3>
+                  <p>Media-facing era moment.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
+      </section>
+    </section>
+
+    <section class="mode-panel" id="pressPanel">
+      <div class="page-head">
+        <h1 class="page-title">CocoPress</h1>
+        <p class="page-copy">
+          Some of Coco’s most insightful moments live in written media. This version flips the full page into a lavender reading space and swaps the watch shelves for editorial cards.
+        </p>
+      </div>
+
+      <section class="press-grid">
+        <article class="article-card">
+          <img class="article-image" src="https://images.unsplash.com/photo-1515377905703-c4788e51af15?auto=format&fit=crop&w=1200&q=80" alt="Hollywood Reporter style feature image">
+          <div class="article-meta">
+            <span class="article-tag">Feature</span>
+            <h3>Hollywood Reporter Interview</h3>
+            <p>A long-form conversation centered on Coco Jones, Grammy recognition, and the Why Not More? era.</p>
+            <a class="article-link" href="https://www.hollywoodreporter.com/music/music-features/coco-jones-grammy-nom-why-not-more-album-music-interview-1236478239/" target="_blank" rel="noopener noreferrer">Read Article</a>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <img class="article-image" src="https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=1200&q=80" alt="Magazine profile mock image">
+          <div class="article-meta">
+            <span class="article-tag">Profile</span>
+            <h3>Coco Jones Cover Story</h3>
+            <p>A mock editorial card to preview how a magazine profile would sit in the CocoPress grid.</p>
+            <a class="article-link" href="#" onclick="return false;">Read Article</a>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <img class="article-image" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=1200&q=80" alt="Press Q and A mock image">
+          <div class="article-meta">
+            <span class="article-tag">Interview</span>
+            <h3>The Written Q&amp;A</h3>
+            <p>A cleaner written-media mockup to help you judge spacing, hierarchy, and image balance.</p>
+            <a class="article-link" href="#" onclick="return false;">Read Article</a>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <img class="article-image" src="https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=1200&q=80" alt="Editorial mock image">
+          <div class="article-meta">
+            <span class="article-tag">Editorial</span>
+            <h3>Inside the Era</h3>
+            <p>A mock editorial entry for visual testing so the read mode feels like a proper library and not a placeholder.</p>
+            <a class="article-link" href="#" onclick="return false;">Read Article</a>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <img class="article-image" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=1200&q=80" alt="Industry article mock image">
+          <div class="article-meta">
+            <span class="article-tag">Press</span>
+            <h3>Industry Conversation</h3>
+            <p>A fifth card to show how a denser press archive will wrap and flow when more stories are added.</p>
+            <a class="article-link" href="#" onclick="return false;">Read Article</a>
+          </div>
+        </article>
+
+        <article class="article-card">
+          <img class="article-image" src="https://images.unsplash.com/photo-1521119989659-a83eee488004?auto=format&fit=crop&w=1200&q=80" alt="Review mock image">
+          <div class="article-meta">
+            <span class="article-tag">Review</span>
+            <h3>Critical Reception</h3>
+            <p>A sixth mock card so you can see how the full CocoPress wall behaves with multiple images at once.</p>
+            <a class="article-link" href="#" onclick="return false;">Read Article</a>
+          </div>
+        </article>
+      </section>
+    </section>
+
+    <div class="footer">
+      Coco’s World — watch the moments, read the insight, stay in the world.
+    </div>
+  </main>
+
+  <script>
+    const body = document.body;
+    const modeToggle = document.getElementById('modeToggle');
+    const watchPanel = document.getElementById('watchPanel');
+    const pressPanel = document.getElementById('pressPanel');
+    const topTitle = document.getElementById('topTitle');
+    const browseBtn = document.getElementById('browseBtn');
+    const heroPlayBtn = document.getElementById('heroPlayBtn');
+    const heroLibraryBtn = document.getElementById('heroLibraryBtn');
+    const mainPlayer = document.getElementById('mainPlayer');
+    const featuredTitle = document.getElementById('featuredTitle');
+    const featuredCopy = document.getElementById('featuredCopy');
+    const featuredInfoCard = document.getElementById('featuredInfoCard');
+    const nowPlaying = document.getElementById('nowPlaying');
+    const videoCards = Array.from(document.querySelectorAll('.video-card'));
+
+    function setMode() {
+      const isPress = modeToggle.checked;
+
+      if (isPress) {
+        watchPanel.classList.remove('active');
+        pressPanel.classList.add('active');
+        body.classList.add('press-mode');
+        topTitle.textContent = 'CocoPress';
+        browseBtn.classList.add('hidden');
+      } else {
+        pressPanel.classList.remove('active');
+        watchPanel.classList.add('active');
+        body.classList.remove('press-mode');
+        topTitle.textContent = 'CocoStream';
+        browseBtn.classList.remove('hidden');
+      }
+    }
+
+    function updateFeatured(videoId, title, description) {
+      mainPlayer.src = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+      featuredTitle.textContent = title;
+      featuredCopy.textContent = description;
+      nowPlaying.textContent = `Now Playing: ${title}`;
+      featuredInfoCard.style.backgroundImage = `
+        linear-gradient(to bottom, rgba(45, 17, 73, 0.72) 0%, rgba(45, 17, 73, 0.34) 100%),
+        url('https://img.youtube.com/vi/${videoId}/maxresdefault.jpg')
+      `;
+    }
+
+    browseBtn.addEventListener('click', () => {
+      document.getElementById('watchLibrary').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    });
+
+    heroLibraryBtn.addEventListener('click', () => {
+      document.getElementById('watchLibrary').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    });
+
+    heroPlayBtn.addEventListener('click', () => {
+      document.querySelector('.featured-player-card').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+
+      if (!mainPlayer.src.includes('autoplay=1')) {
+        mainPlayer.src = mainPlayer.src.includes('?')
+          ? `${mainPlayer.src}&autoplay=1`
+          : `${mainPlayer.src}?autoplay=1`;
+      }
+    });
+
+    videoCards.forEach(card => {
+      card.addEventListener('click', () => {
+        updateFeatured(
+          card.dataset.videoId,
+          card.dataset.title,
+          card.dataset.description
+        );
+      });
+    });
+
+    modeToggle.addEventListener('change', setMode);
+    setMode();
+  </script>
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CocoStream | Coco's World</title>
+
+  <style>
+    :root {
       --bg: #FFE4EC;
       --bg-soft: #fff8fb;
       --nav: #FFD1DC;
