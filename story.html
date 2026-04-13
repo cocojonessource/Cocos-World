@@ -274,20 +274,6 @@
       animation-duration: 2.9s;
     }
 
-    .sparkle.s4 {
-      width: 6px;
-      height: 6px;
-      animation-duration: 2.2s;
-      box-shadow: 0 0 14px rgba(255,255,255,0.95);
-    }
-
-    .sparkle.s5 {
-      width: 2px;
-      height: 2px;
-      animation-duration: 4s;
-      opacity: 0.7;
-    }
-
     @keyframes twinkle {
       0%, 100% {
         opacity: 0.25;
@@ -295,7 +281,7 @@
       }
       50% {
         opacity: 1;
-        transform: scale(1.18);
+        transform: scale(1.15);
       }
     }
 
@@ -382,8 +368,12 @@
     .line-spark.s4 { animation-delay: 1.4s; }
 
     @keyframes lineTwinkle {
-      0%, 100% { opacity: 0.2; }
-      50% { opacity: 1; }
+      0%, 100% {
+        opacity: 0.2;
+      }
+      50% {
+        opacity: 1;
+      }
     }
 
     .story-node {
@@ -428,10 +418,6 @@
         0 0 44px rgba(255, 217, 120, 0.65);
     }
 
-    .story-node.just-activated {
-      animation: activatedBlink 0.95s ease;
-    }
-
     .story-node.final {
       width: 32px;
       height: 32px;
@@ -454,38 +440,6 @@
       }
     }
 
-    @keyframes activatedBlink {
-      0% {
-        opacity: 0.4;
-        transform: scale(0.86);
-        filter: brightness(0.7);
-      }
-      18% {
-        opacity: 1;
-        transform: scale(1.22);
-        filter: brightness(1.7);
-      }
-      36% {
-        opacity: 0.5;
-        transform: scale(0.94);
-        filter: brightness(0.8);
-      }
-      54% {
-        opacity: 1;
-        transform: scale(1.18);
-        filter: brightness(1.45);
-      }
-      72% {
-        opacity: 0.78;
-        transform: scale(1.02);
-      }
-      100% {
-        opacity: 1;
-        transform: scale(1.13);
-        filter: brightness(1);
-      }
-    }
-
     .node-label {
       position: absolute;
       z-index: 4;
@@ -495,14 +449,6 @@
       text-shadow: 0 3px 12px rgba(0,0,0,0.35);
       white-space: nowrap;
       pointer-events: none;
-      opacity: 0;
-      transform: translateY(8px);
-      transition: opacity 0.45s ease, transform 0.45s ease;
-    }
-
-    .node-label.visible {
-      opacity: 1;
-      transform: translateY(0);
     }
 
     .panel-card {
@@ -621,16 +567,6 @@
       border: 1px solid rgba(255,255,255,0.12);
     }
 
-    .constellation-actions {
-      position: absolute;
-      left: 24px;
-      bottom: 24px;
-      z-index: 6;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
     @media (max-width: 1100px) {
       .story-layout {
         grid-template-columns: 1fr;
@@ -711,11 +647,6 @@
       .shape-guide {
         width: 320px;
       }
-
-      .constellation-actions {
-        left: 18px;
-        bottom: 18px;
-      }
     }
   </style>
 </head>
@@ -752,7 +683,7 @@
     <section class="story-layout">
       <div class="constellation-card">
         <div class="constellation-header">
-          <h2 class="constellation-heading">Follow the anchor-shaped path</h2>
+          <h2 class="constellation-heading">Follow the heart-shaped path</h2>
           <p class="constellation-copy">
             Move chapter by chapter. Each step unlocks the next star, and once the full path is complete, every point stays open to revisit.
           </p>
@@ -774,45 +705,24 @@
             <span class="sparkle s3" style="left: 34%; top: 76%;"></span>
             <span class="sparkle" style="left: 16%; top: 55%;"></span>
             <span class="sparkle s2" style="left: 89%; top: 72%;"></span>
-
-            <span class="sparkle s4" style="left: 8%; top: 10%;"></span>
-            <span class="sparkle s5" style="left: 14%; top: 21%;"></span>
-            <span class="sparkle s2" style="left: 22%; top: 12%;"></span>
-            <span class="sparkle s4" style="left: 27%; top: 25%;"></span>
-            <span class="sparkle s5" style="left: 36%; top: 10%;"></span>
-            <span class="sparkle s3" style="left: 48%; top: 13%;"></span>
-            <span class="sparkle s5" style="left: 54%; top: 26%;"></span>
-            <span class="sparkle s4" style="left: 63%; top: 11%;"></span>
-            <span class="sparkle s5" style="left: 69%; top: 30%;"></span>
-            <span class="sparkle s2" style="left: 78%; top: 16%;"></span>
-            <span class="sparkle s4" style="left: 91%; top: 24%;"></span>
-            <span class="sparkle s5" style="left: 12%; top: 43%;"></span>
-            <span class="sparkle s3" style="left: 24%; top: 63%;"></span>
-            <span class="sparkle s4" style="left: 39%; top: 83%;"></span>
-            <span class="sparkle s5" style="left: 48%; top: 70%;"></span>
-            <span class="sparkle s3" style="left: 57%; top: 89%;"></span>
-            <span class="sparkle s2" style="left: 67%; top: 74%;"></span>
-            <span class="sparkle s4" style="left: 76%; top: 62%;"></span>
-            <span class="sparkle s5" style="left: 84%; top: 83%;"></span>
-            <span class="sparkle s3" style="left: 92%; top: 52%;"></span>
           </div>
 
           <svg class="story-svg" viewBox="0 0 1000 720" preserveAspectRatio="none" aria-hidden="true">
             <!-- faint base path -->
             <line class="story-line-base" x1="500" y1="250" x2="500" y2="366"></line>
             <line class="story-line-base" x1="500" y1="370" x2="500" y2="535"></line>
-            <line class="story-line-base" x1="500" y1="535" x2="755" y2="425"></line>
-            <path class="story-line-base" d="M755 425 Q585 560 245 425"></path>
-            <path class="story-line-base" d="M245 425 Q430 340 650 350"></path>
-            <line class="story-line-base" x1="650" y1="350" x2="345" y2="350"></line>
+            <path class="story-line-base" d="M500 535 Q395 600 245 425"></path>
+            <path class="story-line-base" d="M500 530 Q605 600 755 425"></path>
+            <line class="story-line-base" x1="350" y1="370" x2="515" y2="370"></line>
+            <path class="story-line-base" x1="345" y1="350" x2="650" y2="350"></line>
 
             <!-- animated path -->
             <line id="line1" class="story-line" pathLength="100" x1="500" y1="250" x2="500" y2="366"></line>
             <line id="line2" class="story-line" pathLength="100" x1="500" y1="370" x2="500" y2="535"></line>
-            <line id="line3" class="story-line" pathLength="100" x1="500" y1="535" x2="755" y2="425"></line>
-            <path id="line4" class="story-line" pathLength="100" d="M755 425 Q585 560 245 425"></path>
-            <path id="line5" class="story-line" pathLength="100" d="M245 425 Q430 340 650 350"></path>
-            <line id="line6" class="story-line" pathLength="100" x1="650" y1="350" x2="345" y2="350"></line>
+            <path id="line3" class="story-line" pathLength="100" d="M500 535 Q395 520 245 425"></path>
+            <path id="line4" class="story-line" pathLength="100" d="M500 535 Q395 600 755 425"></path>
+            <line id="line5" class="story-line" pathLength="100" x1="345 y1="370" x2="650" y2="350"></line>
+            <path id="line6" class="story-line" pathLength="100" x1="345 y1="370" x2="650" y2="350"></line>
 
             <!-- line sparkles -->
             <circle class="line-spark s1" data-line="1" cx="500" cy="282" r="3"></circle>
@@ -823,50 +733,44 @@
             <circle class="line-spark s2" data-line="2" cx="500" cy="462" r="2"></circle>
             <circle class="line-spark s4" data-line="2" cx="500" cy="505" r="4"></circle>
 
-            <circle class="line-spark s1" data-line="3" cx="560" cy="510" r="2"></circle>
-            <circle class="line-spark s2" data-line="3" cx="620" cy="485" r="4"></circle>
-            <circle class="line-spark s3" data-line="3" cx="690" cy="455" r="2.5"></circle>
-            <circle class="line-spark s4" data-line="3" cx="730" cy="438" r="4"></circle>
+            <circle class="line-spark s1" data-line="3" cx="448" cy="522" r="2"></circle>
+            <circle class="line-spark s2" data-line="3" cx="392" cy="503" r="4"></circle>
+            <circle class="line-spark s3" data-line="3" cx="330" cy="472" r="2.5"></circle>
+            <circle class="line-spark s4" data-line="3" cx="278" cy="442" r="4"></circle>
 
-            <circle class="line-spark s1" data-line="4" cx="690" cy="458" r="2"></circle>
-            <circle class="line-spark s2" data-line="4" cx="575" cy="520" r="4"></circle>
-            <circle class="line-spark s3" data-line="4" cx="420" cy="515" r="2.5"></circle>
-            <circle class="line-spark s4" data-line="4" cx="300" cy="455" r="4"></circle>
+            <circle class="line-spark s1" data-line="4" cx="260" cy="400" r="2"></circle>
+            <circle class="line-spark s2" data-line="4" cx="284" cy="376" r="4"></circle>
+            <circle class="line-spark s3" data-line="4" cx="316" cy="358" r="2.5"></circle>
 
-            <circle class="line-spark s1" data-line="5" cx="300" cy="420" r="2"></circle>
-            <circle class="line-spark s2" data-line="5" cx="395" cy="390" r="4"></circle>
-            <circle class="line-spark s3" data-line="5" cx="525" cy="360" r="2.5"></circle>
-            <circle class="line-spark s4" data-line="5" cx="620" cy="352" r="4"></circle>
+            <circle class="line-spark s1" data-line="5" cx="420" cy="350" r="2"></circle>
+            <circle class="line-spark s2" data-line="5" cx="500" cy="350" r="4"></circle>
+            <circle class="line-spark s3" data-line="5" cx="580" cy="350" r="2.5"></circle>
 
-            <circle class="line-spark s1" data-line="6" cx="585" cy="350" r="2"></circle>
-            <circle class="line-spark s2" data-line="6" cx="505" cy="350" r="4"></circle>
-            <circle class="line-spark s4" data-line="6" cx="410" cy="350" r="2.5"></circle>
+            <circle class="line-spark s1" data-line="6" cx="675" cy="352" r="2"></circle>
+            <circle class="line-spark s2" data-line="6" cx="705" cy="367" r="4"></circle>
+            <circle class="line-spark s4" data-line="6" cx="730" cy="392" r="2.5"></circle>
           </svg>
 
           <button class="story-node active available" id="star1" style="left: 48%; top: 33%;" aria-label="Early Life"></button>
-          <div class="node-label visible" id="label1" style="left: 39%; top: 20%;">Early Life</div>
+          <div class="node-label" style="left: 39%; top: 26.5%;">Early Life</div>
 
           <button class="story-node locked" id="star2" style="left: 48%; top: 49.15%;" aria-label="Disney Era"></button>
-          <div class="node-label" id="label2" style="left: 40%; top: 36%;">Disney Era</div>
+          <div class="node-label" style="left: 40%; top: 42.5%;">Disney Era</div>
 
           <button class="story-node locked" id="star3" style="left: 48%; top: 73%;" aria-label="Independent Era"></button>
-          <div class="node-label" id="label3" style="left: 38%; top: 59.5%;">Independent Era</div>
-
-          <button class="story-node locked final" id="star4" style="left: 73%; top: 56%;" aria-label="Internet Sensation"></button>
-          <div class="node-label" id="label4" style="left: 66%; top: 42.5%;">Internet Sensation</div>
+          <div class="node-label" style="left: 38%; top: 66.5%;">Independent Era</div>
 
           <button class="story-node locked" id="star5" style="left: 23%; top: 57%;" aria-label="Renaissance"></button>
-          <div class="node-label" id="label5" style="left: 16%; top: 43.5%;">Renaissance</div>
+          <div class="node-label" style="left: 16%; top: 50.5%;">Renaissance</div>
 
           <button class="story-node locked" id="star6" style="left: 33%; top: 49%;" aria-label="Award-Winning Artist"></button>
-          <div class="node-label" id="label6" style="left: 20%; top: 35.5%;">Award-Winning Artist</div>
+          <div class="node-label" style="left: 20%; top: 42%;">Award-Winning Artist</div>
 
           <button class="story-node locked" id="star7" style="left: 64%; top: 49%;" aria-label="Building a Legacy"></button>
-          <div class="node-label" id="label7" style="left: 58%; top: 35.5%;">Building a Legacy</div>
+          <div class="node-label" style="left: 58%; top: 42%;">Building a Legacy</div>
 
-          <div class="constellation-actions">
-            <button class="story-btn primary-btn" id="nextBtn">Reveal Next Point</button>
-          </div>
+          <button class="story-node locked final" id="star4" style="left: 73%; top: 56%;" aria-label="Internet Sensation"></button>
+          <div class="node-label" style="left: 66%; top: 49.8%;">Internet Sensation</div>
         </div>
       </div>
 
@@ -897,6 +801,7 @@
             <div class="progress" id="panelProgress">1 / 7 points available</div>
 
             <div class="button-row">
+              <button class="story-btn primary-btn" id="nextBtn">Reveal Next Point</button>
               <button class="story-btn secondary-btn" id="replayBtn">Replay Story Path</button>
             </div>
           </div>
@@ -910,30 +815,20 @@
       { title: "Early Life", chapter: "Chapter 1", copy: "Source has to write this part..." },
       { title: "Disney Era", chapter: "Chapter 2", copy: "Source has to write this part..." },
       { title: "Independent Era", chapter: "Chapter 3", copy: "Source has to write this part..." },
-      { title: "Internet Sensation", chapter: "Chapter 4", copy: "Source has to write this part..." },
-      { title: "Building a Legacy", chapter: "Chapter 5", copy: "Source has to write this part..." },
-      { title: "Renaissance", chapter: "Chapter 6", copy: "Source has to write this part..." },
-      { title: "Award-Winning Artist", chapter: "Chapter 7", copy: "Source has to write this part..." }
+      { title: "Renaissance", chapter: "Chapter 4", copy: "Source has to write this part..." },
+      { title: "Award-Winning Artist", chapter: "Chapter 5", copy: "Source has to write this part..." },
+      { title: "Building a Legacy", chapter: "Chapter 6", copy: "Source has to write this part..." },
+      { title: "Internet Sensation", chapter: "Chapter 7", copy: "Source has to write this part..." }
     ];
 
     const stars = [
       document.getElementById("star1"),
       document.getElementById("star2"),
       document.getElementById("star3"),
-      document.getElementById("star4"),
-      document.getElementById("star7"),
       document.getElementById("star5"),
-      document.getElementById("star6")
-    ];
-
-    const labels = [
-      document.getElementById("label1"),
-      document.getElementById("label2"),
-      document.getElementById("label3"),
-      document.getElementById("label4"),
-      document.getElementById("label7"),
-      document.getElementById("label5"),
-      document.getElementById("label6")
+      document.getElementById("star6"),
+      document.getElementById("star7"),
+      document.getElementById("star4")
     ];
 
     const lines = [
@@ -972,17 +867,6 @@
       return new Promise(resolve => setTimeout(resolve, ms));
     }
 
-    function blinkStar(index) {
-      const star = stars[index];
-      if (!star) return;
-      star.classList.remove("just-activated");
-      void star.offsetWidth;
-      star.classList.add("just-activated");
-      setTimeout(() => {
-        star.classList.remove("just-activated");
-      }, 1000);
-    }
-
     function updatePanel(index) {
       const item = chapters[index];
       panelKicker.textContent = item.chapter;
@@ -1016,12 +900,6 @@
       });
     }
 
-    function updateLabels() {
-      labels.forEach((label, index) => {
-        label.classList.toggle("visible", index <= highestUnlocked);
-      });
-    }
-
     function updateStars() {
       stars.forEach((star, index) => {
         star.classList.toggle("active", index === activeIndex);
@@ -1047,7 +925,6 @@
       highestUnlocked = chapters.length - 1;
       activeIndex = Math.min(activeIndex, chapters.length - 1);
       updateLines();
-      updateLabels();
       updateStars();
       updatePanel(activeIndex);
       updateButtons();
@@ -1055,7 +932,6 @@
 
     function refreshUI() {
       updateLines();
-      updateLabels();
       updateStars();
       updatePanel(activeIndex);
       updateButtons();
@@ -1077,7 +953,6 @@
 
       highestUnlocked = Math.max(highestUnlocked, next);
       activeIndex = next;
-      blinkStar(next);
 
       if (next === chapters.length - 1) {
         completeStory();
@@ -1088,7 +963,7 @@
     }
 
     stars.forEach((star, index) => {
-      star.addEventListener("click", () => {
+      star.addEventListener("click", async () => {
         if (isReplaying) return;
 
         if (completed) {
@@ -1098,6 +973,17 @@
         }
 
         if (index > highestUnlocked) return;
+
+        if (index < highestUnlocked) {
+          activeIndex = index;
+          refreshUI();
+          return;
+        }
+
+        if (index === activeIndex && index < chapters.length - 1) {
+          await progressToNext();
+          return;
+        }
 
         activeIndex = index;
         refreshUI();
@@ -1120,10 +1006,6 @@
         items.forEach(item => item.classList.remove("visible"));
       });
 
-      labels.forEach((label, index) => {
-        label.classList.toggle("visible", index === 0);
-      });
-
       refreshUI();
       await sleep(450);
 
@@ -1141,7 +1023,6 @@
 
         highestUnlocked = i + 1;
         activeIndex = i + 1;
-        blinkStar(i + 1);
         refreshUI();
         await sleep(520);
       }
