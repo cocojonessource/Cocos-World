@@ -1,163 +1,799 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>CocoStream | Coco's World</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CocoStream | Coco's World</title>
 
-<style>
-:root {
-  --primary:#6B2FA3;
-  --secondary:#8B5FBF;
-  --accent:#D76BA8;
-  --gold:#D4A857;
-  --white:#fff;
-  --bg:#FFE4EC;
-}
+  <style>
+    :root {
+      --bg: #FFE4EC;
+      --bg-soft: #fff8fb;
+      --nav: #FFD1DC;
+      --primary: #6B2FA3;
+      --secondary: #8B5FBF;
+      --accent: #D76BA8;
+      --gold: #D4A857;
+      --white: #FFFFFF;
+      --lavender-bg: #EEE6FF;
+      --lavender-card: #F7F1FF;
+      --shadow: rgba(107, 47, 163, 0.10);
+      --shadow-strong: rgba(107, 47, 163, 0.18);
+      --border-soft: rgba(255,255,255,0.55);
+      --dark-overlay: rgba(45, 17, 73, 0.70);
+      --dark-overlay-soft: rgba(45, 17, 73, 0.32);
+    }
 
-body{
-  margin:0;
-  font-family:Arial;
-  background:linear-gradient(to bottom,#fff8fb,var(--bg));
-}
+    * {
+      box-sizing: border-box;
+    }
 
-/* HERO */
-.featured-hero{
-  border-radius:30px;
-  min-height:420px;
-  display:flex;
-  align-items:flex-end;
-  padding:30px;
-  margin-bottom:20px;
-  background:
-    linear-gradient(to right,rgba(45,17,73,.8),rgba(45,17,73,.3)),
-    url('https://img.youtube.com/vi/0Lhs1WEjloo/maxresdefault.jpg');
-  background-size:cover;
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-.featured-title{font-size:40px;color:#fff;}
-.featured-copy{color:#eee;}
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.45), transparent 30%),
+        linear-gradient(to bottom, var(--bg-soft) 0%, var(--bg) 20%, #ffeaf1 100%);
+      color: var(--primary);
+      overflow-x: hidden;
+    }
 
-.hero-btn{
-  padding:12px 18px;
-  border:none;
-  border-radius:999px;
-  background:var(--accent);
-  color:#fff;
-  cursor:pointer;
-}
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-/* PLAYER */
-.player-frame iframe{
-  width:100%;
-  height:400px;
-}
+    button {
+      font: inherit;
+    }
 
-.playlist-item{
-  cursor:pointer;
-  padding:10px;
-  border-bottom:1px solid #ddd;
-}
-</style>
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 209, 220, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.45);
+    }
+
+    .topbar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--primary);
+    }
+
+    .anchor-home {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: var(--white);
+      border: 1px solid rgba(212, 168, 87, 0.45);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      color: var(--gold);
+      box-shadow: 0 6px 16px rgba(212, 168, 87, 0.14);
+      flex-shrink: 0;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .browse-btn {
+      border: none;
+      background: var(--accent);
+      color: var(--white);
+      border-radius: 999px;
+      padding: 12px 18px;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 10px 22px rgba(215, 107, 168, 0.22);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .browse-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 14px 28px rgba(215, 107, 168, 0.28);
+    }
+
+    .mode-switch-wrap {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 10px 24px var(--shadow);
+    }
+
+    .mode-label {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--secondary);
+      min-width: 76px;
+      text-align: center;
+    }
+
+    .switch {
+      position: relative;
+      width: 68px;
+      height: 36px;
+      display: inline-block;
+      flex-shrink: 0;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      inset: 0;
+      cursor: pointer;
+      background: linear-gradient(135deg, #f6bfd1, #e6c9ff);
+      border-radius: 999px;
+      transition: 0.28s ease;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.55);
+    }
+
+    .slider::before {
+      content: "";
+      position: absolute;
+      height: 28px;
+      width: 28px;
+      left: 4px;
+      top: 4px;
+      border-radius: 50%;
+      background: var(--white);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+      transition: 0.28s ease;
+    }
+
+    .switch input:checked + .slider::before {
+      transform: translateX(32px);
+    }
+
+    .page {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 28px 20px 60px;
+    }
+
+    .mode-panel {
+      display: none;
+      animation: fadeIn 0.28s ease;
+    }
+
+    .mode-panel.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .watch-intro {
+      margin-bottom: 22px;
+    }
+
+    .watch-title-row {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .page-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(40px, 6vw, 74px);
+      line-height: 0.95;
+      color: var(--primary);
+    }
+
+    .page-copy {
+      margin: 14px 0 0;
+      max-width: 900px;
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--secondary);
+    }
+
+    .featured-wrap {
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(320px, 0.82fr);
+      gap: 22px;
+      align-items: stretch;
+      margin-bottom: 30px;
+    }
+
+    .featured-player-card,
+    .featured-info-card,
+    .library-card,
+    .press-card,
+    .press-preview {
+      background: rgba(255,255,255,0.62);
+      border: 1px solid var(--border-soft);
+      border-radius: 28px;
+      box-shadow: 0 14px 30px var(--shadow);
+      overflow: hidden;
+    }
+
+    .featured-player {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #000;
+    }
+
+    .featured-player iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+    }
+
+    .featured-info-card {
+      position: relative;
+      min-height: 100%;
+      padding: 28px 26px 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      background:
+        linear-gradient(to bottom, var(--dark-overlay) 0%, var(--dark-overlay-soft) 100%),
+        url('https://img.youtube.com/vi/0Lhs1WEjloo/maxresdefault.jpg');
+      background-position: center;
+      background-size: cover;
+      color: var(--white);
+    }
+
+    .featured-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      margin-bottom: 14px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(212, 168, 87, 0.92);
+      color: #fff;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .featured-kicker {
+      margin: 0 0 10px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      color: #ffe2f0;
+    }
+
+    .featured-title {
+      margin: 0 0 14px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(30px, 4vw, 46px);
+      line-height: 1.02;
+      color: var(--white);
+    }
+
+    .featured-copy {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.75;
+      color: rgba(255,255,255,0.92);
+      max-width: 520px;
+    }
+
+    .featured-actions {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: 22px;
+    }
+
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 46px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-size: 14px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hero-btn:hover {
+      transform: translateY(-1px);
+    }
+
+    .hero-btn-primary {
+      background: var(--accent);
+      color: var(--white);
+      box-shadow: 0 10px 22px rgba(215, 107, 168, 0.26);
+    }
+
+    .hero-btn-secondary {
+      background: rgba(255,255,255,0.16);
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.34);
+      backdrop-filter: blur(6px);
+    }
+
+    .library {
+      display: grid;
+      gap: 22px;
+    }
+
+    .library-section {
+      display: grid;
+      gap: 12px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .section-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(28px, 4vw, 40px);
+      line-height: 1;
+      color: var(--primary);
+    }
+
+    .section-copy {
+      margin: 7px 0 0;
+      font-size: 15px;
+      line-height: 1.65;
+      color: var(--secondary);
+      max-width: 760px;
+    }
+
+    .playlist-link {
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .library-card {
+      padding: 0;
+      overflow: hidden;
+    }
+
+    .playlist-embed {
+      width: 100%;
+      height: 340px;
+      border: 0;
+      display: block;
+      background: #000;
+    }
+
+    .press-panel-shell {
+      background: linear-gradient(to bottom, #f3ebff 0%, var(--lavender-bg) 100%);
+      border: 1px solid rgba(255,255,255,0.62);
+      border-radius: 30px;
+      box-shadow: 0 16px 34px var(--shadow);
+      padding: 26px;
+    }
+
+    .press-top {
+      margin-bottom: 22px;
+    }
+
+    .press-title {
+      margin: 0 0 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(34px, 5vw, 54px);
+      color: var(--primary);
+      line-height: 0.98;
+    }
+
+    .press-copy {
+      margin: 0;
+      max-width: 960px;
+      font-size: 16px;
+      line-height: 1.85;
+      color: #8b4bb3;
+    }
+
+    .press-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+      gap: 18px;
+    }
+
+    .press-preview {
+      padding: 24px;
+      background: rgba(255,255,255,0.76);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-height: 260px;
+    }
+
+    .press-preview h3 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      line-height: 1.1;
+      color: var(--accent);
+    }
+
+    .press-preview p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--secondary);
+    }
+
+    .press-link-btn {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: fit-content;
+      padding: 12px 16px;
+      border-radius: 999px;
+      background: var(--accent);
+      color: var(--white);
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .press-note {
+      padding: 24px;
+      background: rgba(255,255,255,0.72);
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: 0 12px 26px var(--shadow);
+    }
+
+    .press-note h4 {
+      margin: 0 0 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 24px;
+      color: var(--primary);
+    }
+
+    .press-note p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.75;
+      color: var(--secondary);
+    }
+
+    .footer {
+      text-align: center;
+      padding: 30px 20px 10px;
+      color: var(--secondary);
+      font-size: 14px;
+    }
+
+    @media (max-width: 1100px) {
+      .featured-wrap,
+      .press-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .playlist-embed {
+        height: 320px;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .topbar-inner {
+        align-items: flex-start;
+      }
+
+      .brand {
+        font-size: 24px;
+      }
+
+      .page {
+        padding: 24px 16px 50px;
+      }
+
+      .topbar-actions {
+        width: 100%;
+        justify-content: space-between;
+      }
+
+      .mode-switch-wrap {
+        gap: 8px;
+        padding: 8px 10px;
+      }
+
+      .mode-label {
+        min-width: 64px;
+        font-size: 12px;
+      }
+
+      .page-copy,
+      .press-copy {
+        font-size: 15px;
+      }
+
+      .featured-info-card,
+      .press-panel-shell {
+        padding: 18px;
+      }
+
+      .playlist-embed {
+        height: 280px;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <a class="anchor-home" href="index.html">⚓</a>
+        <span id="topTitle">CocoStream</span>
+      </div>
 
-<!-- HERO -->
-<section class="featured-hero" id="featuredHero">
-  <div>
-    <h2 class="featured-title" id="featuredTitle">Featured Video</h2>
-    <p class="featured-copy" id="featuredCopy">Main highlight</p>
-    <button class="hero-btn" id="heroPlayBtn">Play Now</button>
-  </div>
-</section>
+      <div class="topbar-actions">
+        <button class="browse-btn" id="browseBtn" type="button">Browse</button>
 
-<!-- PLAYER -->
-<section class="stream-shell">
+        <div class="mode-switch-wrap">
+          <span class="mode-label">Watch</span>
 
-<article class="player-card">
-  <div class="player-frame">
-    <iframe
-      id="mainPlayer"
-      src="https://www.youtube.com/embed/0Lhs1WEjloo?rel=0"
-      allowfullscreen>
-    </iframe>
-  </div>
+          <label class="switch" aria-label="Toggle between CocoStream and CocoPress">
+            <input type="checkbox" id="modeToggle" />
+            <span class="slider"></span>
+          </label>
 
-  <h2 id="mainVideoTitle">Featured Video</h2>
-  <p id="mainVideoDescription">Main video</p>
-</article>
+          <span class="mode-label">Press</span>
+        </div>
+      </div>
+    </div>
+  </header>
 
-<!-- PLAYLIST -->
-<div class="playlist">
+  <main class="page">
+    <section class="mode-panel active" id="watchPanel">
+      <div class="watch-intro">
+        <div class="watch-title-row">
+          <h1 class="page-title">CocoStream</h1>
+        </div>
 
-<div class="playlist-item active"
-  data-video-id="0Lhs1WEjloo"
-  data-title="Featured Video"
-  data-description="Main feature">
-  ▶ Featured Video
-</div>
+        <p class="page-copy">
+          A watch-first media space for performances, interviews, appearances, and era-based viewing paths — pulled from YouTube, but played right here inside Coco’s World.
+        </p>
+      </div>
 
-<div class="playlist-item"
-  data-video-id="ysz5S6PUM-U"
-  data-title="Interview"
-  data-description="Interview content">
-  ▶ Interview
-</div>
+      <section class="featured-wrap">
+        <article class="featured-player-card">
+          <div class="featured-player">
+            <iframe
+              id="mainPlayer"
+              src="https://www.youtube.com/embed/0Lhs1WEjloo?rel=0"
+              title="Featured Coco video"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </article>
 
-<div class="playlist-item"
-  data-video-id="aqz-KE-bpKQ"
-  data-title="Performance"
-  data-description="Live performance">
-  ▶ Performance
-</div>
+        <aside class="featured-info-card" id="featuredInfoCard">
+          <div class="featured-badge">Featured</div>
+          <p class="featured-kicker">CocoStream Spotlight</p>
+          <h2 class="featured-title" id="featuredTitle">Featured Coco Video</h2>
+          <p class="featured-copy" id="featuredCopy">
+            A standout Coco moment at the top of the page, with the video playing directly on site and the rest of the watch library living underneath.
+          </p>
 
-</div>
+          <div class="featured-actions">
+            <button class="hero-btn hero-btn-primary" id="heroPlayBtn" type="button">Play Now</button>
+            <button class="hero-btn hero-btn-secondary" id="heroLibraryBtn" type="button">Open Library</button>
+          </div>
+        </aside>
+      </section>
 
-</section>
+      <section class="library" id="watchLibrary">
+        <section class="library-section">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Interviews</h2>
+              <p class="section-copy">
+                A dedicated interview shelf powered by your YouTube playlist.
+              </p>
+            </div>
 
-<script>
+            <a
+              class="playlist-link"
+              href="https://youtube.com/playlist?list=PLE3WRH9iwVb047Og48ndetaBlZD6QSagu&si=VNfaTyq8XTnZyAC5"
+              target="_blank"
+              rel="noopener noreferrer">
+              Open on YouTube
+            </a>
+          </div>
 
-const mainPlayer=document.getElementById('mainPlayer');
-const title=document.getElementById('mainVideoTitle');
-const desc=document.getElementById('mainVideoDescription');
+          <div class="library-card">
+            <iframe
+              class="playlist-embed"
+              src="https://www.youtube.com/embed/videoseries?list=PLE3WRH9iwVb047Og48ndetaBlZD6QSagu"
+              title="Coco Interviews playlist"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </section>
 
-const hero=document.getElementById('featuredHero');
-const heroTitle=document.getElementById('featuredTitle');
-const heroCopy=document.getElementById('featuredCopy');
+        <section class="library-section">
+          <div class="section-head">
+            <div>
+              <h2 class="section-title">Why Not More?</h2>
+              <p class="section-copy">
+                Era-based viewing pulled from your Why Not More? playlist.
+              </p>
+            </div>
 
-const items=document.querySelectorAll('.playlist-item');
+            <a
+              class="playlist-link"
+              href="https://youtube.com/playlist?list=PLHtD_OP4uB2aH7ObIsoU1LeHuWSbMEPnZ&si=YQTehsBnWKjZNzu6"
+              target="_blank"
+              rel="noopener noreferrer">
+              Open on YouTube
+            </a>
+          </div>
 
-function update(videoId,t,d){
+          <div class="library-card">
+            <iframe
+              class="playlist-embed"
+              src="https://www.youtube.com/embed/videoseries?list=PLHtD_OP4uB2aH7ObIsoU1LeHuWSbMEPnZ"
+              title="Why Not More playlist"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen>
+            </iframe>
+          </div>
+        </section>
+      </section>
+    </section>
 
-mainPlayer.src=`https://www.youtube.com/embed/${videoId}?autoplay=1`;
+    <section class="mode-panel" id="pressPanel">
+      <div class="press-panel-shell">
+        <div class="press-top">
+          <h1 class="press-title">CocoPress</h1>
+          <p class="press-copy">
+            Some of Coco’s most insightful moments live in written media. CocoPress is a softer reading space for profiles, interviews, and feature stories that deserve more room than a headline and a clip.
+          </p>
+        </div>
 
-title.textContent=t;
-desc.textContent=d;
+        <div class="press-grid">
+          <article class="press-preview">
+            <div class="featured-badge">Feature</div>
+            <h3>Hollywood Reporter Interview</h3>
+            <p>
+              A long-form written conversation centered on Coco Jones, her Grammy recognition, and the Why Not More? era.
+            </p>
+            <a
+              class="press-link-btn"
+              href="https://www.hollywoodreporter.com/music/music-features/coco-jones-grammy-nom-why-not-more-album-music-interview-1236478239/"
+              target="_blank"
+              rel="noopener noreferrer">
+              Read Article
+            </a>
+          </article>
 
-hero.style.backgroundImage=
-`linear-gradient(to right,rgba(45,17,73,.8),rgba(45,17,73,.3)),
-url('https://img.youtube.com/vi/${videoId}/maxresdefault.jpg')`;
+          <article class="press-note">
+            <h4>About this space</h4>
+            <p>
+              This mode is intentionally quieter. The background shifts lavender, the visual noise drops, and the page becomes a reading room for Coco’s most thoughtful written coverage. Add more article cards here later as you collect them.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
 
-heroTitle.textContent=t;
-heroCopy.textContent=d;
-}
+    <div class="footer">
+      Coco’s World — watch the moments, read the insight, stay in the world.
+    </div>
+  </main>
 
-items.forEach(item=>{
-item.onclick=()=>{
-update(
-item.dataset.videoId,
-item.dataset.title,
-item.dataset.description
-);
-};
-});
+  <script>
+    const modeToggle = document.getElementById('modeToggle');
+    const watchPanel = document.getElementById('watchPanel');
+    const pressPanel = document.getElementById('pressPanel');
+    const topTitle = document.getElementById('topTitle');
+    const browseBtn = document.getElementById('browseBtn');
+    const heroPlayBtn = document.getElementById('heroPlayBtn');
+    const heroLibraryBtn = document.getElementById('heroLibraryBtn');
+    const mainPlayer = document.getElementById('mainPlayer');
 
-document.getElementById('heroPlayBtn').onclick=()=>{
-document.querySelector('.player-frame').scrollIntoView({behavior:'smooth'});
-};
+    function setMode() {
+      const isPress = modeToggle.checked;
 
-</script>
+      if (isPress) {
+        watchPanel.classList.remove('active');
+        pressPanel.classList.add('active');
+        topTitle.textContent = 'CocoPress';
+        browseBtn.style.display = 'none';
+      } else {
+        pressPanel.classList.remove('active');
+        watchPanel.classList.add('active');
+        topTitle.textContent = 'CocoStream';
+        browseBtn.style.display = 'inline-flex';
+      }
+    }
 
+    browseBtn.addEventListener('click', () => {
+      document.getElementById('watchLibrary').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    });
+
+    heroLibraryBtn.addEventListener('click', () => {
+      document.getElementById('watchLibrary').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    });
+
+    heroPlayBtn.addEventListener('click', () => {
+      document.querySelector('.featured-player-card').scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+
+      if (!mainPlayer.src.includes('autoplay=1')) {
+        if (mainPlayer.src.includes('?')) {
+          mainPlayer.src += '&autoplay=1';
+        } else {
+          mainPlayer.src += '?autoplay=1';
+        }
+      }
+    });
+
+    modeToggle.addEventListener('change', setMode);
+    setMode();
+  </script>
 </body>
 </html>
