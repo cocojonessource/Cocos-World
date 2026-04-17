@@ -34,7 +34,6 @@
       --chip: rgba(255, 255, 255, 0.1);
       --chip-border: rgba(255, 255, 255, 0.12);
       --shadow: rgba(107, 47, 163, 0.15);
-      --line-burst: #ffeaa6;
     }
 
     * {
@@ -51,10 +50,10 @@
       min-height: 100%;
       font-family: Arial, sans-serif;
       background:
-        radial-gradient(circle at 12% 18%, rgba(255,255,255,0.42), transparent 18%),
-        radial-gradient(circle at 84% 12%, rgba(255,255,255,0.24), transparent 18%),
-        radial-gradient(circle at 68% 72%, rgba(255,255,255,0.14), transparent 20%),
-        linear-gradient(to bottom, #ffe6f0 0%, #ffd7e7 48%, #f3bfd6 100%);
+        radial-gradient(circle at 12% 18%, rgba(255,255,255,0.5), transparent 18%),
+        radial-gradient(circle at 84% 12%, rgba(255,255,255,0.28), transparent 18%),
+        radial-gradient(circle at 68% 72%, rgba(255,255,255,0.16), transparent 20%),
+        linear-gradient(to bottom, var(--bg) 0%, var(--bg-2) 48%, var(--bg-3) 100%);
       color: var(--text-deep);
       overflow-x: hidden;
       opacity: 0;
@@ -79,47 +78,6 @@
       color: inherit;
       text-decoration: none;
     }
-
-    .page-bg-stars {
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      overflow: hidden;
-    }
-
-    .page-bg-stars svg {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    .bg-constellation-line {
-      stroke: rgba(255,255,255,0.16);
-      stroke-width: 1.4;
-      fill: none;
-      stroke-linecap: round;
-    }
-
-    .bg-constellation-star {
-      fill: rgba(255,255,255,0.8);
-      filter: drop-shadow(0 0 8px rgba(255,255,255,0.45));
-      animation: twinkle 3.6s ease-in-out infinite;
-    }
-
-    .page-sparkle {
-      position: absolute;
-      width: 4px;
-      height: 4px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.88);
-      box-shadow: 0 0 10px rgba(255,255,255,0.7);
-      animation: twinkle 3s ease-in-out infinite;
-    }
-
-    .page-sparkle.s2 { width: 3px; height: 3px; animation-duration: 3.7s; }
-    .page-sparkle.s3 { width: 6px; height: 6px; animation-duration: 2.5s; }
 
     .topbar {
       position: sticky;
@@ -187,38 +145,15 @@
     }
 
     .page {
-      position: relative;
-      z-index: 1;
       max-width: 1000px;
       margin: 0 auto;
       padding: 34px 20px 42px;
     }
 
-
     .hero {
-      position: relative;
       text-align: center;
       margin-bottom: 26px;
     }
-
-    .title-wrap {
-      position: relative;
-      display: inline-block;
-    }
-
-    .title-star {
-      position: absolute;
-      width: 8px;
-      height: 8px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.95);
-      box-shadow: 0 0 12px rgba(255,255,255,0.88), 0 0 26px rgba(255, 217, 120, 0.42);
-      animation: twinkle 2.4s ease-in-out infinite;
-      pointer-events: none;
-    }
-
-    .title-star.s2 { width: 5px; height: 5px; animation-duration: 3.2s; }
-    .title-star.s3 { width: 10px; height: 10px; animation-duration: 2.8s; }
 
     .eyebrow {
       display: inline-block;
@@ -268,7 +203,7 @@
     .constellation-card {
       position: relative;
       min-height: 720px;
-      overflow: visible;
+      overflow: hidden;
     }
 
     .constellation-header {
@@ -298,13 +233,10 @@
       position: relative;
       width: 100%;
       height: 720px;
-      overflow: visible;
-      border-radius: 30px;
     }
 
     .sparkles,
-    .panel-sparkles,
-    .card-constellations {
+    .panel-sparkles {
       position: absolute;
       inset: 0;
       pointer-events: none;
@@ -314,24 +246,10 @@
       z-index: 1;
     }
 
-    .panel-sparkles,
-    .card-constellations {
+    .panel-sparkles {
       z-index: 0;
       overflow: hidden;
       border-radius: 30px;
-    }
-
-    .mini-constellation-line {
-      stroke: rgba(255,255,255,0.15);
-      stroke-width: 1.2;
-      fill: none;
-      stroke-linecap: round;
-    }
-
-    .mini-constellation-star {
-      fill: rgba(255,255,255,0.8);
-      filter: drop-shadow(0 0 8px rgba(255,255,255,0.38));
-      animation: twinkle 3.2s ease-in-out infinite;
     }
 
     .sparkle {
@@ -354,12 +272,6 @@
       width: 5px;
       height: 5px;
       animation-duration: 2.9s;
-    }
-
-    .sparkle.s4 {
-      width: 7px;
-      height: 7px;
-      animation-duration: 2.3s;
     }
 
     @keyframes twinkle {
@@ -392,7 +304,7 @@
 
     .story-line {
       stroke: var(--line-on);
-      stroke-width: 4.6;
+      stroke-width: 4;
       fill: none;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -400,42 +312,38 @@
       stroke-dashoffset: 100;
       opacity: 0;
       filter:
-        drop-shadow(0 0 4px rgba(255, 240, 185, 0.85))
-        drop-shadow(0 0 12px rgba(255, 217, 120, 0.6))
-        drop-shadow(0 0 20px rgba(255, 217, 120, 0.42));
+        drop-shadow(0 0 2px rgba(255, 217, 120, 0.55))
+        drop-shadow(0 0 6px rgba(255, 217, 120, 0.35));
       transition:
-        stroke-dashoffset 0.34s ease,
-        opacity 0.18s ease,
-        filter 0.25s ease,
-        stroke-width 0.25s ease;
+        stroke-dashoffset 0.9s ease,
+        opacity 0.25s ease,
+        filter 0.4s ease,
+        stroke-width 0.4s ease;
     }
 
     .story-line.visible {
       stroke-dashoffset: 0;
       opacity: 1;
-      stroke-width: 5.15;
+      stroke-width: 4.5;
       filter:
-        drop-shadow(0 0 5px rgba(255, 248, 220, 1))
-        drop-shadow(0 0 14px rgba(255, 217, 120, 0.95))
-        drop-shadow(0 0 26px rgba(255, 217, 120, 0.72))
-        drop-shadow(0 0 38px rgba(255, 217, 120, 0.38));
-      animation: lineGlow 1.9s ease-in-out infinite;
+        drop-shadow(0 0 4px rgba(255, 240, 185, 0.95))
+        drop-shadow(0 0 10px rgba(255, 217, 120, 0.8))
+        drop-shadow(0 0 18px rgba(255, 217, 120, 0.55));
+      animation: lineGlow 2.2s ease-in-out infinite;
     }
 
     @keyframes lineGlow {
       0%, 100% {
         filter:
-          drop-shadow(0 0 5px rgba(255, 248, 220, 1))
-          drop-shadow(0 0 14px rgba(255, 217, 120, 0.95))
-          drop-shadow(0 0 26px rgba(255, 217, 120, 0.72))
-          drop-shadow(0 0 38px rgba(255, 217, 120, 0.38));
+          drop-shadow(0 0 4px rgba(255, 240, 185, 0.95))
+          drop-shadow(0 0 10px rgba(255, 217, 120, 0.8))
+          drop-shadow(0 0 18px rgba(255, 217, 120, 0.55));
       }
       50% {
         filter:
-          drop-shadow(0 0 7px rgba(255, 252, 232, 1))
-          drop-shadow(0 0 18px rgba(255, 217, 120, 1))
-          drop-shadow(0 0 32px rgba(255, 217, 120, 0.86))
-          drop-shadow(0 0 46px rgba(255, 217, 120, 0.46));
+          drop-shadow(0 0 5px rgba(255, 248, 220, 1))
+          drop-shadow(0 0 14px rgba(255, 217, 120, 0.95))
+          drop-shadow(0 0 24px rgba(255, 217, 120, 0.75));
       }
     }
 
@@ -446,28 +354,25 @@
       filter:
         drop-shadow(0 0 4px rgba(255, 240, 185, 1))
         drop-shadow(0 0 10px rgba(255, 217, 120, 0.8));
-      transition: opacity 0.22s ease;
+      transition: opacity 0.35s ease;
     }
 
     .line-spark.visible {
       opacity: 1;
-      animation: lineTwinkle 1.9s ease-in-out infinite;
+      animation: lineTwinkle 2.4s ease-in-out infinite;
     }
 
     .line-spark.s1 { animation-delay: 0s; }
-    .line-spark.s2 { animation-delay: 0.3s; }
-    .line-spark.s3 { animation-delay: 0.7s; }
-    .line-spark.s4 { animation-delay: 1s; }
-    .line-spark.s5 { animation-delay: 1.2s; }
+    .line-spark.s2 { animation-delay: 0.5s; }
+    .line-spark.s3 { animation-delay: 1s; }
+    .line-spark.s4 { animation-delay: 1.4s; }
 
     @keyframes lineTwinkle {
       0%, 100% {
-        opacity: 0.22;
-        transform: scale(0.88);
+        opacity: 0.2;
       }
       50% {
         opacity: 1;
-        transform: scale(1.22);
       }
     }
 
@@ -518,32 +423,6 @@
       height: 32px;
       background:
         radial-gradient(circle at center, #fffefa 0%, #ffefb8 35%, #ffd978 64%, #ffc8df 100%);
-    }
-
-    .story-node.twinkling::before,
-    .story-node.twinkling::after {
-      content: "";
-      position: absolute;
-      left: 50%;
-      top: 50%;
-      width: 2px;
-      height: 20px;
-      background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,249,216,0.95), rgba(255,255,255,0));
-      transform: translate(-50%, -50%);
-      border-radius: 999px;
-      opacity: 0.55;
-      pointer-events: none;
-      animation: starCross 2s ease-in-out infinite;
-    }
-
-    .story-node.twinkling::after {
-      width: 20px;
-      height: 2px;
-    }
-
-    @keyframes starCross {
-      0%, 100% { opacity: 0.18; transform: translate(-50%, -50%) scale(0.82); }
-      50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.15); }
     }
 
     @keyframes pulseGlow {
@@ -641,8 +520,8 @@
       margin-top: 22px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
-      align-items: stretch;
+      gap: 14px;
+      align-items: flex-start;
     }
 
     .progress {
@@ -687,92 +566,6 @@
       color: var(--panel-text);
       border: 1px solid rgba(255,255,255,0.12);
     }
-
-    .constellation-controls {
-      position: absolute;
-      left: 24px;
-      bottom: 22px;
-      z-index: 7;
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-
-    .panel-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-      margin-top: auto;
-    }
-
-    .chapter-arrow {
-      width: 58px;
-      height: 58px;
-      border-radius: 18px;
-      border: 1px solid rgba(255,255,255,0.12);
-      background: rgba(255,255,255,0.08);
-      color: var(--panel-text);
-      font-size: 26px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
-    }
-
-    .chapter-arrow:hover { transform: translateY(-1px); }
-    .chapter-arrow:disabled { opacity: 0.38; cursor: not-allowed; transform: none; }
-
-    .chapter-arrow .tri {
-      width: 0;
-      height: 0;
-      border-top: 11px solid transparent;
-      border-bottom: 11px solid transparent;
-    }
-
-    .chapter-arrow.left .tri { border-right: 16px solid #fff8fd; margin-left: -4px; }
-    .chapter-arrow.right .tri { border-left: 16px solid #fff8fd; margin-right: -4px; }
-
-    .panel-center-status {
-      flex: 1;
-      text-align: center;
-      font-size: 13px;
-      line-height: 1.55;
-      color: var(--panel-muted);
-      padding: 0 8px;
-    }
-
-    .replay-burst-layer {
-      position: absolute;
-      inset: 0;
-      z-index: 8;
-      pointer-events: none;
-      overflow: visible;
-      border-radius: 30px;
-    }
-
-    .burst-particle {
-      position: absolute;
-      width: 7px;
-      height: 7px;
-      border-radius: 999px;
-      background: radial-gradient(circle, #fffce8 0%, var(--line-burst) 48%, rgba(255, 217, 120, 0.3) 100%);
-      box-shadow:
-        0 0 8px rgba(255,255,255,0.9),
-        0 0 18px rgba(255, 217, 120, 0.85);
-      opacity: 0;
-      animation: burstFly 0.95s ease-out forwards;
-    }
-
-    @keyframes burstFly {
-      0% { opacity: 0; transform: translate(0,0) scale(0.3); }
-      12% { opacity: 1; transform: translate(0,0) scale(1.05); }
-      100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.18); }
-    }
-
 
     @media (max-width: 1100px) {
       .story-layout {
@@ -854,75 +647,10 @@
       .shape-guide {
         width: 320px;
       }
-
-      .constellation-controls {
-        left: 18px;
-        bottom: 18px;
-      }
-
-      .story-btn {
-        padding: 12px 16px;
-        font-size: 13px;
-      }
-
-      .chapter-arrow {
-        width: 52px;
-        height: 52px;
-      }
     }
   </style>
 </head>
-
 <body>
-  <div class="page-bg-stars" aria-hidden="true">
-    <span class="page-sparkle s3" style="left: 6%; top: 8%;"></span>
-    <span class="page-sparkle" style="left: 14%; top: 20%;"></span>
-    <span class="page-sparkle s2" style="left: 24%; top: 7%;"></span>
-    <span class="page-sparkle s2" style="left: 32%; top: 15%;"></span>
-    <span class="page-sparkle s3" style="left: 44%; top: 6%;"></span>
-    <span class="page-sparkle" style="left: 57%; top: 14%;"></span>
-    <span class="page-sparkle s2" style="left: 67%; top: 9%;"></span>
-    <span class="page-sparkle s3" style="left: 81%; top: 16%;"></span>
-    <span class="page-sparkle" style="left: 92%; top: 9%;"></span>
-    <span class="page-sparkle s2" style="left: 8%; top: 42%;"></span>
-    <span class="page-sparkle s3" style="left: 18%; top: 57%;"></span>
-    <span class="page-sparkle" style="left: 37%; top: 39%;"></span>
-    <span class="page-sparkle s2" style="left: 52%; top: 48%;"></span>
-    <span class="page-sparkle s3" style="left: 71%; top: 38%;"></span>
-    <span class="page-sparkle" style="left: 86%; top: 54%;"></span>
-    <span class="page-sparkle s2" style="left: 11%; top: 78%;"></span>
-    <span class="page-sparkle s3" style="left: 28%; top: 88%;"></span>
-    <span class="page-sparkle" style="left: 48%; top: 83%;"></span>
-    <span class="page-sparkle s2" style="left: 69%; top: 86%;"></span>
-    <span class="page-sparkle s3" style="left: 90%; top: 76%;"></span>
-
-    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
-      <path class="bg-constellation-line" d="M8 18 L16 24 L26 22 L34 30"></path>
-      <circle class="bg-constellation-star" cx="8" cy="18" r="0.8"></circle>
-      <circle class="bg-constellation-star" cx="16" cy="24" r="1"></circle>
-      <circle class="bg-constellation-star" cx="26" cy="22" r="0.9"></circle>
-      <circle class="bg-constellation-star" cx="34" cy="30" r="1.1"></circle>
-
-      <path class="bg-constellation-line" d="M71 11 L78 15 L84 12 L90 18"></path>
-      <circle class="bg-constellation-star" cx="71" cy="11" r="0.9"></circle>
-      <circle class="bg-constellation-star" cx="78" cy="15" r="1"></circle>
-      <circle class="bg-constellation-star" cx="84" cy="12" r="0.85"></circle>
-      <circle class="bg-constellation-star" cx="90" cy="18" r="1.05"></circle>
-
-      <path class="bg-constellation-line" d="M10 62 L16 68 L23 64 L30 72 L38 69"></path>
-      <circle class="bg-constellation-star" cx="10" cy="62" r="0.9"></circle>
-      <circle class="bg-constellation-star" cx="16" cy="68" r="1.1"></circle>
-      <circle class="bg-constellation-star" cx="23" cy="64" r="0.9"></circle>
-      <circle class="bg-constellation-star" cx="30" cy="72" r="1.1"></circle>
-      <circle class="bg-constellation-star" cx="38" cy="69" r="0.9"></circle>
-
-      <path class="bg-constellation-line" d="M72 60 L79 56 L86 62 L92 58"></path>
-      <circle class="bg-constellation-star" cx="72" cy="60" r="0.9"></circle>
-      <circle class="bg-constellation-star" cx="79" cy="56" r="1"></circle>
-      <circle class="bg-constellation-star" cx="86" cy="62" r="1.1"></circle>
-      <circle class="bg-constellation-star" cx="92" cy="58" r="0.95"></circle>
-    </svg>
-
   <header class="topbar">
     <div class="topbar-inner">
       <div class="brand">
@@ -946,14 +674,7 @@
   <main class="page">
     <section class="hero">
       <div class="eyebrow">A guided constellation chapter path</div>
-      <div class="title-wrap">
-        <h1 class="title">Coco’s Star Path</h1>
-        <span class="title-star s3" style="left: -16px; top: 10px;"></span>
-        <span class="title-star s2" style="left: 18%; top: -10px;"></span>
-        <span class="title-star" style="right: 24%; top: 4px;"></span>
-        <span class="title-star s3" style="right: -14px; top: 18px;"></span>
-        <span class="title-star s2" style="right: 12%; bottom: 10px;"></span>
-      </div>
+      <h1 class="title">Coco’s Star Path</h1>
       <p class="subtitle">
         Trace the glowing path through the chapters, turning points, and milestones that shaped Coco’s journey.
       </p>
@@ -961,35 +682,8 @@
 
     <section class="story-layout">
       <div class="constellation-card">
-        <div class="card-constellations" aria-hidden="true">
-          <svg viewBox="0 0 1000 720" preserveAspectRatio="none">
-            <path class="mini-constellation-line" d="M80 110 L145 135 L210 98 L260 155"></path>
-            <circle class="mini-constellation-star" cx="80" cy="110" r="3"></circle>
-            <circle class="mini-constellation-star" cx="145" cy="135" r="3.3"></circle>
-            <circle class="mini-constellation-star" cx="210" cy="98" r="3"></circle>
-            <circle class="mini-constellation-star" cx="260" cy="155" r="3.5"></circle>
-
-            <path class="mini-constellation-line" d="M710 118 L760 92 L825 128 L892 108"></path>
-            <circle class="mini-constellation-star" cx="710" cy="118" r="3"></circle>
-            <circle class="mini-constellation-star" cx="760" cy="92" r="3.4"></circle>
-            <circle class="mini-constellation-star" cx="825" cy="128" r="3.2"></circle>
-            <circle class="mini-constellation-star" cx="892" cy="108" r="3.6"></circle>
-
-            <path class="mini-constellation-line" d="M120 615 L175 580 L230 620 L298 590"></path>
-            <circle class="mini-constellation-star" cx="120" cy="615" r="3.2"></circle>
-            <circle class="mini-constellation-star" cx="175" cy="580" r="3.6"></circle>
-            <circle class="mini-constellation-star" cx="230" cy="620" r="3"></circle>
-            <circle class="mini-constellation-star" cx="298" cy="590" r="3.4"></circle>
-
-            <path class="mini-constellation-line" d="M720 610 L785 575 L838 612 L900 586"></path>
-            <circle class="mini-constellation-star" cx="720" cy="610" r="3.1"></circle>
-            <circle class="mini-constellation-star" cx="785" cy="575" r="3.5"></circle>
-            <circle class="mini-constellation-star" cx="838" cy="612" r="3.2"></circle>
-            <circle class="mini-constellation-star" cx="900" cy="586" r="3.6"></circle>
-          </svg>
-        </div>
         <div class="constellation-header">
-          <h2 class="constellation-heading">Follow the anchor path</h2>
+          <h2 class="constellation-heading">Follow the heart-shaped path</h2>
           <p class="constellation-copy">
             Move chapter by chapter. Each step unlocks the next star, and once the full path is complete, every point stays open to revisit.
           </p>
@@ -999,22 +693,18 @@
           <img src="heart-guide.png" class="shape-guide" alt="">
 
           <div class="sparkles" aria-hidden="true">
-            <span class="sparkle s4" style="left: 10%; top: 15%;"></span>
-            <span class="sparkle s2" style="left: 18%; top: 28%;"></span>
-            <span class="sparkle" style="left: 28%; top: 13%;"></span>
-            <span class="sparkle s3" style="left: 39%; top: 21%;"></span>
-            <span class="sparkle s2" style="left: 47%; top: 10%;"></span>
-            <span class="sparkle s4" style="left: 59%; top: 14%;"></span>
-            <span class="sparkle" style="left: 71%; top: 19%;"></span>
-            <span class="sparkle s3" style="left: 84%; top: 27%;"></span>
-            <span class="sparkle s2" style="left: 87%; top: 44%;"></span>
-            <span class="sparkle s4" style="left: 76%; top: 63%;"></span>
-            <span class="sparkle" style="left: 60%; top: 83%;"></span>
-            <span class="sparkle s3" style="left: 36%; top: 78%;"></span>
-            <span class="sparkle s2" style="left: 16%; top: 56%;"></span>
-            <span class="sparkle s4" style="left: 88%; top: 78%;"></span>
-            <span class="sparkle" style="left: 7%; top: 73%;"></span>
-            <span class="sparkle s3" style="left: 24%; top: 64%;"></span>
+            <span class="sparkle s3" style="left: 10%; top: 16%;"></span>
+            <span class="sparkle s2" style="left: 19%; top: 30%;"></span>
+            <span class="sparkle" style="left: 30%; top: 14%;"></span>
+            <span class="sparkle s3" style="left: 43%; top: 20%;"></span>
+            <span class="sparkle" style="left: 57%; top: 14%;"></span>
+            <span class="sparkle s2" style="left: 72%; top: 20%;"></span>
+            <span class="sparkle s3" style="left: 85%; top: 31%;"></span>
+            <span class="sparkle" style="left: 82%; top: 58%;"></span>
+            <span class="sparkle s2" style="left: 62%; top: 80%;"></span>
+            <span class="sparkle s3" style="left: 34%; top: 76%;"></span>
+            <span class="sparkle" style="left: 16%; top: 55%;"></span>
+            <span class="sparkle s2" style="left: 89%; top: 72%;"></span>
           </div>
 
           <svg class="story-svg" viewBox="0 0 1000 720" preserveAspectRatio="none" aria-hidden="true">
@@ -1022,99 +712,70 @@
             <line class="story-line-base" x1="500" y1="250" x2="500" y2="366"></line>
             <line class="story-line-base" x1="500" y1="370" x2="500" y2="535"></line>
             <path class="story-line-base" d="M500 535 Q395 600 245 425"></path>
-            <line class="story-line-base" x1="245" y1="425" x2="350" y2="370"></line>
-            <line class="story-line-base" x1="350" y1="370" x2="650" y2="370"></line>
-            <line class="story-line-base" x1="650" y1="370" x2="755" y2="425"></line>
-            <line class="story-line-base" x1="778" y1="425" x2="883" y2="425"></line>
+            <path class="story-line-base" d="M500 530 Q605 600 755 425"></path>
+            <line class="story-line-base" x1="350" y1="370" x2="515" y2="370"></line>
+            <path class="story-line-base" x1="345" y1="350" x2="650" y2="350"></line>
 
             <!-- animated path -->
             <line id="line1" class="story-line" pathLength="100" x1="500" y1="250" x2="500" y2="366"></line>
             <line id="line2" class="story-line" pathLength="100" x1="500" y1="370" x2="500" y2="535"></line>
-            <path id="line3" class="story-line" pathLength="100" d="M500 535 Q395 600 245 425"></path>
-            <line id="line4" class="story-line" pathLength="100" x1="245" y1="425" x2="350" y2="370"></line>
-            <line id="line5" class="story-line" pathLength="100" x1="350" y1="370" x2="650" y2="370"></line>
-            <line id="line6" class="story-line" pathLength="100" x1="650" y1="370" x2="755" y2="425"></line>
-            <line id="line7" class="story-line" pathLength="100" x1="778" y1="425" x2="883" y2="425"></line>
+            <path id="line3" class="story-line" pathLength="100" d="M500 535 Q395 520 245 425"></path>
+            <path id="line4" class="story-line" pathLength="100" d="M500 535 Q395 600 755 425"></path>
+            <line id="line5" class="story-line" pathLength="100" x1="345 y1="370" x2="650" y2="350"></line>
+            <path id="line6" class="story-line" pathLength="100" x1="345 y1="370" x2="650" y2="350"></line>
 
             <!-- line sparkles -->
             <circle class="line-spark s1" data-line="1" cx="500" cy="282" r="3"></circle>
             <circle class="line-spark s2" data-line="1" cx="500" cy="320" r="2"></circle>
             <circle class="line-spark s3" data-line="1" cx="500" cy="350" r="4"></circle>
-            <circle class="line-spark s5" data-line="1" cx="500" cy="360" r="2.5"></circle>
 
             <circle class="line-spark s1" data-line="2" cx="500" cy="415" r="3"></circle>
             <circle class="line-spark s2" data-line="2" cx="500" cy="462" r="2"></circle>
             <circle class="line-spark s4" data-line="2" cx="500" cy="505" r="4"></circle>
-            <circle class="line-spark s5" data-line="2" cx="500" cy="526" r="2.5"></circle>
 
             <circle class="line-spark s1" data-line="3" cx="448" cy="522" r="2"></circle>
             <circle class="line-spark s2" data-line="3" cx="392" cy="503" r="4"></circle>
             <circle class="line-spark s3" data-line="3" cx="330" cy="472" r="2.5"></circle>
             <circle class="line-spark s4" data-line="3" cx="278" cy="442" r="4"></circle>
-            <circle class="line-spark s5" data-line="3" cx="252" cy="428" r="2.5"></circle>
 
-            <circle class="line-spark s1" data-line="4" cx="260" cy="417" r="2"></circle>
-            <circle class="line-spark s2" data-line="4" cx="288" cy="401" r="4"></circle>
-            <circle class="line-spark s3" data-line="4" cx="316" cy="385" r="2.5"></circle>
-            <circle class="line-spark s5" data-line="4" cx="340" cy="374" r="4"></circle>
+            <circle class="line-spark s1" data-line="4" cx="260" cy="400" r="2"></circle>
+            <circle class="line-spark s2" data-line="4" cx="284" cy="376" r="4"></circle>
+            <circle class="line-spark s3" data-line="4" cx="316" cy="358" r="2.5"></circle>
 
-            <circle class="line-spark s1" data-line="5" cx="420" cy="370" r="2"></circle>
-            <circle class="line-spark s2" data-line="5" cx="500" cy="370" r="4"></circle>
-            <circle class="line-spark s3" data-line="5" cx="580" cy="370" r="2.5"></circle>
-            <circle class="line-spark s5" data-line="5" cx="630" cy="370" r="4"></circle>
+            <circle class="line-spark s1" data-line="5" cx="420" cy="350" r="2"></circle>
+            <circle class="line-spark s2" data-line="5" cx="500" cy="350" r="4"></circle>
+            <circle class="line-spark s3" data-line="5" cx="580" cy="350" r="2.5"></circle>
 
-            <circle class="line-spark s1" data-line="6" cx="675" cy="382" r="2"></circle>
-            <circle class="line-spark s2" data-line="6" cx="705" cy="397" r="4"></circle>
-            <circle class="line-spark s4" data-line="6" cx="735" cy="412" r="2.5"></circle>
-            <circle class="line-spark s5" data-line="6" cx="752" cy="423" r="4"></circle>
-
-            <circle class="line-spark s1" data-line="7" cx="804" cy="425" r="2"></circle>
-            <circle class="line-spark s2" data-line="7" cx="835" cy="425" r="4"></circle>
-            <circle class="line-spark s4" data-line="7" cx="868" cy="425" r="2.5"></circle>
+            <circle class="line-spark s1" data-line="6" cx="675" cy="352" r="2"></circle>
+            <circle class="line-spark s2" data-line="6" cx="705" cy="367" r="4"></circle>
+            <circle class="line-spark s4" data-line="6" cx="730" cy="392" r="2.5"></circle>
           </svg>
 
-          <button class="story-node active available twinkling" id="star1" style="left: 48%; top: 33%;" aria-label="Early Life"></button>
+          <button class="story-node active available" id="star1" style="left: 48%; top: 33%;" aria-label="Early Life"></button>
+          <div class="node-label" style="left: 39%; top: 26.5%;">Early Life</div>
 
-          <button class="story-node locked twinkling" id="star2" style="left: 48%; top: 49.15%;" aria-label="Disney Era"></button>
+          <button class="story-node locked" id="star2" style="left: 48%; top: 49.15%;" aria-label="Disney Era"></button>
+          <div class="node-label" style="left: 40%; top: 42.5%;">Disney Era</div>
 
-          <button class="story-node locked twinkling" id="star3" style="left: 48%; top: 73%;" aria-label="Independent Era"></button>
+          <button class="story-node locked" id="star3" style="left: 48%; top: 73%;" aria-label="Independent Era"></button>
+          <div class="node-label" style="left: 38%; top: 66.5%;">Independent Era</div>
 
-          <button class="story-node locked twinkling" id="star5" style="left: 23%; top: 57%;" aria-label="Renaissance"></button>
+          <button class="story-node locked" id="star5" style="left: 23%; top: 57%;" aria-label="Renaissance"></button>
+          <div class="node-label" style="left: 16%; top: 50.5%;">Renaissance</div>
 
-          <button class="story-node locked twinkling" id="star6" style="left: 73%; top: 56%;" aria-label="Award-Winning Artist"></button>
+          <button class="story-node locked" id="star6" style="left: 33%; top: 49%;" aria-label="Award-Winning Artist"></button>
+          <div class="node-label" style="left: 20%; top: 42%;">Award-Winning Artist</div>
 
-          <button class="story-node locked twinkling" id="star7" style="left: 33%; top: 49%;" aria-label="Building a Legacy"></button>
+          <button class="story-node locked" id="star7" style="left: 64%; top: 49%;" aria-label="Building a Legacy"></button>
+          <div class="node-label" style="left: 58%; top: 42%;">Building a Legacy</div>
 
-          <button class="story-node locked final twinkling" id="star4" style="left: 64%; top: 49%;" aria-label="Internet Sensation"></button>
-
-          <div class="constellation-controls">
-            <button class="story-btn primary-btn" id="nextBtn">Next Star</button>
-            <button class="story-btn secondary-btn" id="replayBtn">Replay</button>
-          </div>
-
-          <div class="replay-burst-layer" id="burstLayer" aria-hidden="true"></div>
+          <button class="story-node locked final" id="star4" style="left: 73%; top: 56%;" aria-label="Internet Sensation"></button>
+          <div class="node-label" style="left: 66%; top: 49.8%;">Internet Sensation</div>
         </div>
       </div>
 
       <aside class="panel-card">
         <div class="panel-sparkles" aria-hidden="true">
-          <svg viewBox="0 0 1000 720" preserveAspectRatio="none">
-            <path class="mini-constellation-line" d="M120 100 L180 130 L250 95"></path>
-            <circle class="mini-constellation-star" cx="120" cy="100" r="5"></circle>
-            <circle class="mini-constellation-star" cx="180" cy="130" r="4"></circle>
-            <circle class="mini-constellation-star" cx="250" cy="95" r="5"></circle>
-
-            <path class="mini-constellation-line" d="M690 150 L760 110 L840 145"></path>
-            <circle class="mini-constellation-star" cx="690" cy="150" r="4.5"></circle>
-            <circle class="mini-constellation-star" cx="760" cy="110" r="5"></circle>
-            <circle class="mini-constellation-star" cx="840" cy="145" r="4.2"></circle>
-
-            <path class="mini-constellation-line" d="M160 555 L220 515 L290 560 L355 526"></path>
-            <circle class="mini-constellation-star" cx="160" cy="555" r="4.2"></circle>
-            <circle class="mini-constellation-star" cx="220" cy="515" r="5"></circle>
-            <circle class="mini-constellation-star" cx="290" cy="560" r="4.3"></circle>
-            <circle class="mini-constellation-star" cx="355" cy="526" r="5"></circle>
-          </svg>
           <span class="sparkle s2" style="left: 12%; top: 12%;"></span>
           <span class="sparkle" style="left: 82%; top: 11%;"></span>
           <span class="sparkle s3" style="left: 88%; top: 28%;"></span>
@@ -1122,8 +783,6 @@
           <span class="sparkle" style="left: 76%; top: 54%;"></span>
           <span class="sparkle s3" style="left: 24%; top: 76%;"></span>
           <span class="sparkle s2" style="left: 68%; top: 84%;"></span>
-          <span class="sparkle s4" style="left: 53%; top: 20%;"></span>
-          <span class="sparkle s2" style="left: 61%; top: 66%;"></span>
         </div>
 
         <div class="panel-content">
@@ -1141,18 +800,9 @@
           <div class="panel-bottom">
             <div class="progress" id="panelProgress">1 / 7 points available</div>
 
-            <div class="panel-nav">
-              <button class="chapter-arrow left" id="prevChapterBtn" aria-label="Previous chapter">
-                <span class="tri"></span>
-              </button>
-
-              <div class="panel-center-status" id="panelCenterStatus">
-                Use the arrows to move backward or forward through the chapters.
-              </div>
-
-              <button class="chapter-arrow right" id="nextChapterBtn" aria-label="Next chapter">
-                <span class="tri"></span>
-              </button>
+            <div class="button-row">
+              <button class="story-btn primary-btn" id="nextBtn">Reveal Next Point</button>
+              <button class="story-btn secondary-btn" id="replayBtn">Replay Story Path</button>
             </div>
           </div>
         </div>
@@ -1166,9 +816,9 @@
       { title: "Disney Era", chapter: "Chapter 2", copy: "Source has to write this part..." },
       { title: "Independent Era", chapter: "Chapter 3", copy: "Source has to write this part..." },
       { title: "Renaissance", chapter: "Chapter 4", copy: "Source has to write this part..." },
-      { title: "Building a Legacy", chapter: "Chapter 5", copy: "Source has to write this part..." },
-      { title: "Internet Sensation", chapter: "Chapter 6", copy: "Source has to write this part..." },
-      { title: "Award-Winning Artist", chapter: "Chapter 7", copy: "Source has to write this part..." }
+      { title: "Award-Winning Artist", chapter: "Chapter 5", copy: "Source has to write this part..." },
+      { title: "Building a Legacy", chapter: "Chapter 6", copy: "Source has to write this part..." },
+      { title: "Internet Sensation", chapter: "Chapter 7", copy: "Source has to write this part..." }
     ];
 
     const stars = [
@@ -1176,9 +826,9 @@
       document.getElementById("star2"),
       document.getElementById("star3"),
       document.getElementById("star5"),
+      document.getElementById("star6"),
       document.getElementById("star7"),
-      document.getElementById("star4"),
-      document.getElementById("star6")
+      document.getElementById("star4")
     ];
 
     const lines = [
@@ -1187,8 +837,7 @@
       document.getElementById("line3"),
       document.getElementById("line4"),
       document.getElementById("line5"),
-      document.getElementById("line6"),
-      document.getElementById("line7")
+      document.getElementById("line6")
     ];
 
     const lineEffects = [
@@ -1197,18 +846,7 @@
       [document.getElementById("line3"), ...document.querySelectorAll('[data-line="3"]')],
       [document.getElementById("line4"), ...document.querySelectorAll('[data-line="4"]')],
       [document.getElementById("line5"), ...document.querySelectorAll('[data-line="5"]')],
-      [document.getElementById("line6"), ...document.querySelectorAll('[data-line="6"]')],
-      [document.getElementById("line7"), ...document.querySelectorAll('[data-line="7"]')]
-    ];
-
-    const linePoints = [
-      [{x:500,y:282},{x:500,y:320},{x:500,y:350},{x:500,y:360}],
-      [{x:500,y:415},{x:500,y:462},{x:500,y:505},{x:500,y:526}],
-      [{x:448,y:522},{x:392,y:503},{x:330,y:472},{x:278,y:442}],
-      [{x:260,y:417},{x:288,y:401},{x:316,y:385},{x:340,y:374}],
-      [{x:420,y:370},{x:500,y:370},{x:580,y:370},{x:630,y:370}],
-      [{x:675,y:382},{x:705,y:397},{x:735,y:412},{x:752,y:423}],
-      [{x:804,y:425},{x:835,y:425},{x:868,y:425}]
+      [document.getElementById("line6"), ...document.querySelectorAll('[data-line="6"]')]
     ];
 
     const panelKicker = document.getElementById("panelKicker");
@@ -1217,19 +855,13 @@
     const panelProgress = document.getElementById("panelProgress");
     const panelChip1 = document.getElementById("panelChip1");
     const panelChip2 = document.getElementById("panelChip2");
-    const panelCenterStatus = document.getElementById("panelCenterStatus");
-
     const nextBtn = document.getElementById("nextBtn");
     const replayBtn = document.getElementById("replayBtn");
-    const prevChapterBtn = document.getElementById("prevChapterBtn");
-    const nextChapterBtn = document.getElementById("nextChapterBtn");
-    const burstLayer = document.getElementById("burstLayer");
 
     let activeIndex = 0;
     let highestUnlocked = 0;
     let completed = false;
     let isReplaying = false;
-    let isAnimating = false;
 
     function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
@@ -1252,26 +884,19 @@
     }
 
     function updateButtons() {
-      nextBtn.disabled = isReplaying || isAnimating || completed || activeIndex >= chapters.length - 1;
-      nextBtn.textContent = completed ? "Path Complete" : "Next Star";
+      nextBtn.disabled = isReplaying || completed || activeIndex >= chapters.length - 1;
+      nextBtn.textContent = completed ? "All points revealed" : "Reveal Next Point";
 
-      replayBtn.disabled = isReplaying || isAnimating;
-      replayBtn.textContent = isReplaying ? "Replaying..." : "Replay";
-
-      prevChapterBtn.disabled = isReplaying || isAnimating || activeIndex <= 0;
-      nextChapterBtn.disabled = isReplaying || isAnimating || activeIndex >= highestUnlocked;
-
-      if (completed) {
-        panelCenterStatus.textContent = "The story card only changes with arrows, star clicks, or first unlocks.";
-      } else {
-        panelCenterStatus.textContent = "Use the arrows to move through unlocked chapters.";
-      }
+      replayBtn.disabled = isReplaying;
+      replayBtn.textContent = isReplaying ? "Replaying..." : "Replay Story Path";
     }
 
     function updateLines() {
       lineEffects.forEach((items, index) => {
-        const shouldShow = index < activeIndex;
-        items.forEach(item => item.classList.toggle("visible", shouldShow));
+        const shouldShow = index < highestUnlocked;
+        items.forEach(item => {
+          item.classList.toggle("visible", shouldShow);
+        });
       });
     }
 
@@ -1281,7 +906,7 @@
 
         if (completed) {
           star.classList.remove("locked");
-          star.classList.toggle("available", index === activeIndex);
+          star.classList.remove("available");
           return;
         }
 
@@ -1291,8 +916,18 @@
           star.classList.add("locked");
         }
 
-        star.classList.toggle("available", index === highestUnlocked || index === activeIndex);
+        star.classList.toggle("available", index === highestUnlocked);
       });
+    }
+
+    function completeStory() {
+      completed = true;
+      highestUnlocked = chapters.length - 1;
+      activeIndex = Math.min(activeIndex, chapters.length - 1);
+      updateLines();
+      updateStars();
+      updatePanel(activeIndex);
+      updateButtons();
     }
 
     function refreshUI() {
@@ -1302,131 +937,97 @@
       updateButtons();
     }
 
-    async function drawLine(index) {
-      if (index < 0 || index >= lines.length) return;
-      lineEffects[index].forEach(item => item.classList.add("visible"));
-      await sleep(340);
-    }
-
-    async function undrawLine(index) {
-      if (index < 0 || index >= lines.length) return;
-      lineEffects[index].forEach(item => item.classList.remove("visible"));
-      await sleep(220);
-    }
-
-    async function moveForward(triggeredByReplay = false) {
-      if (isAnimating || isReplaying && !triggeredByReplay) return;
+    async function progressToNext() {
+      if (isReplaying || completed) return;
       if (activeIndex >= chapters.length - 1) return;
 
-      isAnimating = true;
       const current = activeIndex;
       const next = current + 1;
 
-      await drawLine(current);
-      activeIndex = next;
-      highestUnlocked = Math.max(highestUnlocked, next);
-
-      if (activeIndex === chapters.length - 1) {
-        completed = true;
-      }
-
-      refreshUI();
-      isAnimating = false;
-    }
-
-    async function moveBackward() {
-      if (isAnimating || isReplaying) return;
-      if (activeIndex <= 0) return;
-
-      isAnimating = true;
-      await undrawLine(activeIndex - 1);
-      activeIndex -= 1;
-      completed = false;
-      refreshUI();
-      isAnimating = false;
-    }
-
-    async function jumpToIndex(index) {
-      if (isAnimating || isReplaying) return;
-      if (!completed && index > highestUnlocked) return;
-      if (index === activeIndex) return;
-
-      if (index > activeIndex) {
-        while (activeIndex < index) {
-          await moveForward();
-        }
-      } else {
-        while (activeIndex > index) {
-          await moveBackward();
-        }
-      }
-    }
-
-    function createBurstParticles() {
-      burstLayer.innerHTML = "";
-      const allPoints = linePoints.slice(0, activeIndex).flat();
-
-      allPoints.forEach((point, idx) => {
-        const count = 2;
-        for (let i = 0; i < count; i++) {
-          const particle = document.createElement("span");
-          particle.className = "burst-particle";
-          particle.style.left = `${(point.x / 1000) * 100}%`;
-          particle.style.top = `${(point.y / 720) * 100}%`;
-          particle.style.setProperty("--dx", `${(Math.random() * 240) - 120}px`);
-          particle.style.setProperty("--dy", `${(Math.random() * 220) - 110}px`);
-          particle.style.animationDelay = `${(idx * 0.01) + (i * 0.025)}s`;
-          particle.style.width = `${5 + Math.random() * 4}px`;
-          particle.style.height = particle.style.width;
-          burstLayer.appendChild(particle);
-        }
+      lines[current].classList.add("visible");
+      document.querySelectorAll(`[data-line="${current + 1}"]`).forEach(item => {
+        item.classList.add("visible");
       });
 
-      setTimeout(() => { burstLayer.innerHTML = ""; }, 1200);
+      await sleep(900);
+
+      highestUnlocked = Math.max(highestUnlocked, next);
+      activeIndex = next;
+
+      if (next === chapters.length - 1) {
+        completeStory();
+        return;
+      }
+
+      refreshUI();
     }
 
     stars.forEach((star, index) => {
       star.addEventListener("click", async () => {
-        await jumpToIndex(index);
+        if (isReplaying) return;
+
+        if (completed) {
+          activeIndex = index;
+          refreshUI();
+          return;
+        }
+
+        if (index > highestUnlocked) return;
+
+        if (index < highestUnlocked) {
+          activeIndex = index;
+          refreshUI();
+          return;
+        }
+
+        if (index === activeIndex && index < chapters.length - 1) {
+          await progressToNext();
+          return;
+        }
+
+        activeIndex = index;
+        refreshUI();
       });
     });
 
     nextBtn.addEventListener("click", async () => {
-      await moveForward();
-    });
-
-    prevChapterBtn.addEventListener("click", async () => {
-      await moveBackward();
-    });
-
-    nextChapterBtn.addEventListener("click", async () => {
-      await moveForward();
+      await progressToNext();
     });
 
     replayBtn.addEventListener("click", async () => {
-      if (isReplaying || isAnimating) return;
-
-      const savedActive = activeIndex;
-      const savedUnlocked = highestUnlocked;
-      const savedCompleted = completed;
+      if (isReplaying) return;
 
       isReplaying = true;
-      createBurstParticles();
+      completed = false;
+      activeIndex = 0;
+      highestUnlocked = 0;
 
       lineEffects.forEach(items => {
         items.forEach(item => item.classList.remove("visible"));
       });
 
-      await sleep(420);
+      refreshUI();
+      await sleep(450);
 
-      for (let i = 0; i < savedActive; i++) {
-        lineEffects[i].forEach(item => item.classList.add("visible"));
-        await sleep(170);
+      for (let i = 0; i < lines.length; i++) {
+        activeIndex = i;
+        refreshUI();
+        await sleep(500);
+
+        lines[i].classList.add("visible");
+        document.querySelectorAll(`[data-line="${i + 1}"]`).forEach(item => {
+          item.classList.add("visible");
+        });
+
+        await sleep(900);
+
+        highestUnlocked = i + 1;
+        activeIndex = i + 1;
+        refreshUI();
+        await sleep(520);
       }
 
-      activeIndex = savedActive;
-      highestUnlocked = savedUnlocked;
-      completed = savedCompleted;
+      completeStory();
       isReplaying = false;
       refreshUI();
     });
