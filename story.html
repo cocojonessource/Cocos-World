@@ -6,68 +6,47 @@
   <title>Coco's World — Story</title>
 
   <style>
-    .shape-guide {
-      position: absolute;
-      top: 59%;
-      left: 50%;
-      width: 450px;
-      transform: translate(-50%, -50%);
-      opacity: 0.20;
-      pointer-events: none;
-      z-index: 1;
-      filter: drop-shadow(0 0 12px rgba(255,255,255,0.08));
-    }
-
     :root {
       --bg: #ffe8f1;
-      --bg-2: #ffd8e8;
-      --bg-3: #f3c1da;
-      --bg-4: #d89abb;
-
+      --bg-2: #ffdce9;
+      --bg-3: #f6c7dc;
       --text-deep: #6b2fa3;
       --text-soft: #7f4aa9;
-
       --panel: rgba(98, 58, 128, 0.88);
       --panel-border: rgba(255, 255, 255, 0.18);
       --panel-text: #fff8fd;
       --panel-muted: #f3dff0;
-
       --gold: #ffd978;
       --gold-soft: #fff0b8;
-      --line-off: rgba(255, 245, 210, 0.20);
+      --line-off: rgba(255, 245, 210, 0.22);
       --line-on: #ffd978;
-
       --chip: rgba(255, 255, 255, 0.1);
       --chip-border: rgba(255, 255, 255, 0.12);
-
       --shadow: rgba(107, 47, 163, 0.15);
+      --line-burst: #ffeaa6;
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html {
+    html, body {
       margin: 0;
       min-height: 100%;
     }
 
     body {
-      margin: 0;
-      min-height: 100%;
+      position: relative;
       font-family: Arial, sans-serif;
       background:
-        radial-gradient(circle at 12% 18%, rgba(255,255,255,0.5), transparent 18%),
-        radial-gradient(circle at 84% 12%, rgba(255,255,255,0.28), transparent 18%),
-        radial-gradient(circle at 68% 72%, rgba(255,255,255,0.16), transparent 20%),
-        linear-gradient(to bottom, var(--bg) 0%, var(--bg-2) 44%, var(--bg-3) 74%, var(--bg-4) 100%);
+        radial-gradient(circle at 12% 18%, rgba(255,255,255,0.45), transparent 18%),
+        radial-gradient(circle at 84% 12%, rgba(255,255,255,0.24), transparent 18%),
+        radial-gradient(circle at 68% 72%, rgba(255,255,255,0.14), transparent 22%),
+        linear-gradient(to bottom, var(--bg) 0%, var(--bg-2) 50%, var(--bg-3) 100%);
       color: var(--text-deep);
       overflow-x: hidden;
       opacity: 0;
       transform: translateY(12px);
       filter: blur(4px);
       transition: opacity 0.55s ease, transform 0.55s ease, filter 0.55s ease;
-      position: relative;
     }
 
     body.page-ready {
@@ -87,52 +66,53 @@
       text-decoration: none;
     }
 
-    .page-bg-stars,
-    .page-bg-constellations {
+    .page-bg-stars {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
+      overflow: hidden;
     }
 
-    .page-bg-stars span {
+    .page-bg-stars svg {
       position: absolute;
-      display: block;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.9);
-      box-shadow: 0 0 10px rgba(255,255,255,0.55);
+      inset: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .bg-constellation-line {
+      stroke: rgba(255,255,255,0.18);
+      stroke-width: 1.4;
+      fill: none;
+      stroke-linecap: round;
+    }
+
+    .bg-constellation-star {
+      fill: rgba(255,255,255,0.8);
+      filter: drop-shadow(0 0 8px rgba(255,255,255,0.45));
       animation: pageTwinkle 3.4s ease-in-out infinite;
     }
 
-    .page-bg-stars .s1 { width: 2px; height: 2px; }
-    .page-bg-stars .s2 { width: 3px; height: 3px; }
-    .page-bg-stars .s3 { width: 4px; height: 4px; }
+    .bg-constellation-star.slow { animation-duration: 4.5s; }
+    .bg-constellation-star.fast { animation-duration: 2.4s; }
+
+    .page-sparkle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.88);
+      box-shadow: 0 0 10px rgba(255,255,255,0.7);
+      animation: pageTwinkle 2.8s ease-in-out infinite;
+    }
+
+    .page-sparkle.s2 { width: 3px; height: 3px; animation-duration: 3.5s; }
+    .page-sparkle.s3 { width: 6px; height: 6px; animation-duration: 2.2s; }
 
     @keyframes pageTwinkle {
-      0%, 100% {
-        opacity: 0.22;
-        transform: scale(0.85);
-      }
-      50% {
-        opacity: 1;
-        transform: scale(1.22);
-      }
-    }
-
-    .page-bg-constellations svg {
-      width: 100%;
-      height: 100%;
-      opacity: 0.22;
-    }
-
-    .page-bg-constellations line {
-      stroke: rgba(255,255,255,0.22);
-      stroke-width: 1.1;
-    }
-
-    .page-bg-constellations circle {
-      fill: rgba(255,255,255,0.82);
-      filter: drop-shadow(0 0 6px rgba(255,255,255,0.45));
+      0%, 100% { opacity: 0.22; transform: scale(0.88); }
+      50% { opacity: 1; transform: scale(1.18); }
     }
 
     .topbar {
@@ -145,7 +125,7 @@
     }
 
     .topbar-inner {
-      max-width: 1480px;
+      max-width: 1400px;
       margin: 0 auto;
       padding: 16px 20px;
       display: flex;
@@ -153,8 +133,6 @@
       justify-content: space-between;
       gap: 20px;
       flex-wrap: wrap;
-      position: relative;
-      z-index: 2;
     }
 
     .brand {
@@ -205,15 +183,15 @@
     .page {
       position: relative;
       z-index: 1;
-      max-width: 1480px;
+      max-width: 1000px;
       margin: 0 auto;
       padding: 34px 20px 42px;
     }
 
     .hero {
+      position: relative;
       text-align: center;
       margin-bottom: 26px;
-      position: relative;
     }
 
     .eyebrow {
@@ -231,7 +209,6 @@
     .title-wrap {
       position: relative;
       display: inline-block;
-      padding: 0 16px;
     }
 
     .title {
@@ -241,43 +218,21 @@
       line-height: 0.96;
       color: var(--text-deep);
       text-shadow: 0 8px 24px rgba(255,255,255,0.26);
-      position: relative;
-      z-index: 2;
     }
 
-    .title-stars {
+    .title-star {
       position: absolute;
-      inset: -8px -16px -8px -16px;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .title-stars span {
-      position: absolute;
-      display: block;
+      width: 8px;
+      height: 8px;
       border-radius: 999px;
-      background: rgba(255,255,255,0.96);
-      box-shadow: 0 0 10px rgba(255,255,255,0.62);
-      animation: titleTwinkle 2.8s ease-in-out infinite;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 0 12px rgba(255,255,255,0.88), 0 0 26px rgba(255, 217, 120, 0.42);
+      animation: pageTwinkle 2.4s ease-in-out infinite;
+      pointer-events: none;
     }
 
-    .title-stars .a { width: 3px; height: 3px; left: 4%; top: 34%; }
-    .title-stars .b { width: 4px; height: 4px; left: 16%; top: 8%; animation-delay: 0.4s; }
-    .title-stars .c { width: 2px; height: 2px; left: 28%; top: 70%; animation-delay: 0.9s; }
-    .title-stars .d { width: 4px; height: 4px; left: 68%; top: 10%; animation-delay: 0.6s; }
-    .title-stars .e { width: 3px; height: 3px; left: 84%; top: 52%; animation-delay: 1.2s; }
-    .title-stars .f { width: 2px; height: 2px; left: 94%; top: 22%; animation-delay: 0.15s; }
-
-    @keyframes titleTwinkle {
-      0%, 100% {
-        opacity: 0.22;
-        transform: scale(0.82);
-      }
-      50% {
-        opacity: 1;
-        transform: scale(1.22);
-      }
-    }
+    .title-star.s2 { width: 5px; height: 5px; animation-duration: 3.2s; }
+    .title-star.s3 { width: 10px; height: 10px; animation-duration: 2.8s; }
 
     .subtitle {
       max-width: 860px;
@@ -289,7 +244,7 @@
 
     .story-layout {
       display: grid;
-      grid-template-columns: 0.92fr 1.08fr;
+      grid-template-columns: 1.12fr 0.88fr;
       gap: 24px;
       align-items: stretch;
     }
@@ -301,31 +256,12 @@
       border-radius: 30px;
       box-shadow: 0 18px 40px var(--shadow);
       backdrop-filter: blur(8px);
-      position: relative;
-      overflow: hidden;
     }
 
     .constellation-card {
+      position: relative;
       min-height: 720px;
-    }
-
-    .panel-card {
-      min-height: 720px;
-    }
-
-    .book-edge {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-      z-index: 0;
-      background:
-        linear-gradient(to right,
-          rgba(255,255,255,0.04) 0%,
-          rgba(255,255,255,0.06) 3%,
-          transparent 8%,
-          transparent 92%,
-          rgba(255,255,255,0.06) 97%,
-          rgba(255,255,255,0.04) 100%);
+      overflow: visible;
     }
 
     .constellation-header {
@@ -333,7 +269,7 @@
       top: 24px;
       left: 24px;
       right: 24px;
-      z-index: 5;
+      z-index: 6;
     }
 
     .constellation-heading {
@@ -355,6 +291,8 @@
       position: relative;
       width: 100%;
       height: 720px;
+      overflow: visible;
+      border-radius: 30px;
     }
 
     .sparkles,
@@ -365,16 +303,9 @@
       pointer-events: none;
     }
 
-    .sparkles,
-    .card-constellations {
-      z-index: 1;
-    }
-
-    .panel-sparkles {
-      z-index: 0;
-      overflow: hidden;
-      border-radius: 30px;
-    }
+    .sparkles { z-index: 1; }
+    .panel-sparkles { z-index: 0; overflow: hidden; border-radius: 30px; }
+    .card-constellations { z-index: 0; overflow: hidden; border-radius: 30px; }
 
     .sparkle {
       position: absolute;
@@ -386,46 +317,26 @@
       animation: twinkle 2.6s ease-in-out infinite;
     }
 
-    .sparkle.s2 {
-      width: 3px;
-      height: 3px;
-      animation-duration: 3.2s;
-    }
-
-    .sparkle.s3 {
-      width: 5px;
-      height: 5px;
-      animation-duration: 2.9s;
-    }
+    .sparkle.s2 { width: 3px; height: 3px; animation-duration: 3.2s; }
+    .sparkle.s3 { width: 5px; height: 5px; animation-duration: 2.9s; }
+    .sparkle.s4 { width: 7px; height: 7px; animation-duration: 2.3s; }
 
     @keyframes twinkle {
-      0%, 100% {
-        opacity: 0.22;
-        transform: scale(0.9);
-      }
-      50% {
-        opacity: 1;
-        transform: scale(1.15);
-      }
+      0%, 100% { opacity: 0.25; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.16); }
     }
 
-    .card-constellations svg,
-    .panel-sparkles svg {
-      width: 100%;
-      height: 100%;
-      opacity: 0.34;
-    }
-
-    .card-constellations line,
-    .panel-sparkles line {
+    .mini-constellation-line {
       stroke: rgba(255,255,255,0.16);
-      stroke-width: 1;
+      stroke-width: 1.2;
+      fill: none;
+      stroke-linecap: round;
     }
 
-    .card-constellations circle,
-    .panel-sparkles circle {
-      fill: rgba(255,255,255,0.82);
-      filter: drop-shadow(0 0 5px rgba(255,255,255,0.4));
+    .mini-constellation-star {
+      fill: rgba(255,255,255,0.8);
+      filter: drop-shadow(0 0 8px rgba(255,255,255,0.38));
+      animation: twinkle 3.2s ease-in-out infinite;
     }
 
     .story-svg {
@@ -447,7 +358,7 @@
 
     .story-line {
       stroke: var(--line-on);
-      stroke-width: 4.3;
+      stroke-width: 4.4;
       fill: none;
       stroke-linecap: round;
       stroke-linejoin: round;
@@ -455,38 +366,42 @@
       stroke-dashoffset: 100;
       opacity: 0;
       filter:
-        drop-shadow(0 0 3px rgba(255, 217, 120, 0.65))
-        drop-shadow(0 0 8px rgba(255, 217, 120, 0.42));
+        drop-shadow(0 0 4px rgba(255, 240, 185, 0.85))
+        drop-shadow(0 0 12px rgba(255, 217, 120, 0.6))
+        drop-shadow(0 0 20px rgba(255, 217, 120, 0.42));
       transition:
-        stroke-dashoffset 0.72s ease,
-        opacity 0.2s ease,
-        filter 0.35s ease,
-        stroke-width 0.35s ease;
+        stroke-dashoffset 0.56s ease,
+        opacity 0.18s ease,
+        filter 0.3s ease,
+        stroke-width 0.3s ease;
     }
 
     .story-line.visible {
       stroke-dashoffset: 0;
       opacity: 1;
-      stroke-width: 4.9;
+      stroke-width: 5.1;
       filter:
-        drop-shadow(0 0 4px rgba(255, 240, 185, 0.95))
-        drop-shadow(0 0 11px rgba(255, 217, 120, 0.85))
-        drop-shadow(0 0 22px rgba(255, 217, 120, 0.58));
-      animation: lineGlow 2.15s ease-in-out infinite;
+        drop-shadow(0 0 5px rgba(255, 248, 220, 1))
+        drop-shadow(0 0 14px rgba(255, 217, 120, 0.95))
+        drop-shadow(0 0 26px rgba(255, 217, 120, 0.72))
+        drop-shadow(0 0 38px rgba(255, 217, 120, 0.38));
+      animation: lineGlow 1.9s ease-in-out infinite;
     }
 
     @keyframes lineGlow {
       0%, 100% {
         filter:
-          drop-shadow(0 0 4px rgba(255, 240, 185, 0.95))
-          drop-shadow(0 0 11px rgba(255, 217, 120, 0.85))
-          drop-shadow(0 0 22px rgba(255, 217, 120, 0.58));
+          drop-shadow(0 0 5px rgba(255, 248, 220, 1))
+          drop-shadow(0 0 14px rgba(255, 217, 120, 0.95))
+          drop-shadow(0 0 26px rgba(255, 217, 120, 0.72))
+          drop-shadow(0 0 38px rgba(255, 217, 120, 0.38));
       }
       50% {
         filter:
-          drop-shadow(0 0 5px rgba(255, 248, 220, 1))
-          drop-shadow(0 0 15px rgba(255, 217, 120, 0.98))
-          drop-shadow(0 0 28px rgba(255, 217, 120, 0.7));
+          drop-shadow(0 0 7px rgba(255, 252, 232, 1))
+          drop-shadow(0 0 18px rgba(255, 217, 120, 1))
+          drop-shadow(0 0 32px rgba(255, 217, 120, 0.86))
+          drop-shadow(0 0 46px rgba(255, 217, 120, 0.46));
       }
     }
 
@@ -502,24 +417,36 @@
 
     .line-spark.visible {
       opacity: 1;
-      animation: lineTwinkle 2.25s ease-in-out infinite;
+      animation: lineTwinkle 1.9s ease-in-out infinite;
     }
 
     .line-spark.s1 { animation-delay: 0s; }
-    .line-spark.s2 { animation-delay: 0.4s; }
-    .line-spark.s3 { animation-delay: 0.8s; }
-    .line-spark.s4 { animation-delay: 1.2s; }
-    .line-spark.s5 { animation-delay: 1.6s; }
+    .line-spark.s2 { animation-delay: 0.3s; }
+    .line-spark.s3 { animation-delay: 0.7s; }
+    .line-spark.s4 { animation-delay: 1s; }
+    .line-spark.s5 { animation-delay: 1.2s; }
 
     @keyframes lineTwinkle {
-      0%, 100% {
-        opacity: 0.2;
-        transform: scale(0.85);
-      }
-      50% {
-        opacity: 1;
-        transform: scale(1.22);
-      }
+      0%, 100% { opacity: 0.22; transform: scale(0.88); }
+      50% { opacity: 1; transform: scale(1.22); }
+    }
+
+    .travel-spark {
+      fill: #fffce7;
+      opacity: 0;
+      filter:
+        drop-shadow(0 0 4px rgba(255,255,255,0.95))
+        drop-shadow(0 0 12px rgba(255, 217, 120, 0.9));
+    }
+
+    .travel-spark.animate {
+      animation: travelSpark 0.62s ease-out forwards;
+    }
+
+    @keyframes travelSpark {
+      0% { opacity: 0; transform: scale(0.2); }
+      15% { opacity: 1; transform: scale(1.15); }
+      100% { opacity: 0; transform: scale(0.55); }
     }
 
     .story-node {
@@ -539,9 +466,7 @@
       transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease, filter 0.2s ease;
     }
 
-    .story-node:hover {
-      transform: scale(1.08);
-    }
+    .story-node:hover { transform: scale(1.08); }
 
     .story-node.locked {
       opacity: 0.42;
@@ -552,9 +477,7 @@
         0 0 10px rgba(255, 217, 120, 0.25);
     }
 
-    .story-node.available {
-      animation: pulseGlow 1.8s ease-in-out infinite;
-    }
+    .story-node.available { animation: pulseGlow 1.55s ease-in-out infinite; }
 
     .story-node.active {
       transform: scale(1.13);
@@ -562,7 +485,6 @@
         0 0 0 5px rgba(255,255,255,0.14),
         0 0 24px rgba(255, 240, 185, 1),
         0 0 44px rgba(255, 217, 120, 0.65);
-      animation: pulseGlow 1.4s ease-in-out infinite;
     }
 
     .story-node.final {
@@ -570,6 +492,32 @@
       height: 32px;
       background:
         radial-gradient(circle at center, #fffefa 0%, #ffefb8 35%, #ffd978 64%, #ffc8df 100%);
+    }
+
+    .story-node.twinkling::before,
+    .story-node.twinkling::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      width: 2px;
+      height: 20px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0), rgba(255,249,216,0.95), rgba(255,255,255,0));
+      transform: translate(-50%, -50%);
+      border-radius: 999px;
+      opacity: 0.55;
+      pointer-events: none;
+      animation: starCross 2s ease-in-out infinite;
+    }
+
+    .story-node.twinkling::after {
+      width: 20px;
+      height: 2px;
+    }
+
+    @keyframes starCross {
+      0%, 100% { opacity: 0.18; transform: translate(-50%, -50%) scale(0.82); }
+      50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.15); }
     }
 
     @keyframes pulseGlow {
@@ -587,14 +535,72 @@
       }
     }
 
-    .story-controls {
+    .constellation-controls {
       position: absolute;
       left: 24px;
-      bottom: 24px;
-      z-index: 6;
+      bottom: 22px;
+      z-index: 7;
       display: flex;
       gap: 12px;
       flex-wrap: wrap;
+    }
+
+    .story-btn {
+      border: none;
+      border-radius: 999px;
+      padding: 14px 20px;
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .story-btn:hover { transform: translateY(-1px); }
+
+    .story-btn:disabled {
+      opacity: 0.45;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .primary-btn {
+      background: linear-gradient(135deg, #ffd978, #ffc8df);
+      color: #43255b;
+      box-shadow: 0 10px 24px rgba(255, 199, 223, 0.2);
+    }
+
+    .secondary-btn {
+      background: rgba(255,255,255,0.08);
+      color: var(--panel-text);
+      border: 1px solid rgba(255,255,255,0.12);
+    }
+
+    .replay-burst-layer {
+      position: absolute;
+      inset: 0;
+      z-index: 8;
+      pointer-events: none;
+      overflow: visible;
+      border-radius: 30px;
+    }
+
+    .burst-particle {
+      position: absolute;
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle, #fffce8 0%, var(--line-burst) 48%, rgba(255, 217, 120, 0.3) 100%);
+      box-shadow:
+        0 0 8px rgba(255,255,255,0.9),
+        0 0 18px rgba(255, 217, 120, 0.85);
+      opacity: 0;
+      animation: burstFly 0.95s ease-out forwards;
+    }
+
+    @keyframes burstFly {
+      0% { opacity: 0; transform: translate(0,0) scale(0.3); }
+      12% { opacity: 1; transform: translate(0,0) scale(1.05); }
+      100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0.18); }
     }
 
     .panel-card {
@@ -603,6 +609,8 @@
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      min-height: 720px;
+      overflow: hidden;
     }
 
     .panel-content {
@@ -631,17 +639,18 @@
     .panel-title {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(38px, 4vw, 56px);
+      font-size: clamp(34px, 4vw, 52px);
       line-height: 0.96;
       color: var(--panel-text);
+      min-height: 58px;
     }
 
     .panel-copy {
       margin: 0;
       font-size: 16px;
-      line-height: 1.9;
+      line-height: 1.85;
       color: var(--panel-muted);
-      max-width: 96%;
+      min-height: 270px;
     }
 
     .panel-meta {
@@ -665,8 +674,8 @@
       margin-top: 22px;
       display: flex;
       flex-direction: column;
-      gap: 14px;
-      align-items: flex-start;
+      gap: 16px;
+      align-items: stretch;
     }
 
     .progress {
@@ -674,180 +683,132 @@
       color: var(--panel-muted);
     }
 
-    .story-btn {
-      border: none;
-      border-radius: 999px;
-      padding: 14px 20px;
-      font-size: 14px;
-      font-weight: 800;
+    .panel-nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      margin-top: auto;
+    }
+
+    .chapter-arrow {
+      width: 58px;
+      height: 58px;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.12);
+      background: rgba(255,255,255,0.08);
+      color: var(--panel-text);
+      font-size: 26px;
+      font-weight: 700;
       cursor: pointer;
-      transition: transform 0.2s ease, opacity 0.2s ease;
+      transition: transform 0.2s ease, opacity 0.2s ease, box-shadow 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.08);
     }
 
-    .story-btn:hover {
-      transform: translateY(-1px);
-    }
+    .chapter-arrow:hover { transform: translateY(-1px); }
 
-    .story-btn:disabled {
-      opacity: 0.45;
+    .chapter-arrow:disabled {
+      opacity: 0.38;
       cursor: not-allowed;
       transform: none;
     }
 
-    .primary-btn {
-      background: linear-gradient(135deg, #ffd978, #ffc8df);
-      color: #43255b;
-      box-shadow: 0 10px 24px rgba(255, 199, 223, 0.2);
+    .chapter-arrow .tri {
+      width: 0;
+      height: 0;
+      border-top: 11px solid transparent;
+      border-bottom: 11px solid transparent;
     }
 
-    .secondary-btn {
-      background: rgba(255,255,255,0.08);
-      color: var(--panel-text);
-      border: 1px solid rgba(255,255,255,0.12);
+    .chapter-arrow.left .tri { border-right: 16px solid #fff8fd; margin-left: -4px; }
+    .chapter-arrow.right .tri { border-left: 16px solid #fff8fd; margin-right: -4px; }
+
+    .panel-center-status {
+      flex: 1;
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--panel-muted);
+      padding: 0 8px;
     }
 
     @media (max-width: 1100px) {
-      .story-layout {
-        grid-template-columns: 1fr;
-      }
-
-      .constellation-card,
-      .panel-card {
-        min-height: auto;
-      }
-
-      .panel-card {
-        min-height: 360px;
-      }
+      .story-layout { grid-template-columns: 1fr; }
+      .constellation-card, .panel-card { min-height: auto; }
+      .panel-card { min-height: 400px; }
     }
 
     @media (max-width: 700px) {
-      .topbar-inner {
-        align-items: flex-start;
-      }
-
-      .brand {
-        font-size: 24px;
-      }
-
-      .page {
-        padding: 24px 14px 28px;
-      }
-
-      .subtitle {
-        font-size: 15px;
-      }
-
-      .constellation-card {
-        min-height: 620px;
-      }
-
-      .story-stage {
-        height: 620px;
-      }
-
-      .constellation-header {
-        top: 18px;
-        left: 18px;
-        right: 18px;
-      }
-
-      .constellation-heading {
-        font-size: 25px;
-      }
-
-      .constellation-copy {
-        font-size: 13px;
-      }
-
-      .panel-card {
-        padding: 22px 18px;
-        min-height: 320px;
-      }
-
-      .panel-copy {
-        font-size: 15px;
-      }
-
-      .story-node {
-        width: 22px;
-        height: 22px;
-      }
-
-      .story-node.final {
-        width: 26px;
-        height: 26px;
-      }
-
-      .shape-guide {
-        width: 320px;
-      }
-
-      .story-controls {
-        left: 18px;
-        bottom: 18px;
-      }
+      .topbar-inner { align-items: flex-start; }
+      .brand { font-size: 24px; }
+      .page { padding: 24px 14px 28px; }
+      .subtitle { font-size: 15px; }
+      .constellation-card { min-height: 620px; }
+      .story-stage { height: 620px; }
+      .constellation-header { top: 18px; left: 18px; right: 18px; }
+      .constellation-heading { font-size: 25px; }
+      .constellation-copy { font-size: 13px; }
+      .panel-card { padding: 22px 18px; min-height: 320px; }
+      .panel-copy { font-size: 15px; min-height: 220px; }
+      .story-node { width: 22px; height: 22px; }
+      .story-node.final { width: 26px; height: 26px; }
+      .constellation-controls { left: 18px; bottom: 18px; }
+      .story-btn { padding: 12px 16px; font-size: 13px; }
+      .chapter-arrow { width: 52px; height: 52px; }
     }
   </style>
 </head>
 <body>
   <div class="page-bg-stars" aria-hidden="true">
-    <span class="s1" style="left:4%; top:8%; animation-delay:.2s;"></span>
-    <span class="s2" style="left:12%; top:18%; animation-delay:1.1s;"></span>
-    <span class="s3" style="left:19%; top:6%; animation-delay:.5s;"></span>
-    <span class="s1" style="left:25%; top:24%; animation-delay:1.8s;"></span>
-    <span class="s2" style="left:32%; top:12%; animation-delay:.4s;"></span>
-    <span class="s1" style="left:39%; top:30%; animation-delay:2.1s;"></span>
-    <span class="s3" style="left:47%; top:10%; animation-delay:1.2s;"></span>
-    <span class="s2" style="left:56%; top:20%; animation-delay:.8s;"></span>
-    <span class="s1" style="left:64%; top:8%; animation-delay:1.4s;"></span>
-    <span class="s3" style="left:72%; top:16%; animation-delay:.3s;"></span>
-    <span class="s2" style="left:80%; top:10%; animation-delay:2s;"></span>
-    <span class="s1" style="left:90%; top:22%; animation-delay:1.6s;"></span>
-    <span class="s2" style="left:8%; top:52%; animation-delay:.6s;"></span>
-    <span class="s1" style="left:18%; top:66%; animation-delay:1.9s;"></span>
-    <span class="s3" style="left:28%; top:58%; animation-delay:1.1s;"></span>
-    <span class="s1" style="left:37%; top:72%; animation-delay:.7s;"></span>
-    <span class="s2" style="left:48%; top:60%; animation-delay:1.3s;"></span>
-    <span class="s3" style="left:60%; top:74%; animation-delay:2.2s;"></span>
-    <span class="s1" style="left:70%; top:64%; animation-delay:.9s;"></span>
-    <span class="s2" style="left:82%; top:70%; animation-delay:1.5s;"></span>
-    <span class="s1" style="left:92%; top:58%; animation-delay:.1s;"></span>
-  </div>
+    <span class="page-sparkle s3" style="left: 6%; top: 8%;"></span>
+    <span class="page-sparkle" style="left: 14%; top: 20%;"></span>
+    <span class="page-sparkle s2" style="left: 24%; top: 7%;"></span>
+    <span class="page-sparkle s2" style="left: 32%; top: 15%;"></span>
+    <span class="page-sparkle s3" style="left: 44%; top: 6%;"></span>
+    <span class="page-sparkle" style="left: 57%; top: 14%;"></span>
+    <span class="page-sparkle s2" style="left: 67%; top: 9%;"></span>
+    <span class="page-sparkle s3" style="left: 81%; top: 16%;"></span>
+    <span class="page-sparkle" style="left: 92%; top: 9%;"></span>
+    <span class="page-sparkle s2" style="left: 8%; top: 42%;"></span>
+    <span class="page-sparkle s3" style="left: 18%; top: 57%;"></span>
+    <span class="page-sparkle" style="left: 37%; top: 39%;"></span>
+    <span class="page-sparkle s2" style="left: 52%; top: 48%;"></span>
+    <span class="page-sparkle s3" style="left: 71%; top: 38%;"></span>
+    <span class="page-sparkle" style="left: 86%; top: 54%;"></span>
+    <span class="page-sparkle s2" style="left: 11%; top: 78%;"></span>
+    <span class="page-sparkle s3" style="left: 28%; top: 88%;"></span>
+    <span class="page-sparkle" style="left: 48%; top: 83%;"></span>
+    <span class="page-sparkle s2" style="left: 69%; top: 86%;"></span>
+    <span class="page-sparkle s3" style="left: 90%; top: 76%;"></span>
 
-  <div class="page-bg-constellations" aria-hidden="true">
-    <svg viewBox="0 0 1600 1000" preserveAspectRatio="none">
-      <line x1="80" y1="110" x2="150" y2="160"></line>
-      <line x1="150" y1="160" x2="230" y2="135"></line>
-      <line x1="230" y1="135" x2="300" y2="195"></line>
-      <circle cx="80" cy="110" r="2.2"></circle>
-      <circle cx="150" cy="160" r="2"></circle>
-      <circle cx="230" cy="135" r="2.5"></circle>
-      <circle cx="300" cy="195" r="2"></circle>
+    <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+      <path class="bg-constellation-line" d="M8 18 L16 24 L26 22 L34 30"></path>
+      <circle class="bg-constellation-star fast" cx="8" cy="18" r="0.8"></circle>
+      <circle class="bg-constellation-star" cx="16" cy="24" r="1"></circle>
+      <circle class="bg-constellation-star slow" cx="26" cy="22" r="0.9"></circle>
+      <circle class="bg-constellation-star fast" cx="34" cy="30" r="1.1"></circle>
 
-      <line x1="1180" y1="130" x2="1260" y2="90"></line>
-      <line x1="1260" y1="90" x2="1335" y2="145"></line>
-      <line x1="1335" y1="145" x2="1400" y2="110"></line>
-      <circle cx="1180" cy="130" r="2"></circle>
-      <circle cx="1260" cy="90" r="2.3"></circle>
-      <circle cx="1335" cy="145" r="2"></circle>
-      <circle cx="1400" cy="110" r="2.4"></circle>
+      <path class="bg-constellation-line" d="M71 11 L78 15 L84 12 L90 18"></path>
+      <circle class="bg-constellation-star slow" cx="71" cy="11" r="0.9"></circle>
+      <circle class="bg-constellation-star" cx="78" cy="15" r="1"></circle>
+      <circle class="bg-constellation-star fast" cx="84" cy="12" r="0.85"></circle>
+      <circle class="bg-constellation-star" cx="90" cy="18" r="1.05"></circle>
 
-      <line x1="112" y1="720" x2="180" y2="680"></line>
-      <line x1="180" y1="680" x2="235" y2="742"></line>
-      <line x1="235" y1="742" x2="300" y2="706"></line>
-      <circle cx="112" cy="720" r="2.4"></circle>
-      <circle cx="180" cy="680" r="2"></circle>
-      <circle cx="235" cy="742" r="2.2"></circle>
-      <circle cx="300" cy="706" r="2"></circle>
+      <path class="bg-constellation-line" d="M10 62 L16 68 L23 64 L30 72 L38 69"></path>
+      <circle class="bg-constellation-star" cx="10" cy="62" r="0.9"></circle>
+      <circle class="bg-constellation-star slow" cx="16" cy="68" r="1.1"></circle>
+      <circle class="bg-constellation-star fast" cx="23" cy="64" r="0.9"></circle>
+      <circle class="bg-constellation-star" cx="30" cy="72" r="1.1"></circle>
+      <circle class="bg-constellation-star slow" cx="38" cy="69" r="0.9"></circle>
 
-      <line x1="1255" y1="760" x2="1328" y2="720"></line>
-      <line x1="1328" y1="720" x2="1390" y2="782"></line>
-      <line x1="1390" y1="782" x2="1470" y2="744"></line>
-      <circle cx="1255" cy="760" r="2"></circle>
-      <circle cx="1328" cy="720" r="2.4"></circle>
-      <circle cx="1390" cy="782" r="2"></circle>
-      <circle cx="1470" cy="744" r="2.4"></circle>
+      <path class="bg-constellation-line" d="M72 60 L79 56 L86 62 L92 58"></path>
+      <circle class="bg-constellation-star fast" cx="72" cy="60" r="0.9"></circle>
+      <circle class="bg-constellation-star" cx="79" cy="56" r="1"></circle>
+      <circle class="bg-constellation-star slow" cx="86" cy="62" r="1.1"></circle>
+      <circle class="bg-constellation-star" cx="92" cy="58" r="0.95"></circle>
     </svg>
   </div>
 
@@ -876,15 +837,12 @@
       <div class="eyebrow">A guided constellation chapter path</div>
 
       <div class="title-wrap">
-        <div class="title-stars" aria-hidden="true">
-          <span class="a"></span>
-          <span class="b"></span>
-          <span class="c"></span>
-          <span class="d"></span>
-          <span class="e"></span>
-          <span class="f"></span>
-        </div>
         <h1 class="title">Coco’s Star Path</h1>
+        <span class="title-star s3" style="left: -16px; top: 10px;"></span>
+        <span class="title-star s2" style="left: 18%; top: -10px;"></span>
+        <span class="title-star" style="right: 24%; top: 4px;"></span>
+        <span class="title-star s3" style="right: -14px; top: 18px;"></span>
+        <span class="title-star s2" style="right: 12%; bottom: 10px;"></span>
       </div>
 
       <p class="subtitle">
@@ -894,61 +852,59 @@
 
     <section class="story-layout">
       <div class="constellation-card">
-        <div class="book-edge"></div>
+        <div class="card-constellations" aria-hidden="true">
+          <svg viewBox="0 0 1000 720" preserveAspectRatio="none">
+            <path class="mini-constellation-line" d="M80 110 L145 135 L210 98 L260 155"></path>
+            <circle class="mini-constellation-star" cx="80" cy="110" r="3"></circle>
+            <circle class="mini-constellation-star" cx="145" cy="135" r="3.3"></circle>
+            <circle class="mini-constellation-star" cx="210" cy="98" r="3"></circle>
+            <circle class="mini-constellation-star" cx="260" cy="155" r="3.5"></circle>
+
+            <path class="mini-constellation-line" d="M710 118 L760 92 L825 128 L892 108"></path>
+            <circle class="mini-constellation-star" cx="710" cy="118" r="3"></circle>
+            <circle class="mini-constellation-star" cx="760" cy="92" r="3.4"></circle>
+            <circle class="mini-constellation-star" cx="825" cy="128" r="3.2"></circle>
+            <circle class="mini-constellation-star" cx="892" cy="108" r="3.6"></circle>
+
+            <path class="mini-constellation-line" d="M120 615 L175 580 L230 620 L298 590"></path>
+            <circle class="mini-constellation-star" cx="120" cy="615" r="3.2"></circle>
+            <circle class="mini-constellation-star" cx="175" cy="580" r="3.6"></circle>
+            <circle class="mini-constellation-star" cx="230" cy="620" r="3"></circle>
+            <circle class="mini-constellation-star" cx="298" cy="590" r="3.4"></circle>
+
+            <path class="mini-constellation-line" d="M720 610 L785 575 L838 612 L900 586"></path>
+            <circle class="mini-constellation-star" cx="720" cy="610" r="3.1"></circle>
+            <circle class="mini-constellation-star" cx="785" cy="575" r="3.5"></circle>
+            <circle class="mini-constellation-star" cx="838" cy="612" r="3.2"></circle>
+            <circle class="mini-constellation-star" cx="900" cy="586" r="3.6"></circle>
+          </svg>
+        </div>
 
         <div class="constellation-header">
           <h2 class="constellation-heading">Follow the anchor path</h2>
           <p class="constellation-copy">
-            Move chapter by chapter. Each step unlocks the next star, and once the full path is complete, every point stays open to revisit.
+            Move chapter by chapter. Each step lights the next star, and replay will burst the path into particles before tracing again.
           </p>
         </div>
 
-        <div class="story-stage">
-          <img src="heart-guide.png" class="shape-guide" alt="">
-
-          <div class="card-constellations" aria-hidden="true">
-            <svg viewBox="0 0 1000 720" preserveAspectRatio="none">
-              <line x1="92" y1="150" x2="162" y2="116"></line>
-              <line x1="162" y1="116" x2="214" y2="176"></line>
-              <line x1="214" y1="176" x2="282" y2="140"></line>
-              <circle cx="92" cy="150" r="2"></circle>
-              <circle cx="162" cy="116" r="2.3"></circle>
-              <circle cx="214" cy="176" r="2"></circle>
-              <circle cx="282" cy="140" r="2.2"></circle>
-
-              <line x1="720" y1="110" x2="788" y2="148"></line>
-              <line x1="788" y1="148" x2="852" y2="110"></line>
-              <line x1="852" y1="110" x2="908" y2="166"></line>
-              <circle cx="720" cy="110" r="2"></circle>
-              <circle cx="788" cy="148" r="2.2"></circle>
-              <circle cx="852" cy="110" r="2"></circle>
-              <circle cx="908" cy="166" r="2.2"></circle>
-
-              <line x1="98" y1="600" x2="156" y2="562"></line>
-              <line x1="156" y1="562" x2="222" y2="620"></line>
-              <line x1="222" y1="620" x2="284" y2="580"></line>
-              <circle cx="98" cy="600" r="2.2"></circle>
-              <circle cx="156" cy="562" r="2"></circle>
-              <circle cx="222" cy="620" r="2.3"></circle>
-              <circle cx="284" cy="580" r="2"></circle>
-            </svg>
-          </div>
-
+        <div class="story-stage" id="storyStage">
           <div class="sparkles" aria-hidden="true">
-            <span class="sparkle s3" style="left: 10%; top: 16%;"></span>
-            <span class="sparkle s2" style="left: 19%; top: 30%;"></span>
-            <span class="sparkle" style="left: 30%; top: 14%;"></span>
-            <span class="sparkle s3" style="left: 43%; top: 20%;"></span>
-            <span class="sparkle" style="left: 57%; top: 14%;"></span>
-            <span class="sparkle s2" style="left: 72%; top: 20%;"></span>
-            <span class="sparkle s3" style="left: 85%; top: 31%;"></span>
-            <span class="sparkle" style="left: 82%; top: 58%;"></span>
-            <span class="sparkle s2" style="left: 62%; top: 80%;"></span>
-            <span class="sparkle s3" style="left: 34%; top: 76%;"></span>
-            <span class="sparkle" style="left: 16%; top: 55%;"></span>
-            <span class="sparkle s2" style="left: 89%; top: 72%;"></span>
-            <span class="sparkle s2" style="left: 8%; top: 72%;"></span>
-            <span class="sparkle s3" style="left: 49%; top: 86%;"></span>
+            <span class="sparkle s4" style="left: 10%; top: 15%;"></span>
+            <span class="sparkle s2" style="left: 18%; top: 28%;"></span>
+            <span class="sparkle" style="left: 28%; top: 13%;"></span>
+            <span class="sparkle s3" style="left: 39%; top: 21%;"></span>
+            <span class="sparkle s2" style="left: 47%; top: 10%;"></span>
+            <span class="sparkle s4" style="left: 59%; top: 14%;"></span>
+            <span class="sparkle" style="left: 71%; top: 19%;"></span>
+            <span class="sparkle s3" style="left: 84%; top: 27%;"></span>
+            <span class="sparkle s2" style="left: 87%; top: 44%;"></span>
+            <span class="sparkle s4" style="left: 76%; top: 63%;"></span>
+            <span class="sparkle" style="left: 60%; top: 83%;"></span>
+            <span class="sparkle s3" style="left: 36%; top: 78%;"></span>
+            <span class="sparkle s2" style="left: 16%; top: 56%;"></span>
+            <span class="sparkle s4" style="left: 88%; top: 78%;"></span>
+            <span class="sparkle" style="left: 7%; top: 73%;"></span>
+            <span class="sparkle s3" style="left: 24%; top: 64%;"></span>
           </div>
 
           <svg class="story-svg" viewBox="0 0 1000 720" preserveAspectRatio="none" aria-hidden="true">
@@ -956,116 +912,119 @@
             <line class="story-line-base" x1="500" y1="250" x2="500" y2="366"></line>
             <line class="story-line-base" x1="500" y1="370" x2="500" y2="535"></line>
             <path class="story-line-base" d="M500 535 Q395 600 245 425"></path>
-            <path class="story-line-base" d="M500 535 Q605 600 755 425"></path>
-            <line class="story-line-base" x1="245" y1="425" x2="345" y2="370"></line>
-            <line class="story-line-base" x1="345" y1="370" x2="650" y2="370"></line>
-            <line class="story-line-base" x1="650" y1="370" x2="755" y2="370"></line>
+            <line class="story-line-base" x1="245" y1="425" x2="350" y2="370"></line>
+            <line class="story-line-base" x1="350" y1="370" x2="650" y2="370"></line>
+            <line class="story-line-base" x1="650" y1="370" x2="755" y2="425"></line>
+            <line class="story-line-base" x1="778" y1="425" x2="883" y2="425"></line>
 
             <!-- animated path -->
             <line id="line1" class="story-line" pathLength="100" x1="500" y1="250" x2="500" y2="366"></line>
             <line id="line2" class="story-line" pathLength="100" x1="500" y1="370" x2="500" y2="535"></line>
             <path id="line3" class="story-line" pathLength="100" d="M500 535 Q395 600 245 425"></path>
-            <path id="line4" class="story-line" pathLength="100" d="M500 535 Q605 600 755 425"></path>
-            <line id="line5" class="story-line" pathLength="100" x1="245" y1="425" x2="345" y2="370"></line>
-            <line id="line6" class="story-line" pathLength="100" x1="345" y1="370" x2="650" y2="370"></line>
-            <line id="line7" class="story-line" pathLength="100" x1="650" y1="370" x2="755" y2="370"></line>
+            <line id="line4" class="story-line" pathLength="100" x1="245" y1="425" x2="350" y2="370"></line>
+            <line id="line5" class="story-line" pathLength="100" x1="350" y1="370" x2="650" y2="370"></line>
+            <line id="line6" class="story-line" pathLength="100" x1="650" y1="370" x2="755" y2="425"></line>
+            <line id="line7" class="story-line" pathLength="100" x1="778" y1="425" x2="883" y2="425"></line>
 
             <!-- line sparkles -->
-            <circle class="line-spark s1" data-line="1" cx="500" cy="282" r="3"></circle>
-            <circle class="line-spark s2" data-line="1" cx="500" cy="320" r="2"></circle>
-            <circle class="line-spark s3" data-line="1" cx="500" cy="350" r="4"></circle>
-            <circle class="line-spark s4" data-line="1" cx="500" cy="362" r="2.3"></circle>
+            <circle class="line-spark s1" data-line="1" cx="500" cy="278" r="2.5"></circle>
+            <circle class="line-spark s2" data-line="1" cx="500" cy="308" r="4"></circle>
+            <circle class="line-spark s3" data-line="1" cx="500" cy="340" r="2.4"></circle>
+            <circle class="line-spark s4" data-line="1" cx="500" cy="356" r="5"></circle>
 
-            <circle class="line-spark s1" data-line="2" cx="500" cy="415" r="3"></circle>
-            <circle class="line-spark s2" data-line="2" cx="500" cy="462" r="2"></circle>
-            <circle class="line-spark s4" data-line="2" cx="500" cy="505" r="4"></circle>
-            <circle class="line-spark s5" data-line="2" cx="500" cy="528" r="2.5"></circle>
+            <circle class="line-spark s1" data-line="2" cx="500" cy="405" r="3"></circle>
+            <circle class="line-spark s2" data-line="2" cx="500" cy="448" r="2.4"></circle>
+            <circle class="line-spark s4" data-line="2" cx="500" cy="490" r="4.8"></circle>
+            <circle class="line-spark s5" data-line="2" cx="500" cy="526" r="2.8"></circle>
 
-            <circle class="line-spark s1" data-line="3" cx="448" cy="555" r="2"></circle>
-            <circle class="line-spark s2" data-line="3" cx="392" cy="525" r="4"></circle>
-            <circle class="line-spark s3" data-line="3" cx="330" cy="490" r="2.5"></circle>
-            <circle class="line-spark s4" data-line="3" cx="278" cy="452" r="4"></circle>
-            <circle class="line-spark s5" data-line="3" cx="252" cy="432" r="2.4"></circle>
+            <circle class="line-spark s1" data-line="3" cx="466" cy="548" r="2.2"></circle>
+            <circle class="line-spark s2" data-line="3" cx="432" cy="565" r="4.3"></circle>
+            <circle class="line-spark s3" data-line="3" cx="388" cy="555" r="2.6"></circle>
+            <circle class="line-spark s4" data-line="3" cx="332" cy="512" r="4.8"></circle>
+            <circle class="line-spark s5" data-line="3" cx="284" cy="458" r="3.2"></circle>
 
-            <circle class="line-spark s1" data-line="4" cx="550" cy="555" r="2"></circle>
-            <circle class="line-spark s2" data-line="4" cx="610" cy="526" r="4"></circle>
-            <circle class="line-spark s3" data-line="4" cx="670" cy="490" r="2.5"></circle>
-            <circle class="line-spark s4" data-line="4" cx="722" cy="452" r="4"></circle>
-            <circle class="line-spark s5" data-line="4" cx="748" cy="432" r="2.4"></circle>
+            <circle class="line-spark s1" data-line="4" cx="270" cy="412" r="2.6"></circle>
+            <circle class="line-spark s2" data-line="4" cx="296" cy="397" r="4.2"></circle>
+            <circle class="line-spark s3" data-line="4" cx="320" cy="384" r="2.5"></circle>
+            <circle class="line-spark s4" data-line="4" cx="338" cy="374" r="4.6"></circle>
 
-            <circle class="line-spark s1" data-line="5" cx="270" cy="412" r="2.2"></circle>
-            <circle class="line-spark s2" data-line="5" cx="294" cy="398" r="3.8"></circle>
-            <circle class="line-spark s3" data-line="5" cx="320" cy="384" r="2.5"></circle>
-            <circle class="line-spark s4" data-line="5" cx="340" cy="372" r="3.8"></circle>
+            <circle class="line-spark s1" data-line="5" cx="390" cy="370" r="2.5"></circle>
+            <circle class="line-spark s2" data-line="5" cx="460" cy="370" r="4.2"></circle>
+            <circle class="line-spark s3" data-line="5" cx="540" cy="370" r="2.4"></circle>
+            <circle class="line-spark s4" data-line="5" cx="610" cy="370" r="4.8"></circle>
 
-            <circle class="line-spark s1" data-line="6" cx="405" cy="370" r="2"></circle>
-            <circle class="line-spark s2" data-line="6" cx="485" cy="370" r="4"></circle>
-            <circle class="line-spark s3" data-line="6" cx="560" cy="370" r="2.5"></circle>
-            <circle class="line-spark s4" data-line="6" cx="620" cy="370" r="4"></circle>
+            <circle class="line-spark s1" data-line="6" cx="672" cy="382" r="2.6"></circle>
+            <circle class="line-spark s2" data-line="6" cx="696" cy="394" r="4.2"></circle>
+            <circle class="line-spark s3" data-line="6" cx="724" cy="408" r="2.7"></circle>
+            <circle class="line-spark s4" data-line="6" cx="746" cy="421" r="4.8"></circle>
 
-            <circle class="line-spark s1" data-line="7" cx="675" cy="370" r="2"></circle>
-            <circle class="line-spark s2" data-line="7" cx="705" cy="370" r="4"></circle>
-            <circle class="line-spark s4" data-line="7" cx="735" cy="370" r="2.5"></circle>
-            <circle class="line-spark s5" data-line="7" cx="751" cy="370" r="3.6"></circle>
+            <circle class="line-spark s1" data-line="7" cx="795" cy="425" r="2.5"></circle>
+            <circle class="line-spark s2" data-line="7" cx="822" cy="425" r="4.1"></circle>
+            <circle class="line-spark s3" data-line="7" cx="850" cy="425" r="2.6"></circle>
+            <circle class="line-spark s4" data-line="7" cx="874" cy="425" r="4.7"></circle>
+
+            <!-- moving sparkles -->
+            <circle id="travelSpark1" class="travel-spark" r="4"></circle>
+            <circle id="travelSpark2" class="travel-spark" r="3"></circle>
+            <circle id="travelSpark3" class="travel-spark" r="5"></circle>
           </svg>
 
-          <!-- STAR POSITIONS LEFT EXACTLY AS THEY WERE -->
-          <button class="story-node active available" id="star1" style="left: 48%; top: 33%;" aria-label="Early Life"></button>
-          <button class="story-node locked" id="star2" style="left: 48%; top: 49.15%;" aria-label="Disney Era"></button>
-          <button class="story-node locked" id="star3" style="left: 48%; top: 73%;" aria-label="Independent Era"></button>
-          <button class="story-node locked" id="star5" style="left: 23%; top: 57%;" aria-label="Renaissance"></button>
-          <button class="story-node locked" id="star6" style="left: 73%; top: 56%;" aria-label="Award-Winning Artist"></button>
-          <button class="story-node locked" id="star7" style="left: 33%; top: 49%;" aria-label="Building a Legacy"></button>
-          <button class="story-node locked final" id="star4" style="left: 64%; top: 49%;" aria-label="Internet Sensation"></button>
+          <!-- star positions kept unchanged -->
+          <button class="story-node active available twinkling" id="star1" style="left: 48%; top: 33%;" aria-label="Early Life"></button>
+          <button class="story-node locked twinkling" id="star2" style="left: 48%; top: 49.15%;" aria-label="Disney Era"></button>
+          <button class="story-node locked twinkling" id="star3" style="left: 48%; top: 73%;" aria-label="Independent Era"></button>
+          <button class="story-node locked twinkling" id="star5" style="left: 23%; top: 57%;" aria-label="Renaissance"></button>
+          <button class="story-node locked twinkling" id="star6" style="left: 73%; top: 56%;" aria-label="Award-Winning Artist"></button>
+          <button class="story-node locked twinkling" id="star7" style="left: 33%; top: 49%;" aria-label="Building a Legacy"></button>
+          <button class="story-node locked final twinkling" id="star4" style="left: 64%; top: 49%;" aria-label="Internet Sensation"></button>
 
-          <div class="story-controls">
+          <div class="constellation-controls">
             <button class="story-btn primary-btn" id="nextBtn">Next Star</button>
             <button class="story-btn secondary-btn" id="replayBtn">Replay</button>
           </div>
+
+          <div class="replay-burst-layer" id="burstLayer" aria-hidden="true"></div>
         </div>
       </div>
 
       <aside class="panel-card">
-        <div class="book-edge"></div>
-
         <div class="panel-sparkles" aria-hidden="true">
-          <svg viewBox="0 0 500 720" preserveAspectRatio="none">
-            <line x1="64" y1="92" x2="112" y2="128"></line>
-            <line x1="112" y1="128" x2="172" y2="96"></line>
-            <line x1="172" y1="96" x2="222" y2="146"></line>
-            <circle cx="64" cy="92" r="2.2"></circle>
-            <circle cx="112" cy="128" r="2"></circle>
-            <circle cx="172" cy="96" r="2.3"></circle>
-            <circle cx="222" cy="146" r="2"></circle>
+          <svg viewBox="0 0 1000 720" preserveAspectRatio="none">
+            <path class="mini-constellation-line" d="M120 100 L180 130 L250 95"></path>
+            <circle class="mini-constellation-star" cx="120" cy="100" r="5"></circle>
+            <circle class="mini-constellation-star" cx="180" cy="130" r="4"></circle>
+            <circle class="mini-constellation-star" cx="250" cy="95" r="5"></circle>
 
-            <line x1="292" y1="198" x2="346" y2="160"></line>
-            <line x1="346" y1="160" x2="408" y2="206"></line>
-            <circle cx="292" cy="198" r="2"></circle>
-            <circle cx="346" cy="160" r="2.2"></circle>
-            <circle cx="408" cy="206" r="2"></circle>
+            <path class="mini-constellation-line" d="M690 150 L760 110 L840 145"></path>
+            <circle class="mini-constellation-star" cx="690" cy="150" r="4.5"></circle>
+            <circle class="mini-constellation-star" cx="760" cy="110" r="5"></circle>
+            <circle class="mini-constellation-star" cx="840" cy="145" r="4.2"></circle>
 
-            <line x1="90" y1="596" x2="140" y2="556"></line>
-            <line x1="140" y1="556" x2="204" y2="608"></line>
-            <circle cx="90" cy="596" r="2"></circle>
-            <circle cx="140" cy="556" r="2.2"></circle>
-            <circle cx="204" cy="608" r="2"></circle>
+            <path class="mini-constellation-line" d="M160 555 L220 515 L290 560 L355 526"></path>
+            <circle class="mini-constellation-star" cx="160" cy="555" r="4.2"></circle>
+            <circle class="mini-constellation-star" cx="220" cy="515" r="5"></circle>
+            <circle class="mini-constellation-star" cx="290" cy="560" r="4.3"></circle>
+            <circle class="mini-constellation-star" cx="355" cy="526" r="5"></circle>
           </svg>
 
           <span class="sparkle s2" style="left: 12%; top: 12%;"></span>
           <span class="sparkle" style="left: 82%; top: 11%;"></span>
           <span class="sparkle s3" style="left: 88%; top: 28%;"></span>
-          <span class="sparkle s2" style="left: 16%; top: 42%;"></span>
+          <span class="sparkle s4" style="left: 16%; top: 42%;"></span>
           <span class="sparkle" style="left: 76%; top: 54%;"></span>
           <span class="sparkle s3" style="left: 24%; top: 76%;"></span>
           <span class="sparkle s2" style="left: 68%; top: 84%;"></span>
-          <span class="sparkle" style="left: 48%; top: 18%;"></span>
+          <span class="sparkle s4" style="left: 53%; top: 20%;"></span>
+          <span class="sparkle s2" style="left: 61%; top: 66%;"></span>
         </div>
 
         <div class="panel-content">
           <div class="panel-top">
             <div class="panel-kicker" id="panelKicker">Chapter 1</div>
             <h2 class="panel-title" id="panelTitle">Early Life</h2>
-            <p class="panel-copy" id="panelCopy">Source has to write this part...</p>
+            <p class="panel-copy" id="panelCopy">
+              Coco’s story starts long before the spotlight felt this bright. This opening chapter is the beginning point of the path — the foundation, the instincts, and the earliest version of the star the world would later come to know.
+            </p>
 
             <div class="panel-meta">
               <div class="chip" id="panelChip1">Current point</div>
@@ -1075,6 +1034,20 @@
 
           <div class="panel-bottom">
             <div class="progress" id="panelProgress">1 / 7 points available</div>
+
+            <div class="panel-nav">
+              <button class="chapter-arrow left" id="prevChapterBtn" aria-label="Previous chapter">
+                <span class="tri"></span>
+              </button>
+
+              <div class="panel-center-status" id="panelCenterStatus">
+                Use the arrows to move backward or forward through the chapters.
+              </div>
+
+              <button class="chapter-arrow right" id="nextChapterBtn" aria-label="Next chapter">
+                <span class="tri"></span>
+              </button>
+            </div>
           </div>
         </div>
       </aside>
@@ -1083,13 +1056,41 @@
 
   <script>
     const chapters = [
-      { title: "Early Life", chapter: "Chapter 1", copy: "Source has to write this part..." },
-      { title: "Disney Era", chapter: "Chapter 2", copy: "Source has to write this part..." },
-      { title: "Independent Era", chapter: "Chapter 3", copy: "Source has to write this part..." },
-      { title: "Renaissance", chapter: "Chapter 4", copy: "Source has to write this part..." },
-      { title: "Award-Winning Artist", chapter: "Chapter 5", copy: "Source has to write this part..." },
-      { title: "Building a Legacy", chapter: "Chapter 6", copy: "Source has to write this part..." },
-      { title: "Internet Sensation", chapter: "Chapter 7", copy: "Source has to write this part..." }
+      {
+        title: "Early Life",
+        chapter: "Chapter 1",
+        copy: "Coco’s story starts long before the spotlight felt this bright. This opening chapter is the beginning point of the path — the foundation, the instincts, and the earliest version of the star the world would later come to know."
+      },
+      {
+        title: "Disney Era",
+        chapter: "Chapter 2",
+        copy: "This chapter marks the first major public shape of her career. The world sees her through a platform, but the path is still forming beneath that visibility."
+      },
+      {
+        title: "Independent Era",
+        chapter: "Chapter 3",
+        copy: "Here the path drops deeper into self-definition. The structure changes, the support shifts, and the journey begins to lean more clearly toward who she is on her own terms."
+      },
+      {
+        title: "Renaissance",
+        chapter: "Chapter 4",
+        copy: "This point represents a turning bend in the path — the chapter where momentum starts to feel different, recognition sharpens, and the energy around her begins to rise again."
+      },
+      {
+        title: "Building a Legacy",
+        chapter: "Chapter 5",
+        copy: "At this stage the path climbs upward. What once looked like moments now starts to read like a pattern, with each step feeding a bigger long-term picture."
+      },
+      {
+        title: "Internet Sensation",
+        chapter: "Chapter 6",
+        copy: "The spotlight spreads wider here. Visibility accelerates, attention expands, and her presence moves beyond isolated moments into broader cultural circulation."
+      },
+      {
+        title: "Award-Winning Artist",
+        chapter: "Chapter 7",
+        copy: "This final star lands as proof of arrival — not the end of the story, but the point where the path visibly holds its shape. The last horizontal trace completes the anchor."
+      }
     ];
 
     const stars = [
@@ -1097,9 +1098,9 @@
       document.getElementById("star2"),
       document.getElementById("star3"),
       document.getElementById("star5"),
-      document.getElementById("star6"),
       document.getElementById("star7"),
-      document.getElementById("star4")
+      document.getElementById("star4"),
+      document.getElementById("star6")
     ];
 
     const lines = [
@@ -1112,9 +1113,25 @@
       document.getElementById("line7")
     ];
 
-    const lineEffects = lines.map((line, index) => {
-      return [line, ...document.querySelectorAll(`[data-line="${index + 1}"]`)];
-    });
+    const lineEffects = [
+      [document.getElementById("line1"), ...document.querySelectorAll('[data-line="1"]')],
+      [document.getElementById("line2"), ...document.querySelectorAll('[data-line="2"]')],
+      [document.getElementById("line3"), ...document.querySelectorAll('[data-line="3"]')],
+      [document.getElementById("line4"), ...document.querySelectorAll('[data-line="4"]')],
+      [document.getElementById("line5"), ...document.querySelectorAll('[data-line="5"]')],
+      [document.getElementById("line6"), ...document.querySelectorAll('[data-line="6"]')],
+      [document.getElementById("line7"), ...document.querySelectorAll('[data-line="7"]')]
+    ];
+
+    const lineTravelPoints = {
+      0: [{x: 500, y: 272}, {x: 500, y: 320}, {x: 500, y: 355}],
+      1: [{x: 500, y: 398}, {x: 500, y: 462}, {x: 500, y: 520}],
+      2: [{x: 470, y: 548}, {x: 392, y: 556}, {x: 286, y: 455}],
+      3: [{x: 268, y: 412}, {x: 310, y: 392}, {x: 342, y: 374}],
+      4: [{x: 398, y: 370}, {x: 500, y: 370}, {x: 612, y: 370}],
+      5: [{x: 672, y: 382}, {x: 715, y: 404}, {x: 748, y: 422}],
+      6: [{x: 796, y: 425}, {x: 835, y: 425}, {x: 872, y: 425}]
+    };
 
     const panelKicker = document.getElementById("panelKicker");
     const panelTitle = document.getElementById("panelTitle");
@@ -1122,16 +1139,53 @@
     const panelProgress = document.getElementById("panelProgress");
     const panelChip1 = document.getElementById("panelChip1");
     const panelChip2 = document.getElementById("panelChip2");
+    const panelCenterStatus = document.getElementById("panelCenterStatus");
+
     const nextBtn = document.getElementById("nextBtn");
     const replayBtn = document.getElementById("replayBtn");
+    const prevChapterBtn = document.getElementById("prevChapterBtn");
+    const nextChapterBtn = document.getElementById("nextChapterBtn");
+
+    const burstLayer = document.getElementById("burstLayer");
+    const travelSparks = [
+      document.getElementById("travelSpark1"),
+      document.getElementById("travelSpark2"),
+      document.getElementById("travelSpark3")
+    ];
 
     let activeIndex = 0;
     let highestUnlocked = 0;
     let completed = false;
     let isReplaying = false;
+    let isAnimating = false;
 
     function sleep(ms) {
       return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function setTravelSparkPositions(points = []) {
+      travelSparks.forEach((spark, i) => {
+        const point = points[i];
+        if (!point) {
+          spark.setAttribute("cx", -40);
+          spark.setAttribute("cy", -40);
+          spark.classList.remove("animate");
+          return;
+        }
+        spark.setAttribute("cx", point.x);
+        spark.setAttribute("cy", point.y);
+      });
+    }
+
+    function animateTravelSparks(lineIndex) {
+      const points = lineTravelPoints[lineIndex] || [];
+      setTravelSparkPositions(points);
+      travelSparks.forEach((spark, i) => {
+        spark.classList.remove("animate");
+        void spark.getBBox();
+        spark.style.animationDelay = `${i * 0.08}s`;
+        spark.classList.add("animate");
+      });
     }
 
     function updatePanel(index) {
@@ -1144,26 +1198,29 @@
       if (completed) {
         panelChip1.textContent = "All points unlocked";
         panelProgress.textContent = `${chapters.length} / ${chapters.length} points available`;
+        panelCenterStatus.textContent = "The full anchor path is complete. Use the arrows to move through every chapter.";
       } else {
         panelChip1.textContent = "Current point";
         panelProgress.textContent = `${highestUnlocked + 1} / ${chapters.length} points available`;
+        panelCenterStatus.textContent = "Use the arrows to move backward or forward through the chapters.";
       }
     }
 
     function updateButtons() {
-      nextBtn.disabled = isReplaying || completed || activeIndex >= chapters.length - 1;
-      nextBtn.textContent = completed ? "All points revealed" : "Next Star";
+      nextBtn.disabled = isReplaying || isAnimating || completed || activeIndex >= chapters.length - 1 || activeIndex > highestUnlocked;
+      replayBtn.disabled = isReplaying || isAnimating;
 
-      replayBtn.disabled = isReplaying;
+      nextBtn.textContent = completed ? "Path Complete" : "Next Star";
       replayBtn.textContent = isReplaying ? "Replaying..." : "Replay";
+
+      prevChapterBtn.disabled = isReplaying || isAnimating || activeIndex === 0;
+      nextChapterBtn.disabled = isReplaying || isAnimating || activeIndex >= highestUnlocked;
     }
 
     function updateLines() {
       lineEffects.forEach((items, index) => {
-        const shouldShow = index < highestUnlocked;
-        items.forEach(item => {
-          item.classList.toggle("visible", shouldShow);
-        });
+        const shouldShow = index < activeIndex;
+        items.forEach(item => item.classList.toggle("visible", shouldShow));
       });
     }
 
@@ -1173,7 +1230,7 @@
 
         if (completed) {
           star.classList.remove("locked");
-          star.classList.remove("available");
+          star.classList.toggle("available", index === activeIndex);
           return;
         }
 
@@ -1183,18 +1240,8 @@
           star.classList.add("locked");
         }
 
-        star.classList.toggle("available", index === highestUnlocked);
+        star.classList.toggle("available", index === highestUnlocked || index === activeIndex);
       });
-    }
-
-    function completeStory() {
-      completed = true;
-      highestUnlocked = chapters.length - 1;
-      activeIndex = Math.min(activeIndex, chapters.length - 1);
-      updateLines();
-      updateStars();
-      updatePanel(activeIndex);
-      updateButtons();
     }
 
     function refreshUI() {
@@ -1204,100 +1251,149 @@
       updateButtons();
     }
 
-    async function animateSegment(segmentIndex) {
-      if (!lines[segmentIndex]) return;
-
-      lines[segmentIndex].classList.add("visible");
-      document.querySelectorAll(`[data-line="${segmentIndex + 1}"]`).forEach(item => {
-        item.classList.add("visible");
-      });
-
-      await sleep(760);
+    async function showLine(index) {
+      if (index < 0 || index >= lines.length) return;
+      animateTravelSparks(index);
+      lineEffects[index].forEach(item => item.classList.add("visible"));
+      await sleep(560);
     }
 
-    async function progressToNext() {
-      if (isReplaying || completed) return;
-      if (activeIndex >= chapters.length - 1) return;
+    async function hideLine(index) {
+      if (index < 0 || index >= lines.length) return;
+      lineEffects[index].forEach(item => item.classList.remove("visible"));
+      await sleep(280);
+    }
 
+    function createBurstParticles() {
+      burstLayer.innerHTML = "";
+      const points = [];
+      Object.values(lineTravelPoints).forEach(group => group.forEach(point => points.push(point)));
+
+      points.forEach((point, idx) => {
+        for (let i = 0; i < 2; i++) {
+          const particle = document.createElement("span");
+          particle.className = "burst-particle";
+          particle.style.left = `${(point.x / 1000) * 100}%`;
+          particle.style.top = `${(point.y / 720) * 100}%`;
+
+          const spreadX = (Math.random() * 240 - 120);
+          const spreadY = (Math.random() * 220 - 110);
+          particle.style.setProperty("--dx", `${spreadX}px`);
+          particle.style.setProperty("--dy", `${spreadY}px`);
+          particle.style.animationDelay = `${(idx * 0.012) + (i * 0.03)}s`;
+          particle.style.width = `${5 + Math.random() * 4}px`;
+          particle.style.height = particle.style.width;
+          burstLayer.appendChild(particle);
+        }
+      });
+
+      setTimeout(() => {
+        burstLayer.innerHTML = "";
+      }, 1200);
+    }
+
+    async function goForward() {
+      if (isAnimating || isReplaying) return;
+      if (activeIndex >= chapters.length - 1) return;
+      if (activeIndex > highestUnlocked) return;
+
+      isAnimating = true;
       const current = activeIndex;
       const next = current + 1;
 
-      await animateSegment(current);
+      await showLine(current);
 
-      highestUnlocked = Math.max(highestUnlocked, next);
       activeIndex = next;
+      highestUnlocked = Math.max(highestUnlocked, next);
 
-      if (next === chapters.length - 1) {
-        completeStory();
-        return;
+      if (activeIndex === chapters.length - 1) {
+        completed = true;
       }
 
       refreshUI();
+      isAnimating = false;
+    }
+
+    async function goBackward() {
+      if (isAnimating || isReplaying) return;
+      if (activeIndex <= 0) return;
+
+      isAnimating = true;
+      const lineIndex = activeIndex - 1;
+
+      await hideLine(lineIndex);
+      activeIndex -= 1;
+      completed = false;
+      refreshUI();
+      isAnimating = false;
+    }
+
+    async function jumpToIndex(targetIndex) {
+      if (isAnimating || isReplaying) return;
+      if (targetIndex < 0 || targetIndex > highestUnlocked) return;
+      if (targetIndex === activeIndex) return;
+
+      if (targetIndex > activeIndex) {
+        while (activeIndex < targetIndex) {
+          await goForward();
+        }
+      } else {
+        while (activeIndex > targetIndex) {
+          await goBackward();
+        }
+      }
     }
 
     stars.forEach((star, index) => {
       star.addEventListener("click", async () => {
-        if (isReplaying) return;
-
-        if (completed) {
-          activeIndex = index;
-          refreshUI();
-          return;
-        }
-
-        if (index > highestUnlocked) return;
-
-        if (index < highestUnlocked) {
-          activeIndex = index;
-          refreshUI();
-          return;
-        }
-
-        if (index === activeIndex && index < chapters.length - 1) {
-          await progressToNext();
-          return;
-        }
-
-        activeIndex = index;
-        refreshUI();
+        if (isReplaying || isAnimating) return;
+        if (!completed && index > highestUnlocked) return;
+        await jumpToIndex(index);
       });
     });
 
     nextBtn.addEventListener("click", async () => {
-      await progressToNext();
+      await goForward();
+    });
+
+    prevChapterBtn.addEventListener("click", async () => {
+      await goBackward();
+    });
+
+    nextChapterBtn.addEventListener("click", async () => {
+      await goForward();
     });
 
     replayBtn.addEventListener("click", async () => {
-      if (isReplaying) return;
+      if (isReplaying || isAnimating) return;
 
       isReplaying = true;
       completed = false;
-      activeIndex = 0;
-      highestUnlocked = 0;
+      createBurstParticles();
 
-      lineEffects.forEach(items => {
-        items.forEach(item => item.classList.remove("visible"));
-      });
-
-      refreshUI();
-      await sleep(320);
-
-      for (let i = 0; i < lines.length; i++) {
-        activeIndex = Math.min(i, chapters.length - 1);
-        refreshUI();
-        await sleep(220);
-
-        await animateSegment(i);
-
-        if (i < chapters.length - 1) {
-          highestUnlocked = i + 1;
-          activeIndex = i + 1;
-          refreshUI();
-          await sleep(180);
-        }
+      for (let i = activeIndex - 1; i >= 0; i--) {
+        lineEffects[i].forEach(item => item.classList.remove("visible"));
       }
 
-      completeStory();
+      activeIndex = 0;
+      highestUnlocked = 0;
+      refreshUI();
+
+      await sleep(360);
+
+      for (let i = 0; i < lines.length; i++) {
+        animateTravelSparks(i);
+        lineEffects[i].forEach(item => item.classList.add("visible"));
+        await sleep(540);
+        activeIndex = i + 1;
+        highestUnlocked = i + 1;
+        refreshUI();
+        await sleep(120);
+      }
+
+      completed = true;
+      activeIndex = chapters.length - 1;
+      highestUnlocked = chapters.length - 1;
       isReplaying = false;
       refreshUI();
     });
