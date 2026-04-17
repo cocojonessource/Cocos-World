@@ -211,23 +211,28 @@
     .scribble {
       position: absolute;
       font-family: "Brush Script MT", "Segoe Script", cursive;
-      font-size: 34px;
+      font-size: 52px;
+      font-weight: 700;
       color: var(--accent);
-      opacity: 0.9;
+      opacity: 0.98;
       pointer-events: none;
-      transform: rotate(-7deg);
-      text-shadow: 0 3px 10px rgba(255,255,255,0.65);
+      letter-spacing: 0.5px;
+      text-shadow:
+        0 2px 0 rgba(255,255,255,0.85),
+        0 8px 18px rgba(74, 31, 107, 0.22),
+        0 0 14px rgba(255,255,255,0.55);
     }
 
     .scribble.watch {
-      top: -24px;
-      left: 26px;
+      top: -30px;
+      left: 24px;
+      transform: rotate(-7deg);
     }
 
     .scribble.read {
-      bottom: -20px;
-      left: 34px;
-      transform: rotate(5deg);
+      top: -30px;
+      left: 24px;
+      transform: rotate(6deg);
     }
 
     .choice-icon {
@@ -301,16 +306,11 @@
         min-height: 220px;
       }
 
-      .scribble.watch {
-        top: -18px;
-        left: 20px;
-        font-size: 30px;
-      }
-
+      .scribble.watch,
       .scribble.read {
-        bottom: -15px;
-        left: 26px;
-        font-size: 30px;
+        top: -22px;
+        left: 18px;
+        font-size: 44px;
       }
     }
   </style>
@@ -359,6 +359,7 @@
           </article>
 
           <article class="choice-block">
+            <div class="scribble read">read</div>
             <div>
               <div class="choice-icon">📰</div>
               <h2 class="choice-title">CocoPress</h2>
@@ -367,7 +368,6 @@
               </p>
             </div>
             <a href="cocopress.html" class="choice-button">Enter CocoPress</a>
-            <div class="scribble read">read</div>
           </article>
         </div>
       </div>
