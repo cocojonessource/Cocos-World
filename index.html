@@ -7,15 +7,16 @@
 
   <style>
   :root {
-  --bg: #f8e9f0;
-  --nav: #f2d6e1;
-  --primary: #4a1f6b;
-  --secondary: #7a4c9f;
-  --accent: #c85c8e;
-  --gold: #d4af37;
-  --white: #ffffff;
-  --shadow: rgba(74, 31, 107, 0.12);
-}
+    --bg: #f8e9f0;
+    --nav: #f2d6e1;
+    --primary: #4a1f6b;
+    --secondary: #7a4c9f;
+    --accent: #c85c8e;
+    --gold: #d4af37;
+    --white: #ffffff;
+    --shadow: rgba(74, 31, 107, 0.12);
+    --shadow-strong: rgba(74, 31, 107, 0.2);
+  }
 
     * {
       box-sizing: border-box;
@@ -415,75 +416,26 @@
         font-size: 24px;
       }
 
-      .page {
-        padding: 24px 16px 50px;
-      }
-
-      .hero-gallery {
-        margin-bottom: 26px;
-      }
-
-      .hero-title {
-        font-size: clamp(40px, 13vw, 58px);
+      .tools-grid {
+        grid-template-columns: 1fr;
       }
 
       .hero-description {
         font-size: 16px;
-        line-height: 1.7;
-        margin-bottom: 20px;
       }
 
       .flow-wrap {
-        height: 320px;
-        margin: 0 auto 12px;
-        overflow: hidden;
-        perspective: 1400px;
+        height: 300px;
       }
 
       .flow-card {
-        width: 132px;
-        height: 192px;
-        left: 50%;
-        top: 50%;
-        transform-origin: center center;
+        width: 135px;
+        height: 195px;
       }
 
       .flow-fade-left,
       .flow-fade-right {
-        width: 18px;
-        opacity: 0.22;
-      }
-
-      .search-section {
-        margin-bottom: 26px;
-      }
-
-      .search-card {
-        padding: 16px;
-        border-radius: 20px;
-      }
-
-      .search-bar {
-        flex-direction: column;
-      }
-
-      .search-bar input,
-      .search-bar button {
-        width: 100%;
-      }
-
-      .tools-grid {
-        display: grid;
-        grid-template-columns: 1fr;
-        gap: 16px;
-        overflow: visible;
-        padding-bottom: 0;
-      }
-
-      .tool-card {
-        min-width: 0;
-        flex: initial;
-        min-height: 190px;
+        width: 45px;
       }
     }
   </style>
@@ -500,13 +452,11 @@
         <a href="index.html">Home</a>
         <a href="gallery.html">Gallery</a>
         <a href="#">Music</a>
-        <a href="videos.html">Videos</a>
+        <a href="media.html">Media</a>
         <a href="#">Updates</a>
         <a href="#">Calendar</a>
         <a href="#">Games</a>
         <a href="story.html">Story</a>
-        <a href="cocostream.html">CocoStream</a>
-        <a href="cocopress.html">CocoPress</a>
       </nav>
     </div>
   </header>
@@ -516,7 +466,7 @@
       <h1 class="hero-title">Coco's World</h1>
 
       <p class="hero-description">
-        A modern digital diary for Coco Jones — music, visuals, updates, videos,
+        A modern digital diary for Coco Jones — music, visuals, updates, media,
         gallery archives, calendar moments, games, and curated deep dives, all in one place.
       </p>
 
@@ -539,7 +489,7 @@
 
     <section class="search-section">
       <div class="search-card">
-        <div class="search-label">Search the archive, gallery, music, videos, or updates</div>
+        <div class="search-label">Search the archive, gallery, music, media, or updates</div>
         <div class="search-bar">
           <input type="text" placeholder="Search by era, year, event, magazine, video, song..." />
           <button>Search</button>
@@ -552,7 +502,7 @@
         <div>
           <h2 class="section-title">Explore</h2>
           <p class="section-subtitle">
-            Start anywhere — browse the archive, listen to music, watch videos, check updates,
+            Start anywhere — browse the archive, listen to music, open media, check updates,
             track events, play games, or dive into Coco’s story.
           </p>
         </div>
@@ -580,10 +530,10 @@
         <article class="tool-card">
           <div>
             <div class="tool-icon">🎬</div>
-            <h3>Videos</h3>
-            <p>Newest uploads, interviews, performances, and official video pathways.</p>
+            <h3>Media</h3>
+            <p>Choose between CocoStream for watch mode or CocoPress for read mode.</p>
           </div>
-          <a class="tool-link" href="#">Open Videos</a>
+          <a class="tool-link" href="media.html">Open Media</a>
         </article>
 
         <article class="tool-card">
@@ -654,63 +604,20 @@
 
     let paused = false;
     let speed = 0.8;
-    let mobileAngleOffset = 0;
-    let animationFrameId = null;
-
-    function isMobileView() {
-      return window.innerWidth <= 700;
-    }
-
-    function getActiveCards() {
-      return isMobileView() ? cards.slice(0, 5) : cards;
-    }
-
-    function applyCardVisibility() {
-      const activeCards = getActiveCards();
-      const activeSet = new Set(activeCards);
-
-      cards.forEach((card) => {
-        if (activeSet.has(card)) {
-          card.style.display = 'block';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
 
     function getCardWidth() {
-      if (isMobileView()) return 132;
-      return window.innerWidth <= 1100 ? 170 : 210;
+      return window.innerWidth <= 700 ? 135 : window.innerWidth <= 1100 ? 170 : 210;
     }
 
     function getCardHeight() {
-      if (isMobileView()) return 192;
-      return window.innerWidth <= 1100 ? 240 : 290;
+      return window.innerWidth <= 700 ? 195 : window.innerWidth <= 1100 ? 240 : 290;
     }
 
     function setupCards() {
-      const activeCards = getActiveCards();
       const gap = 26;
       const cardWidth = getCardWidth();
-
-      applyCardVisibility();
-
-      if (isMobileView()) {
-        const step = (Math.PI * 2) / activeCards.length;
-
-        activeCards.forEach((card, index) => {
-          card.dataset.angle = index * step;
-          card.dataset.x = '';
-        });
-
-        mobileAngleOffset = -0.3;
-        return;
-      }
-
-      activeCards.forEach((card, index) => {
+      cards.forEach((card, index) => {
         card.dataset.x = index * (cardWidth + gap);
-        card.dataset.angle = '';
-        card.style.display = 'block';
       });
     }
 
@@ -718,51 +625,9 @@
       const wrapWidth = flowWrap.clientWidth;
       const cardWidth = getCardWidth();
       const cardHeight = getCardHeight();
-      const activeCards = getActiveCards();
-
-      if (isMobileView()) {
-        const radiusX = Math.min(wrapWidth * 0.32, 108);
-        const radiusY = 70;
-        const centerYOffset = -22;
-
-        if (!paused) {
-          mobileAngleOffset += 0.009;
-        }
-
-        activeCards.forEach((card) => {
-          const baseAngle = parseFloat(card.dataset.angle || 0);
-          const angle = baseAngle + mobileAngleOffset;
-
-          const x = Math.sin(angle) * radiusX;
-          const y = Math.cos(angle) * radiusY + centerYOffset;
-
-          const depth = (y - centerYOffset + radiusY) / (radiusY * 2);
-          const scale = 0.78 + depth * 0.24;
-          const opacity = 0.55 + depth * 0.45;
-          const rotateY = x / 9;
-          const zIndex = Math.floor(depth * 1000);
-
-          card.style.width = `${cardWidth}px`;
-          card.style.height = `${cardHeight}px`;
-          card.style.left = '50%';
-          card.style.top = '50%';
-          card.style.transform = `
-            translate(-50%, -50%)
-            translate3d(${x}px, ${y}px, 0)
-            rotateY(${rotateY}deg)
-            scale(${scale})
-          `;
-          card.style.opacity = opacity;
-          card.style.zIndex = zIndex;
-        });
-
-        animationFrameId = requestAnimationFrame(renderCards);
-        return;
-      }
-
       const centerX = wrapWidth / 2;
 
-      activeCards.forEach((card) => {
+      cards.forEach(card => {
         let x = parseFloat(card.dataset.x);
 
         if (!paused) {
@@ -770,7 +635,7 @@
         }
 
         if (x < -cardWidth - 40) {
-          const maxX = Math.max(...activeCards.map(c => parseFloat(c.dataset.x)));
+          const maxX = Math.max(...cards.map(c => parseFloat(c.dataset.x)));
           x = maxX + cardWidth + 26;
         }
 
@@ -784,13 +649,12 @@
         const y = 26 + (1 - ratio) * 52;
         const rotateY = ((cardCenter - centerX) / centerX) * 18;
         const opacity = 0.72 + (ratio * 0.28);
+        const z = Math.round(ratio * 100);
 
         card.style.width = `${cardWidth}px`;
         card.style.height = `${cardHeight}px`;
-        card.style.left = '0';
-        card.style.top = '0';
         card.style.transform = `
-          translate3d(${x}px, ${y}px, 0)
+          translate3d(${x}px, ${y}px, ${z}px)
           rotateY(${rotateY}deg)
           scale(${scale})
         `;
@@ -798,16 +662,7 @@
         card.style.zIndex = Math.floor(ratio * 1000);
       });
 
-      animationFrameId = requestAnimationFrame(renderCards);
-    }
-
-    function restartAnimation() {
-      if (animationFrameId) {
-        cancelAnimationFrame(animationFrameId);
-      }
-
-      setupCards();
-      renderCards();
+      requestAnimationFrame(renderCards);
     }
 
     flowWrap.addEventListener('mouseenter', () => paused = true);
@@ -865,7 +720,7 @@
       });
     }
 
-    window.addEventListener('resize', restartAnimation);
+    window.addEventListener('resize', setupCards);
 
     window.addEventListener('DOMContentLoaded', () => {
       requestAnimationFrame(() => {
