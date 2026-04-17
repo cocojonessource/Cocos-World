@@ -6,32 +6,28 @@
   <title>CocoPress — Coco's World</title>
   <style>
     :root {
-      --bg-1: #faf2ff;
-      --bg-2: #f1e2ff;
-      --bg-3: #e2cbf7;
+      --bg-1: #f8f0ff;
+      --bg-2: #eddfff;
+      --bg-3: #dcc4f3;
       --lavender: #8b5fbf;
-      --lavender-deep: #612b94;
-      --lavender-mid: #7b4eb0;
+      --lavender-deep: #6b2fa3;
+      --lavender-soft: #b695db;
       --pink: #f2bfd7;
-      --pink-soft: #ffe7f2;
-      --gold: #d8b56d;
-      --cream: #fffafc;
+      --pink-soft: #ffe4f0;
+      --white: #ffffff;
+      --gold: #d9b165;
       --text: #562b83;
-      --text-soft: #7b63a3;
-      --panel: rgba(255,255,255,.62);
-      --border: rgba(255,255,255,.75);
-      --shadow: rgba(76, 33, 116, .12);
-      --shadow-strong: rgba(76, 33, 116, .24);
-      --shelf-back-top: #b184dd;
-      --shelf-back-mid: #7a48b0;
-      --shelf-back-bottom: #5d2c95;
-      --shelf-left-top: #9c6fd0;
-      --shelf-left-bottom: #6a3ca4;
-      --shelf-board-top: #efdfff;
-      --shelf-board-front: #bf8fe5;
-      --shelf-board-bottom: #7b4cae;
-      --book-shadow: rgba(53, 22, 85, .42);
-      --book-shadow-soft: rgba(53, 22, 85, .24);
+      --text-soft: #7d5aa6;
+      --panel: rgba(255, 255, 255, 0.58);
+      --panel-strong: rgba(255, 255, 255, 0.72);
+      --border: rgba(255, 255, 255, 0.62);
+      --shadow: rgba(107, 47, 163, 0.12);
+      --shadow-strong: rgba(107, 47, 163, 0.2);
+      --shelf-top: #b695db;
+      --shelf-front: #8e67c0;
+      --shelf-under: #6f47a3;
+      --book-shadow: rgba(58, 28, 95, 0.30);
+      --book-shadow-soft: rgba(58, 28, 95, 0.16);
     }
 
     * { box-sizing: border-box; }
@@ -41,10 +37,10 @@
       font-family: Arial, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at 14% 10%, rgba(255,255,255,.75), transparent 18%),
-        radial-gradient(circle at 85% 12%, rgba(255,255,255,.42), transparent 18%),
-        radial-gradient(circle at 70% 72%, rgba(255,255,255,.2), transparent 24%),
-        linear-gradient(to bottom, var(--bg-1) 0%, var(--bg-2) 46%, var(--bg-3) 100%);
+        radial-gradient(circle at 15% 12%, rgba(255,255,255,0.75), transparent 20%),
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,0.42), transparent 22%),
+        radial-gradient(circle at 70% 70%, rgba(255,255,255,0.25), transparent 24%),
+        linear-gradient(to bottom, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
       overflow-x: hidden;
     }
     a { color: inherit; text-decoration: none; }
@@ -53,18 +49,18 @@
       position: sticky;
       top: 0;
       z-index: 2000;
-      background: rgba(245, 233, 255, .82);
+      background: rgba(245, 234, 255, 0.78);
       backdrop-filter: blur(14px);
-      border-bottom: 1px solid rgba(255,255,255,.7);
+      border-bottom: 1px solid rgba(255,255,255,0.6);
     }
     .topbar-inner {
-      max-width: 1400px;
+      max-width: 1440px;
       margin: 0 auto;
       padding: 16px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
+      gap: 20px;
       flex-wrap: wrap;
     }
     .brand {
@@ -83,10 +79,10 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      background: rgba(255,255,255,.95);
+      background: rgba(255,255,255,0.92);
       color: var(--gold);
-      border: 1px solid rgba(255,255,255,.86);
-      box-shadow: 0 8px 18px rgba(107, 47, 163, .1);
+      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: 0 8px 18px rgba(107, 47, 163, 0.1);
       flex-shrink: 0;
     }
     .nav {
@@ -113,10 +109,18 @@
     .nav a:hover::after, .nav a.active::after { transform: scaleX(1); }
 
     .page {
-      max-width: 1400px;
+      max-width: 1440px;
       margin: 0 auto;
-      padding: 34px 20px 74px;
+      padding: 34px 20px 70px;
     }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 250px minmax(0,1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
     .panel {
       background: var(--panel);
       border: 1px solid var(--border);
@@ -125,64 +129,92 @@
       backdrop-filter: blur(14px);
     }
 
-    .hero {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 14px;
-      margin-bottom: 34px;
+    .rail {
+      position: sticky;
+      top: 92px;
+      padding: 20px 16px 16px;
     }
-    .hero-copy {
-      padding: 28px 30px 24px;
-      text-align: center;
-      position: relative;
-      z-index: 2;
-    }
-    .hero-title {
-      margin: 0 0 12px;
+    .rail-title {
+      margin: 0 0 8px;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(48px, 6vw, 82px);
-      line-height: .94;
+      font-size: 28px;
+      color: var(--lavender-deep);
+      line-height: 1;
+    }
+    .rail-copy {
+      margin: 0 0 18px;
+      font-size: 13px;
+      line-height: 1.55;
+      color: var(--text-soft);
+    }
+    .rail-group + .rail-group { margin-top: 18px; }
+    .rail-heading {
+      margin: 0 0 10px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
       color: var(--lavender-deep);
     }
-    .hero-text {
-      margin: 0 auto;
-      font-size: 17px;
-      line-height: 1.8;
-      color: var(--text-soft);
-      max-width: 760px;
-    }
-    .hero-note {
-      margin-top: 18px;
-      display: inline-flex;
-      align-items: center;
+    .rail-list {
+      display: flex;
+      flex-direction: column;
       gap: 8px;
-      padding: 10px 14px;
-      border-radius: 999px;
-      background: rgba(255,255,255,.56);
+      max-height: 260px;
+      overflow: auto;
+      padding-right: 4px;
+    }
+    .rail-item {
       border: 1px solid rgba(255,255,255,.7);
+      background: rgba(255,255,255,.72);
+      border-radius: 16px;
+      padding: 10px 11px;
+      cursor: pointer;
+      transition: transform .18s ease, box-shadow .18s ease;
+    }
+    .rail-item:hover { transform: translateY(-2px); box-shadow: 0 10px 18px rgba(107,47,163,.08); }
+    .rail-item-title {
       font-size: 13px;
       font-weight: 700;
       color: var(--lavender-deep);
+      line-height: 1.25;
     }
-    .browse-link {
-      margin-top: 24px;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 14px;
+    .rail-item-meta {
+      margin-top: 4px;
+      font-size: 11px;
+      color: var(--text-soft);
+      line-height: 1.35;
+    }
+    .rail-empty {
+      font-size: 12px;
+      color: var(--text-soft);
+      line-height: 1.55;
+      padding: 6px 2px 2px;
+    }
+    .rail-clear {
+      margin-top: 10px;
+      width: 100%;
+      border: none;
+      border-radius: 999px;
+      padding: 11px 12px;
+      font-size: 12px;
       font-weight: 800;
+      background: rgba(255,255,255,.78);
       color: var(--lavender-deep);
+      cursor: pointer;
     }
 
-    .hero-shelf {
-      position: relative;
-      min-height: 560px;
-      padding: 18px 28px 34px;
-      overflow: hidden;
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,.28), transparent 24%),
-        linear-gradient(to bottom, rgba(255,255,255,.22), rgba(255,255,255,.06));
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.12fr) minmax(320px, .88fr);
+      gap: 30px;
+      align-items: center;
+      margin-bottom: 34px;
     }
+    .hero-left, .hero-right, .filters-wrap, .archive-section { position: relative; }
+    .hero-left { padding: 28px 26px 42px; min-height: 600px; overflow: hidden; }
+    .hero-right { padding: 34px 30px; }
+
     .sparkle-field {
       position: absolute;
       inset: 0;
@@ -193,222 +225,184 @@
     .sparkle {
       position: absolute;
       border-radius: 999px;
-      background: rgba(255,255,255,.95);
-      box-shadow: 0 0 10px rgba(255,255,255,.85);
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 0 10px rgba(255,255,255,0.8);
       animation: twinkle 3.2s ease-in-out infinite;
     }
     .sparkle.s1 { width: 3px; height: 3px; }
     .sparkle.s2 { width: 4px; height: 4px; animation-duration: 2.8s; }
     .sparkle.s3 { width: 5px; height: 5px; animation-duration: 3.6s; }
     @keyframes twinkle {
-      0%,100% { opacity: .24; transform: scale(.9); }
-      50% { opacity: 1; transform: scale(1.14); }
+      0%, 100% { opacity: 0.25; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.15); }
     }
 
-    .shelf-stage {
-      position: relative;
-      width: min(1080px, 100%);
-      min-height: 470px;
-      margin: 0 auto;
-      padding: 50px 60px 88px 112px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-    }
-    .bookshelf-left {
-      position: absolute;
-      left: 42px;
-      top: 26px;
-      bottom: 74px;
-      width: 58px;
-      border-radius: 18px 10px 10px 18px;
-      background: linear-gradient(180deg, var(--shelf-left-top) 0%, var(--shelf-left-bottom) 100%);
-      box-shadow: inset 8px 0 12px rgba(255,255,255,.12), inset -10px 0 14px rgba(44, 18, 70, .34);
-      z-index: 1;
-    }
-    .bookshelf-back {
-      position: absolute;
-      left: 88px;
-      right: 58px;
-      top: 12px;
-      bottom: 74px;
-      border-radius: 22px 22px 8px 8px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,.09), transparent 18%),
-        linear-gradient(180deg, var(--shelf-back-top) 0%, var(--shelf-back-mid) 50%, var(--shelf-back-bottom) 100%);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.16),
-        inset 0 -28px 34px rgba(33, 10, 59, .28),
-        inset 14px 0 16px rgba(255,255,255,.04);
-      z-index: 0;
-    }
-    .bookshelf-board {
-      position: absolute;
-      left: 42px;
-      right: 26px;
-      bottom: 44px;
-      height: 10px;
-      border-radius: 8px;
-      background: linear-gradient(to bottom, var(--shelf-board-top) 0%, #d6b1f1 100%);
-      box-shadow:
-        inset 0 1px 0 rgba(255,255,255,.7),
-        inset 0 -1px 0 rgba(126, 77, 177, .38);
-      z-index: 4;
-    }
-    .bookshelf-under {
-      position: absolute;
-      left: 42px;
-      right: 26px;
-      bottom: 20px;
-      height: 24px;
-      border-radius: 0 0 14px 14px;
-      background: linear-gradient(to bottom, var(--shelf-board-front) 0%, var(--shelf-board-bottom) 100%);
-      box-shadow: inset 0 -8px 14px rgba(34, 12, 59, .28);
-      z-index: 3;
-    }
-    .bookshelf-floor-shadow {
-      position: absolute;
-      left: 138px;
-      right: 112px;
-      bottom: 2px;
-      height: 24px;
-      background: radial-gradient(circle, rgba(55,24,88,.26) 0%, rgba(55,24,88,.1) 56%, transparent 78%);
-      filter: blur(18px);
-      pointer-events: none;
-      z-index: 2;
-    }
-    .shelf-row {
+    .shelf-title {
       position: relative;
       z-index: 5;
+      margin: 0 0 8px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(48px, 6vw, 82px);
+      line-height: .94;
+      color: var(--lavender-deep);
+      text-align: center;
+    }
+    .shelf-subtitle {
+      position: relative;
+      z-index: 5;
+      margin: 0 auto 8px;
+      max-width: 540px;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-soft);
+      text-align: center;
+    }
+
+    .hero-books-wrap {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      top: 132px;
+      z-index: 3;
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      gap: 58px;
-      width: 100%;
-      padding: 0 12px;
+      padding: 0 16px 64px;
+    }
+    .hero-books {
+      position: relative;
+      width: min(900px, 100%);
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-evenly;
+      gap: 54px;
+      padding-bottom: 42px;
+    }
+    .bookshelf {
+      position: absolute;
+      left: 2.5%;
+      right: 1.2%;
+      bottom: 10px;
+      height: 18px;
+      border-radius: 999px 999px 14px 14px;
+      background: linear-gradient(to bottom, var(--shelf-top) 0%, var(--shelf-front) 100%);
+      box-shadow:
+        inset 0 2px 0 rgba(255,255,255,.24),
+        0 1px 0 rgba(255,255,255,.08);
+    }
+    .bookshelf::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 100%;
+      height: 12px;
+      border-radius: 0 0 12px 12px;
+      background: linear-gradient(to bottom, var(--shelf-under), rgba(89,51,137,.94));
+    }
+    .bookshelf-ground {
+      position: absolute;
+      left: 14%;
+      right: 12%;
+      bottom: -18px;
+      height: 30px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(83, 46, 128, .22) 0%, rgba(83, 46, 128, .1) 45%, transparent 74%);
+      filter: blur(12px);
+      pointer-events: none;
     }
 
     .book-wrap {
       position: relative;
-      display: inline-flex;
+      display: flex;
       align-items: flex-end;
       justify-content: center;
-      cursor: pointer;
-      transform-style: preserve-3d;
-    }
-    .book-wrap .book {
-      position: relative;
-      width: 100%;
-      height: 100%;
-      border-radius: 18px 12px 12px 18px;
-      overflow: hidden;
-      border: 1px solid rgba(255,255,255,.48);
-      box-shadow: 0 16px 28px rgba(72, 35, 110, .14);
-      transition: transform .18s ease, box-shadow .18s ease;
       transform-origin: center bottom;
-      background: #9e77d8;
-      z-index: 3;
+      animation: none;
+      z-index: 4;
     }
-    .book-wrap:hover .book {
-      transform: translateY(-14px);
-      box-shadow: 0 24px 36px rgba(72, 35, 110, .16);
+    .book-wrap.drop-bounce {
+      animation: dropBounce .42s ease-out;
     }
-    .book-wrap.dropping .book {
-      animation: dropBack .34s cubic-bezier(.2,.84,.24,1);
-    }
-    .book-wrap.opening .book {
-      animation: pageTurnIn .42s cubic-bezier(.2,.8,.2,1) forwards;
-    }
-    @keyframes dropBack {
-      0% { transform: translateY(-14px); }
-      52% { transform: translateY(3px); }
-      76% { transform: translateY(-2px); }
+    @keyframes dropBounce {
+      0% { transform: translateY(-10px); }
+      45% { transform: translateY(0); }
+      68% { transform: translateY(-3px); }
       100% { transform: translateY(0); }
     }
-    @keyframes pageTurnIn {
-      0% { transform: translateY(-10px) rotateY(0deg) scale(1); }
-      55% { transform: translateY(-16px) rotateY(-18deg) scale(1.02); }
-      100% { transform: translateY(-6px) rotateY(-8deg) scale(1.01); }
-    }
-    .featured-book {
-      width: 182px;
-      height: 276px;
-    }
-    .book-shape-shadow,
-    .book-occlusion-shadow,
-    .archive-rear-shadow,
-    .archive-occlusion-shadow {
-      position: absolute;
-      pointer-events: none;
-      transition: transform .18s ease, opacity .18s ease;
-    }
+
     .book-shape-shadow {
-      left: 44px;
+      position: absolute;
+      width: calc(100% - 8px);
+      height: calc(100% - 10px);
+      right: -14px;
       top: 10px;
-      width: 100%;
-      height: 100%;
       border-radius: 18px 12px 12px 18px;
-      background: var(--book-shadow);
-      filter: blur(6px);
-      opacity: .98;
-      z-index: 1;
+      background: rgba(46, 20, 78, 0.28);
+      filter: blur(5px);
+      z-index: 0;
+      pointer-events: none;
+      opacity: .95;
+      transform: translateZ(0);
+    }
+    .archive-book .book-shape-shadow {
+      right: -10px;
+      top: 10px;
+      background: rgba(46, 20, 78, 0.2);
+      filter: blur(5px);
     }
     .book-occlusion-shadow {
-      left: 22px;
-      right: 18px;
-      bottom: 36px;
-      height: 14px;
-      border-radius: 999px;
-      background: rgba(42,18,70,.26);
-      filter: blur(7px);
-      opacity: .78;
-      z-index: 2;
-    }
-    .book-wrap:hover .book-shape-shadow,
-    .book-wrap:hover .book-occlusion-shadow {
-      transform: translateY(-10px);
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 2px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(46, 20, 78, 0.16);
+      filter: blur(6px);
+      opacity: 0;
+      transition: opacity .22s ease, transform .22s ease;
+      pointer-events: none;
+      z-index: 0;
     }
 
-    .archive-book {
+    .book {
       position: relative;
-      padding-bottom: 8px;
-    }
-    .archive-book .book-wrap { width: 100%; display: block; }
-    .archive-book .book { width: 100%; height: 326px; }
-    .archive-rear-shadow {
-      left: 18px;
-      top: 10px;
-      width: calc(100% - 20px);
-      height: calc(100% - 24px);
+      width: 200px;
+      height: 300px;
       border-radius: 18px 12px 12px 18px;
-      background: rgba(52, 21, 84, .26);
-      filter: blur(8px);
-      opacity: .78;
-      z-index: 1;
-    }
-    .archive-occlusion-shadow {
-      left: 24px;
-      right: 26px;
-      bottom: 10px;
-      height: 12px;
-      border-radius: 999px;
-      background: rgba(35, 12, 59, .28);
-      filter: blur(5px);
-      opacity: .92;
+      overflow: hidden;
+      box-shadow: 0 18px 30px rgba(81, 37, 125, 0.14);
+      transform: translateY(0);
+      transition: transform .24s ease, box-shadow .24s ease;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,.48);
+      flex-shrink: 0;
       z-index: 2;
+      transform-origin: center bottom;
+      backface-visibility: hidden;
     }
-    .archive-book:hover .archive-rear-shadow,
-    .archive-book:hover .archive-occlusion-shadow {
+    .book:hover {
       transform: translateY(-10px);
+      box-shadow: 0 24px 34px rgba(81, 37, 125, 0.16);
     }
-    .archive-book.dropping .archive-rear-shadow,
-    .archive-book.dropping .archive-occlusion-shadow,
-    .archive-book.dropping .book {
-      animation: dropBack .34s cubic-bezier(.2,.84,.24,1);
+    .book-wrap:hover .book-occlusion-shadow {
+      opacity: 1;
+      transform: translateY(7px) scaleX(.92);
     }
-    .archive-book:hover .book {
-      transform: translateY(-14px);
-      box-shadow: 0 24px 36px rgba(72, 35, 110, .16);
+    .featured-book { width: 206px; height: 314px; }
+    .featured-book:nth-child(2) { margin-bottom: 10px; }
+
+    .book.turning {
+      animation: pageTurn .55s ease forwards;
+      z-index: 12;
+    }
+    @keyframes pageTurn {
+      0% { transform: translateY(-10px) rotateY(0deg) scale(1); }
+      50% { transform: translateY(-18px) rotateY(-24deg) scale(1.02); }
+      100% { transform: translateY(-10px) rotateY(0deg) scale(1); }
     }
 
     .book::before {
@@ -418,60 +412,51 @@
       top: 0;
       width: 14px;
       height: 100%;
-      background: linear-gradient(to right, rgba(255,255,255,.34), rgba(255,255,255,.06));
-      z-index: 3;
+      background: linear-gradient(to right, rgba(255,255,255,0.32), rgba(255,255,255,0.05));
+      z-index: 2;
     }
     .book::after {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(255,255,255,.06), transparent 26%, rgba(0,0,0,.15) 100%);
+      background: linear-gradient(to bottom, rgba(255,255,255,0.08), transparent 30%, rgba(0,0,0,0.08) 100%);
       pointer-events: none;
-      z-index: 3;
+      z-index: 2;
     }
 
     .book-cover {
       position: absolute;
       inset: 0;
-      z-index: 1;
+      padding: 18px 16px 16px;
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      z-index: 1;
       background:
-        linear-gradient(to bottom, rgba(22, 11, 35, .08), rgba(22, 11, 35, .46)),
-        var(--cover-image, linear-gradient(145deg, #ab87d8 0%, #7b4eb0 46%, #52267f 100%));
+        linear-gradient(to bottom, rgba(24, 12, 38, .08), rgba(24, 12, 38, .44)),
+        var(--cover-image, linear-gradient(145deg, #cfb7ee 0%, #a580d2 50%, #7043a6 100%));
       background-size: cover;
       background-position: center;
     }
-    .book-cover.fallback-vibe {
+    .fallback-vibe {
       background:
-        linear-gradient(to bottom, rgba(29, 14, 45, .12), rgba(29, 14, 45, .5)),
-        radial-gradient(circle at top left, rgba(255,255,255,.22), transparent 26%),
-        linear-gradient(145deg, #9c73d5 0%, #6b3ea9 44%, #471f78 100%);
+        linear-gradient(to bottom, rgba(24, 12, 38, .12), rgba(24, 12, 38, .44)),
+        radial-gradient(circle at top left, rgba(255,255,255,.24), transparent 20%),
+        linear-gradient(145deg, #9e77d8 0%, #6e40ad 42%, #4e247e 100%);
     }
-    .book-cover.fallback-ap {
+    .fallback-ap {
       background:
-        linear-gradient(to bottom, rgba(29, 14, 45, .08), rgba(29, 14, 45, .48)),
-        radial-gradient(circle at top right, rgba(255,255,255,.22), transparent 24%),
-        linear-gradient(145deg, #cbd2f7 0%, #9ea8e8 44%, #6872bc 100%);
-    }
-    .book-cover-inner {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      gap: 14px;
-      height: 100%;
-      padding: 18px 16px 16px;
+        linear-gradient(to bottom, rgba(24, 12, 38, .1), rgba(24, 12, 38, .42)),
+        radial-gradient(circle at top right, rgba(255,255,255,.28), transparent 20%),
+        linear-gradient(145deg, #c8cff8 0%, #9aa9ec 42%, #6a6fbc 100%);
     }
     .cover-top {
       display: flex;
-      justify-content: space-between;
-      gap: 8px;
       align-items: flex-start;
+      justify-content: space-between;
+      gap: 10px;
     }
-    .cover-outlet,
-    .cover-year {
+    .cover-outlet, .cover-year {
       display: inline-flex;
       padding: 7px 10px;
       border-radius: 999px;
@@ -479,17 +464,14 @@
       font-weight: 800;
       letter-spacing: .08em;
       text-transform: uppercase;
-      background: rgba(255,255,255,.16);
-      color: rgba(255,255,255,.98);
-      border: 1px solid rgba(255,255,255,.18);
-      backdrop-filter: blur(6px);
+      background: rgba(255,255,255,0.18);
+      color: rgba(255,255,255,0.96);
+      border: 1px solid rgba(255,255,255,0.16);
+      backdrop-filter: blur(4px);
+      max-width: max-content;
     }
-    .cover-year {
-      letter-spacing: .03em;
-      min-width: 56px;
-      justify-content: center;
-    }
-    .cover-middle {
+    .cover-year { letter-spacing: .03em; }
+    .cover-center {
       display: flex;
       flex-direction: column;
       gap: 10px;
@@ -498,43 +480,35 @@
     .cover-title {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 30px;
-      line-height: .94;
-      color: rgba(255,255,255,.98);
-      text-shadow: 0 6px 18px rgba(21, 10, 33, .3);
+      font-size: 29px;
+      line-height: .96;
+      color: rgba(255,255,255,0.98);
+      text-shadow: 0 4px 16px rgba(43, 13, 70, 0.18);
     }
     .cover-credit {
       font-size: 12px;
       line-height: 1.45;
-      color: rgba(255,255,255,.88);
+      color: rgba(255,255,255,0.88);
       max-width: 92%;
     }
-    .cover-bottom {
-      display: flex;
-      justify-content: flex-end;
-      gap: 12px;
-      align-items: end;
-      font-size: 11px;
-      color: rgba(255,255,255,.86);
-    }
-    .cover-bottom span {
-      font-weight: 800;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-    }
 
-    .reader-cover .cover-top,
-    .reader-cover .cover-bottom,
-    .reader-cover .cover-credit { display: none; }
-    .reader-cover .book-cover-inner { padding: 18px; }
-    .reader-cover .cover-middle { margin-top: auto; }
-
-    .divider {
-      margin: 16px auto 28px;
-      width: min(860px, 100%);
-      height: 1px;
-      background: linear-gradient(to right, transparent, rgba(139,95,191,.45), transparent);
+    .hero-title { margin: 0 0 12px; font-family: Georgia, "Times New Roman", serif; font-size: clamp(48px, 6vw, 82px); line-height: 0.94; color: var(--lavender-deep); }
+    .hero-copy { margin: 0; font-size: 17px; line-height: 1.8; color: var(--text-soft); max-width: 470px; }
+    .hero-note {
+      margin-top: 18px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.56);
+      border: 1px solid rgba(255,255,255,0.7);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--lavender-deep);
     }
+    .browse-link { margin-top: 24px; display: inline-flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 800; color: var(--lavender-deep); }
+    .divider { margin: 16px auto 28px; width: min(860px, 100%); height: 1px; background: linear-gradient(to right, transparent, rgba(139,95,191,0.45), transparent); }
 
     .filters-wrap { padding: 18px; margin-bottom: 22px; }
     .filters-top {
@@ -545,29 +519,13 @@
       flex-wrap: wrap;
       margin-bottom: 14px;
     }
-    .section-title {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(26px, 4vw, 38px);
-      line-height: 1;
-      color: var(--lavender-deep);
-    }
-    .section-copy {
-      margin: 8px 0 0;
-      font-size: 15px;
-      line-height: 1.6;
-      color: var(--text-soft);
-    }
-    .filter-grid {
-      display: grid;
-      grid-template-columns: 2fr repeat(4, minmax(0, 1fr));
-      gap: 12px;
-    }
-    .filter-grid input,
-    .filter-grid select {
+    .section-title { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(26px, 4vw, 38px); line-height: 1; color: var(--lavender-deep); }
+    .section-copy { margin: 8px 0 0; font-size: 15px; line-height: 1.6; color: var(--text-soft); }
+    .filter-grid { display: grid; grid-template-columns: 2fr repeat(4, minmax(0, 1fr)); gap: 12px; }
+    .filter-grid input, .filter-grid select {
       width: 100%;
-      border: 1px solid rgba(107,47,163,.12);
-      background: rgba(255,255,255,.92);
+      border: 1px solid rgba(107,47,163,0.12);
+      background: rgba(255,255,255,0.92);
       border-radius: 16px;
       padding: 14px 16px;
       font-size: 14px;
@@ -581,125 +539,76 @@
       grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 20px 18px;
     }
-    .archive-card {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      min-width: 0;
+    .archive-card { display: flex; flex-direction: column; gap: 12px; }
+    .archive-card .book {
+      width: 100%;
+      height: 344px;
     }
+    .archive-book { width: 100%; }
     .archive-meta {
       display: flex;
       flex-direction: column;
-      gap: 7px;
+      gap: 6px;
       padding: 0 4px;
     }
-    .archive-title {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 24px;
-      line-height: 1.04;
-      color: var(--lavender-deep);
-    }
-    .archive-line {
-      font-size: 13px;
-      line-height: 1.55;
-      color: var(--text-soft);
-    }
-    .archive-line strong { color: var(--lavender-deep); }
-    .empty-state {
-      display: none;
-      padding: 26px 10px 6px;
-      text-align: center;
-      color: var(--text-soft);
-      font-size: 15px;
-    }
+    .archive-title { margin: 0; font-family: Georgia, "Times New Roman", serif; font-size: 24px; line-height: 1.02; color: var(--lavender-deep); }
+    .archive-line { font-size: 13px; line-height: 1.5; color: var(--text-soft); }
+    .empty-state { display: none; padding: 26px 10px 6px; text-align: center; color: var(--text-soft); font-size: 15px; }
 
     .reader {
       position: fixed;
       inset: 0;
-      z-index: 5000;
+      z-index: 4000;
       display: none;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background: rgba(44,20,67,.58);
+      background: rgba(44, 20, 67, 0.56);
       backdrop-filter: blur(12px);
     }
     .reader.active { display: flex; }
     .reader-shell {
-      width: min(1180px, 100%);
-      height: min(84vh, 760px);
+      width: min(1220px, 100%);
+      min-height: 720px;
       display: grid;
-      grid-template-columns: 380px minmax(0, 1fr);
-      background: rgba(249,244,255,.97);
+      grid-template-columns: 360px minmax(0,1fr);
+      background: rgba(249, 244, 255, 0.95);
       border-radius: 28px;
       overflow: hidden;
-      border: 1px solid rgba(255,255,255,.78);
-      box-shadow: 0 28px 80px rgba(34,10,52,.28);
+      border: 1px solid rgba(255,255,255,0.76);
+      box-shadow: 0 28px 80px rgba(34, 10, 52, 0.28);
       position: relative;
     }
     .reader-info {
       position: relative;
-      z-index: 3;
-      padding: 28px 24px 24px;
+      padding: 58px 24px 24px;
       background:
-        radial-gradient(circle at top left, rgba(255,255,255,.52), transparent 24%),
+        radial-gradient(circle at top left, rgba(255,255,255,0.52), transparent 24%),
         linear-gradient(160deg, #f4e8ff 0%, #ecd9ff 52%, #e0c6f4 100%);
-      border-right: 1px solid rgba(255,255,255,.7);
+      border-right: 1px solid rgba(255,255,255,0.7);
       overflow-y: auto;
     }
     .reader-close {
       position: absolute;
       top: 16px;
       left: 16px;
-      width: 38px;
-      height: 38px;
+      width: 40px;
+      height: 40px;
       border-radius: 999px;
       border: none;
-      background: rgba(255,255,255,.92);
+      background: rgba(255,255,255,0.96);
       color: var(--lavender-deep);
-      font-size: 18px;
+      font-size: 20px;
       cursor: pointer;
-      box-shadow: 0 10px 24px rgba(107,47,163,.14);
+      box-shadow: 0 10px 24px rgba(107,47,163,0.14);
       z-index: 5;
     }
-    .reader-book-wrap {
-      position: relative;
-      width: 188px;
-      margin: 32px 0 18px;
-    }
-    .reader-book-wrap .book { width: 188px; height: 278px; }
-    .reader-book-wrap .book-shape-shadow { left: 26px; top: 8px; width: 100%; }
-    .reader-book-wrap .book-occlusion-shadow { left: 16px; right: 12px; bottom: 8px; }
-    .reader-kicker {
-      margin: 0 0 10px;
-      font-size: 12px;
-      font-weight: 800;
-      letter-spacing: .08em;
-      text-transform: uppercase;
-      color: var(--text-soft);
-    }
-    .reader-title {
-      margin: 0 0 12px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 34px;
-      line-height: .96;
-      color: var(--lavender-deep);
-    }
-    .reader-summary {
-      margin: 0 0 16px;
-      font-size: 15px;
-      line-height: 1.72;
-      color: var(--text-soft);
-    }
-    .reader-credit {
-      margin: 0;
-      font-size: 13px;
-      line-height: 1.65;
-      color: var(--lavender-deep);
-    }
-    .reader-links { margin-top: 18px; }
+    .reader-book { width: 186px; height: 276px; margin-bottom: 18px; }
+    .reader-kicker { margin: 0 0 10px; font-size: 12px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-soft); }
+    .reader-title { margin: 0 0 12px; font-family: Georgia, "Times New Roman", serif; font-size: 36px; line-height: .96; color: var(--lavender-deep); }
+    .reader-summary { margin: 0 0 16px; font-size: 15px; line-height: 1.7; color: var(--text-soft); }
+    .reader-credit { margin: 0; font-size: 13px; line-height: 1.6; color: var(--lavender-deep); font-weight: 700; }
+    .reader-links { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; }
     .reader-btn {
       display: inline-flex;
       align-items: center;
@@ -708,146 +617,201 @@
       border-radius: 999px;
       font-size: 13px;
       font-weight: 800;
-      border: 1px solid rgba(255,255,255,.72);
-      background: linear-gradient(135deg, #f2bfd7, #c7a7ef);
-      color: #4d246f;
+      border: 1px solid rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.9);
+      color: var(--lavender-deep);
       cursor: pointer;
     }
 
+    .reader-frame-wrap {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: rgba(255,255,255,0.82);
+      position: relative;
+    }
+    .reader-frame-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 16px 18px;
+      border-bottom: 1px solid rgba(107,47,163,0.08);
+      background: rgba(255,255,255,0.76);
+      position: relative;
+      z-index: 2;
+    }
+    .reader-frame-title { font-size: 13px; font-weight: 800; color: var(--lavender-deep); }
+    .reader-note { font-size: 12px; color: var(--text-soft); text-align: right; }
     .reader-stage {
       position: relative;
+      flex: 1;
+      min-height: 560px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.52), rgba(255,255,255,.3));
       overflow: hidden;
-      background: linear-gradient(to bottom, rgba(255,255,255,.76), rgba(255,255,255,.88));
     }
-    .reader-topbar {
+    .reader-placeholder {
       position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 58px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 18px;
-      background: rgba(255,255,255,.82);
-      border-bottom: 1px solid rgba(107,47,163,.08);
-      z-index: 4;
-    }
-    .reader-frame-title {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--lavender-deep);
-    }
-    .reader-note {
-      font-size: 12px;
-      color: var(--text-soft);
-      text-align: right;
-    }
-    .reader-empty,
-    .reader-source-layer {
-      position: absolute;
-      inset: 58px 0 0 0;
-    }
-    .reader-empty {
+      inset: 0;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 26px;
+      padding: 24px;
       z-index: 1;
     }
-    .reader-empty-card {
-      width: min(430px, 100%);
-      padding: 22px 24px;
+    .reader-placeholder-card {
+      width: min(520px, 100%);
+      border-radius: 28px;
+      border: 1px solid rgba(255,255,255,.8);
+      background: rgba(255,255,255,.74);
+      box-shadow: 0 18px 40px rgba(107,47,163,.10);
+      padding: 26px;
       text-align: center;
-      border-radius: 24px;
-      background: rgba(249,244,255,.92);
-      border: 1px solid rgba(107,47,163,.08);
-      box-shadow: 0 18px 34px rgba(74, 33, 114, .1);
     }
-    .reader-empty-card p {
-      margin: 0 0 14px;
-      font-size: 14px;
-      line-height: 1.65;
+    .reader-placeholder-title {
+      margin: 0 0 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 34px;
+      line-height: 1;
+      color: var(--lavender-deep);
+    }
+    .reader-placeholder-copy {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.7;
       color: var(--text-soft);
     }
-    .reader-source-layer {
+
+    .source-layer {
+      position: absolute;
+      inset: 0;
       display: none;
-      z-index: 2;
-      background: transparent;
+      z-index: 3;
+      background: rgba(255,255,255,.0);
     }
-    .reader-source-layer.active { display: block; }
-    .reader-source-frame {
+    .source-layer.active { display: block; }
+    .source-window {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      background: rgba(255,255,255,.02);
+    }
+    .source-window-bar {
+      height: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 0 18px;
+      background: linear-gradient(to right, rgba(246,237,255,.95), rgba(240,227,255,.95));
+      border-bottom: 1px solid rgba(107,47,163,.08);
+      box-shadow: 0 8px 18px rgba(107,47,163,.07);
+    }
+    .source-window-brand {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+      color: var(--lavender-deep);
+      font-weight: 700;
+    }
+    .source-window-url {
+      flex: 1;
+      min-width: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.88);
+      border: 1px solid rgba(255,255,255,.9);
+      font-size: 12px;
+      color: var(--text-soft);
+    }
+    .source-window-body {
+      position: relative;
+      flex: 1;
+      background: rgba(255,255,255,.9);
+    }
+    .source-frame {
       width: 100%;
       height: 100%;
       border: none;
       background: #fff;
     }
-    .reader-source-fallback {
-      display: none;
+    .source-fallback {
       position: absolute;
-      left: 24px;
-      right: 24px;
-      bottom: 24px;
-      padding: 14px 16px;
-      border-radius: 18px;
-      background: rgba(249,244,255,.94);
-      border: 1px solid rgba(107,47,163,.08);
-      color: var(--text-soft);
-      font-size: 14px;
-      line-height: 1.6;
-      box-shadow: 0 16px 30px rgba(74, 33, 114, .12);
-      z-index: 3;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      background: linear-gradient(to bottom, rgba(255,255,255,.72), rgba(255,255,255,.88));
     }
-    .reader-source-fallback a {
-      font-weight: 800;
+    .source-fallback.show { display: flex; }
+    .source-fallback-card {
+      width: min(500px, 100%);
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,.9);
+      background: rgba(255,255,255,.85);
+      box-shadow: 0 18px 40px rgba(107,47,163,.10);
+      padding: 24px;
+      text-align: center;
+    }
+    .source-fallback-card h3 {
+      margin: 0 0 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 32px;
+      line-height: 1;
       color: var(--lavender-deep);
     }
-
-    .footer {
-      padding: 26px 20px 18px;
-      text-align: center;
-      color: var(--text-soft);
+    .source-fallback-card p {
+      margin: 0 0 16px;
       font-size: 14px;
+      line-height: 1.7;
+      color: var(--text-soft);
     }
 
-    @media (max-width: 1200px) {
-      .archive-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .footer { padding: 26px 20px 18px; text-align: center; color: var(--text-soft); font-size: 14px; }
+
+    @media (max-width: 1250px) {
+      .archive-grid { grid-template-columns: repeat(3, minmax(0,1fr)); }
       .filter-grid { grid-template-columns: 1fr 1fr; }
-      .shelf-row { gap: 36px; }
-      .book-shape-shadow { left: 32px; }
+      .hero-books { gap: 32px; }
     }
-    @media (max-width: 980px) {
-      .reader-shell { grid-template-columns: 1fr; height: min(92vh, 980px); }
-      .reader-info { border-right: none; border-bottom: 1px solid rgba(255,255,255,.7); }
+    @media (max-width: 1120px) {
+      .layout { grid-template-columns: 1fr; }
+      .rail { position: static; order: 2; }
+      .hero { grid-template-columns: 1fr; }
+      .reader-shell { grid-template-columns: 1fr; min-height: 0; }
+      .reader-info { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.7); }
     }
-    @media (max-width: 820px) {
-      .archive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .shelf-stage { padding: 34px 28px 84px 78px; }
-      .shelf-row { gap: 18px; }
-      .featured-book { width: 158px; height: 246px; }
-      .book-shape-shadow { left: 20px; }
+    @media (max-width: 860px) {
+      .archive-grid { grid-template-columns: repeat(2, minmax(0,1fr)); }
     }
     @media (max-width: 700px) {
       .topbar-inner { align-items: flex-start; }
       .brand { font-size: 24px; }
       .page { padding: 24px 14px 48px; }
-      .hero-shelf, .hero-copy, .filters-wrap, .archive-section { border-radius: 24px; }
-      .hero-shelf { min-height: auto; padding: 18px 14px 24px; }
-      .hero-copy { padding: 26px 20px; }
-      .shelf-stage { width: 100%; padding: 22px 14px 78px 48px; min-height: 360px; }
-      .bookshelf-left { left: 12px; width: 24px; top: 18px; bottom: 64px; }
-      .bookshelf-back { left: 28px; right: 14px; top: 8px; bottom: 64px; }
-      .bookshelf-board, .bookshelf-under { left: 12px; right: 8px; }
-      .shelf-row { gap: 14px; justify-content: flex-start; overflow-x: auto; padding-bottom: 6px; }
-      .featured-book { width: 154px; height: 238px; flex-shrink: 0; }
-      .book-shape-shadow { left: 16px; }
-      .cover-title { font-size: 26px; }
+      .hero-left, .hero-right, .filters-wrap, .archive-section, .rail { border-radius: 24px; }
+      .hero-left { min-height: 560px; padding: 24px 18px 34px; }
+      .hero-right { padding: 26px 20px; }
+      .hero-books-wrap { top: 146px; padding-bottom: 58px; }
+      .hero-books {
+        justify-content: flex-start;
+        overflow-x: auto;
+        gap: 22px;
+        padding: 0 8px 42px;
+      }
+      .bookshelf { left: 2%; right: 2%; }
+      .featured-book { width: 176px; height: 274px; }
+      .book .cover-title { font-size: 25px; }
       .filter-grid { grid-template-columns: 1fr; }
       .archive-grid { grid-template-columns: 1fr; }
-      .archive-book .book { height: 294px; }
+      .archive-card .book { height: 318px; }
       .reader { padding: 10px; }
       .reader-shell { border-radius: 22px; }
       .reader-title { font-size: 30px; }
+      .reader-stage { min-height: 420px; }
     }
   </style>
 </head>
@@ -873,66 +837,87 @@
   </header>
 
   <main class="page">
-    <section class="hero">
-      <div class="hero-copy panel">
-        <h1 class="hero-title">CocoPress</h1>
-        <p class="hero-text">
-          CocoPress is a curated editorial library for Coco Jones’s media world — cover stories, interviews, and defining press moments arranged like a living bookshelf instead of a flat archive.
-        </p>
-        <div class="hero-note">Lavender editorial archive</div>
-        <a class="browse-link" href="#archive">Browse the archive ↓</a>
-      </div>
+    <div class="layout">
+      <aside class="rail panel">
+        <h2 class="rail-title">Library</h2>
+        <p class="rail-copy">Local browser memory for your CocoPress visit.</p>
 
-      <div class="hero-shelf panel">
-        <div class="sparkle-field" aria-hidden="true">
-          <span class="sparkle s2" style="left: 10%; top: 12%;"></span>
-          <span class="sparkle s1" style="left: 20%; top: 24%;"></span>
-          <span class="sparkle s3" style="left: 31%; top: 15%;"></span>
-          <span class="sparkle s1" style="left: 44%; top: 22%;"></span>
-          <span class="sparkle s2" style="left: 58%; top: 14%;"></span>
-          <span class="sparkle s3" style="left: 72%; top: 20%;"></span>
-          <span class="sparkle s1" style="left: 86%; top: 14%;"></span>
-          <span class="sparkle s2" style="left: 15%; top: 76%;"></span>
-          <span class="sparkle s1" style="left: 83%; top: 76%;"></span>
-          <span class="sparkle s3" style="left: 55%; top: 84%;"></span>
+        <div class="rail-group">
+          <h3 class="rail-heading">History</h3>
+          <div class="rail-list" id="historyList"></div>
+          <div class="rail-empty" id="historyEmpty">Recently opened articles will appear here.</div>
+          <button class="rail-clear" id="clearHistoryBtn" type="button">Clear History</button>
         </div>
 
-        <div class="shelf-stage">
-          <div class="bookshelf-left"></div>
-          <div class="bookshelf-back"></div>
-          <div class="shelf-row" id="heroBooks"></div>
-          <div class="bookshelf-floor-shadow"></div>
-          <div class="bookshelf-board"></div>
-          <div class="bookshelf-under"></div>
+        <div class="rail-group">
+          <h3 class="rail-heading">Bookmarks</h3>
+          <div class="rail-list" id="bookmarkList"></div>
+          <div class="rail-empty" id="bookmarkEmpty">Save articles here to keep them pinned.</div>
         </div>
+      </aside>
+
+      <div>
+        <section class="hero">
+          <div class="hero-left panel">
+            <div class="sparkle-field" aria-hidden="true">
+              <span class="sparkle s2" style="left: 10%; top: 12%;"></span>
+              <span class="sparkle s1" style="left: 20%; top: 25%;"></span>
+              <span class="sparkle s3" style="left: 31%; top: 15%;"></span>
+              <span class="sparkle s1" style="left: 43%; top: 24%;"></span>
+              <span class="sparkle s2" style="left: 58%; top: 14%;"></span>
+              <span class="sparkle s3" style="left: 72%; top: 20%;"></span>
+              <span class="sparkle s1" style="left: 86%; top: 14%;"></span>
+              <span class="sparkle s2" style="left: 15%; top: 72%;"></span>
+              <span class="sparkle s1" style="left: 83%; top: 76%;"></span>
+              <span class="sparkle s3" style="left: 55%; top: 83%;"></span>
+            </div>
+
+            <h1 class="shelf-title">CocoPress</h1>
+            <p class="shelf-subtitle">A curated editorial library of cover stories, interviews, and defining press moments.</p>
+
+            <div class="hero-books-wrap">
+              <div class="hero-books" id="heroBooks">
+                <div class="bookshelf"></div>
+                <div class="bookshelf-ground"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="hero-right panel">
+            <h1 class="hero-title">Press Library</h1>
+            <p class="hero-copy">Browse by year, outlet, and era — then open each piece inside CocoPress with a cleaner layered source view instead of a stripped-down fake reader.</p>
+            <div class="hero-note">Lavender editorial archive</div>
+            <a class="browse-link" href="#archive">Browse the archive ↓</a>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="filters-wrap panel" id="archive">
+          <div class="filters-top">
+            <div>
+              <h2 class="section-title">Press Library</h2>
+              <p class="section-copy">Browse by year, era, outlet, or type — then open each piece inside CocoPress.</p>
+            </div>
+          </div>
+
+          <div class="filter-grid">
+            <input type="text" id="searchInput" placeholder="Search title, outlet, author, or description..." />
+            <select id="yearFilter"><option value="all">All Years</option></select>
+            <select id="eraFilter"><option value="all">All Eras</option></select>
+            <select id="typeFilter"><option value="all">All Types</option></select>
+            <select id="outletFilter"><option value="all">All Outlets</option></select>
+          </div>
+        </section>
+
+        <section class="archive-section panel">
+          <div class="archive-grid" id="archiveGrid"></div>
+          <div class="empty-state" id="emptyState">No press pieces matched those filters.</div>
+        </section>
+
+        <div class="footer">CocoPress — a lavender editorial archive inside Coco’s World.</div>
       </div>
-    </section>
-
-    <div class="divider"></div>
-
-    <section class="filters-wrap panel" id="archive">
-      <div class="filters-top">
-        <div>
-          <h2 class="section-title">Press Library</h2>
-          <p class="section-copy">Browse by year, era, outlet, or type — then open each piece inside CocoPress.</p>
-        </div>
-      </div>
-
-      <div class="filter-grid">
-        <input type="text" id="searchInput" placeholder="Search title, outlet, credit, or description..." />
-        <select id="yearFilter"><option value="all">All Years</option></select>
-        <select id="eraFilter"><option value="all">All Eras</option></select>
-        <select id="typeFilter"><option value="all">All Types</option></select>
-        <select id="outletFilter"><option value="all">All Outlets</option></select>
-      </div>
-    </section>
-
-    <section class="archive-section panel">
-      <div class="archive-grid" id="archiveGrid"></div>
-      <div class="empty-state" id="emptyState">No press pieces matched those filters.</div>
-    </section>
-
-    <div class="footer">CocoPress — a lavender editorial archive inside Coco’s World.</div>
+    </div>
   </main>
 
   <div class="reader" id="reader">
@@ -945,27 +930,42 @@
         <p class="reader-summary" id="readerSummary"></p>
         <p class="reader-credit" id="readerCredit"></p>
         <div class="reader-links">
-          <button class="reader-btn" id="readerOpenSource">Read on the Source</button>
+          <button class="reader-btn" id="readerBookmarkBtn" type="button">Bookmark</button>
+          <button class="reader-btn" id="readerSourceBtn" type="button">Read on Source</button>
         </div>
       </div>
 
-      <div class="reader-stage">
-        <div class="reader-topbar">
-          <div class="reader-frame-title" id="readerFrameLabel">Coco's World Reader</div>
-          <div class="reader-note">Source view opens here when available.</div>
+      <div class="reader-frame-wrap">
+        <div class="reader-frame-top">
+          <div class="reader-frame-title" id="readerFrameLabel">Coco’s World Source Window</div>
+          <div class="reader-note">The real article opens in a layered source view here when the site allows it.</div>
         </div>
 
-        <div class="reader-empty" id="readerEmpty">
-          <div class="reader-empty-card">
-            <p>This article can open inside the CocoPress reader layer when you choose to read it.</p>
-            <button class="reader-btn" id="readerEmptyBtn">Read on the Source</button>
+        <div class="reader-stage">
+          <div class="reader-placeholder" id="readerPlaceholder">
+            <div class="reader-placeholder-card">
+              <h3 class="reader-placeholder-title">Open the source</h3>
+              <p class="reader-placeholder-copy">This side stays clean until you choose to load the real source. If the publisher blocks in-page display, the direct source button still opens the article.</p>
+            </div>
           </div>
-        </div>
 
-        <div class="reader-source-layer" id="readerSourceLayer">
-          <iframe class="reader-source-frame" id="readerSourceFrame" title="CocoPress Source Reader"></iframe>
-          <div class="reader-source-fallback" id="readerSourceFallback">
-            This publisher may block in-reader display. <a id="readerSourceDirect" href="#" target="_blank" rel="noopener noreferrer">Read on the source</a>.
+          <div class="source-layer" id="sourceLayer">
+            <div class="source-window">
+              <div class="source-window-bar">
+                <div class="source-window-brand">Coco’s World</div>
+                <div class="source-window-url" id="sourceUrlLabel"></div>
+              </div>
+              <div class="source-window-body">
+                <iframe class="source-frame" id="sourceFrame" title="Source Article"></iframe>
+                <div class="source-fallback" id="sourceFallback">
+                  <div class="source-fallback-card">
+                    <h3>Read on the source</h3>
+                    <p>This publisher is blocking in-page display. Use the source button again and the article will open directly in a new tab.</p>
+                    <a class="reader-btn" id="fallbackSourceLink" href="#" target="_blank" rel="noopener noreferrer">Read on the Source</a>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -973,42 +973,10 @@
   </div>
 
   <script>
+    const STORAGE_HISTORY_KEY = 'cocopressHistory';
+    const STORAGE_BOOKMARKS_KEY = 'cocopressBookmarks';
+
     const articles = [
-      {
-        id: 'vibe',
-        title: 'More Than Hilary Banks',
-        fullTitle: 'Coco Jones Is More Than Hilary Banks',
-        outlet: 'Vibe',
-        year: '2022',
-        era: 'Pre-Why Not More',
-        type: 'Interview',
-        author: 'Vibe Editorial',
-        photoCredit: 'Vibe',
-        creditLine: 'Vibe • 2022',
-        summary: 'An early editorial piece centered on identity, music ambition, and Coco positioning herself beyond one defining role.',
-        url: 'https://www.vibe.com/features/editorial/coco-jones-caliber-interview-1234654510/',
-        image: '',
-        fallbackClass: 'fallback-vibe',
-        featured: false,
-        tags: ['early career', 'caliber', 'identity', 'pre debut', 'interview']
-      },
-      {
-        id: 'byrdie',
-        title: 'Beauty, Ritual, and Ease',
-        fullTitle: 'Coco Jones Shares How Her Approach to Beauty Has Evolved Since Her Child Star Days',
-        outlet: 'Byrdie',
-        year: '2025',
-        era: 'Why Not More Era',
-        type: 'Beauty',
-        author: 'Olivia Hancock',
-        photoCredit: 'The Lip Bar',
-        creditLine: 'Olivia Hancock • The Lip Bar • 2025',
-        summary: 'A softer lifestyle conversation that widens CocoPress beyond music-only coverage and gives the page tonal range.',
-        url: 'https://www.byrdie.com/coco-jones-interview-11790049',
-        image: 'https://www.byrdie.com/thmb/B1nhrBkAW2IOn6v4tipMAybVTVM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/cocojones-bf7bd1390cb04a2c82ea9eab37cfc7af.png',
-        featured: false,
-        tags: ['beauty', 'lip bar', 'album era', 'routine', 'feature']
-      },
       {
         id: 'nylon',
         title: 'Works for Herself',
@@ -1023,8 +991,39 @@
         summary: 'A modern profile framed around autonomy, direction, and the energy leading into her debut album chapter.',
         url: 'https://www.nylon.com/entertainment/coco-jones-2024-debut-album',
         image: 'https://imgix.bustle.com/uploads/image/2024/3/21/11f9bef5-53c8-4b87-b6a1-c3f4248b3a98-to_nylon_coco_202448871-1-copy.jpg?crop=faces&dpr=2&fit=crop&h=620&w=414',
-        featured: true,
-        tags: ['debut album', 'profile', 'viral', 'employee', 'breakthrough']
+        featured: true
+      },
+      {
+        id: 'schon',
+        title: 'A Schön! Interview',
+        fullTitle: 'interview | coco jones | Schön! Magazine',
+        outlet: 'Schön! Magazine',
+        year: '2023',
+        era: 'Pre-Why Not More',
+        type: 'Editorial',
+        author: 'Shama Nasinde',
+        photoCredit: 'Mark Clennon',
+        creditLine: 'Shama Nasinde • Mark Clennon • 2023',
+        summary: 'A fashion-editorial entry that gives the library a more magazine-forward texture.',
+        url: 'https://schonmagazine.com/interview-coco-jones/',
+        image: 'https://schonmagazine.com/wp-content/uploads/2023/04/Schon_Magazine_cocojones.jpg',
+        featured: true
+      },
+      {
+        id: 'bustle',
+        title: 'Life After Disney',
+        fullTitle: 'Why Not Coco Jones?',
+        outlet: 'Bustle',
+        year: '2025',
+        era: 'Why Not More Era',
+        type: 'Interview',
+        author: 'Clover Hope',
+        photoCredit: 'Bustle',
+        creditLine: 'Clover Hope • 2025',
+        summary: 'A wide-ranging piece touching image, momentum, television, engagement, and where this chapter is taking her next.',
+        url: 'https://www.bustle.com/entertainment/coco-jones-super-bowl-performance-why-not-more-new-album-engagement-bel-air-interview',
+        image: 'https://imgix.bustle.com/uploads/image/2025/12/18/32804c6d/121125-bustle-coco-jones.jpg?crop=faces&dpr=2&fit=crop&h=621&w=414',
+        featured: true
       },
       {
         id: 'elle-2024',
@@ -1040,8 +1039,7 @@
         summary: 'A milestone-focused Elle profile centered on ambition, recognition, and the scale of Coco’s upward movement.',
         url: 'https://www.elle.com/culture/music/a60539065/coco-jones-interview-2024/',
         image: 'https://hips.hearstapps.com/hmg-prod/images/elm050124wlwomeninmusic-003-662174ba75207.jpg?resize=2048:*',
-        featured: false,
-        tags: ['grammy', 'elle', 'breakthrough', 'profile', 'career goals']
+        featured: false
       },
       {
         id: 'elle-2025',
@@ -1058,8 +1056,23 @@
         url: 'https://www.elle.com/culture/music/a64640841/coco-jones-why-not-more-interview/',
         image: '',
         fallbackClass: 'fallback-vibe',
-        featured: false,
-        tags: ['why not more', 'black women', 'interview', 'album', 'elle']
+        featured: false
+      },
+      {
+        id: 'byrdie',
+        title: 'Beauty, Ritual, and Ease',
+        fullTitle: 'Coco Jones Shares How Her Approach to Beauty Has Evolved Since Her Child Star Days',
+        outlet: 'Byrdie',
+        year: '2025',
+        era: 'Why Not More Era',
+        type: 'Beauty',
+        author: 'Olivia Hancock',
+        photoCredit: 'The Lip Bar',
+        creditLine: 'Olivia Hancock • The Lip Bar • 2025',
+        summary: 'A softer lifestyle conversation that widens CocoPress beyond music-only coverage and gives the page tonal range.',
+        url: 'https://www.byrdie.com/coco-jones-interview-11790049',
+        image: 'https://www.byrdie.com/thmb/B1nhrBkAW2IOn6v4tipMAybVTVM=/1500x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/cocojones-bf7bd1390cb04a2c82ea9eab37cfc7af.png',
+        featured: false
       },
       {
         id: 'ap',
@@ -1076,42 +1089,24 @@
         url: 'https://apnews.com/video/coco-jones-says-shes-proud-of-debut-album-why-not-more-8935463c04e543b7aa75c6be67397bb6',
         image: '',
         fallbackClass: 'fallback-ap',
-        featured: false,
-        tags: ['ap', 'video', 'why not more', 'debut album', 'press']
+        featured: false
       },
       {
-        id: 'schon',
-        title: 'A Schön! Interview',
-        fullTitle: 'interview | coco jones | Schön! Magazine',
-        outlet: 'Schön! Magazine',
-        year: '2023',
+        id: 'vibe',
+        title: 'More Than Hilary Banks',
+        fullTitle: 'Coco Jones Is More Than Hilary Banks',
+        outlet: 'Vibe',
+        year: '2022',
         era: 'Pre-Why Not More',
-        type: 'Editorial',
-        author: 'Shama Nasinde',
-        photoCredit: 'Mark Clennon',
-        creditLine: 'Shama Nasinde • Mark Clennon • 2023',
-        summary: 'A fashion-editorial entry that gives the library a more magazine-forward texture.',
-        url: 'https://schonmagazine.com/interview-coco-jones/',
-        image: 'https://schonmagazine.com/wp-content/uploads/2023/04/Schon_Magazine_cocojones.jpg',
-        featured: true,
-        tags: ['schon', 'editorial', 'fashion', 'icu', 'pre debut']
-      },
-      {
-        id: 'bustle',
-        title: 'Life After Disney',
-        fullTitle: 'Why Not Coco Jones?',
-        outlet: 'Bustle',
-        year: '2025',
-        era: 'Why Not More Era',
         type: 'Interview',
-        author: 'Clover Hope',
-        photoCredit: 'Bustle',
-        creditLine: 'Clover Hope • 2025',
-        summary: 'A wide-ranging piece touching image, momentum, television, engagement, and where this chapter is taking her next.',
-        url: 'https://www.bustle.com/entertainment/coco-jones-super-bowl-performance-why-not-more-new-album-engagement-bel-air-interview',
-        image: 'https://imgix.bustle.com/uploads/image/2025/12/18/32804c6d/121125-bustle-coco-jones.jpg?crop=faces&dpr=2&fit=crop&h=621&w=414',
-        featured: true,
-        tags: ['bustle', 'super bowl', 'engagement', 'bel air', 'feature']
+        author: 'Vibe Editorial',
+        photoCredit: 'Vibe',
+        creditLine: 'Vibe • 2022',
+        summary: 'An early editorial piece centered on identity, music ambition, and Coco positioning herself beyond one defining role.',
+        url: 'https://www.vibe.com/features/editorial/coco-jones-caliber-interview-1234654510/',
+        image: '',
+        fallbackClass: 'fallback-vibe',
+        featured: false
       }
     ];
 
@@ -1124,6 +1119,12 @@
     const typeFilter = document.getElementById('typeFilter');
     const outletFilter = document.getElementById('outletFilter');
 
+    const historyList = document.getElementById('historyList');
+    const bookmarkList = document.getElementById('bookmarkList');
+    const historyEmpty = document.getElementById('historyEmpty');
+    const bookmarkEmpty = document.getElementById('bookmarkEmpty');
+    const clearHistoryBtn = document.getElementById('clearHistoryBtn');
+
     const reader = document.getElementById('reader');
     const readerClose = document.getElementById('readerClose');
     const readerBookMount = document.getElementById('readerBookMount');
@@ -1132,60 +1133,77 @@
     const readerSummary = document.getElementById('readerSummary');
     const readerCredit = document.getElementById('readerCredit');
     const readerFrameLabel = document.getElementById('readerFrameLabel');
-    const readerOpenSource = document.getElementById('readerOpenSource');
-    const readerEmptyBtn = document.getElementById('readerEmptyBtn');
-    const readerSourceLayer = document.getElementById('readerSourceLayer');
-    const readerSourceFrame = document.getElementById('readerSourceFrame');
-    const readerSourceFallback = document.getElementById('readerSourceFallback');
-    const readerSourceDirect = document.getElementById('readerSourceDirect');
+    const readerPlaceholder = document.getElementById('readerPlaceholder');
+    const readerSourceBtn = document.getElementById('readerSourceBtn');
+    const readerBookmarkBtn = document.getElementById('readerBookmarkBtn');
+    const sourceLayer = document.getElementById('sourceLayer');
+    const sourceFrame = document.getElementById('sourceFrame');
+    const sourceFallback = document.getElementById('sourceFallback');
+    const sourceUrlLabel = document.getElementById('sourceUrlLabel');
+    const fallbackSourceLink = document.getElementById('fallbackSourceLink');
 
     let currentArticle = null;
     let sourceFallbackTimer = null;
+    let sourcePopupWindow = null;
 
-    function makeMirrorUrl(url) {
-      const clean = url.replace(/^https?:\/\//, '');
-      return `https://r.jina.ai/http://${clean}`;
+    function getStorage(key) {
+      try {
+        const value = localStorage.getItem(key);
+        return value ? JSON.parse(value) : [];
+      } catch {
+        return [];
+      }
     }
 
+    function setStorage(key, value) {
+      localStorage.setItem(key, JSON.stringify(value));
+    }
+
+    function getHistory() { return getStorage(STORAGE_HISTORY_KEY); }
+    function getBookmarks() { return getStorage(STORAGE_BOOKMARKS_KEY); }
+
+    function addHistory(articleId) {
+      const history = getHistory().filter(item => item !== articleId);
+      history.unshift(articleId);
+      setStorage(STORAGE_HISTORY_KEY, history.slice(0, 12));
+      renderHistory();
+    }
+
+    function toggleBookmark(articleId) {
+      const bookmarks = getBookmarks();
+      const exists = bookmarks.includes(articleId);
+      const next = exists ? bookmarks.filter(id => id !== articleId) : [articleId, ...bookmarks].slice(0, 18);
+      setStorage(STORAGE_BOOKMARKS_KEY, next);
+      renderBookmarks();
+      updateBookmarkButton();
+    }
+
+    function updateBookmarkButton() {
+      if (!currentArticle) return;
+      const saved = getBookmarks().includes(currentArticle.id);
+      readerBookmarkBtn.textContent = saved ? 'Remove Bookmark' : 'Bookmark';
+    }
+
+    function findArticle(id) { return articles.find(item => item.id === id); }
+
     function buildBookMarkup(article, mode = 'archive') {
-      const wrapperClass = mode === 'hero' ? 'book-wrap featured-book' : mode === 'reader' ? 'book-wrap reader-cover' : 'book-wrap';
-      const fallbackClass = article.fallbackClass ? article.fallbackClass : '';
+      const wrapClass = mode === 'hero' ? 'book-wrap featured-book' : 'book-wrap archive-book';
+      const bookClass = mode === 'hero' ? 'book featured-book' : 'book';
+      const fallbackClass = article.fallbackClass || '';
       const coverStyle = article.image ? `style="--cover-image: url('${article.image.replace(/'/g, "%27")}')"` : '';
-
-      if (mode === 'reader') {
-        return `
-          <div class="${wrapperClass}">
-            <div class="book-shape-shadow"></div>
-            <div class="book-occlusion-shadow"></div>
-            <div class="book">
-              <div class="book-cover ${fallbackClass}" ${coverStyle}>
-                <div class="book-cover-inner">
-                  <div class="cover-middle">
-                    <h3 class="cover-title">${article.title}</h3>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        `;
-      }
-
       return `
-        <div class="${wrapperClass}" data-open="${article.id}">
+        <div class="${wrapClass}" data-open="${article.id}">
           <div class="book-shape-shadow"></div>
           <div class="book-occlusion-shadow"></div>
-          <div class="book ${mode === 'hero' ? 'featured-book' : ''}">
+          <div class="${bookClass}">
             <div class="book-cover ${fallbackClass}" ${coverStyle}>
-              <div class="book-cover-inner">
-                <div class="cover-top">
-                  <span class="cover-outlet">${article.outlet}</span>
-                  <span class="cover-year">${article.year}</span>
-                </div>
-                <div class="cover-middle">
-                  <h3 class="cover-title">${article.title}</h3>
-                  <div class="cover-credit">${article.author}</div>
-                </div>
-                <div class="cover-bottom"><span>CocoPress</span></div>
+              <div class="cover-top">
+                <span class="cover-outlet">${article.outlet}</span>
+                <span class="cover-year">${article.year}</span>
+              </div>
+              <div class="cover-center">
+                <h3 class="cover-title">${article.title}</h3>
+                <div class="cover-credit">${article.author}</div>
               </div>
             </div>
           </div>
@@ -1193,34 +1211,18 @@
       `;
     }
 
-    function buildArchiveMarkup(article) {
-      return `
-        <article class="archive-card">
-          <div class="archive-book" data-open="${article.id}">
-            <div class="archive-rear-shadow"></div>
-            <div class="archive-occlusion-shadow"></div>
-            ${buildBookMarkup(article, 'archive')}
-          </div>
-          <div class="archive-meta">
-            <h3 class="archive-title">${article.title}</h3>
-            <div class="archive-line"><strong>${article.outlet}</strong> • ${article.year}</div>
-            <div class="archive-line">${article.author}${article.photoCredit ? ` • Photo: ${article.photoCredit}` : ''}</div>
-            <div class="archive-line">${article.summary}</div>
-          </div>
-        </article>
-      `;
-    }
-
     function renderHero() {
-      heroBooks.innerHTML = articles.filter(a => a.featured).map(a => buildBookMarkup(a, 'hero')).join('');
-      bindHoverDrop(heroBooks.querySelectorAll('.book-wrap'), false);
+      const shelf = heroBooks.querySelector('.bookshelf');
+      const ground = heroBooks.querySelector('.bookshelf-ground');
+      heroBooks.innerHTML = articles.filter(article => article.featured).map(article => buildBookMarkup(article, 'hero')).join('') + shelf.outerHTML + ground.outerHTML;
+      bindBookHover(heroBooks);
     }
 
     function renderFilters() {
-      const years = [...new Set(articles.map(a => a.year))].sort((a, b) => b.localeCompare(a));
-      const eras = [...new Set(articles.map(a => a.era))];
-      const types = [...new Set(articles.map(a => a.type))];
-      const outlets = [...new Set(articles.map(a => a.outlet))];
+      const years = [...new Set(articles.map(article => article.year))].sort((a, b) => b.localeCompare(a));
+      const eras = [...new Set(articles.map(article => article.era))];
+      const types = [...new Set(articles.map(article => article.type))];
+      const outlets = [...new Set(articles.map(article => article.outlet))];
       years.forEach(year => yearFilter.insertAdjacentHTML('beforeend', `<option value="${year}">${year}</option>`));
       eras.forEach(era => eraFilter.insertAdjacentHTML('beforeend', `<option value="${era}">${era}</option>`));
       types.forEach(type => typeFilter.insertAdjacentHTML('beforeend', `<option value="${type}">${type}</option>`));
@@ -1238,105 +1240,163 @@
     }
 
     function matches(article, filters) {
-      const haystack = [
-        article.title,
-        article.fullTitle,
-        article.outlet,
-        article.summary,
-        article.type,
-        article.era,
-        article.year,
-        article.author,
-        article.photoCredit,
-        ...(article.tags || [])
-      ].join(' ').toLowerCase();
-
-      return (
-        (!filters.search || haystack.includes(filters.search)) &&
-        (filters.year === 'all' || article.year === filters.year) &&
-        (filters.era === 'all' || article.era === filters.era) &&
-        (filters.type === 'all' || article.type === filters.type) &&
-        (filters.outlet === 'all' || article.outlet === filters.outlet)
-      );
+      const haystack = [article.title, article.fullTitle, article.outlet, article.author, article.summary, article.type, article.era, article.year].join(' ').toLowerCase();
+      return (!filters.search || haystack.includes(filters.search))
+        && (filters.year === 'all' || article.year === filters.year)
+        && (filters.era === 'all' || article.era === filters.era)
+        && (filters.type === 'all' || article.type === filters.type)
+        && (filters.outlet === 'all' || article.outlet === filters.outlet);
     }
 
     function renderArchive() {
       const filters = currentFilters();
-      const visible = articles.filter(article => matches(article, filters));
-      archiveGrid.innerHTML = visible.map(buildArchiveMarkup).join('');
-      emptyState.style.display = visible.length ? 'none' : 'block';
-      bindHoverDrop(archiveGrid.querySelectorAll('.archive-book'), true);
+      const visibleArticles = articles.filter(article => matches(article, filters));
+      archiveGrid.innerHTML = visibleArticles.map(article => `
+        <article class="archive-card">
+          ${buildBookMarkup(article)}
+          <div class="archive-meta">
+            <h3 class="archive-title">${article.title}</h3>
+            <div class="archive-line">${article.outlet} • ${article.year}</div>
+            <div class="archive-line">${article.summary}</div>
+          </div>
+        </article>
+      `).join('');
+      bindBookHover(archiveGrid);
+      emptyState.style.display = visibleArticles.length ? 'none' : 'block';
     }
 
-    function bindHoverDrop(nodes, isArchive) {
-      nodes.forEach(node => {
-        node.addEventListener('mouseleave', () => {
-          node.classList.remove('dropping');
-          void node.offsetWidth;
-          node.classList.add('dropping');
-          setTimeout(() => node.classList.remove('dropping'), 360);
+    function bindBookHover(scope) {
+      scope.querySelectorAll('.book-wrap').forEach(wrap => {
+        wrap.addEventListener('mouseleave', () => {
+          wrap.classList.remove('drop-bounce');
+          void wrap.offsetWidth;
+          wrap.classList.add('drop-bounce');
         });
       });
     }
 
-    function openReader(id, clickedNode) {
-      const article = articles.find(item => item.id === id);
+    function renderHistory() {
+      const history = getHistory();
+      historyList.innerHTML = history.map(id => {
+        const article = findArticle(id);
+        if (!article) return '';
+        return `
+          <button class="rail-item" type="button" data-rail-open="${article.id}">
+            <div class="rail-item-title">${article.title}</div>
+            <div class="rail-item-meta">${article.outlet} • ${article.year}</div>
+          </button>
+        `;
+      }).join('');
+      historyEmpty.style.display = history.length ? 'none' : 'block';
+    }
+
+    function renderBookmarks() {
+      const bookmarks = getBookmarks();
+      bookmarkList.innerHTML = bookmarks.map(id => {
+        const article = findArticle(id);
+        if (!article) return '';
+        return `
+          <button class="rail-item" type="button" data-rail-open="${article.id}">
+            <div class="rail-item-title">${article.title}</div>
+            <div class="rail-item-meta">${article.outlet} • ${article.year}</div>
+          </button>
+        `;
+      }).join('');
+      bookmarkEmpty.style.display = bookmarks.length ? 'none' : 'block';
+    }
+
+    function resetSourceLayer() {
+      clearTimeout(sourceFallbackTimer);
+      sourceFrame.src = 'about:blank';
+      sourceLayer.classList.remove('active');
+      sourceFallback.classList.remove('show');
+      readerPlaceholder.style.display = 'flex';
+      sourceUrlLabel.textContent = '';
+      fallbackSourceLink.href = '#';
+      if (sourcePopupWindow && !sourcePopupWindow.closed) {
+        sourcePopupWindow.close();
+      }
+      sourcePopupWindow = null;
+    }
+
+    function openSourceLayer(article) {
+      readerPlaceholder.style.display = 'none';
+      sourceLayer.classList.add('active');
+      sourceFallback.classList.remove('show');
+      sourceUrlLabel.textContent = article.url;
+      fallbackSourceLink.href = article.url;
+      sourceFrame.src = 'about:blank';
+      setTimeout(() => {
+        sourceFrame.src = article.url;
+      }, 40);
+      clearTimeout(sourceFallbackTimer);
+      sourceFallbackTimer = setTimeout(() => {
+        sourceFallback.classList.add('show');
+      }, 2200);
+
+      const popupWidth = 980;
+      const popupHeight = 760;
+      const left = Math.max(20, (window.screen.availWidth - popupWidth) / 2);
+      const top = Math.max(20, (window.screen.availHeight - popupHeight) / 2);
+      sourcePopupWindow = window.open(article.url, 'cocopressSourceWindow', `popup=yes,width=${popupWidth},height=${popupHeight},left=${left},top=${top},noopener,noreferrer`);
+    }
+
+    function openReader(id, triggerEl = null) {
+      const article = findArticle(id);
       if (!article) return;
       currentArticle = article;
+      addHistory(article.id);
 
-      if (clickedNode) {
-        clickedNode.classList.add('opening');
-        setTimeout(() => clickedNode.classList.remove('opening'), 430);
+      if (triggerEl) {
+        const animatedBook = triggerEl.querySelector('.book');
+        if (animatedBook) {
+          animatedBook.classList.remove('turning');
+          void animatedBook.offsetWidth;
+          animatedBook.classList.add('turning');
+          setTimeout(() => animatedBook.classList.remove('turning'), 580);
+        }
       }
 
-      readerBookMount.innerHTML = `<div class="reader-book-wrap">${buildBookMarkup(article, 'reader')}</div>`;
-      readerKicker.textContent = `${article.outlet} • ${article.year} • ${article.type}`;
+      readerBookMount.innerHTML = buildBookMarkup(article, 'archive').replace('archive-book', '').replace('class="book"', 'class="book reader-book"');
+      readerKicker.textContent = `${article.outlet} • ${article.year}`;
       readerTitle.textContent = article.fullTitle;
       readerSummary.textContent = article.summary;
       readerCredit.textContent = article.creditLine;
-      readerFrameLabel.textContent = `${article.outlet} — Coco's World Reader`;
-      readerSourceDirect.href = article.url;
-      readerSourceFallback.style.display = 'none';
-      readerSourceLayer.classList.remove('active');
-      readerSourceFrame.src = 'about:blank';
+      readerFrameLabel.textContent = `Coco’s World • ${article.outlet}`;
+      updateBookmarkButton();
+      resetSourceLayer();
+
       reader.classList.add('active');
       document.body.style.overflow = 'hidden';
-    }
-
-    function loadSourceLayer() {
-      if (!currentArticle) return;
-      if (sourceFallbackTimer) clearTimeout(sourceFallbackTimer);
-      readerSourceDirect.href = currentArticle.url;
-      readerSourceFallback.style.display = 'none';
-      readerSourceLayer.classList.add('active');
-      readerSourceFrame.src = 'about:blank';
-      setTimeout(() => {
-        readerSourceFrame.src = makeMirrorUrl(currentArticle.url);
-      }, 40);
-      sourceFallbackTimer = setTimeout(() => {
-        readerSourceFallback.style.display = 'block';
-      }, 2200);
     }
 
     function closeReader() {
       reader.classList.remove('active');
       document.body.style.overflow = '';
-      readerSourceLayer.classList.remove('active');
-      readerSourceFrame.src = 'about:blank';
-      readerSourceFallback.style.display = 'none';
-      if (sourceFallbackTimer) clearTimeout(sourceFallbackTimer);
+      resetSourceLayer();
+      currentArticle = null;
     }
 
     document.addEventListener('click', (event) => {
-      const opener = event.target.closest('[data-open]');
-      if (!opener) return;
-      const card = opener.classList.contains('archive-book') ? opener.querySelector('.book-wrap') : opener;
-      openReader(opener.dataset.open, card);
+      const bookWrap = event.target.closest('[data-open]');
+      if (bookWrap) {
+        openReader(bookWrap.dataset.open, bookWrap);
+        return;
+      }
+      const railOpen = event.target.closest('[data-rail-open]');
+      if (railOpen) {
+        openReader(railOpen.dataset.railOpen);
+      }
     });
 
     [searchInput, yearFilter, eraFilter, typeFilter, outletFilter].forEach(control => {
       control.addEventListener('input', renderArchive);
       control.addEventListener('change', renderArchive);
+    });
+
+    clearHistoryBtn.addEventListener('click', () => {
+      setStorage(STORAGE_HISTORY_KEY, []);
+      renderHistory();
     });
 
     readerClose.addEventListener('click', closeReader);
@@ -1346,12 +1406,22 @@
     document.addEventListener('keydown', (event) => {
       if (event.key === 'Escape' && reader.classList.contains('active')) closeReader();
     });
-    readerOpenSource.addEventListener('click', loadSourceLayer);
-    readerEmptyBtn.addEventListener('click', loadSourceLayer);
+
+    readerBookmarkBtn.addEventListener('click', () => {
+      if (!currentArticle) return;
+      toggleBookmark(currentArticle.id);
+    });
+
+    readerSourceBtn.addEventListener('click', () => {
+      if (!currentArticle) return;
+      openSourceLayer(currentArticle);
+    });
 
     renderHero();
     renderFilters();
     renderArchive();
+    renderHistory();
+    renderBookmarks();
   </script>
 </body>
 </html>
