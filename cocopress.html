@@ -9,8 +9,7 @@
     /* =========================================================
        1) COLOR SYSTEM
        ---------------------------------------------------------
-       These variables control the whole page palette.
-       Change these first if you ever want to restyle the page.
+       Core palette for CocoPress.
        ========================================================= */
     :root {
       --bg-1: #f8f0ff;
@@ -23,7 +22,7 @@
 
       --pink: #f2bfd7;
       --pink-soft: #ffe4f0;
-      --pink-scribble: #ef8ec2;
+      --pink-deep: #de8db8;
 
       --white: #ffffff;
       --gold: #d9b165;
@@ -32,25 +31,25 @@
       --text-soft: #7d5aa6;
 
       --panel: rgba(255, 255, 255, 0.58);
-      --panel-strong: rgba(255, 255, 255, 0.82);
+      --panel-strong: rgba(255, 255, 255, 0.86);
       --border: rgba(255, 255, 255, 0.64);
 
       --shadow: rgba(107, 47, 163, 0.12);
-      --shadow-strong: rgba(107, 47, 163, 0.22);
+      --shadow-strong: rgba(107, 47, 163, 0.24);
 
       --shelf-top: #efdfff;
       --shelf-mid: #d7b7f0;
       --shelf-bottom: #b984db;
 
       --book-radius: 8px;
-      --sidebar-width: 180px;
-      --reader-width: 1260px;
+      --sidebar-width: 162px;
+      --reader-width: 1080px;
+      --book-width: 190px;
+      --book-height: 332px;
     }
 
     /* =========================================================
        2) GLOBAL RESETS
-       ---------------------------------------------------------
-       Keeps sizing predictable and removes default body margin.
        ========================================================= */
     * {
       box-sizing: border-box;
@@ -85,8 +84,6 @@
 
     /* =========================================================
        3) TOP NAVIGATION
-       ---------------------------------------------------------
-       Main site nav at the top of the page.
        ========================================================= */
     .topbar {
       position: sticky;
@@ -98,7 +95,7 @@
     }
 
     .topbar-inner {
-      max-width: 1450px;
+      max-width: 1520px;
       margin: 0 auto;
       padding: 16px 20px;
       display: flex;
@@ -167,19 +164,18 @@
     /* =========================================================
        4) PAGE LAYOUT
        ---------------------------------------------------------
-       Left = narrow full-height sidebar
-       Right = main CocoPress content
+       Sidebar stays narrow and slightly more left.
        ========================================================= */
     .page {
-      max-width: 1450px;
+      max-width: 1520px;
       margin: 0 auto;
-      padding: 28px 20px 70px;
+      padding: 28px 16px 62px;
     }
 
     .layout {
       display: grid;
       grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
-      gap: 24px;
+      gap: 18px;
       align-items: start;
     }
 
@@ -189,14 +185,12 @@
 
     /* =========================================================
        5) SIDEBAR
-       ---------------------------------------------------------
-       Full vertical sidebar, but narrow so it does not eat space.
        ========================================================= */
     .sidebar {
       position: sticky;
       top: 92px;
       min-height: calc(100vh - 116px);
-      padding: 22px 16px;
+      padding: 22px 14px;
       border-radius: 24px;
       background: rgba(255,255,255,0.52);
       border: 1px solid rgba(255,255,255,0.65);
@@ -258,8 +252,6 @@
 
     /* =========================================================
        6) PAGE TITLE AREA
-       ---------------------------------------------------------
-       User wanted plain title at top, not in a separate title card.
        ========================================================= */
     .page-header {
       margin-bottom: 18px;
@@ -279,13 +271,11 @@
       font-size: 17px;
       line-height: 1.8;
       color: var(--text-soft);
-      max-width: 760px;
+      max-width: 780px;
     }
 
     /* =========================================================
        7) GENERIC PANEL STYLE
-       ---------------------------------------------------------
-       Shared card look used where needed.
        ========================================================= */
     .panel {
       position: relative;
@@ -299,18 +289,12 @@
     /* =========================================================
        8) FEATURED SECTION
        ---------------------------------------------------------
-       This keeps the featured shelf area.
-       Added:
-       - more spacing between books
-       - real visible shadow behind books
-       - more space between books and shelf
-       - pink scribble headline above featured books
+       Now sized for 4 featured books.
        ========================================================= */
     .featured-wrap {
       position: relative;
-      padding: 26px 28px 30px;
+      padding: 28px 28px 34px;
       margin-bottom: 22px;
-      min-height: 620px;
       overflow: hidden;
     }
 
@@ -339,37 +323,49 @@
       50% { opacity: 1; transform: scale(1.15); }
     }
 
-    /* Pink scribble note above featured books */
-    .scribble-note {
+    .scribble-wrap {
       position: relative;
       z-index: 3;
       display: inline-block;
-      margin: 0 0 26px 10px;
-      font-family: "Brush Script MT", "Segoe Script", cursive;
-      font-size: 38px;
-      line-height: 1;
-      color: var(--pink-scribble);
-      transform: rotate(-4deg);
-      opacity: 0;
-      clip-path: inset(0 100% 0 0);
-      animation: scribbleReveal 1.35s ease forwards;
-      text-shadow: 0 4px 14px rgba(239, 142, 194, 0.18);
+      margin: 0 0 24px 8px;
+      padding-bottom: 18px;
     }
 
-    @keyframes scribbleReveal {
-      0% {
-        opacity: 0;
-        clip-path: inset(0 100% 0 0);
-        transform: rotate(-6deg) translateY(6px);
-      }
-      35% {
-        opacity: 1;
-      }
-      100% {
-        opacity: 1;
-        clip-path: inset(0 0 0 0);
-        transform: rotate(-4deg) translateY(0);
-      }
+    .scribble-note {
+      position: relative;
+      display: inline-block;
+      font-family: "Comic Sans MS", "Marker Felt", "Trebuchet MS", sans-serif;
+      font-size: 50px;
+      font-weight: 700;
+      line-height: 1;
+      color: var(--pink-deep);
+      letter-spacing: 0.01em;
+      transform: rotate(-2.2deg);
+      text-shadow: 0 4px 12px rgba(222, 141, 184, 0.12);
+    }
+
+    .scribble-line {
+      position: absolute;
+      left: 6px;
+      right: 6px;
+      height: 10px;
+      border-radius: 999px;
+      border-bottom: 4px solid rgba(222, 141, 184, 0.9);
+      opacity: 0.95;
+      transform-origin: left center;
+    }
+
+    .scribble-line.line-one {
+      bottom: 6px;
+      transform: rotate(-1.2deg);
+    }
+
+    .scribble-line.line-two {
+      bottom: -2px;
+      left: 22px;
+      right: 22px;
+      border-bottom-width: 3px;
+      transform: rotate(1.1deg);
     }
 
     .featured-stage {
@@ -378,16 +374,15 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      min-height: 500px;
     }
 
     .hero-books {
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      gap: 110px;
-      min-height: 410px;
-      padding: 0 28px 44px;
+      gap: 58px;
+      padding: 8px 10px 38px;
+      flex-wrap: nowrap;
     }
 
     .featured-book-wrap {
@@ -395,31 +390,40 @@
       display: flex;
       justify-content: center;
       align-items: flex-end;
-      width: 240px;
-      min-height: 410px;
+      width: 220px;
+      min-height: 420px;
       flex: 0 0 auto;
     }
 
-    /* Strong visible shadow behind featured books */
     .featured-shadow-side {
       position: absolute;
-      left: calc(50% + 28px);
-      bottom: 22px;
-      width: 218px;
-      height: 372px;
+      left: calc(50% + 18px);
+      bottom: 30px;
+      width: 190px;
+      height: 355px;
       transform: translateX(-50%);
-      border-radius: 12px;
-      background: rgba(82, 35, 128, 0.28);
-      filter: blur(14px);
-      opacity: 0.68;
+      border-radius: 10px;
+      background: rgba(61, 22, 97, 0.36);
+      opacity: 0.82;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* Long thin featured shelf */
+    .featured-shadow-oval {
+      position: absolute;
+      bottom: 10px;
+      width: 86%;
+      height: 24px;
+      border-radius: 999px;
+      background: rgba(47, 16, 79, 0.42);
+      opacity: 0.88;
+      pointer-events: none;
+      z-index: 0;
+    }
+
     .featured-shelf {
       position: relative;
-      width: calc(100% - 26px);
+      width: calc(100% - 10px);
       height: 14px;
       margin: 0 auto;
       border-radius: 999px;
@@ -433,27 +437,21 @@
     .featured-shelf::after {
       content: "";
       position: absolute;
-      left: 3%;
-      right: 3%;
-      bottom: -10px;
-      height: 10px;
+      left: 4%;
+      right: 4%;
+      bottom: -8px;
+      height: 8px;
       border-radius: 999px;
-      background: rgba(86, 43, 131, 0.14);
-      filter: blur(10px);
+      background: rgba(86, 43, 131, 0.12);
     }
 
     /* =========================================================
        9) BOOK STYLE
-       ---------------------------------------------------------
-       Books stay long rectangular.
-       Title lower on cover.
-       Author + editorial on cover.
-       No stamps/tags.
        ========================================================= */
     .book {
       position: relative;
-      width: 208px;
-      height: 350px;
+      width: var(--book-width);
+      height: var(--book-height);
       border-radius: var(--book-radius);
       overflow: hidden;
       box-shadow:
@@ -475,7 +473,6 @@
         0 8px 24px rgba(255,255,255,0.28);
     }
 
-    /* Left bind / crease */
     .book::before {
       content: "";
       position: absolute;
@@ -515,12 +512,11 @@
       background-position: center;
     }
 
-    /* If later your JSON has real image URLs, this overlay helps readability */
     .book-cover.has-image::before {
       content: "";
       position: absolute;
       inset: 0;
-      background: linear-gradient(to bottom, rgba(36,16,54,0.14), rgba(36,16,54,0.58));
+      background: linear-gradient(to bottom, rgba(36,16,54,0.12), rgba(36,16,54,0.60));
       z-index: 0;
     }
 
@@ -530,68 +526,19 @@
     }
 
     .featured-book {
-      width: 222px;
-      height: 380px;
+      width: 198px;
+      height: 350px;
     }
 
     .archive-book {
       width: 100%;
-      height: 350px;
+      height: 334px;
     }
 
     .reader-book {
-      width: 205px;
-      height: 330px;
-      margin-bottom: 18px;
-    }
-
-    /* Fallback cover color classes until you replace with real JSON images */
-    .cover-schon {
-      background:
-        radial-gradient(circle at top right, rgba(255,255,255,0.22), transparent 20%),
-        linear-gradient(145deg, #e9d9f7 0%, #c7a1df 48%, #8a60ab 100%);
-    }
-
-    .cover-nylon {
-      background:
-        radial-gradient(circle at center top, rgba(255,255,255,0.22), transparent 24%),
-        linear-gradient(145deg, #b8b0f3 0%, #8a7ce1 45%, #5d4fc2 100%);
-    }
-
-    .cover-bustle {
-      background:
-        radial-gradient(circle at top center, rgba(255,255,255,0.26), transparent 24%),
-        linear-gradient(145deg, #ffdfd9 0%, #e9b2ca 44%, #ac6a9d 100%);
-    }
-
-    .cover-vibe {
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.28), transparent 26%),
-        linear-gradient(145deg, #9e77d8 0%, #6e40ad 42%, #4e247e 100%);
-    }
-
-    .cover-byrdie {
-      background:
-        radial-gradient(circle at top right, rgba(255,255,255,0.38), transparent 24%),
-        linear-gradient(145deg, #f2d7ee 0%, #dbb5e8 44%, #a573cd 100%);
-    }
-
-    .cover-elle {
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.22), transparent 22%),
-        linear-gradient(145deg, #f3c6dd 0%, #d48ab7 45%, #8a4f8f 100%);
-    }
-
-    .cover-ap {
-      background:
-        radial-gradient(circle at bottom right, rgba(255,255,255,0.22), transparent 26%),
-        linear-gradient(145deg, #c8cff8 0%, #9aa9ec 42%, #6a6fbc 100%);
-    }
-
-    .cover-rollingstone {
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.22), transparent 20%),
-        linear-gradient(145deg, #d4b4f4 0%, #a576d2 44%, #67358f 100%);
+      width: 196px;
+      height: 320px;
+      margin-bottom: 14px;
     }
 
     .cover-base {
@@ -607,7 +554,6 @@
       gap: 5px;
     }
 
-    /* Editorial on cover */
     .cover-editorial {
       font-size: 11px;
       font-weight: 800;
@@ -619,7 +565,6 @@
       max-width: 100%;
     }
 
-    /* Actual author on cover */
     .cover-author {
       font-size: 10px;
       font-weight: 700;
@@ -630,7 +575,6 @@
       max-width: 100%;
     }
 
-    /* Push title lower */
     .cover-center {
       display: flex;
       flex-direction: column;
@@ -643,7 +587,7 @@
     .cover-title {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(24px, 2.2vw, 34px);
+      font-size: clamp(22px, 2vw, 30px);
       line-height: 0.96;
       color: rgba(255,255,255,0.98);
       text-shadow: 0 4px 16px rgba(43, 13, 70, 0.22);
@@ -652,23 +596,19 @@
     }
 
     .archive-book .cover-title {
-      font-size: clamp(22px, 1.8vw, 30px);
+      font-size: 26px;
     }
 
     .reader-book .cover-title {
       font-size: 24px;
     }
 
-    /* Empty footer: no tags/stamps */
     .cover-footer {
       min-height: 8px;
     }
 
     /* =========================================================
        10) SEARCH + YEAR FILTER
-       ---------------------------------------------------------
-       Search stays.
-       Previous / Next removed from here.
        ========================================================= */
     .controls-wrap {
       padding: 18px;
@@ -697,115 +637,30 @@
     /* =========================================================
        11) LIBRARY GRID
        ---------------------------------------------------------
-       - 12 per page
-       - 3 books per row
-       - shelf between rows
-       - next/prev at the bottom of this section
+       24 per page / 4 per row / 6 rows.
        ========================================================= */
     .archive-section {
       padding: 22px;
       overflow: hidden;
     }
 
-    .archive-stage {
-      position: relative;
-      min-height: 1800px;
-    }
-
-    .archive-track {
-      display: flex;
-      width: 100%;
-      transition: transform 0.46s ease;
-      will-change: transform;
-    }
-
-    .archive-page {
-      min-width: 100%;
-      flex: 0 0 100%;
-    }
-
-    .archive-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 26px 24px;
-    }
-
-    .archive-card {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-width: 0;
-    }
-
-    /* Deep oval shadow under each gallery book */
-    .book-oval-shadow {
-      width: 82%;
-      height: 28px;
-      border-radius: 999px;
-      background: rgba(73, 31, 111, 0.28);
-      filter: blur(14px);
-      margin-top: 12px;
-      margin-bottom: -6px;
-      pointer-events: none;
-    }
-
-    /* Shelf between rows */
-    .row-shelf {
-      width: 100%;
-      height: 16px;
-      border-radius: 999px;
-      background: linear-gradient(to bottom, var(--shelf-top), var(--shelf-mid) 58%, var(--shelf-bottom));
-      border: 1px solid rgba(255,255,255,0.52);
-      box-shadow:
-        0 4px 0 rgba(255,255,255,0.40) inset,
-        0 14px 24px rgba(98,53,140,0.14);
-      margin-top: 8px;
-    }
-
-    .row-shelf-spacer {
-      width: 100%;
-      height: 8px;
-    }
-
-    .archive-meta {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 7px;
-      padding: 14px 2px 0;
-    }
-
-    .archive-title {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 22px;
-      line-height: 1.02;
-      color: var(--lavender-deep);
-    }
-
-    .archive-line {
-      font-size: 13px;
-      line-height: 1.5;
-      color: var(--text-soft);
-    }
-
-    .empty-state {
-      display: none;
-      padding: 26px 10px 6px;
-      text-align: center;
-      color: var(--text-soft);
-      font-size: 15px;
-    }
-
-    /* Pagination now lives at the bottom of the library card */
+    .library-topbar,
     .library-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 14px;
-      margin-top: 24px;
       flex-wrap: wrap;
+    }
+
+    .library-topbar {
+      margin-bottom: 18px;
+    }
+
+    .library-footer {
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid rgba(107,47,163,0.08);
     }
 
     .page-count {
@@ -844,6 +699,92 @@
       transform: none;
     }
 
+    .archive-stage {
+      position: relative;
+    }
+
+    .archive-track {
+      display: flex;
+      width: 100%;
+      transition: transform 0.42s ease;
+      will-change: transform;
+    }
+
+    .archive-page {
+      min-width: 100%;
+      flex: 0 0 100%;
+    }
+
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 22px 18px;
+    }
+
+    .archive-grid-row {
+      margin-bottom: 14px;
+    }
+
+    .archive-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .book-oval-shadow {
+      width: 84%;
+      height: 22px;
+      border-radius: 999px;
+      background: rgba(47, 16, 79, 0.38);
+      margin-top: 10px;
+      margin-bottom: -4px;
+      pointer-events: none;
+    }
+
+    .row-shelf {
+      width: 100%;
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, var(--shelf-top), var(--shelf-mid) 58%, var(--shelf-bottom));
+      border: 1px solid rgba(255,255,255,0.52);
+      box-shadow:
+        0 4px 0 rgba(255,255,255,0.40) inset,
+        0 14px 24px rgba(98,53,140,0.14);
+      margin-top: 12px;
+    }
+
+    .archive-meta {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      padding: 12px 2px 0;
+    }
+
+    .archive-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 22px;
+      line-height: 1.02;
+      color: var(--lavender-deep);
+    }
+
+    .archive-line {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-soft);
+    }
+
+    .empty-state {
+      display: none;
+      padding: 24px 10px 8px;
+      text-align: center;
+      color: var(--text-soft);
+      font-size: 15px;
+    }
+
     .footer {
       padding: 26px 20px 18px;
       text-align: center;
@@ -854,12 +795,7 @@
     /* =========================================================
        12) READER MODAL
        ---------------------------------------------------------
-       Bigger, but same overall shape.
-       Left side made more appealing:
-       - glow behind book
-       - small shelf base under book
-       - soft decorative background
-       Read on Source opens popup window now.
+       Slightly larger, still compact and less empty.
        ========================================================= */
     .reader {
       position: fixed;
@@ -880,17 +816,17 @@
     .reader-shell {
       position: relative;
       width: min(var(--reader-width), 100%);
-      height: min(92vh, 920px);
+      min-height: 640px;
+      max-height: 90vh;
       display: grid;
-      grid-template-columns: 320px minmax(0, 1fr);
+      grid-template-columns: 286px minmax(0, 1fr);
       background: rgba(249, 244, 255, 0.97);
-      border-radius: 28px;
+      border-radius: 26px;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.76);
       box-shadow: 0 28px 80px rgba(34, 10, 52, 0.28);
     }
 
-    /* Close stays visible upper left */
     .reader-close {
       position: absolute;
       top: 16px;
@@ -910,7 +846,7 @@
 
     .reader-left {
       position: relative;
-      padding: 76px 24px 24px;
+      padding: 72px 20px 22px;
       background:
         radial-gradient(circle at 22% 14%, rgba(255,255,255,0.72), transparent 24%),
         radial-gradient(circle at 84% 20%, rgba(255,255,255,0.34), transparent 22%),
@@ -919,84 +855,43 @@
       overflow-y: auto;
     }
 
-    /* Decorative sparkles inside left reader area */
-    .reader-left::before,
-    .reader-left::after {
-      content: "";
-      position: absolute;
-      width: 10px;
-      height: 10px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.72);
-      box-shadow: 0 0 14px rgba(255,255,255,0.85);
-      pointer-events: none;
-    }
-
-    .reader-left::before {
-      top: 106px;
-      right: 42px;
-    }
-
-    .reader-left::after {
-      bottom: 88px;
-      left: 42px;
-      width: 7px;
-      height: 7px;
-    }
-
-    /* Left side book display area */
     .reader-book-display {
       position: relative;
-      min-height: 430px;
+      min-height: 400px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-start;
-      padding-top: 16px;
+      padding-top: 18px;
     }
 
-    /* Glow halo behind reader book */
     .reader-book-glow {
       position: absolute;
-      top: 56px;
-      width: 220px;
-      height: 300px;
-      border-radius: 30px;
-      background: rgba(130, 86, 190, 0.22);
-      filter: blur(30px);
+      top: 52px;
+      width: 208px;
+      height: 270px;
+      border-radius: 26px;
+      background: rgba(130, 86, 190, 0.16);
       pointer-events: none;
       z-index: 0;
     }
 
-    /* Small decorative shelf under reader book */
     .reader-book-shelf {
-      width: 210px;
-      height: 14px;
+      width: 205px;
+      height: 12px;
       border-radius: 999px;
       background: linear-gradient(to bottom, var(--shelf-top), var(--shelf-mid) 58%, var(--shelf-bottom));
       border: 1px solid rgba(255,255,255,0.52);
       box-shadow:
         0 4px 0 rgba(255,255,255,0.40) inset,
         0 12px 20px rgba(98,53,140,0.14);
-      margin-top: 18px;
+      margin-top: 12px;
       position: relative;
       z-index: 1;
     }
 
-    .reader-book-shelf::after {
-      content: "";
-      position: absolute;
-      left: 10%;
-      right: 10%;
-      bottom: -8px;
-      height: 8px;
-      border-radius: 999px;
-      background: rgba(86, 43, 131, 0.12);
-      filter: blur(8px);
-    }
-
     .reader-side-label {
-      margin-top: 22px;
+      margin-top: 18px;
       font-size: 12px;
       font-weight: 800;
       letter-spacing: 0.08em;
@@ -1006,7 +901,7 @@
     }
 
     .reader-right {
-      padding: 78px 42px 34px;
+      padding: 70px 30px 28px;
       overflow-y: auto;
       background: rgba(255,255,255,0.84);
     }
@@ -1023,16 +918,17 @@
     .reader-title {
       margin: 0 0 14px;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 44px;
-      line-height: 0.96;
+      font-size: 38px;
+      line-height: 0.98;
       color: var(--lavender-deep);
+      max-width: 720px;
     }
 
     .reader-meta {
       display: flex;
       gap: 8px;
       flex-wrap: wrap;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
     }
 
     .reader-chip {
@@ -1048,20 +944,20 @@
 
     .reader-summary {
       margin: 0;
-      font-size: 17px;
-      line-height: 1.95;
+      font-size: 16px;
+      line-height: 1.86;
       color: var(--text-soft);
       white-space: pre-line;
-      max-width: 780px;
+      max-width: 700px;
     }
 
     .reader-actions {
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       gap: 14px;
-      margin-top: 30px;
-      padding-top: 24px;
+      margin-top: 24px;
+      padding-top: 22px;
       border-top: 1px solid rgba(107,47,163,0.08);
     }
 
@@ -1080,7 +976,6 @@
       box-shadow: 0 10px 24px rgba(107,47,163,0.10);
     }
 
-    /* Bookmark icon approved shape */
     .bookmark-btn {
       background: transparent;
       border: none;
@@ -1110,11 +1005,76 @@
     }
 
     /* =========================================================
-       13) RESPONSIVE
+       13) BLOCKED SEARCH POPUP
        ========================================================= */
-    @media (max-width: 1120px) {
+    .blocked-modal {
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(40, 18, 63, 0.48);
+      backdrop-filter: blur(8px);
+    }
+
+    .blocked-modal.active {
+      display: flex;
+    }
+
+    .blocked-modal-card {
+      width: min(420px, 100%);
+      background: rgba(255,255,255,0.96);
+      border: 1px solid rgba(255,255,255,0.8);
+      border-radius: 24px;
+      box-shadow: 0 24px 56px rgba(57, 21, 89, 0.24);
+      padding: 24px 22px 20px;
+      text-align: center;
+    }
+
+    .blocked-modal-title {
+      margin: 0 0 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 32px;
+      line-height: 0.95;
+      color: var(--lavender-deep);
+    }
+
+    .blocked-modal-copy {
+      margin: 0 0 18px;
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--text-soft);
+    }
+
+    .blocked-modal-btn {
+      border: none;
+      background: linear-gradient(135deg, #f2bfd7, #c7a7ef);
+      color: #4d246f;
+      padding: 12px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* =========================================================
+       14) RESPONSIVE
+       ========================================================= */
+    @media (max-width: 1300px) {
       .hero-books {
-        gap: 64px;
+        gap: 34px;
+      }
+    }
+
+    @media (max-width: 1160px) {
+      .archive-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+
+      .hero-books {
+        gap: 22px;
       }
     }
 
@@ -1144,8 +1104,10 @@
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
 
-      .archive-stage {
-        min-height: 2700px;
+      .hero-books {
+        justify-content: flex-start;
+        overflow-x: auto;
+        padding-bottom: 28px;
       }
     }
 
@@ -1173,35 +1135,15 @@
         grid-template-columns: 1fr;
       }
 
-      .hero-books {
-        justify-content: flex-start;
-        overflow-x: auto;
-        gap: 28px;
-        padding: 0 0 44px;
-      }
-
-      .featured-book-wrap {
-        width: 220px;
-      }
-
-      .featured-shadow-side {
-        width: 196px;
-        height: 340px;
-      }
-
-      .featured-book {
-        width: 198px;
-        height: 340px;
+      .scribble-note {
+        font-size: 40px;
       }
 
       .archive-grid {
         grid-template-columns: 1fr;
       }
 
-      .archive-stage {
-        min-height: 4900px;
-      }
-
+      .library-topbar,
       .library-footer {
         justify-content: center;
       }
@@ -1212,7 +1154,6 @@
 
       .reader-shell {
         width: 100%;
-        height: min(94vh, 940px);
         border-radius: 22px;
       }
 
@@ -1223,12 +1164,12 @@
       }
 
       .reader-title {
-        font-size: 34px;
+        font-size: 32px;
       }
 
       .reader-summary {
-        font-size: 16px;
-        line-height: 1.85;
+        font-size: 15px;
+        line-height: 1.8;
       }
     }
   </style>
@@ -1264,7 +1205,7 @@
         <div class="sidebar-header">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M2 6c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v14c0-1.1-.9-2-2-2H4c-1.1 0-2-.9-2-2V6z"></path>
-            <path d="M22 6c0-1.1-.9-2-2-2h-6c-1.1 0-2 .9-2 2v14c0-1.1-.9-2 2-2h6c1.1 0 2-.9 2-2V6z"></path>
+            <path d="M22 6c0-1.1-.9-2-2-2h-6c-1.1 0-2 .9-2 2v14c0-1.1-.9-2-2-2h6c1.1 0 2-.9 2-2V6z"></path>
           </svg>
           <div class="sidebar-title">My Coco Reads</div>
         </div>
@@ -1288,13 +1229,12 @@
         </section>
 
         <!-- =====================================================
-             FEATURED SHELF
-             Pink scribble note + featured books
+             FEATURED SECTION
              ===================================================== -->
         <section class="featured-wrap panel">
           <div class="sparkle-field" aria-hidden="true">
             <span class="sparkle s2" style="left: 10%; top: 12%;"></span>
-            <span class="sparkle s1" style="left: 20%; top: 25%;"></span>
+            <span class="sparkle s1" style="left: 18%; top: 25%;"></span>
             <span class="sparkle s3" style="left: 31%; top: 15%;"></span>
             <span class="sparkle s1" style="left: 43%; top: 24%;"></span>
             <span class="sparkle s2" style="left: 58%; top: 14%;"></span>
@@ -1305,7 +1245,11 @@
             <span class="sparkle s3" style="left: 55%; top: 83%;"></span>
           </div>
 
-          <div class="scribble-note">Source’s recs</div>
+          <div class="scribble-wrap">
+            <div class="scribble-note">Source’s recs</div>
+            <span class="scribble-line line-one" aria-hidden="true"></span>
+            <span class="scribble-line line-two" aria-hidden="true"></span>
+          </div>
 
           <div class="featured-stage">
             <div class="hero-books" id="heroBooks"></div>
@@ -1315,7 +1259,6 @@
 
         <!-- =====================================================
              SEARCH + YEAR FILTER
-             Search remains in layout
              ===================================================== -->
         <section class="controls-wrap panel">
           <div class="control-row">
@@ -1323,7 +1266,7 @@
               type="text"
               id="searchInput"
               class="search-input"
-              placeholder="Search title, editorial, author, or summary..."
+              placeholder="Search title, outlet, author, summary, or keywords..."
             />
 
             <select id="yearFilter" class="year-filter">
@@ -1333,11 +1276,19 @@
         </section>
 
         <!-- =====================================================
-             LIBRARY SECTION
-             Pagination lives at bottom of this card now
+             LIBRARY
              ===================================================== -->
         <section class="archive-section panel">
-          <div class="archive-stage" id="archiveStage">
+          <div class="library-topbar">
+            <div class="page-count" id="pageCountTop">Page 1 of 1</div>
+
+            <div class="pagination-row">
+              <button class="pager-btn" id="prevBtnTop" type="button">← Previous</button>
+              <button class="pager-btn" id="nextBtnTop" type="button">Next →</button>
+            </div>
+          </div>
+
+          <div class="archive-stage">
             <div class="archive-track" id="archiveTrack"></div>
           </div>
 
@@ -1346,11 +1297,11 @@
           </div>
 
           <div class="library-footer">
-            <div class="page-count" id="pageCount">Page 1 of 1</div>
+            <div class="page-count" id="pageCountBottom">Page 1 of 1</div>
 
             <div class="pagination-row">
-              <button class="pager-btn" id="prevBtn" type="button">← Previous</button>
-              <button class="pager-btn" id="nextBtn" type="button">Next →</button>
+              <button class="pager-btn" id="prevBtnBottom" type="button">← Previous</button>
+              <button class="pager-btn" id="nextBtnBottom" type="button">Next →</button>
             </div>
           </div>
         </section>
@@ -1372,10 +1323,7 @@
       <div class="reader-left">
         <div class="reader-book-display">
           <div class="reader-book-glow"></div>
-
-          <!-- The selected book gets mounted here in JS -->
           <div id="readerBookMount"></div>
-
           <div class="reader-book-shelf"></div>
           <div class="reader-side-label">CocoPress selection</div>
         </div>
@@ -1384,18 +1332,11 @@
       <div class="reader-right">
         <p class="reader-kicker" id="readerKicker"></p>
         <h2 class="reader-title" id="readerTitle"></h2>
-
         <div class="reader-meta" id="readerMeta"></div>
-
         <p class="reader-summary" id="readerSummary"></p>
 
         <div class="reader-actions">
-          <a
-            class="reader-btn"
-            id="readerSourceBtn"
-            href="#"
-            rel="noopener noreferrer"
-          >
+          <a class="reader-btn" id="readerSourceBtn" href="#" rel="noopener noreferrer">
             Read on Source
           </a>
 
@@ -1409,181 +1350,921 @@
     </div>
   </div>
 
+  <!-- =========================================================
+       BLOCKED SEARCH POPUP
+       ========================================================= -->
+  <div class="blocked-modal" id="blockedModal">
+    <div class="blocked-modal-card">
+      <h2 class="blocked-modal-title">Not here.</h2>
+      <p class="blocked-modal-copy">
+        We do not search things like that here. Do not disrespect our superstar.
+      </p>
+      <button class="blocked-modal-btn" id="blockedModalBtn" type="button">Okay</button>
+    </div>
+  </div>
+
   <script>
     /* =========================================================
-       14) HARD-CODED "JSON" DATA
+       15) HARD-CODED JSON DATA
        ---------------------------------------------------------
-       You asked to hard-code the JSON now.
-       So this section is written like in-page JSON data.
-       Later you can move this to external .json files.
+       Base data model comes from your uploaded JSON structure.
        ========================================================= */
-
-    /* Main library data
-       - image: place real image URL later if you want
-       - author: this should be the actual byline you want shown
-       - featured: controls which books appear in featured shelf */
     const libraryData = [
       {
-        id: "schon",
-        title: "A Schön! Interview",
-        fullTitle: "interview | coco jones | Schön! Magazine",
-        editorial: "Schön! Magazine",
-        author: "Schön! Magazine",
-        year: "2024",
-        source: "https://schonmagazine.com/interview-coco-jones/",
-        image: "",
-        cover: "cover-schon",
-        featured: true
+        "id": "nylon-2024",
+        "title": "Coco Jones Works For Herself",
+        "fullTitle": "Coco Jones Works For Herself",
+        "outlet": "Nylon",
+        "author": "Chelsea Peng",
+        "date": "2024-03-21",
+        "year": "2024",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://www.nylon.com/entertainment/coco-jones-2024-debut-album",
+        "cover": "https://www.nylon.com/entertainment/coco-jones-2024-debut-album",
+        "summary": "Coco Jones reflects on virality, control, therapy, ambition, and the version of herself she wants to bring into her debut album era.",
+        "searchPhrases": [
+          "coco jones works for herself",
+          "an employee",
+          "you would do it too for a check",
+          "very decisive very opinionated and very very choosy",
+          "debut album",
+          "new version of me",
+          "only consistent thing here",
+          "top 10 billboard songs",
+          "world tour",
+          "grammy winner",
+          "naacp image award",
+          "bel-air season 3",
+          "therapy",
+          "spending time with God",
+          "mentally protective",
+          "japanese akita",
+          "balance",
+          "nashville",
+          "country song",
+          "high gloss photos",
+          "if not me then who",
+          "coco career life",
+          "nylon interview",
+          "travys owen",
+          "jan-michael quammie"
+        ],
+        "featured": true
       },
       {
-        id: "nylon",
-        title: "Works for Herself",
-        fullTitle: "Coco Jones Works For Herself",
-        editorial: "Nylon",
-        author: "Nylon",
-        year: "2024",
-        source: "https://www.nylon.com/entertainment/coco-jones-2024-debut-album",
-        image: "",
-        cover: "cover-nylon",
-        featured: true
+        "id": "rollingstone-2024",
+        "title": "Coco Jones Reflects on Success and R&B",
+        "fullTitle": "Coco Jones Reflects on Success and R&B for The Green Room",
+        "outlet": "Rolling Stone",
+        "author": "",
+        "date": "2024",
+        "year": "2024",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://www.rollingstone.com/music/music-news/coco-jones-rolling-stone-the-green-room-interview-1234961544/",
+        "cover": "https://bossip.com/wp-content/uploads/sites/28/2024/02/17072616521217.jpg?w=700&strip=all&quality=80",
+        "summary": "A Green Room profile centered on Coco Jones’s success, self-definition, and place within contemporary R&B.",
+        "searchPhrases": [
+          "the green room",
+          "rolling stone green room",
+          "coco jones rolling stone",
+          "reflects on success",
+          "r&b",
+          "modern r&b",
+          "success and r&b",
+          "music news",
+          "career growth",
+          "artist identity",
+          "coco jones interview 2024"
+        ],
+        "featured": true
       },
       {
-        id: "bustle",
-        title: "Life After Disney",
-        fullTitle: "Coco Jones On Super Bowl, Engagement, Life After Disney & 'Bel-Air' S4",
-        editorial: "Bustle",
-        author: "Bustle",
-        year: "2025",
-        source: "https://www.bustle.com/entertainment/coco-jones-super-bowl-performance-why-not-more-new-album-engagement-bel-air-interview",
-        image: "",
-        cover: "cover-bustle",
-        featured: true
+        "id": "schon-2023",
+        "title": "Interview | Coco Jones",
+        "fullTitle": "Interview | Coco Jones",
+        "outlet": "Schön! Magazine",
+        "author": "",
+        "date": "2023",
+        "year": "2023",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://schonmagazine.com/interview-coco-jones/",
+        "cover": "https://schonmagazine.com/wp-content/uploads/2023/04/Schon_Magazine_cocojones.jpg",
+        "summary": "In this Schön! interview, Coco discusses Bel-Air, ICU, What I Didn’t Tell You, Beyoncé, and mastering the art of delusion.",
+        "searchPhrases": [
+          "interview coco jones schon",
+          "schon magazine",
+          "icu",
+          "what i didn't tell you",
+          "bel-air",
+          "mastering the art of delusion",
+          "meeting beyonce",
+          "r&b rising star",
+          "rewrites what you think a black woman in r&b should be",
+          "cheetah girls",
+          "raven-symone",
+          "aretha franklin",
+          "cece winans",
+          "whitney houston",
+          "listen from dreamgirls",
+          "olivia rodrigo",
+          "social media rebrand",
+          "cult following",
+          "young musician",
+          "in tune with artistry"
+        ],
+        "featured": false
       },
       {
-        id: "vibe",
-        title: "More Than Hilary Banks",
-        fullTitle: "Coco Jones Is More Than Hilary Banks",
-        editorial: "Vibe",
-        author: "Vibe",
-        year: "2022",
-        source: "https://www.vibe.com/features/editorial/coco-jones-caliber-interview-1234654510/",
-        image: "",
-        cover: "cover-vibe",
-        featured: false
+        "id": "elle-2024",
+        "title": "Coco Jones on Winning Her First Grammy, Career Goals, and Beyoncé",
+        "fullTitle": "Coco Jones on Winning Her First Grammy, Career Goals, and Beyoncé",
+        "outlet": "Elle",
+        "author": "Juliana Ukiomogbe",
+        "date": "2024-05-01",
+        "year": "2024",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://www.elle.com/culture/music/a60539065/coco-jones-interview-2024/",
+        "cover": "https://hips.hearstapps.com/hmg-prod/images/elm050124wlwomeninmusic-001-662175ce07c2b.jpg?resize=980:*",
+        "summary": "Coco talks about her first Grammy, her evolving definition of success, new music, and the artists who continue to shape her ambitions.",
+        "searchPhrases": [
+          "first grammy",
+          "career goals",
+          "beyonce",
+          "beyoncé",
+          "coco jones does it her way",
+          "my definition of success used to just be beyonce",
+          "new levels new success new lessons",
+          "best r&b performance",
+          "icu",
+          "here we go uh oh",
+          "new single",
+          "debut album this summer",
+          "old-school r&b storytelling",
+          "sprinkle in new genres",
+          "jazmine sullivan",
+          "brandy",
+          "rihanna",
+          "alex isley",
+          "tate mcrae",
+          "stand on business",
+          "art gallery for black women",
+          "elle interview 2024"
+        ],
+        "featured": true
       },
       {
-        id: "byrdie",
-        title: "Beauty, Ritual, and Ease",
-        fullTitle: "Coco Jones on Her Beauty Routine, Favorite Hairstyle, and More",
-        editorial: "Byrdie",
-        author: "Byrdie",
-        year: "2025",
-        source: "https://www.byrdie.com/coco-jones-interview-11790049",
-        image: "",
-        cover: "cover-byrdie",
-        featured: false
+        "id": "byrdie-2025",
+        "title": "Coco Jones Shares How Her Approach to Beauty Has Evolved Since Her Child Star Days",
+        "fullTitle": "Coco Jones Shares How Her Approach to Beauty Has Evolved Since Her Child Star Days",
+        "outlet": "Byrdie",
+        "author": "Olivia Hancock",
+        "date": "2025-08-15",
+        "year": "2025",
+        "era": "Why Not More Era",
+        "url": "https://www.byrdie.com/coco-jones-interview-11790049",
+        "cover": "https://www.byrdie.com/thmb/OqvobS4UuqTn1kd4nnp5-LOEtuY=/750x0/filters:no_upscale():max_bytes(150000):strip_icc():format(webp)/cocojones-bf7bd1390cb04a2c82ea9eab37cfc7af.png",
+        "summary": "A beauty-focused written interview about Coco’s routine, favorite looks, evolving self-image, and the emotional takeaway she hopes listeners get from her music.",
+        "searchPhrases": [
+          "approach to beauty has evolved",
+          "child star days",
+          "the one thing",
+          "beauty routine",
+          "favorite hairstyle",
+          "makeup must-have",
+          "makeup must have",
+          "oily skin",
+          "sunscreen primer",
+          "setting powder",
+          "buss down middle part",
+          "layered hair",
+          "blowout curls",
+          "bed-head with a touch of perfection",
+          "passion for beauty",
+          "skincare makeup and hair",
+          "the lip bar",
+          "album takeaway",
+          "validation in those feelings",
+          "i'm just like them",
+          "human being outside of this whole artist world",
+          "byrdie interview"
+        ],
+        "featured": false
       },
       {
-        id: "elle-2025",
-        title: "Why Not More",
-        fullTitle: "Coco Jones Pays Tribute to Black Women: ‘We Thrive Through the Most Unfair Odds’",
-        editorial: "Elle",
-        author: "Elle",
-        year: "2025",
-        source: "https://www.elle.com/culture/music/a64640841/coco-jones-why-not-more-interview/",
-        image: "",
-        cover: "cover-elle",
-        featured: false
+        "id": "elle-2025-why-not-more",
+        "title": "Coco Jones Pays Tribute to Black Women: ‘We Thrive Through the Most Unfair Odds’",
+        "fullTitle": "Coco Jones Pays Tribute to Black Women: ‘We Thrive Through the Most Unfair Odds’",
+        "outlet": "Elle",
+        "author": "Keyaira Kelly",
+        "date": "2025-05-01",
+        "year": "2025",
+        "era": "Why Not More Era",
+        "url": "https://www.elle.com/culture/music/a64640841/coco-jones-why-not-more-interview/",
+        "cover": "https://hips.hearstapps.com/hmg-prod/images/whynotmore-albumartwork-final-dsp-6812eca1cc2f7.jpg?resize=1800:*",
+        "summary": "A Why Not More-era interview focused on colorism, boundaries, Black women, and the emotional and political layers behind Coco’s debut album.",
+        "searchPhrases": [
+          "why not more",
+          "we thrive through the most unfair odds",
+          "debut album",
+          "colorism",
+          "power in setting boundaries",
+          "black women",
+          "young star",
+          "bel-air",
+          "hilary banks",
+          "dark-skinned girls",
+          "romance novel for dark-skinned girls",
+          "impenetrable confidence",
+          "beauty value system",
+          "lower tier",
+          "keke palmer comparison",
+          "courtesy of def jam",
+          "elle 2025",
+          "why not more era"
+        ],
+        "featured": false
       },
       {
-        id: "ap-why-not-more",
-        title: "Proud of the Debut",
-        fullTitle: "Coco Jones says she's 'proud' of debut album 'Why Not More?'",
-        editorial: "AP News",
-        author: "AP News",
-        year: "2025",
-        source: "https://apnews.com/video/coco-jones-says-shes-proud-of-debut-album-why-not-more-8935463c04e543b7aa75c6be67397bb6",
-        image: "",
-        cover: "cover-ap",
-        featured: false
+        "id": "bustle-2025-why-not-coco-jones",
+        "title": "Why Not Coco Jones?",
+        "fullTitle": "Why Not Coco Jones?",
+        "outlet": "Bustle",
+        "author": "Clover Hope",
+        "date": "2025-12-19",
+        "year": "2025",
+        "era": "Why Not More Era",
+        "url": "https://www.bustle.com/entertainment/coco-jones-super-bowl-performance-why-not-more-new-album-engagement-bel-air-interview",
+        "cover": "https://imgix.bustle.com/uploads/image/2025/12/18/32804c6d/121125-bustle-coco-jones.jpg?w=1320&h=1980&fit=crop&crop=faces&dpr=2",
+        "summary": "Bustle frames Coco’s year through album release, engagement, acting, touring, and major stages like the Super Bowl.",
+        "searchPhrases": [
+          "why not coco jones",
+          "super bowl performance",
+          "booked the super bowl",
+          "why not more album",
+          "engagement",
+          "donovan mitchell",
+          "tour with her idols",
+          "former disney star turned r&b powerhouse",
+          "constructive criticism",
+          "dance moves",
+          "body-rolling",
+          "world domination",
+          "truth first i tell it first",
+          "raw thing that occurs",
+          "bel-air season 4",
+          "the boy is mine tour",
+          "brandy and monica",
+          "met gala debut",
+          "lift every voice and sing"
+        ],
+        "featured": false
       },
       {
-        id: "rollingstone",
-        title: "Inside the Green Room",
-        fullTitle: "Coco Jones Reflects on Success, R&B for The Green Room",
-        editorial: "Rolling Stone",
-        author: "Rolling Stone",
-        year: "2024",
-        source: "https://www.rollingstone.com/music/music-news/coco-jones-rolling-stone-the-green-room-interview-1234961544/",
-        image: "",
-        cover: "cover-rollingstone",
-        featured: false
+        "id": "girlsunited-2022-belair-princesses",
+        "title": "Meet Our 'Bel-Air' Princesses, Coco Jones And Akira Akbar",
+        "fullTitle": "Meet Our 'Bel-Air' Princesses, Coco Jones And Akira Akbar",
+        "outlet": "Girls United",
+        "author": "D'Shonda Brown",
+        "date": "2022-02-16",
+        "year": "2022",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://girlsunited.essence.com/feedback/news/bel-air-coco-jones-akira-akbar/",
+        "cover": "https://girlsunited.essence.com/wp-content/uploads/2022/02/GettyImages-1369679569-Cropped-1920x1080.jpg?width=1920",
+        "summary": "Coco and Akira Akbar discuss Bel-Air, auditioning for the reboot, character development, and Black representation.",
+        "searchPhrases": [
+          "bel-air princesses",
+          "akira akbar",
+          "girls united",
+          "bel-air reboot",
+          "fresh prince of bel-air",
+          "representation of a black family",
+          "representation in different styles",
+          "you don't have to be one certain type of black girl",
+          "morgan cooper",
+          "audition process",
+          "hilary banks",
+          "ashley banks",
+          "foodie influencer",
+          "refreshing reboot",
+          "black wealth",
+          "different shades of beautiful black people"
+        ],
+        "featured": false
       },
       {
-        id: "elle-2024",
-        title: "Winning Her First Grammy",
-        fullTitle: "Coco Jones on Winning Her First Grammy, Career Goals, and Beyoncé",
-        editorial: "Elle",
-        author: "Elle",
-        year: "2024",
-        source: "https://www.elle.com/culture/music/a60539065/coco-jones-interview-2024/",
-        image: "",
-        cover: "cover-elle",
-        featured: false
+        "id": "refinery29-2022-colorism",
+        "title": "Coco Jones on Bel-Air, Hilary, and Colorism",
+        "fullTitle": "Coco Jones on Bel-Air, Hilary, and Colorism",
+        "outlet": "Refinery29",
+        "author": "",
+        "date": "2022-02-17",
+        "year": "2022",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://www.refinery29.com/en-us/2022/02/10869393/coco-jones-bel-air-hilary-colorism",
+        "cover": "https://www.refinery29.com/images/10875519.jpg?format=webp&width=680&height=816&quality=85",
+        "summary": "A feature on Coco’s take on Hilary Banks, colorism, dark-skin visibility, and the meaning of Bel-Air’s version of Black womanhood.",
+        "searchPhrases": [
+          "refinery29 coco jones",
+          "hilary banks",
+          "colorism",
+          "dark-skin representation",
+          "black womanhood",
+          "bel-air reboot",
+          "visibility",
+          "disney to bel-air",
+          "reimagining hilary",
+          "representation matters",
+          "black beauty"
+        ],
+        "featured": false
+      },
+      {
+        "id": "latimes-2023-icu-let-it-shine",
+        "title": "Coco Jones on ICU, Let It Shine, and the Long Road Back",
+        "fullTitle": "Coco Jones on ICU, Let It Shine, and the Long Road Back",
+        "outlet": "Los Angeles Times",
+        "author": "",
+        "date": "2023-10-09",
+        "year": "2023",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://www.latimes.com/entertainment-arts/music/story/2023-10-09/coco-jones-icu-let-it-shine",
+        "cover": "https://ca-times.brightspotcdn.com/dims4/default/3b4d312/2147483647/strip/true/crop/3831x3831+0+0/resize/1440x1440!/format/webp/quality/75/?url=https%3A%2F%2Fcalifornia-times-brightspot.s3.amazonaws.com%2Fcb%2Fb7%2F47a16d1947da91f7392138a9e898%2F1348112-env-coco-jones-grammy-envelope-015.jpg",
+        "summary": "An interview tying ICU’s breakout to Coco’s earlier Disney period, Let It Shine, and the years it took to be seen correctly by the industry.",
+        "searchPhrases": [
+          "icu",
+          "let it shine",
+          "los angeles times",
+          "disney to r&b",
+          "long road back",
+          "career transition",
+          "breakout single",
+          "what happened to coco jones",
+          "grammy envelope"
+        ],
+        "featured": false
+      },
+      {
+        "id": "blavity-2022-hilary-banks-relatability",
+        "title": "'Bel-Air' Star Coco Jones On Hilary Banks' Relatability And Her 'Long Road' To This Dramatic Reimagining",
+        "fullTitle": "'Bel-Air' Star Coco Jones On Hilary Banks' Relatability And Her 'Long Road' To This Dramatic Reimagining",
+        "outlet": "Blavity",
+        "author": "Trey Mangum",
+        "date": "2022-02-19",
+        "year": "2022",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://blavity.com/bel-air-star-coco-jones-on-hilary-banks-relatability-and-her-long-road-to-this-dramatic-reimagining",
+        "cover": "https://cms.blavity.com/wp-content/uploads/2023/07/NUP_195316_03819-compress-compress.jpg",
+        "summary": "A Bel-Air interview about Hilary’s relatability, influencer culture, and Coco’s long path back toward mainstream recognition.",
+        "searchPhrases": [
+          "long road",
+          "dramatic reimagining",
+          "hilary banks relatability",
+          "blavity interview",
+          "foodie influencer",
+          "former disney star",
+          "disney's next big thing",
+          "let it shine",
+          "vampires vs the bronx",
+          "what's meant for you is for you",
+          "highs and lows",
+          "keep going",
+          "bel-air star coco jones"
+        ],
+        "featured": false
+      },
+      {
+        "id": "vibe-2022-bel-air-new-music",
+        "title": "Coco Jones Discusses 'Bel-Air' And New Music",
+        "fullTitle": "Coco Jones Discusses 'Bel-Air' And New Music",
+        "outlet": "VIBE",
+        "author": "",
+        "date": "2022-03-03",
+        "year": "2022",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://www.vibe.com/news/entertainment/coco-jones-new-music-bel-air-interview-1234650570/",
+        "cover": "https://www.vibe.com/wp-content/uploads/2022/03/Coco-Jones-e1646328198860.jpeg?w=910&h=511&crop=1&resize=1440%2C810",
+        "summary": "A VIBE interview on Bel-Air, on-screen ambitions, and where Coco wanted her music to go after the reboot’s launch.",
+        "searchPhrases": [
+          "bel-air and new music",
+          "vibe interview",
+          "billboard women in music",
+          "red carpet",
+          "future on-screen hopes",
+          "new music",
+          "former disney starlet",
+          "hilary banks",
+          "peacock reboot"
+        ],
+        "featured": false
+      },
+      {
+        "id": "blanc-2022-what-a-wonderful-world",
+        "title": "CoCo Jones",
+        "fullTitle": "CoCo Jones | WHAT A WONDERFUL WORLD ISSUE 18",
+        "outlet": "Blanc Magazine",
+        "author": "Shaday Stewart",
+        "date": "2022-03",
+        "year": "2022",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://blancmagazine.com/coco-jones/",
+        "cover": "https://blancmagazine.com/wp-content/uploads/2022/05/COCO-000137120007-copy-1.jpg",
+        "summary": "A profile on Coco’s early life, powerful voice, Bel-Air role, and the confidence and imagination that shaped her career from childhood onward.",
+        "searchPhrases": [
+          "what a wonderful world issue 18",
+          "words by shaday stewart",
+          "rural tennessee",
+          "born in columbia south carolina",
+          "daughter of a session vocalist and former nfl player",
+          "singing at a graduation by age six",
+          "hilary banks",
+          "bel-air",
+          "rosetta getty",
+          "gucci",
+          "radio disney's the next big thing",
+          "let it shine",
+          "so random",
+          "good luck charlie",
+          "validation",
+          "powerful vocals",
+          "infectious confidence",
+          "comedic charm"
+        ],
+        "featured": false
+      },
+      {
+        "id": "vibe-2022-caliber",
+        "title": "Coco Jones Is More Than Hilary Banks",
+        "fullTitle": "Coco Jones Is More Than Hilary Banks",
+        "outlet": "VIBE",
+        "author": "",
+        "date": "2022-04-07",
+        "year": "2022",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://www.vibe.com/features/editorial/coco-jones-caliber-interview-1234654510/",
+        "cover": "https://www.vibe.com/wp-content/uploads/2022/03/Coco-Jones-1-e1648659371508.jpeg?w=910&h=511&crop=1&resize=1440%2C810",
+        "summary": "A Caliber-era editorial about identity beyond Hilary Banks and the version of Coco that wanted to be heard on her own terms.",
+        "searchPhrases": [
+          "more than hilary banks",
+          "caliber",
+          "vibe editorial",
+          "coco jones caliber interview",
+          "identity beyond acting",
+          "music and acting",
+          "sultry single caliber",
+          "hilary banks image",
+          "career reset"
+        ],
+        "featured": false
+      },
+      {
+        "id": "girlsunited-2022-pure-leef-hotline",
+        "title": "Coco Jones on the Pure Leaf Subtly Sweet Hotline",
+        "fullTitle": "Coco Jones on the Pure Leaf Subtly Sweet Hotline",
+        "outlet": "Girls United",
+        "author": "",
+        "date": "2022-08",
+        "year": "2022",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://girlsunited.essence.com/feedback/news/coco-jones-pure-leef-subtly-sweet-hotline/",
+        "cover": "https://girlsunited.essence.com/feedback/news/coco-jones-pure-leef-subtly-sweet-hotline/",
+        "summary": "A branded interview-style piece around Coco’s participation in Pure Leaf’s subtly sweet hotline concept.",
+        "searchPhrases": [
+          "pure leaf",
+          "subtly sweet hotline",
+          "girls united",
+          "hotline campaign",
+          "brand partnership",
+          "coco jones hotline",
+          "women who are tired of being too sweet"
+        ],
+        "featured": false
+      },
+      {
+        "id": "youknowigotsoul-2022-babyface",
+        "title": "Coco Jones Talks New EP, Working with Babyface, Balancing Acting & Singing (Exclusive Interview)",
+        "fullTitle": "Coco Jones Talks New EP, Working with Babyface, Balancing Acting & Singing (Exclusive Interview)",
+        "outlet": "YouKnowIGotSoul",
+        "author": "",
+        "date": "2022-11-14",
+        "year": "2022",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://youknowigotsoul.com/coco-jones-talks-new-ep-working-with-babyface-balancing-acting-singing-exclusive-interview",
+        "cover": "https://defjamshop.com/cdn/shop/files/CocoJones.jpg?v=1695049964&width=800",
+        "summary": "A detailed interview about What I Didn’t Tell You, identity, Babyface, balancing music and acting, and what changed between 2015 and 2022.",
+        "searchPhrases": [
+          "working with babyface",
+          "balancing acting and singing",
+          "exclusive interview",
+          "what i didn't tell you",
+          "girls night out",
+          "simple",
+          "2015 me",
+          "finding my sound",
+          "discovering yourself as an artist",
+          "left disney",
+          "independent artist",
+          "identity",
+          "maintain this and stay grounded and grateful",
+          "blast from the past",
+          "recent success",
+          "surreal"
+        ],
+        "featured": false
+      },
+      {
+        "id": "uproxx-2023-collecting-dues",
+        "title": "Coco Jones Is Collecting Dues And Living Her Best Life",
+        "fullTitle": "Coco Jones Is Collecting Dues And Living Her Best Life",
+        "outlet": "UPROXX",
+        "author": "Wongo Okon",
+        "date": "2023-01-31",
+        "year": "2023",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://uproxx.com/music/coco-jones-interview-what-i-didnt-tell-you/",
+        "cover": "https://www.ebony.com/wp-content/uploads/2023/01/08/20220918_BH_EXQUISITEYE_COCOJONES-EP_12253-copy.jpg",
+        "summary": "A long-form profile about the industry’s treatment of Coco, Bel-Air, Def Jam, What I Didn’t Tell You, and finally collecting the dues she was owed.",
+        "searchPhrases": [
+          "collecting dues and living her best life",
+          "wongo okon",
+          "what i didn't tell you",
+          "high standardz",
+          "def jam recordings",
+          "caliber",
+          "icu",
+          "babyface",
+          "simple",
+          "girls night out",
+          "teyana taylor",
+          "spike tey",
+          "janet jackson",
+          "i get lonely",
+          "what happened to coco jones",
+          "mistreatment of dark-skin women",
+          "silver lining",
+          "better in ways that i would have never known to pray for"
+        ],
+        "featured": false
+      },
+      {
+        "id": "teenvogue-2023-bel-air-season-2",
+        "title": "Coco Jones On Bel-Air Season 2, Short Kings, and “Delusional” Advice From SZA",
+        "fullTitle": "Coco Jones On Bel-Air Season 2, Short Kings, and “Delusional” Advice From SZA",
+        "outlet": "Teen Vogue",
+        "author": "Kaitlyn McNab",
+        "date": "2023-02-24",
+        "year": "2023",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://www.teenvogue.com/story/coco-jones-interview-bel-air-season-2-music-advice-from-sza",
+        "cover": "https://assets.teenvogue.com/photos/63f8fb1d82db4fb463cf556f/16:9/w_1920,c_limit/Cul_CocoJones_Feb2023_SOCIAL.jpg",
+        "summary": "A lively Teen Vogue interview on Bel-Air season 2, confidence, Hilary and Jazz, short kings, and the now-famous advice SZA gave Coco.",
+        "searchPhrases": [
+          "short kings",
+          "delusional advice from sza",
+          "bel-air season 2",
+          "kaitlyn mcnab",
+          "most confident yet",
+          "go-getter bel-air character",
+          "apple music's r&b charts",
+          "major label debut ep",
+          "i am validated",
+          "hilary and jazz",
+          "social media influencer",
+          "fresh prince reboot",
+          "queen ie costume director",
+          "yacht dress",
+          "season 2 spoilers",
+          "r&b is dead debate",
+          "teen vogue interview 2023"
+        ],
+        "featured": true
+      },
+      {
+        "id": "ebony-2023-women-who-rule-break",
+        "title": "Women Who Rule Break: Coco Jones",
+        "fullTitle": "Women Who Rule Break: Coco Jones",
+        "outlet": "EBONY",
+        "author": "",
+        "date": "2023-03-21",
+        "year": "2023",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://www.ebony.com/coco-jones-women-who-rule-break/",
+        "cover": "https://media.ebony.com/sytwmfsyue/uploads/2023/03/21/1_0072.jpg",
+        "summary": "EBONY frames Coco as a woman who breaks rules through Bel-Air, What I Didn’t Tell You, and her blend of grace, drive, and Black American princess energy.",
+        "searchPhrases": [
+          "women who rule break",
+          "ebony",
+          "black american princess",
+          "what i didn't tell you",
+          "bel-air",
+          "rule breaker",
+          "music and acting",
+          "breaking barriers",
+          "black woman success"
+        ],
+        "featured": false
+      },
+      {
+        "id": "vogueuk-2023-how-failure-freed-coco-jones",
+        "title": "How Failure Freed Coco Jones, R&B's Soulful New Star",
+        "fullTitle": "How Failure Freed Coco Jones, R&B's Soulful New Star",
+        "outlet": "Vogue UK",
+        "author": "",
+        "date": "2023-03-28",
+        "year": "2023",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://www.vogue.co.uk/arts-and-lifestyle/article/coco-jones-interview",
+        "cover": "https://media.vogue.co.uk/photos/641b27abcc220c5568817fb3/2:3/w_1920,c_limit/CocoJones.jpg",
+        "summary": "A Vogue UK profile on child stardom, failure, fame, Tiana casting discourse, and how rejection clarified Coco’s sense of self.",
+        "searchPhrases": [
+          "how failure freed coco jones",
+          "vogue uk",
+          "r&b's soulful new star",
+          "child stardom",
+          "hating fame",
+          "tiana",
+          "princess and the frog",
+          "beignets",
+          "role models",
+          "my mum is the only one i really looked up to",
+          "calls for her to play tiana",
+          "vogue interview"
+        ],
+        "featured": false
+      },
+      {
+        "id": "elle-2023-expect-the-unexpected",
+        "title": "Coco Jones Wants You to Expect the Unexpected",
+        "fullTitle": "Coco Jones Wants You to Expect the Unexpected",
+        "outlet": "Elle",
+        "author": "Juliana Ukiomogbe",
+        "date": "2023-06-22",
+        "year": "2023",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://www.elle.com/culture/music/a44266459/coco-jones-interview-2023/",
+        "cover": "https://hips.hearstapps.com/hmg-prod/images/e3i9466-6491b35648afc.jpg?crop=1.00xw:1.00xh;0,0&resize=1800:*",
+        "summary": "An Elle profile on ICU’s success, Crazy For Me, child stardom, and the new lessons Coco says are defining her current phase.",
+        "searchPhrases": [
+          "expect the unexpected",
+          "new levels new success new lessons",
+          "crazy for me",
+          "gold riaa certification",
+          "mainstream r&b/hip-hop airplay chart",
+          "child star",
+          "elle interview 2023",
+          "more music in the works",
+          "reaching new heights",
+          "juniana ukiomogbe",
+          "icu success"
+        ],
+        "featured": false
+      },
+      {
+        "id": "teenvogue-2023-cover-story",
+        "title": "Coco Jones Faced Rejection as a Child Star. Now, She’s a 5-Time Grammy-Nominated Performer",
+        "fullTitle": "Coco Jones Faced Rejection as a Child Star. Now, She’s a 5-Time Grammy-Nominated Performer",
+        "outlet": "Teen Vogue",
+        "author": "Jewel Wicker",
+        "date": "2023-11-14",
+        "year": "2023",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://www.teenvogue.com/story/coco-jones-november-december-cover-2023",
+        "cover": "https://assets.teenvogue.com/photos/654e9ad8aafac2b37ab82d0f/master/w_1600,c_limit/TV_NovCover2023_CocoJones_05.jpg",
+        "summary": "Teen Vogue’s cover story traces Coco’s long arc from child performer to Grammy-nominated artist, centering rejection, competitiveness, ICU, and the years she had to wait.",
+        "searchPhrases": [
+          "child star rejection",
+          "5-time grammy-nominated performer",
+          "jewel wicker",
+          "november december cover 2023",
+          "it's hilarious when it's your time it's your time",
+          "i just didn't like when people weren't astonished by me",
+          "rams game national anthem",
+          "hot chocolate with peppermint straws",
+          "hollywood records",
+          "employee of the month",
+          "i was an employee",
+          "outside too",
+          "the standard grill",
+          "terrell show",
+          "terrell grice",
+          "jaylen barron",
+          "t and coco",
+          "icu was special",
+          "pretty girl club music",
+          "r&b is dead",
+          "ari lennox",
+          "monét",
+          "lucky daye",
+          "yebba",
+          "chinazam ojukwu"
+        ],
+        "featured": true
+      },
+      {
+        "id": "huffpost-2022-renaissance-moment",
+        "title": "Bel-Air Star Coco Jones Is Having a Renaissance Moment",
+        "fullTitle": "Bel-Air Star Coco Jones Is Having a Renaissance Moment",
+        "outlet": "HuffPost",
+        "author": "",
+        "date": "2022",
+        "year": "2022",
+        "era": "What I Didn't Tell You Era",
+        "url": "https://www.huffpost.com/entry/bel-air-star-coco-jones-renaissance-moment_n_6206f681e4b0ccfb3e5540e7",
+        "cover": "https://img.huffingtonpost.com/asset/6206fdfe2700005634457fa0.jpg?cache=sM50Lm9e38&ops=crop_57_154_4423_2938%2Cscalefit_1440&format=webp",
+        "summary": "A HuffPost feature describing Bel-Air and new music as a renaissance moment in Coco’s career after years of being overlooked.",
+        "searchPhrases": [
+          "renaissance moment",
+          "huffpost",
+          "bel-air star",
+          "new music",
+          "career comeback",
+          "overlooked",
+          "coco jones renaissance"
+        ],
+        "featured": false
+      },
+      {
+        "id": "sweetyhigh-2012-just-wants-to-make-people-dance",
+        "title": "Coco Jones Just Wants to Make People Dance",
+        "fullTitle": "Coco Jones Just Wants to Make People Dance",
+        "outlet": "Sweety High",
+        "author": "",
+        "date": "2012",
+        "year": "2012",
+        "era": "Pre-WIDTY / Disney Era",
+        "url": "https://www.sweetyhigh.com/read/coco-jones-just-wants-to-make-people-dance",
+        "cover": "https://static.wikia.nocookie.net/shakeitup/images/1/13/Coco_Jones.jpg/revision/latest?cb=20120323233209",
+        "summary": "An early-career pop interview centered on dancing, Disney momentum, and Coco’s pre-Let It Shine visibility.",
+        "searchPhrases": [
+          "just wants to make people dance",
+          "sweety high",
+          "disney era",
+          "young coco jones",
+          "dance",
+          "teen pop interview",
+          "early career"
+        ],
+        "featured": false
+      },
+      {
+        "id": "sweetyhigh-2015-let-em-know",
+        "title": "Coco Jones Lets 'Em Know",
+        "fullTitle": "Coco Jones Lets 'Em Know",
+        "outlet": "Sweety High",
+        "author": "",
+        "date": "2015",
+        "year": "2015",
+        "era": "Pre-WIDTY / Disney Era",
+        "url": "https://www.sweetyhigh.com/read/coco-jones-let-em-know",
+        "cover": "https://static.vecteezy.com/system/resources/previews/009/556/344/large_2x/los-angeles-jun-5-coco-jones-arriving-at-the-premiere-of-disney-channel-s-let-it-shine-at-dga-theater-on-june-5-2012-in-los-angeles-ca-free-photo.JPG",
+        "summary": "A post-Disney interview tied to Let 'Em Know and Coco’s attempt to define herself outside the image built for her as a child star.",
+        "searchPhrases": [
+          "let em know",
+          "let 'em know",
+          "sweety high",
+          "post-disney",
+          "young adult artist",
+          "new music 2015",
+          "finding herself"
+        ],
+        "featured": false
+      },
+      {
+        "id": "vibe-2025-passion-of-coco-jones",
+        "title": "The Passion of Coco Jones",
+        "fullTitle": "The Passion of Coco Jones",
+        "outlet": "VIBE",
+        "author": "",
+        "date": "2025",
+        "year": "2025",
+        "era": "Why Not More Era",
+        "url": "https://www.vibe.com/features/digital-covers/the-passion-of-coco-jones-cover-story-1235078984/",
+        "cover": "https://www.vibe.com/wp-content/uploads/2025/06/CocoJones_VIBE_10.jpg?w=1440&h=810&crop=1&resize=1440%2C810",
+        "summary": "A digital cover story positioning Coco as a force driven by conviction, faith, passion, and the widening scale of her stardom.",
+        "searchPhrases": [
+          "the passion of coco jones",
+          "digital cover",
+          "vibe digital cover",
+          "why not more era",
+          "cover story",
+          "vibe 2025",
+          "coco jones passion",
+          "star power"
+        ],
+        "featured": false
+      },
+      {
+        "id": "essence-2025-wants-more",
+        "title": "Coco Jones Wants More",
+        "fullTitle": "Coco Jones Wants More",
+        "outlet": "ESSENCE",
+        "author": "",
+        "date": "2025",
+        "year": "2025",
+        "era": "Why Not More Era",
+        "url": "https://www.essence.com/coco-jones-wants-more/",
+        "cover": "https://www.essence.com/coco-jones-wants-more/",
+        "summary": "An ESSENCE profile framing Coco’s ambition, visibility, and desire to keep reaching beyond what people think her ceiling should be.",
+        "searchPhrases": [
+          "coco jones wants more",
+          "essence",
+          "wants more",
+          "ambition",
+          "visibility",
+          "career ceiling",
+          "why not more era",
+          "black women and success"
+        ],
+        "featured": false
+      },
+      {
+        "id": "essence-2026-super-bowl-beauty",
+        "title": "Coco Jones Super Bowl Performance Beauty",
+        "fullTitle": "Coco Jones Super Bowl Performance Beauty",
+        "outlet": "ESSENCE",
+        "author": "",
+        "date": "2026",
+        "year": "2026",
+        "era": "Why Not More Era",
+        "url": "https://www.essence.com/coco-jones-super-bowl-performance-beauty/",
+        "cover": "https://media.essence.com/vxcjywbwpa/uploads/2026/02/Coco-x-Benefit-Super-Bowl-Cropped-3-1920x1080.jpg?width=1920",
+        "summary": "An ESSENCE beauty feature tied to Coco’s Super Bowl performance styling and the visual language of this larger mainstream moment.",
+        "searchPhrases": [
+          "super bowl performance beauty",
+          "essence beauty",
+          "benefit",
+          "super bowl styling",
+          "beauty feature",
+          "coco x benefit",
+          "why not more era",
+          "glam look"
+        ],
+        "featured": false
       }
     ];
 
-    /* Summary data
-       This is separated so later it can become its own summaries JSON file.
-       Right now it is hard-coded in-page. */
-    const summariesData = {
-      "schon": {
-        summary: "Schön! frames Coco through a fashion-editorial lens, centering poise, image, and presence. It reads like a mood piece more than a quick update, which makes it useful for the archive because it preserves how editorial media helps shape public perception beyond music alone."
-      },
-      "nylon": {
-        summary: "Nylon centers autonomy, momentum, and the way Coco appears to be defining the next stage of her career on her own terms. It feels modern and directional, making it one of the strongest pieces for understanding this chapter of her press presence."
-      },
-      "bustle": {
-        summary: "Bustle gives a broader celebrity-and-career snapshot, touching television, visibility, and the way different parts of Coco’s public life intersect. It works well in the library because it captures breadth rather than just one narrow angle."
-      },
-      "vibe": {
-        summary: "An earlier editorial centered on identity and ambition, especially around being understood beyond one defining role. It matters because it captures a point when Coco was already aiming past the frame some people still wanted to keep her in."
-      },
-      "byrdie": {
-        summary: "Byrdie shifts the focus toward beauty, routine, and softness, which gives the archive variety beyond music and milestone coverage. It shows how lifestyle media also contributes to building an artist’s image."
-      },
-      "elle-2025": {
-        summary: "Elle ties the debut album era to larger emotional and cultural framing, especially around pressure, Black womanhood, and resilience. It helps the archive feel grounded in meaning rather than pure publicity."
-      },
-      "ap-why-not-more": {
-        summary: "A concise AP piece focused on the debut album and the straightforward public framing around it. This one is useful because it acts as a clean milestone record inside the library."
-      },
-      "rollingstone": {
-        summary: "Rolling Stone leans into genre, placement, and the language of artistic success. It works well for the archive because it captures how Coco is discussed inside a more music-centered frame."
-      },
-      "elle-2024": {
-        summary: "This feature is centered on recognition, ambition, and what it means to hit a major milestone while still clearly reaching upward. It belongs in the archive because it captures a breakthrough without pretending the journey is complete."
-      }
-    };
-
     /* =========================================================
-       15) APP CONFIG
+       16) APP CONFIG
        ========================================================= */
-    const ITEMS_PER_PAGE = 12;
+    const ITEMS_PER_PAGE = 24;
 
     /* =========================================================
-       16) ELEMENT LOOKUPS
+       17) FEATURED ORDER
        ---------------------------------------------------------
-       Grab all important DOM elements once so we can reuse them.
+       Locked manually to the exact four requested.
+       ========================================================= */
+    const lockedFeaturedIds = [
+      "schon-2023",
+      "teenvogue-2023-cover-story",
+      "nylon-2024",
+      "bustle-2025-why-not-coco-jones"
+    ];
+
+    /* =========================================================
+       18) BLOCKED SEARCH TERMS
+       ---------------------------------------------------------
+       Includes phrases and close-word handling.
+       ========================================================= */
+    const blockedTerms = [
+      "nude",
+      "nudity",
+      "boob",
+      "boobs",
+      "tit",
+      "tits",
+      "pussy",
+      "dick",
+      "porn",
+      "porno",
+      "sex",
+      "sexy pics",
+      "fucking",
+      "bend over",
+      "bending over",
+      "spread legs",
+      "legs spread",
+      "leak",
+      "leaks",
+      "nude pics",
+      "nude pictures",
+      "coco jones nude",
+      "coco jones nude pics",
+      "coco jones naked",
+      "naked coco jones"
+    ];
+
+    /* =========================================================
+       19) ELEMENT LOOKUPS
        ========================================================= */
     const heroBooks = document.getElementById("heroBooks");
     const searchInput = document.getElementById("searchInput");
     const yearFilter = document.getElementById("yearFilter");
     const archiveTrack = document.getElementById("archiveTrack");
-    const archiveStage = document.getElementById("archiveStage");
-    const pageCount = document.getElementById("pageCount");
-    const prevBtn = document.getElementById("prevBtn");
-    const nextBtn = document.getElementById("nextBtn");
+    const pageCountTop = document.getElementById("pageCountTop");
+    const pageCountBottom = document.getElementById("pageCountBottom");
+    const prevBtnTop = document.getElementById("prevBtnTop");
+    const nextBtnTop = document.getElementById("nextBtnTop");
+    const prevBtnBottom = document.getElementById("prevBtnBottom");
+    const nextBtnBottom = document.getElementById("nextBtnBottom");
     const emptyState = document.getElementById("emptyState");
 
     const reader = document.getElementById("reader");
@@ -1596,21 +2277,20 @@
     const readerSourceBtn = document.getElementById("readerSourceBtn");
     const bookmarkBtn = document.getElementById("bookmarkBtn");
 
+    const blockedModal = document.getElementById("blockedModal");
+    const blockedModalBtn = document.getElementById("blockedModalBtn");
+
     /* =========================================================
-       17) APP STATE
+       20) APP STATE
        ========================================================= */
     let currentPage = 0;
     let currentArticleId = null;
     let filteredArticles = [];
+    let blockedSearchWasTriggered = false;
 
     /* =========================================================
-       18) HELPERS
+       21) HELPERS
        ========================================================= */
-
-    /* Break array into chunks.
-       Used for both:
-       - paginating the library
-       - splitting one page into rows of 3 books */
     function chunkArray(array, size) {
       const chunks = [];
       for (let i = 0; i < array.length; i += size) {
@@ -1619,41 +2299,178 @@
       return chunks;
     }
 
-    /* Get full article object merged with its summary data.
-       This keeps library fields and summary fields together. */
-    function getArticleById(id) {
-      const base = libraryData.find(item => item.id === id);
-      if (!base) return null;
-
-      const summaryEntry = summariesData[id] || { summary: "" };
-
-      return {
-        ...base,
-        summary: summaryEntry.summary || ""
-      };
+    function normalizeText(value) {
+      return (value || "")
+        .toLowerCase()
+        .normalize("NFD")
+        .replace(/[\u0300-\u036f]/g, "")
+        .replace(/[^a-z0-9\s]/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
     }
 
-    /* Build one book cover.
-       mode controls whether it renders as:
-       - featured
-       - archive
-       - reader */
-    function buildBookMarkup(article, mode = "archive") {
+    function tokenize(value) {
+      return normalizeText(value).split(" ").filter(Boolean);
+    }
+
+    function levenshtein(a, b) {
+      if (a === b) return 0;
+      if (!a.length) return b.length;
+      if (!b.length) return a.length;
+
+      const matrix = Array.from({ length: b.length + 1 }, (_, i) => [i]);
+
+      for (let j = 0; j <= a.length; j++) {
+        matrix[0][j] = j;
+      }
+
+      for (let i = 1; i <= b.length; i++) {
+        for (let j = 1; j <= a.length; j++) {
+          if (b.charAt(i - 1) === a.charAt(j - 1)) {
+            matrix[i][j] = matrix[i - 1][j - 1];
+          } else {
+            matrix[i][j] = Math.min(
+              matrix[i - 1][j - 1] + 1,
+              matrix[i][j - 1] + 1,
+              matrix[i - 1][j] + 1
+            );
+          }
+        }
+      }
+
+      return matrix[b.length][a.length];
+    }
+
+    function isCloseToken(queryToken, candidateToken) {
+      if (!queryToken || !candidateToken) return false;
+      if (candidateToken.includes(queryToken) || queryToken.includes(candidateToken)) return true;
+      if (queryToken.length >= 4 && candidateToken.startsWith(queryToken.slice(0, 4))) return true;
+
+      const distance = levenshtein(queryToken, candidateToken);
+      if (queryToken.length <= 4) return distance <= 1;
+      if (queryToken.length <= 7) return distance <= 2;
+      return distance <= 2;
+    }
+
+    function getSearchCorpus(article) {
+      return [
+        article.title,
+        article.fullTitle,
+        article.outlet,
+        article.author,
+        article.summary,
+        article.year,
+        article.era,
+        ...(article.searchPhrases || [])
+      ].join(" ");
+    }
+
+    function buildSearchTerms(article) {
+      return tokenize(getSearchCorpus(article));
+    }
+
+    function matchesFuzzy(query, article) {
+      const normalizedQuery = normalizeText(query);
+      if (!normalizedQuery) return true;
+
+      const normalizedCorpus = normalizeText(getSearchCorpus(article));
+      if (normalizedCorpus.includes(normalizedQuery)) return true;
+
+      const queryTokens = tokenize(query);
+      const articleTokens = buildSearchTerms(article);
+
+      if (!queryTokens.length) return true;
+
+      let matchedCount = 0;
+
+      queryTokens.forEach((queryToken) => {
+        const matched = articleTokens.some((articleToken) => isCloseToken(queryToken, articleToken));
+        if (matched) matchedCount += 1;
+      });
+
+      return matchedCount >= Math.max(1, Math.ceil(queryTokens.length * 0.7));
+    }
+
+    function isBlockedSearch(query) {
+      const normalizedQuery = normalizeText(query);
+      if (!normalizedQuery) return false;
+
+      const queryTokens = tokenize(normalizedQuery);
+
+      for (const blockedTerm of blockedTerms) {
+        const normalizedBlocked = normalizeText(blockedTerm);
+
+        if (normalizedQuery.includes(normalizedBlocked)) {
+          return true;
+        }
+
+        const blockedTokens = tokenize(normalizedBlocked);
+
+        if (blockedTokens.length === 1) {
+          const blockedToken = blockedTokens[0];
+          const tokenMatch = queryTokens.some((queryToken) => isCloseToken(queryToken, blockedToken));
+          if (tokenMatch) return true;
+        } else {
+          const phraseMatched = blockedTokens.every((blockedToken) =>
+            queryTokens.some((queryToken) => isCloseToken(queryToken, blockedToken))
+          );
+          if (phraseMatched) return true;
+        }
+      }
+
+      return false;
+    }
+
+    function showBlockedModal() {
+      blockedModal.classList.add("active");
+    }
+
+    function hideBlockedModal() {
+      blockedModal.classList.remove("active");
+    }
+
+    /* =========================================================
+       22) BOOK COVER HELPERS
+       ========================================================= */
+    function getArticleById(id) {
+      return libraryData.find(item => item.id === id) || null;
+    }
+
+    function getFallbackGradient(index) {
+      const gradients = [
+        "linear-gradient(145deg, #e9d9f7 0%, #c7a1df 48%, #8a60ab 100%)",
+        "linear-gradient(145deg, #b8b0f3 0%, #8a7ce1 45%, #5d4fc2 100%)",
+        "linear-gradient(145deg, #ffdfd9 0%, #e9b2ca 44%, #ac6a9d 100%)",
+        "linear-gradient(145deg, #9e77d8 0%, #6e40ad 42%, #4e247e 100%)",
+        "linear-gradient(145deg, #f2d7ee 0%, #dbb5e8 44%, #a573cd 100%)",
+        "linear-gradient(145deg, #f3c6dd 0%, #d48ab7 45%, #8a4f8f 100%)",
+        "linear-gradient(145deg, #c8cff8 0%, #9aa9ec 42%, #6a6fbc 100%)",
+        "linear-gradient(145deg, #d4b4f4 0%, #a576d2 44%, #67358f 100%)"
+      ];
+
+      return gradients[index % gradients.length];
+    }
+
+    function buildBookMarkup(article, mode = "archive", index = 0) {
       const classes = ["book"];
       if (mode === "featured") classes.push("featured-book");
       if (mode === "archive") classes.push("archive-book");
       if (mode === "reader") classes.push("reader-book");
 
-      const coverClasses = ["book-cover", article.cover || "cover-base"];
-      const style = article.image ? `style="background-image:url('${article.image}');"` : "";
-      if (article.image) coverClasses.push("has-image");
+      const coverClasses = ["book-cover"];
+      const safeCover = article.cover && article.cover.startsWith("http") ? article.cover : "";
+      const style = safeCover
+        ? `style="background-image: linear-gradient(to bottom, rgba(36,16,54,0.14), rgba(36,16,54,0.58)), url('${safeCover}');"`
+        : `style="background:${getFallbackGradient(index)};"`;
 
-      const coreMarkup = `
+      if (safeCover) coverClasses.push("has-image");
+
+      return `
         <div class="${classes.join(" ")}" data-open="${article.id}">
           <div class="${coverClasses.join(" ")}" ${style}>
             <div class="cover-top">
-              <span class="cover-editorial">${article.editorial || ""}</span>
-              <span class="cover-author">${article.author || ""}</span>
+              <span class="cover-editorial">${article.outlet || ""}</span>
+              <span class="cover-author">${article.author || "Editorial"}</span>
             </div>
 
             <div class="cover-center">
@@ -1664,41 +2481,29 @@
           </div>
         </div>
       `;
-
-      /* Featured books need extra wrapper for the side shadow */
-      if (mode === "featured") {
-        return `
-          <div class="featured-book-wrap">
-            <div class="featured-shadow-side"></div>
-            ${coreMarkup}
-          </div>
-        `;
-      }
-
-      return coreMarkup;
     }
 
     /* =========================================================
-       19) FEATURED BOOKS
+       23) FEATURED RENDER
        ---------------------------------------------------------
-       Force the exact approved featured order.
+       Uses locked set only.
        ========================================================= */
     function renderHero() {
-      const featuredOrder = ["schon", "nylon", "bustle"];
-
-      const featuredArticles = featuredOrder
+      const featuredArticles = lockedFeaturedIds
         .map(id => getArticleById(id))
         .filter(Boolean);
 
-      heroBooks.innerHTML = featuredArticles
-        .map(article => buildBookMarkup(article, "featured"))
-        .join("");
+      heroBooks.innerHTML = featuredArticles.map((article, index) => `
+        <div class="featured-book-wrap">
+          <div class="featured-shadow-side"></div>
+          ${buildBookMarkup(article, "featured", index)}
+          <div class="featured-shadow-oval"></div>
+        </div>
+      `).join("");
     }
 
     /* =========================================================
-       20) YEAR FILTER
-       ---------------------------------------------------------
-       Only year filter is left on the page.
+       24) YEAR FILTER
        ========================================================= */
     function renderYearFilter() {
       const years = [...new Set(libraryData.map(article => article.year))]
@@ -1710,135 +2515,127 @@
     }
 
     /* =========================================================
-       21) SEARCH + FILTERING
+       25) SEARCH + FILTERING
        ---------------------------------------------------------
-       Search works across:
-       - title
-       - fullTitle
-       - editorial
-       - author
-       - summary
-       - year
+       Search is fuzzy / close-match based.
        ========================================================= */
     function getFilteredArticles() {
       const selectedYear = yearFilter.value;
-      const searchValue = searchInput.value.trim().toLowerCase();
+      const searchValue = searchInput.value.trim();
 
-      return libraryData
-        .map(item => getArticleById(item.id))
-        .filter(article => {
-          const yearMatch = selectedYear === "all" || article.year === selectedYear;
+      if (searchValue && isBlockedSearch(searchValue)) {
+        blockedSearchWasTriggered = true;
+        return [];
+      }
 
-          const haystack = [
-            article.title,
-            article.fullTitle,
-            article.editorial,
-            article.author,
-            article.summary,
-            article.year
-          ]
-            .join(" ")
-            .toLowerCase();
+      blockedSearchWasTriggered = false;
 
-          const searchMatch = !searchValue || haystack.includes(searchValue);
-
-          return yearMatch && searchMatch;
-        });
+      return libraryData.filter(article => {
+        const yearMatch = selectedYear === "all" || article.year === selectedYear;
+        const searchMatch = !searchValue || matchesFuzzy(searchValue, article);
+        return yearMatch && searchMatch;
+      });
     }
 
     /* =========================================================
-       22) LIBRARY PAGE MARKUP
+       26) LIBRARY PAGE MARKUP
        ---------------------------------------------------------
-       Each page can hold 12 books.
-       Each row holds 3 books.
-       Shelf appears between rows.
+       24 books per page / 4 per row / shelves between rows.
        ========================================================= */
     function createArchivePageMarkup(pageArticles) {
-      const rows = chunkArray(pageArticles, 3);
+      const rows = chunkArray(pageArticles, 4);
 
       return `
         <div class="archive-page">
           ${rows.map((row, rowIndex) => `
             <div class="archive-grid-row">
               <div class="archive-grid">
-                ${row.map(article => `
+                ${row.map((article, index) => `
                   <article class="archive-card">
-                    ${buildBookMarkup(article, "archive")}
+                    ${buildBookMarkup(article, "archive", index + rowIndex)}
                     <div class="book-oval-shadow"></div>
 
                     <div class="archive-meta">
                       <h3 class="archive-title">${article.title}</h3>
-                      <div class="archive-line">${article.editorial}</div>
-                      <div class="archive-line">${article.author}</div>
+                      <div class="archive-line">${article.outlet}</div>
+                      <div class="archive-line">${article.author || "Editorial"}</div>
                     </div>
                   </article>
                 `).join("")}
               </div>
 
-              ${rowIndex < rows.length - 1
-                ? `<div class="row-shelf"></div><div class="row-shelf-spacer"></div>`
-                : `<div class="row-shelf"></div>`
-              }
+              ${rowIndex < rows.length - 1 ? `<div class="row-shelf"></div>` : ``}
             </div>
           `).join("")}
         </div>
       `;
     }
 
-    /* Set min-height for stage so the slider has room on each breakpoint */
-    function updateArchiveHeight(pagesLength) {
-      if (window.innerWidth <= 760) {
-        archiveStage.style.minHeight = pagesLength ? "4900px" : "100px";
-      } else if (window.innerWidth <= 900) {
-        archiveStage.style.minHeight = pagesLength ? "2700px" : "100px";
-      } else {
-        archiveStage.style.minHeight = pagesLength ? "1800px" : "100px";
-      }
+    /* =========================================================
+       27) PAGINATION UI
+       ========================================================= */
+    function syncPaginationButtons(totalPages) {
+      const isAtStart = currentPage === 0;
+      const isAtEnd = currentPage === totalPages - 1 || totalPages === 0;
+
+      [prevBtnTop, prevBtnBottom].forEach(btn => btn.disabled = isAtStart || totalPages === 0);
+      [nextBtnTop, nextBtnBottom].forEach(btn => btn.disabled = isAtEnd || totalPages === 0);
+
+      const label = totalPages === 0 ? "Page 0 of 0" : `Page ${currentPage + 1} of ${totalPages}`;
+      pageCountTop.textContent = label;
+      pageCountBottom.textContent = label;
+    }
+
+    function changePage(direction) {
+      const pagesLength = chunkArray(filteredArticles, ITEMS_PER_PAGE).length;
+      currentPage = Math.max(0, Math.min(currentPage + direction, pagesLength - 1));
+      archiveTrack.style.transform = `translateX(-${currentPage * 100}%)`;
+      syncPaginationButtons(pagesLength);
     }
 
     /* =========================================================
-       23) RENDER LIBRARY
+       28) ARCHIVE RENDER
        ========================================================= */
     function renderArchive() {
       filteredArticles = getFilteredArticles();
       const pages = chunkArray(filteredArticles, ITEMS_PER_PAGE);
 
-      emptyState.style.display = filteredArticles.length ? "none" : "block";
       archiveTrack.innerHTML = pages.map(createArchivePageMarkup).join("");
-      updateArchiveHeight(pages.length);
+      archiveTrack.style.transform = `translateX(-${currentPage * 100}%)`;
+
+      if (blockedSearchWasTriggered) {
+        emptyState.style.display = "none";
+        showBlockedModal();
+        searchInput.value = "";
+        filteredArticles = libraryData.filter(article => {
+          const selectedYear = yearFilter.value;
+          return selectedYear === "all" || article.year === selectedYear;
+        });
+        const resetPages = chunkArray(filteredArticles, ITEMS_PER_PAGE);
+        currentPage = 0;
+        archiveTrack.innerHTML = resetPages.map(createArchivePageMarkup).join("");
+        archiveTrack.style.transform = "translateX(0)";
+        syncPaginationButtons(resetPages.length);
+        emptyState.style.display = resetPages.length ? "none" : "block";
+        return;
+      }
+
+      emptyState.style.display = filteredArticles.length ? "none" : "block";
 
       if (!pages.length) {
         currentPage = 0;
-        pageCount.textContent = "Page 0 of 0";
-        prevBtn.disabled = true;
-        nextBtn.disabled = true;
         archiveTrack.style.transform = "translateX(0)";
+        syncPaginationButtons(0);
         return;
       }
 
       currentPage = Math.min(currentPage, pages.length - 1);
       archiveTrack.style.transform = `translateX(-${currentPage * 100}%)`;
-      pageCount.textContent = `Page ${currentPage + 1} of ${pages.length}`;
-      prevBtn.disabled = currentPage === 0;
-      nextBtn.disabled = currentPage === pages.length - 1;
-    }
-
-    /* Move pagination left or right */
-    function changePage(direction) {
-      const pagesLength = chunkArray(filteredArticles, ITEMS_PER_PAGE).length;
-      currentPage = Math.max(0, Math.min(currentPage + direction, pagesLength - 1));
-      archiveTrack.style.transform = `translateX(-${currentPage * 100}%)`;
-      pageCount.textContent = `Page ${currentPage + 1} of ${pagesLength}`;
-      prevBtn.disabled = currentPage === 0;
-      nextBtn.disabled = currentPage === pagesLength - 1;
+      syncPaginationButtons(pages.length);
     }
 
     /* =========================================================
-       24) BOOKMARK STORAGE
-       ---------------------------------------------------------
-       Uses localStorage
-       - outline = not bookmarked
-       - filled purple = bookmarked
+       29) BOOKMARK STORAGE
        ========================================================= */
     function getBookmarks() {
       return JSON.parse(localStorage.getItem("cocoBookmarks") || "[]");
@@ -1868,9 +2665,9 @@
     }
 
     /* =========================================================
-       25) READING HISTORY
+       30) READING HISTORY
        ---------------------------------------------------------
-       Only writes to history when Read on Source is used.
+       Only updates when Read on Source is clicked.
        ========================================================= */
     function addToHistory(article) {
       const current = JSON.parse(localStorage.getItem("cocoReadingHistory") || "[]");
@@ -1879,11 +2676,11 @@
       const newEntry = {
         id: article.id,
         title: article.title,
-        editorial: article.editorial,
+        outlet: article.outlet,
         author: article.author,
         year: article.year,
-        source: article.source,
-        image: article.image || "",
+        source: article.url,
+        cover: article.cover || "",
         viewedAt: new Date().toISOString()
       };
 
@@ -1894,10 +2691,7 @@
     }
 
     /* =========================================================
-       26) POPUP SOURCE WINDOW
-       ---------------------------------------------------------
-       Opens the source article in a centered popup window
-       instead of leaving Coco's World.
+       31) SOURCE POPUP WINDOW
        ========================================================= */
     function openCenteredPopup(url) {
       const width = 960;
@@ -1914,26 +2708,24 @@
     }
 
     /* =========================================================
-       27) READER OPEN / CLOSE
-       ---------------------------------------------------------
-       Reader shows summary only.
+       32) READER OPEN / CLOSE
        ========================================================= */
     function openReader(id) {
       const article = getArticleById(id);
       if (!article) return;
 
-      readerBookMount.innerHTML = buildBookMarkup(article, "reader");
-      readerKicker.textContent = `${article.editorial} • ${article.year}`;
+      readerBookMount.innerHTML = buildBookMarkup(article, "reader", 0);
+      readerKicker.textContent = `${article.outlet} • ${article.year}`;
       readerTitle.textContent = article.fullTitle || article.title;
       readerSummary.textContent = article.summary || "Summary coming soon.";
 
       readerMeta.innerHTML = `
-        <span class="reader-chip">${article.editorial}</span>
-        <span class="reader-chip">${article.author}</span>
+        <span class="reader-chip">${article.outlet}</span>
+        <span class="reader-chip">${article.author || "Editorial"}</span>
         <span class="reader-chip">${article.year}</span>
       `;
 
-      readerSourceBtn.href = article.source;
+      readerSourceBtn.href = article.url;
       readerSourceBtn.dataset.articleId = article.id;
 
       syncBookmarkState(article.id);
@@ -1949,9 +2741,7 @@
     }
 
     /* =========================================================
-       28) CLICK HANDLING
-       ---------------------------------------------------------
-       Any element with data-open="article-id" can open the reader.
+       33) CLICK HANDLING
        ========================================================= */
     function handleBookClicks(event) {
       const book = event.target.closest("[data-open]");
@@ -1960,20 +2750,19 @@
     }
 
     /* =========================================================
-       29) EVENT BINDINGS
+       34) EVENT BINDINGS
        ========================================================= */
-
-    /* Featured shelf book clicks */
     heroBooks.addEventListener("click", handleBookClicks);
-
-    /* Library book clicks */
     archiveTrack.addEventListener("click", handleBookClicks);
 
-    /* Pagination */
-    prevBtn.addEventListener("click", () => changePage(-1));
-    nextBtn.addEventListener("click", () => changePage(1));
+    [prevBtnTop, prevBtnBottom].forEach(btn => {
+      btn.addEventListener("click", () => changePage(-1));
+    });
 
-    /* Search and year filter rerender library */
+    [nextBtnTop, nextBtnBottom].forEach(btn => {
+      btn.addEventListener("click", () => changePage(1));
+    });
+
     searchInput.addEventListener("input", () => {
       currentPage = 0;
       renderArchive();
@@ -1984,29 +2773,28 @@
       renderArchive();
     });
 
-    /* Reader close */
     readerClose.addEventListener("click", closeReader);
 
-    /* Click outside modal to close */
     reader.addEventListener("click", (event) => {
       if (event.target === reader) closeReader();
     });
 
-    /* ESC closes modal */
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && reader.classList.contains("active")) {
         closeReader();
       }
+
+      if (event.key === "Escape" && blockedModal.classList.contains("active")) {
+        hideBlockedModal();
+      }
     });
 
-    /* Bookmark toggle */
     bookmarkBtn.addEventListener("click", () => {
       if (!currentArticleId) return;
       toggleBookmark(currentArticleId);
       syncBookmarkState(currentArticleId);
     });
 
-    /* Read on Source popup window + history tracking */
     readerSourceBtn.addEventListener("click", (event) => {
       event.preventDefault();
 
@@ -2014,15 +2802,18 @@
       const article = getArticleById(articleId);
       if (!article) return;
 
-      openCenteredPopup(article.source);
+      openCenteredPopup(article.url);
       addToHistory(article);
     });
 
-    /* Rerender archive heights on resize */
-    window.addEventListener("resize", renderArchive);
+    blockedModalBtn.addEventListener("click", hideBlockedModal);
+
+    blockedModal.addEventListener("click", (event) => {
+      if (event.target === blockedModal) hideBlockedModal();
+    });
 
     /* =========================================================
-       30) INITIAL PAGE RENDER
+       35) INITIAL RENDER
        ========================================================= */
     renderHero();
     renderYearFilter();
