@@ -6,32 +6,52 @@
   <title>CocoPress — Coco's World</title>
 
   <style>
-    /* =========================
-       ROOT COLORS / GLOBAL TOKENS
-       ========================= */
+    /* =========================================================
+       1) COLOR SYSTEM
+       ---------------------------------------------------------
+       These variables control the whole page palette.
+       Change these first if you ever want to restyle the page.
+       ========================================================= */
     :root {
       --bg-1: #f8f0ff;
       --bg-2: #eddfff;
       --bg-3: #dcc4f3;
+
       --lavender: #8b5fbf;
       --lavender-deep: #6b2fa3;
       --lavender-soft: #b695db;
+
       --pink: #f2bfd7;
       --pink-soft: #ffe4f0;
+      --pink-scribble: #ef8ec2;
+
       --white: #ffffff;
       --gold: #d9b165;
+
       --text: #562b83;
       --text-soft: #7d5aa6;
+
       --panel: rgba(255, 255, 255, 0.58);
-      --panel-strong: rgba(255, 255, 255, 0.78);
-      --border: rgba(255, 255, 255, 0.62);
+      --panel-strong: rgba(255, 255, 255, 0.82);
+      --border: rgba(255, 255, 255, 0.64);
+
       --shadow: rgba(107, 47, 163, 0.12);
-      --shadow-strong: rgba(107, 47, 163, 0.2);
+      --shadow-strong: rgba(107, 47, 163, 0.22);
+
       --shelf-top: #efdfff;
       --shelf-mid: #d7b7f0;
       --shelf-bottom: #b984db;
+
+      --book-radius: 8px;
+      --sidebar-width: 180px;
+      --reader-width: 1260px;
     }
 
+    /* =========================================================
+       2) GLOBAL RESETS
+       ---------------------------------------------------------
+       Keeps sizing predictable and removes default body margin.
+       ========================================================= */
     * {
       box-sizing: border-box;
     }
@@ -57,13 +77,21 @@
       text-decoration: none;
     }
 
-    /* =========================
-       TOP NAV
-       ========================= */
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    /* =========================================================
+       3) TOP NAVIGATION
+       ---------------------------------------------------------
+       Main site nav at the top of the page.
+       ========================================================= */
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 2400;
+      z-index: 2500;
       background: rgba(245, 234, 255, 0.78);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid rgba(255,255,255,0.6);
@@ -136,10 +164,12 @@
       transform: scaleX(1);
     }
 
-    /* =========================
-       PAGE LAYOUT
-       Narrower sidebar + main content
-       ========================= */
+    /* =========================================================
+       4) PAGE LAYOUT
+       ---------------------------------------------------------
+       Left = narrow full-height sidebar
+       Right = main CocoPress content
+       ========================================================= */
     .page {
       max-width: 1450px;
       margin: 0 auto;
@@ -148,15 +178,20 @@
 
     .layout {
       display: grid;
-      grid-template-columns: 180px minmax(0, 1fr);
+      grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
       gap: 24px;
       align-items: start;
     }
 
-    /* =========================
-       LEFT SIDEBAR
-       Full height, but visually narrow
-       ========================= */
+    .main {
+      min-width: 0;
+    }
+
+    /* =========================================================
+       5) SIDEBAR
+       ---------------------------------------------------------
+       Full vertical sidebar, but narrow so it does not eat space.
+       ========================================================= */
     .sidebar {
       position: sticky;
       top: 92px;
@@ -221,17 +256,13 @@
       box-shadow: 0 10px 22px rgba(107,47,163,0.08);
     }
 
-    .main {
-      min-width: 0;
-    }
-
-    /* =========================
-       PAGE TITLE AREA
-       User wanted plain title at top,
-       not sitting inside its own big card
-       ========================= */
+    /* =========================================================
+       6) PAGE TITLE AREA
+       ---------------------------------------------------------
+       User wanted plain title at top, not in a separate title card.
+       ========================================================= */
     .page-header {
-      margin-bottom: 22px;
+      margin-bottom: 18px;
       padding-top: 4px;
     }
 
@@ -251,10 +282,11 @@
       max-width: 760px;
     }
 
-    /* =========================
-       GENERIC PANEL
-       Used only where needed
-       ========================= */
+    /* =========================================================
+       7) GENERIC PANEL STYLE
+       ---------------------------------------------------------
+       Shared card look used where needed.
+       ========================================================= */
     .panel {
       position: relative;
       background: var(--panel);
@@ -264,16 +296,21 @@
       backdrop-filter: blur(14px);
     }
 
-    /* =========================
-       FEATURED SHELF
-       Kept closer to original structure,
-       but corrected spacing / shadows / shelf gap
-       ========================= */
+    /* =========================================================
+       8) FEATURED SECTION
+       ---------------------------------------------------------
+       This keeps the featured shelf area.
+       Added:
+       - more spacing between books
+       - real visible shadow behind books
+       - more space between books and shelf
+       - pink scribble headline above featured books
+       ========================================================= */
     .featured-wrap {
       position: relative;
-      padding: 34px 28px 30px;
-      margin-bottom: 26px;
-      min-height: 600px;
+      padding: 26px 28px 30px;
+      margin-bottom: 22px;
+      min-height: 620px;
       overflow: hidden;
     }
 
@@ -302,55 +339,84 @@
       50% { opacity: 1; transform: scale(1.15); }
     }
 
-    /* Holds books and shelf with a real gap between them */
+    /* Pink scribble note above featured books */
+    .scribble-note {
+      position: relative;
+      z-index: 3;
+      display: inline-block;
+      margin: 0 0 26px 10px;
+      font-family: "Brush Script MT", "Segoe Script", cursive;
+      font-size: 38px;
+      line-height: 1;
+      color: var(--pink-scribble);
+      transform: rotate(-4deg);
+      opacity: 0;
+      clip-path: inset(0 100% 0 0);
+      animation: scribbleReveal 1.35s ease forwards;
+      text-shadow: 0 4px 14px rgba(239, 142, 194, 0.18);
+    }
+
+    @keyframes scribbleReveal {
+      0% {
+        opacity: 0;
+        clip-path: inset(0 100% 0 0);
+        transform: rotate(-6deg) translateY(6px);
+      }
+      35% {
+        opacity: 1;
+      }
+      100% {
+        opacity: 1;
+        clip-path: inset(0 0 0 0);
+        transform: rotate(-4deg) translateY(0);
+      }
+    }
+
     .featured-stage {
       position: relative;
       z-index: 2;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      min-height: 520px;
-      padding-top: 30px;
+      min-height: 500px;
     }
 
-    /* Books row */
     .hero-books {
       display: flex;
       align-items: flex-end;
       justify-content: center;
-      gap: 88px;
-      min-height: 420px;
-      padding: 0 28px 30px;
+      gap: 110px;
+      min-height: 410px;
+      padding: 0 28px 44px;
     }
 
-    /* Each featured book gets its own wrapper so the side shadow can sit behind it */
     .featured-book-wrap {
       position: relative;
       display: flex;
       justify-content: center;
       align-items: flex-end;
       width: 240px;
-      min-height: 420px;
+      min-height: 410px;
       flex: 0 0 auto;
     }
 
-    /* Side offset shadow behind each featured book */
+    /* Strong visible shadow behind featured books */
     .featured-shadow-side {
       position: absolute;
-      left: calc(50% + 24px);
-      bottom: 14px;
-      width: 214px;
-      height: 370px;
+      left: calc(50% + 28px);
+      bottom: 22px;
+      width: 218px;
+      height: 372px;
       transform: translateX(-50%);
-      border-radius: 10px;
-      background: linear-gradient(180deg, rgba(76, 31, 122, 0.10), rgba(76, 31, 122, 0.28));
-      filter: blur(16px);
-      opacity: 0.48;
+      border-radius: 12px;
+      background: rgba(82, 35, 128, 0.28);
+      filter: blur(14px);
+      opacity: 0.68;
       pointer-events: none;
       z-index: 0;
     }
 
-    /* Longer, thinner shelf */
+    /* Long thin featured shelf */
     .featured-shelf {
       position: relative;
       width: calc(100% - 26px);
@@ -376,17 +442,19 @@
       filter: blur(10px);
     }
 
-    /* =========================
-       BOOKS
-       Taller rectangular shape
-       Stronger left bind crease
-       Title lower on the cover
-       ========================= */
+    /* =========================================================
+       9) BOOK STYLE
+       ---------------------------------------------------------
+       Books stay long rectangular.
+       Title lower on cover.
+       Author + editorial on cover.
+       No stamps/tags.
+       ========================================================= */
     .book {
       position: relative;
       width: 208px;
       height: 350px;
-      border-radius: 8px;
+      border-radius: var(--book-radius);
       overflow: hidden;
       box-shadow:
         0 18px 30px rgba(81, 37, 125, 0.18),
@@ -407,7 +475,7 @@
         0 8px 24px rgba(255,255,255,0.28);
     }
 
-    /* Left side bind / crease */
+    /* Left bind / crease */
     .book::before {
       content: "";
       position: absolute;
@@ -447,7 +515,7 @@
       background-position: center;
     }
 
-    /* When real JSON image URLs are added later */
+    /* If later your JSON has real image URLs, this overlay helps readability */
     .book-cover.has-image::before {
       content: "";
       position: absolute;
@@ -461,26 +529,23 @@
       z-index: 1;
     }
 
-    /* Featured books slightly taller */
     .featured-book {
       width: 222px;
       height: 380px;
     }
 
-    /* Reader cover size */
+    .archive-book {
+      width: 100%;
+      height: 350px;
+    }
+
     .reader-book {
-      width: 200px;
-      height: 322px;
+      width: 205px;
+      height: 330px;
       margin-bottom: 18px;
     }
 
-    /* Gallery books */
-    .archive-book {
-      width: 100%;
-      height: 340px;
-    }
-
-    /* Fallback color classes until JSON images are wired */
+    /* Fallback cover color classes until you replace with real JSON images */
     .cover-schon {
       background:
         radial-gradient(circle at top right, rgba(255,255,255,0.22), transparent 20%),
@@ -535,7 +600,6 @@
         linear-gradient(145deg, #cfb7ee 0%, #a580d2 50%, #7043a6 100%);
     }
 
-    /* Top metadata on the cover */
     .cover-top {
       display: flex;
       flex-direction: column;
@@ -543,6 +607,7 @@
       gap: 5px;
     }
 
+    /* Editorial on cover */
     .cover-editorial {
       font-size: 11px;
       font-weight: 800;
@@ -554,6 +619,7 @@
       max-width: 100%;
     }
 
+    /* Actual author on cover */
     .cover-author {
       font-size: 10px;
       font-weight: 700;
@@ -564,13 +630,13 @@
       max-width: 100%;
     }
 
-    /* Push title lower toward bottom */
+    /* Push title lower */
     .cover-center {
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
       flex: 1;
-      padding-top: 80px;
+      padding-top: 82px;
       padding-bottom: 8px;
     }
 
@@ -593,16 +659,17 @@
       font-size: 24px;
     }
 
-    /* Keep footer area minimal / no CocoPress stamps or tags */
+    /* Empty footer: no tags/stamps */
     .cover-footer {
       min-height: 8px;
     }
 
-    /* =========================
-       SEARCH + YEAR FILTER
-       Search bar restored
-       No extra "Press Library" title block
-       ========================= */
+    /* =========================================================
+       10) SEARCH + YEAR FILTER
+       ---------------------------------------------------------
+       Search stays.
+       Previous / Next removed from here.
+       ========================================================= */
     .controls-wrap {
       padding: 18px;
       margin-bottom: 18px;
@@ -610,10 +677,9 @@
 
     .control-row {
       display: grid;
-      grid-template-columns: minmax(0, 1.5fr) 220px auto;
+      grid-template-columns: minmax(0, 1fr) 220px;
       gap: 12px;
       align-items: center;
-      flex-wrap: wrap;
     }
 
     .search-input,
@@ -628,53 +694,14 @@
       outline: none;
     }
 
-    .page-count {
-      font-size: 13px;
-      font-weight: 700;
-      color: var(--text-soft);
-      text-align: right;
-      white-space: nowrap;
-    }
-
-    .pagination-row {
-      display: flex;
-      align-items: center;
-      justify-content: flex-end;
-      gap: 10px;
-      margin-top: 14px;
-      flex-wrap: wrap;
-    }
-
-    .pager-btn {
-      border: none;
-      background: rgba(255,255,255,0.94);
-      color: var(--lavender-deep);
-      padding: 12px 16px;
-      border-radius: 999px;
-      font-size: 13px;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 10px 24px rgba(107,47,163,0.08);
-      transition: transform 0.2s ease, opacity 0.2s ease;
-    }
-
-    .pager-btn:hover:not(:disabled) {
-      transform: translateY(-1px);
-    }
-
-    .pager-btn:disabled {
-      opacity: 0.42;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* =========================
-       LIBRARY GRID
-       12 per page
-       3 per row
-       Shelf between rows
-       Deep oval shadow under each book
-       ========================= */
+    /* =========================================================
+       11) LIBRARY GRID
+       ---------------------------------------------------------
+       - 12 per page
+       - 3 books per row
+       - shelf between rows
+       - next/prev at the bottom of this section
+       ========================================================= */
     .archive-section {
       padding: 22px;
       overflow: hidden;
@@ -682,7 +709,7 @@
 
     .archive-stage {
       position: relative;
-      min-height: 1750px;
+      min-height: 1800px;
     }
 
     .archive-track {
@@ -723,7 +750,7 @@
       pointer-events: none;
     }
 
-    /* Shelf after each row */
+    /* Shelf between rows */
     .row-shelf {
       width: 100%;
       height: 16px;
@@ -771,6 +798,52 @@
       font-size: 15px;
     }
 
+    /* Pagination now lives at the bottom of the library card */
+    .library-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+
+    .page-count {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-soft);
+    }
+
+    .pagination-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .pager-btn {
+      border: none;
+      background: rgba(255,255,255,0.94);
+      color: var(--lavender-deep);
+      padding: 12px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(107,47,163,0.08);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .pager-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .pager-btn:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     .footer {
       padding: 26px 20px 18px;
       text-align: center;
@@ -778,11 +851,16 @@
       font-size: 14px;
     }
 
-    /* =========================
-       READER
-       Made bigger and easier to read
-       Wider text area, larger modal
-       ========================= */
+    /* =========================================================
+       12) READER MODAL
+       ---------------------------------------------------------
+       Bigger, but same overall shape.
+       Left side made more appealing:
+       - glow behind book
+       - small shelf base under book
+       - soft decorative background
+       Read on Source opens popup window now.
+       ========================================================= */
     .reader {
       position: fixed;
       inset: 0;
@@ -801,10 +879,10 @@
 
     .reader-shell {
       position: relative;
-      width: min(1280px, 100%);
+      width: min(var(--reader-width), 100%);
       height: min(92vh, 920px);
       display: grid;
-      grid-template-columns: 280px minmax(0, 1fr);
+      grid-template-columns: 320px minmax(0, 1fr);
       background: rgba(249, 244, 255, 0.97);
       border-radius: 28px;
       overflow: hidden;
@@ -812,7 +890,7 @@
       box-shadow: 0 28px 80px rgba(34, 10, 52, 0.28);
     }
 
-    /* Close button upper left and always visible */
+    /* Close stays visible upper left */
     .reader-close {
       position: absolute;
       top: 16px;
@@ -831,12 +909,100 @@
     }
 
     .reader-left {
+      position: relative;
       padding: 76px 24px 24px;
       background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.52), transparent 24%),
+        radial-gradient(circle at 22% 14%, rgba(255,255,255,0.72), transparent 24%),
+        radial-gradient(circle at 84% 20%, rgba(255,255,255,0.34), transparent 22%),
         linear-gradient(160deg, #f4e8ff 0%, #ecd9ff 52%, #e0c6f4 100%);
       border-right: 1px solid rgba(255,255,255,0.7);
       overflow-y: auto;
+    }
+
+    /* Decorative sparkles inside left reader area */
+    .reader-left::before,
+    .reader-left::after {
+      content: "";
+      position: absolute;
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.72);
+      box-shadow: 0 0 14px rgba(255,255,255,0.85);
+      pointer-events: none;
+    }
+
+    .reader-left::before {
+      top: 106px;
+      right: 42px;
+    }
+
+    .reader-left::after {
+      bottom: 88px;
+      left: 42px;
+      width: 7px;
+      height: 7px;
+    }
+
+    /* Left side book display area */
+    .reader-book-display {
+      position: relative;
+      min-height: 430px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 16px;
+    }
+
+    /* Glow halo behind reader book */
+    .reader-book-glow {
+      position: absolute;
+      top: 56px;
+      width: 220px;
+      height: 300px;
+      border-radius: 30px;
+      background: rgba(130, 86, 190, 0.22);
+      filter: blur(30px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Small decorative shelf under reader book */
+    .reader-book-shelf {
+      width: 210px;
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, var(--shelf-top), var(--shelf-mid) 58%, var(--shelf-bottom));
+      border: 1px solid rgba(255,255,255,0.52);
+      box-shadow:
+        0 4px 0 rgba(255,255,255,0.40) inset,
+        0 12px 20px rgba(98,53,140,0.14);
+      margin-top: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .reader-book-shelf::after {
+      content: "";
+      position: absolute;
+      left: 10%;
+      right: 10%;
+      bottom: -8px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(86, 43, 131, 0.12);
+      filter: blur(8px);
+    }
+
+    .reader-side-label {
+      margin-top: 22px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      text-align: center;
     }
 
     .reader-right {
@@ -889,7 +1055,6 @@
       max-width: 780px;
     }
 
-    /* Read on Source centered with bookmark next to it */
     .reader-actions {
       display: flex;
       align-items: center;
@@ -915,7 +1080,7 @@
       box-shadow: 0 10px 24px rgba(107,47,163,0.10);
     }
 
-    /* Bookmark outline shape approved by user */
+    /* Bookmark icon approved shape */
     .bookmark-btn {
       background: transparent;
       border: none;
@@ -944,27 +1109,12 @@
       transform: scale(1.05);
     }
 
-    /* =========================
-       RESPONSIVE
-       ========================= */
-    @media (max-width: 1220px) {
-      .control-row {
-        grid-template-columns: 1fr 220px;
-      }
-
-      .page-count {
-        grid-column: 1 / -1;
-        text-align: left;
-      }
-    }
-
+    /* =========================================================
+       13) RESPONSIVE
+       ========================================================= */
     @media (max-width: 1120px) {
       .hero-books {
-        gap: 54px;
-      }
-
-      .archive-grid {
-        gap: 24px 18px;
+        gap: 64px;
       }
     }
 
@@ -995,7 +1145,7 @@
       }
 
       .archive-stage {
-        min-height: 2680px;
+        min-height: 2700px;
       }
     }
 
@@ -1026,8 +1176,8 @@
       .hero-books {
         justify-content: flex-start;
         overflow-x: auto;
-        gap: 22px;
-        padding: 0 0 26px;
+        gap: 28px;
+        padding: 0 0 44px;
       }
 
       .featured-book-wrap {
@@ -1049,7 +1199,11 @@
       }
 
       .archive-stage {
-        min-height: 4800px;
+        min-height: 4900px;
+      }
+
+      .library-footer {
+        justify-content: center;
       }
 
       .reader {
@@ -1103,15 +1257,14 @@
 
   <main class="page">
     <div class="layout">
-      <!-- =========================
-           LEFT SIDEBAR
-           Full vertical sidebar, but narrower
-           ========================= -->
+      <!-- =====================================================
+           SIDEBAR
+           ===================================================== -->
       <aside class="sidebar">
         <div class="sidebar-header">
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M2 6c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v14c0-1.1-.9-2-2-2H4c-1.1 0-2-.9-2-2V6z"></path>
-            <path d="M22 6c0-1.1-.9-2-2-2h-6c-1.1 0-2 .9-2 2v14c0-1.1.9-2 2-2h6c1.1 0 2-.9 2-2V6z"></path>
+            <path d="M22 6c0-1.1-.9-2-2-2h-6c-1.1 0-2 .9-2 2v14c0-1.1-.9-2 2-2h6c1.1 0 2-.9 2-2V6z"></path>
           </svg>
           <div class="sidebar-title">My Coco Reads</div>
         </div>
@@ -1124,10 +1277,9 @@
       </aside>
 
       <div class="main">
-        <!-- =========================
-             PAGE TITLE / DESCRIPTION
-             Plain title at top
-             ========================= -->
+        <!-- =====================================================
+             PAGE HEADER
+             ===================================================== -->
         <section class="page-header">
           <h1 class="hero-title">CocoPress</h1>
           <p class="hero-copy">
@@ -1135,10 +1287,10 @@
           </p>
         </section>
 
-        <!-- =========================
-             FEATURED BOOK SHELF
-             Featured books: Schon, Nylon, Bustle
-             ========================= -->
+        <!-- =====================================================
+             FEATURED SHELF
+             Pink scribble note + featured books
+             ===================================================== -->
         <section class="featured-wrap panel">
           <div class="sparkle-field" aria-hidden="true">
             <span class="sparkle s2" style="left: 10%; top: 12%;"></span>
@@ -1153,16 +1305,18 @@
             <span class="sparkle s3" style="left: 55%; top: 83%;"></span>
           </div>
 
+          <div class="scribble-note">Source’s recs</div>
+
           <div class="featured-stage">
             <div class="hero-books" id="heroBooks"></div>
             <div class="featured-shelf"></div>
           </div>
         </section>
 
-        <!-- =========================
+        <!-- =====================================================
              SEARCH + YEAR FILTER
-             Search bar kept in layout
-             ========================= -->
+             Search remains in layout
+             ===================================================== -->
         <section class="controls-wrap panel">
           <div class="control-row">
             <input
@@ -1175,20 +1329,13 @@
             <select id="yearFilter" class="year-filter">
               <option value="all">All Years</option>
             </select>
-
-            <div class="page-count" id="pageCount">Page 1 of 1</div>
-          </div>
-
-          <div class="pagination-row">
-            <button class="pager-btn" id="prevBtn" type="button">← Previous</button>
-            <button class="pager-btn" id="nextBtn" type="button">Next →</button>
           </div>
         </section>
 
-        <!-- =========================
-             LIBRARY GRID
-             No extra "Press Library" title block
-             ========================= -->
+        <!-- =====================================================
+             LIBRARY SECTION
+             Pagination lives at bottom of this card now
+             ===================================================== -->
         <section class="archive-section panel">
           <div class="archive-stage" id="archiveStage">
             <div class="archive-track" id="archiveTrack"></div>
@@ -1196,6 +1343,15 @@
 
           <div class="empty-state" id="emptyState">
             No press pieces matched that search or year.
+          </div>
+
+          <div class="library-footer">
+            <div class="page-count" id="pageCount">Page 1 of 1</div>
+
+            <div class="pagination-row">
+              <button class="pager-btn" id="prevBtn" type="button">← Previous</button>
+              <button class="pager-btn" id="nextBtn" type="button">Next →</button>
+            </div>
           </div>
         </section>
 
@@ -1206,21 +1362,25 @@
     </div>
   </main>
 
-  <!-- =========================
+  <!-- =========================================================
        READER MODAL
-       Bigger / easier to read
-       Shows summary only
-       ========================= -->
+       ========================================================= -->
   <div class="reader" id="reader">
     <div class="reader-shell">
       <button class="reader-close" id="readerClose" aria-label="Close">×</button>
 
-      <!-- Left side = selected book cover -->
       <div class="reader-left">
-        <div id="readerBookMount"></div>
+        <div class="reader-book-display">
+          <div class="reader-book-glow"></div>
+
+          <!-- The selected book gets mounted here in JS -->
+          <div id="readerBookMount"></div>
+
+          <div class="reader-book-shelf"></div>
+          <div class="reader-side-label">CocoPress selection</div>
+        </div>
       </div>
 
-      <!-- Right side = summary content -->
       <div class="reader-right">
         <p class="reader-kicker" id="readerKicker"></p>
         <h2 class="reader-title" id="readerTitle"></h2>
@@ -1234,13 +1394,11 @@
             class="reader-btn"
             id="readerSourceBtn"
             href="#"
-            target="_blank"
             rel="noopener noreferrer"
           >
             Read on Source
           </a>
 
-          <!-- Outline bookmark that fills purple when active -->
           <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark">
             <svg viewBox="0 0 24 24" class="bookmark-icon" aria-hidden="true">
               <path d="M6 3h12v18l-6-4-6 4V3z"></path>
@@ -1253,21 +1411,25 @@
 
   <script>
     /* =========================================================
-       SAMPLE DATA
-       This is still inline only so the layout can render now.
-       Later you can replace this whole array with JSON fetch data.
-       Keep fields:
-       id, title, fullTitle, editorial, author, year, summary, source, image, cover, featured
+       14) HARD-CODED "JSON" DATA
+       ---------------------------------------------------------
+       You asked to hard-code the JSON now.
+       So this section is written like in-page JSON data.
+       Later you can move this to external .json files.
        ========================================================= */
-    const articles = [
+
+    /* Main library data
+       - image: place real image URL later if you want
+       - author: this should be the actual byline you want shown
+       - featured: controls which books appear in featured shelf */
+    const libraryData = [
       {
         id: "schon",
         title: "A Schön! Interview",
         fullTitle: "interview | coco jones | Schön! Magazine",
         editorial: "Schön! Magazine",
-        author: "Editorial Feature",
+        author: "Schön! Magazine",
         year: "2024",
-        summary: "Schön! frames Coco through a fashion-editorial lens, centering poise, image, and presence. It reads like a mood piece more than a quick update, which makes it useful for the archive because it preserves how editorial media helps shape public perception beyond music alone.",
         source: "https://schonmagazine.com/interview-coco-jones/",
         image: "",
         cover: "cover-schon",
@@ -1278,9 +1440,8 @@
         title: "Works for Herself",
         fullTitle: "Coco Jones Works For Herself",
         editorial: "Nylon",
-        author: "Nylon Staff",
+        author: "Nylon",
         year: "2024",
-        summary: "Nylon centers autonomy, momentum, and the way Coco appears to be defining the next stage of her career on her own terms. It feels modern and directional, making it one of the strongest pieces for understanding this chapter of her press presence.",
         source: "https://www.nylon.com/entertainment/coco-jones-2024-debut-album",
         image: "",
         cover: "cover-nylon",
@@ -1291,9 +1452,8 @@
         title: "Life After Disney",
         fullTitle: "Coco Jones On Super Bowl, Engagement, Life After Disney & 'Bel-Air' S4",
         editorial: "Bustle",
-        author: "Bustle Interview",
+        author: "Bustle",
         year: "2025",
-        summary: "Bustle gives a broader celebrity-and-career snapshot, touching television, visibility, and the way different parts of Coco’s public life intersect. It works well in the library because it captures breadth rather than just one narrow angle.",
         source: "https://www.bustle.com/entertainment/coco-jones-super-bowl-performance-why-not-more-new-album-engagement-bel-air-interview",
         image: "",
         cover: "cover-bustle",
@@ -1304,9 +1464,8 @@
         title: "More Than Hilary Banks",
         fullTitle: "Coco Jones Is More Than Hilary Banks",
         editorial: "Vibe",
-        author: "Vibe Editorial",
+        author: "Vibe",
         year: "2022",
-        summary: "An earlier editorial centered on identity and ambition, especially around being understood beyond one defining role. It matters because it captures a point when Coco was already aiming past the frame some people still wanted to keep her in.",
         source: "https://www.vibe.com/features/editorial/coco-jones-caliber-interview-1234654510/",
         image: "",
         cover: "cover-vibe",
@@ -1317,9 +1476,8 @@
         title: "Beauty, Ritual, and Ease",
         fullTitle: "Coco Jones on Her Beauty Routine, Favorite Hairstyle, and More",
         editorial: "Byrdie",
-        author: "Beauty Interview",
+        author: "Byrdie",
         year: "2025",
-        summary: "Byrdie shifts the focus toward beauty, routine, and softness, which gives the archive variety beyond music and milestone coverage. It shows how lifestyle media also contributes to building an artist’s image.",
         source: "https://www.byrdie.com/coco-jones-interview-11790049",
         image: "",
         cover: "cover-byrdie",
@@ -1330,9 +1488,8 @@
         title: "Why Not More",
         fullTitle: "Coco Jones Pays Tribute to Black Women: ‘We Thrive Through the Most Unfair Odds’",
         editorial: "Elle",
-        author: "Elle Interview",
+        author: "Elle",
         year: "2025",
-        summary: "Elle ties the debut album era to larger emotional and cultural framing, especially around pressure, Black womanhood, and resilience. It helps the archive feel grounded in meaning rather than pure publicity.",
         source: "https://www.elle.com/culture/music/a64640841/coco-jones-why-not-more-interview/",
         image: "",
         cover: "cover-elle",
@@ -1343,9 +1500,8 @@
         title: "Proud of the Debut",
         fullTitle: "Coco Jones says she's 'proud' of debut album 'Why Not More?'",
         editorial: "AP News",
-        author: "Associated Press",
+        author: "AP News",
         year: "2025",
-        summary: "A concise AP piece focused on the debut album and the straightforward public framing around it. This one is useful because it acts as a clean milestone record inside the library.",
         source: "https://apnews.com/video/coco-jones-says-shes-proud-of-debut-album-why-not-more-8935463c04e543b7aa75c6be67397bb6",
         image: "",
         cover: "cover-ap",
@@ -1358,7 +1514,6 @@
         editorial: "Rolling Stone",
         author: "Rolling Stone",
         year: "2024",
-        summary: "Rolling Stone leans into genre, placement, and the language of artistic success. It works well for the archive because it captures how Coco is discussed inside a more music-centered frame.",
         source: "https://www.rollingstone.com/music/music-news/coco-jones-rolling-stone-the-green-room-interview-1234961544/",
         image: "",
         cover: "cover-rollingstone",
@@ -1369,9 +1524,8 @@
         title: "Winning Her First Grammy",
         fullTitle: "Coco Jones on Winning Her First Grammy, Career Goals, and Beyoncé",
         editorial: "Elle",
-        author: "Elle Feature",
+        author: "Elle",
         year: "2024",
-        summary: "This feature is centered on recognition, ambition, and what it means to hit a major milestone while still clearly reaching upward. It belongs in the archive because it captures a breakthrough without pretending the journey is complete.",
         source: "https://www.elle.com/culture/music/a60539065/coco-jones-interview-2024/",
         image: "",
         cover: "cover-elle",
@@ -1379,14 +1533,48 @@
       }
     ];
 
+    /* Summary data
+       This is separated so later it can become its own summaries JSON file.
+       Right now it is hard-coded in-page. */
+    const summariesData = {
+      "schon": {
+        summary: "Schön! frames Coco through a fashion-editorial lens, centering poise, image, and presence. It reads like a mood piece more than a quick update, which makes it useful for the archive because it preserves how editorial media helps shape public perception beyond music alone."
+      },
+      "nylon": {
+        summary: "Nylon centers autonomy, momentum, and the way Coco appears to be defining the next stage of her career on her own terms. It feels modern and directional, making it one of the strongest pieces for understanding this chapter of her press presence."
+      },
+      "bustle": {
+        summary: "Bustle gives a broader celebrity-and-career snapshot, touching television, visibility, and the way different parts of Coco’s public life intersect. It works well in the library because it captures breadth rather than just one narrow angle."
+      },
+      "vibe": {
+        summary: "An earlier editorial centered on identity and ambition, especially around being understood beyond one defining role. It matters because it captures a point when Coco was already aiming past the frame some people still wanted to keep her in."
+      },
+      "byrdie": {
+        summary: "Byrdie shifts the focus toward beauty, routine, and softness, which gives the archive variety beyond music and milestone coverage. It shows how lifestyle media also contributes to building an artist’s image."
+      },
+      "elle-2025": {
+        summary: "Elle ties the debut album era to larger emotional and cultural framing, especially around pressure, Black womanhood, and resilience. It helps the archive feel grounded in meaning rather than pure publicity."
+      },
+      "ap-why-not-more": {
+        summary: "A concise AP piece focused on the debut album and the straightforward public framing around it. This one is useful because it acts as a clean milestone record inside the library."
+      },
+      "rollingstone": {
+        summary: "Rolling Stone leans into genre, placement, and the language of artistic success. It works well for the archive because it captures how Coco is discussed inside a more music-centered frame."
+      },
+      "elle-2024": {
+        summary: "This feature is centered on recognition, ambition, and what it means to hit a major milestone while still clearly reaching upward. It belongs in the archive because it captures a breakthrough without pretending the journey is complete."
+      }
+    };
+
     /* =========================================================
-       CONFIG
-       12 books per page as requested
+       15) APP CONFIG
        ========================================================= */
     const ITEMS_PER_PAGE = 12;
 
     /* =========================================================
-       ELEMENT LOOKUPS
+       16) ELEMENT LOOKUPS
+       ---------------------------------------------------------
+       Grab all important DOM elements once so we can reuse them.
        ========================================================= */
     const heroBooks = document.getElementById("heroBooks");
     const searchInput = document.getElementById("searchInput");
@@ -1409,17 +1597,20 @@
     const bookmarkBtn = document.getElementById("bookmarkBtn");
 
     /* =========================================================
-       STATE
+       17) APP STATE
        ========================================================= */
     let currentPage = 0;
     let currentArticleId = null;
     let filteredArticles = [];
 
     /* =========================================================
-       HELPERS
+       18) HELPERS
        ========================================================= */
 
-    /* Split an array into pages or rows */
+    /* Break array into chunks.
+       Used for both:
+       - paginating the library
+       - splitting one page into rows of 3 books */
     function chunkArray(array, size) {
       const chunks = [];
       for (let i = 0; i < array.length; i += size) {
@@ -1428,20 +1619,36 @@
       return chunks;
     }
 
-    /* Build one book.
-       mode = featured / archive / reader
-       This is what later gets driven by JSON fields. */
+    /* Get full article object merged with its summary data.
+       This keeps library fields and summary fields together. */
+    function getArticleById(id) {
+      const base = libraryData.find(item => item.id === id);
+      if (!base) return null;
+
+      const summaryEntry = summariesData[id] || { summary: "" };
+
+      return {
+        ...base,
+        summary: summaryEntry.summary || ""
+      };
+    }
+
+    /* Build one book cover.
+       mode controls whether it renders as:
+       - featured
+       - archive
+       - reader */
     function buildBookMarkup(article, mode = "archive") {
       const classes = ["book"];
       if (mode === "featured") classes.push("featured-book");
-      if (mode === "reader") classes.push("reader-book");
       if (mode === "archive") classes.push("archive-book");
+      if (mode === "reader") classes.push("reader-book");
 
       const coverClasses = ["book-cover", article.cover || "cover-base"];
       const style = article.image ? `style="background-image:url('${article.image}');"` : "";
       if (article.image) coverClasses.push("has-image");
 
-      const bookMarkup = `
+      const coreMarkup = `
         <div class="${classes.join(" ")}" data-open="${article.id}">
           <div class="${coverClasses.join(" ")}" ${style}>
             <div class="cover-top">
@@ -1458,76 +1665,93 @@
         </div>
       `;
 
-      /* Featured books get their own wrapper + side shadow */
+      /* Featured books need extra wrapper for the side shadow */
       if (mode === "featured") {
         return `
           <div class="featured-book-wrap">
             <div class="featured-shadow-side"></div>
-            ${bookMarkup}
+            ${coreMarkup}
           </div>
         `;
       }
 
-      return bookMarkup;
+      return coreMarkup;
     }
 
     /* =========================================================
-       FEATURED SECTION
-       Force exact approved featured order:
-       Schon, Nylon, Bustle
+       19) FEATURED BOOKS
+       ---------------------------------------------------------
+       Force the exact approved featured order.
        ========================================================= */
     function renderHero() {
       const featuredOrder = ["schon", "nylon", "bustle"];
-      const featured = featuredOrder
-        .map(id => articles.find(article => article.id === id))
+
+      const featuredArticles = featuredOrder
+        .map(id => getArticleById(id))
         .filter(Boolean);
 
-      heroBooks.innerHTML = featured.map(article => buildBookMarkup(article, "featured")).join("");
+      heroBooks.innerHTML = featuredArticles
+        .map(article => buildBookMarkup(article, "featured"))
+        .join("");
     }
 
     /* =========================================================
-       YEAR FILTER
-       Only year filter remains
+       20) YEAR FILTER
+       ---------------------------------------------------------
+       Only year filter is left on the page.
        ========================================================= */
     function renderYearFilter() {
-      const years = [...new Set(articles.map(article => article.year))].sort((a, b) => b.localeCompare(a));
+      const years = [...new Set(libraryData.map(article => article.year))]
+        .sort((a, b) => b.localeCompare(a));
+
       years.forEach(year => {
         yearFilter.insertAdjacentHTML("beforeend", `<option value="${year}">${year}</option>`);
       });
     }
 
     /* =========================================================
-       SEARCH + FILTER LOGIC
-       Search bar kept in place and working
+       21) SEARCH + FILTERING
+       ---------------------------------------------------------
+       Search works across:
+       - title
+       - fullTitle
+       - editorial
+       - author
+       - summary
+       - year
        ========================================================= */
     function getFilteredArticles() {
-      const year = yearFilter.value;
-      const search = searchInput.value.trim().toLowerCase();
+      const selectedYear = yearFilter.value;
+      const searchValue = searchInput.value.trim().toLowerCase();
 
-      return articles.filter(article => {
-        const yearMatch = year === "all" || article.year === year;
+      return libraryData
+        .map(item => getArticleById(item.id))
+        .filter(article => {
+          const yearMatch = selectedYear === "all" || article.year === selectedYear;
 
-        const haystack = [
-          article.title,
-          article.fullTitle,
-          article.editorial,
-          article.author,
-          article.summary,
-          article.year
-        ]
-          .join(" ")
-          .toLowerCase();
+          const haystack = [
+            article.title,
+            article.fullTitle,
+            article.editorial,
+            article.author,
+            article.summary,
+            article.year
+          ]
+            .join(" ")
+            .toLowerCase();
 
-        const searchMatch = !search || haystack.includes(search);
+          const searchMatch = !searchValue || haystack.includes(searchValue);
 
-        return yearMatch && searchMatch;
-      });
+          return yearMatch && searchMatch;
+        });
     }
 
     /* =========================================================
-       ARCHIVE PAGE MARKUP
-       3 books per row
-       shelf between rows
+       22) LIBRARY PAGE MARKUP
+       ---------------------------------------------------------
+       Each page can hold 12 books.
+       Each row holds 3 books.
+       Shelf appears between rows.
        ========================================================= */
     function createArchivePageMarkup(pageArticles) {
       const rows = chunkArray(pageArticles, 3);
@@ -1561,19 +1785,19 @@
       `;
     }
 
-    /* Adjust stage height per breakpoint so the sliding pages have room */
+    /* Set min-height for stage so the slider has room on each breakpoint */
     function updateArchiveHeight(pagesLength) {
       if (window.innerWidth <= 760) {
-        archiveStage.style.minHeight = pagesLength ? "4800px" : "100px";
+        archiveStage.style.minHeight = pagesLength ? "4900px" : "100px";
       } else if (window.innerWidth <= 900) {
-        archiveStage.style.minHeight = pagesLength ? "2680px" : "100px";
+        archiveStage.style.minHeight = pagesLength ? "2700px" : "100px";
       } else {
-        archiveStage.style.minHeight = pagesLength ? "1750px" : "100px";
+        archiveStage.style.minHeight = pagesLength ? "1800px" : "100px";
       }
     }
 
     /* =========================================================
-       RENDER LIBRARY
+       23) RENDER LIBRARY
        ========================================================= */
     function renderArchive() {
       filteredArticles = getFilteredArticles();
@@ -1599,7 +1823,7 @@
       nextBtn.disabled = currentPage === pages.length - 1;
     }
 
-    /* Move between paginated library slides */
+    /* Move pagination left or right */
     function changePage(direction) {
       const pagesLength = chunkArray(filteredArticles, ITEMS_PER_PAGE).length;
       currentPage = Math.max(0, Math.min(currentPage + direction, pagesLength - 1));
@@ -1610,8 +1834,11 @@
     }
 
     /* =========================================================
-       BOOKMARK STORAGE
-       localStorage-backed
+       24) BOOKMARK STORAGE
+       ---------------------------------------------------------
+       Uses localStorage
+       - outline = not bookmarked
+       - filled purple = bookmarked
        ========================================================= */
     function getBookmarks() {
       return JSON.parse(localStorage.getItem("cocoBookmarks") || "[]");
@@ -1635,9 +1862,15 @@
       }
     }
 
+    function syncBookmarkState(id) {
+      currentArticleId = id;
+      bookmarkBtn.classList.toggle("active", isBookmarked(id));
+    }
+
     /* =========================================================
-       READING HISTORY
-       Only counts when user clicks Read on Source
+       25) READING HISTORY
+       ---------------------------------------------------------
+       Only writes to history when Read on Source is used.
        ========================================================= */
     function addToHistory(article) {
       const current = JSON.parse(localStorage.getItem("cocoReadingHistory") || "[]");
@@ -1660,24 +1893,39 @@
       );
     }
 
-    /* Keep bookmark UI synced when opening reader */
-    function syncBookmarkState(id) {
-      currentArticleId = id;
-      bookmarkBtn.classList.toggle("active", isBookmarked(id));
+    /* =========================================================
+       26) POPUP SOURCE WINDOW
+       ---------------------------------------------------------
+       Opens the source article in a centered popup window
+       instead of leaving Coco's World.
+       ========================================================= */
+    function openCenteredPopup(url) {
+      const width = 960;
+      const height = 760;
+
+      const left = window.screenX + (window.outerWidth - width) / 2;
+      const top = window.screenY + (window.outerHeight - height) / 2;
+
+      return window.open(
+        url,
+        "cocoReaderPopup",
+        `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes`
+      );
     }
 
     /* =========================================================
-       OPEN / CLOSE READER
-       Reader shows summary only
+       27) READER OPEN / CLOSE
+       ---------------------------------------------------------
+       Reader shows summary only.
        ========================================================= */
     function openReader(id) {
-      const article = articles.find(item => item.id === id);
+      const article = getArticleById(id);
       if (!article) return;
 
       readerBookMount.innerHTML = buildBookMarkup(article, "reader");
       readerKicker.textContent = `${article.editorial} • ${article.year}`;
       readerTitle.textContent = article.fullTitle || article.title;
-      readerSummary.textContent = article.summary;
+      readerSummary.textContent = article.summary || "Summary coming soon.";
 
       readerMeta.innerHTML = `
         <span class="reader-chip">${article.editorial}</span>
@@ -1700,7 +1948,11 @@
       currentArticleId = null;
     }
 
-    /* Shared click handling for featured + archive books */
+    /* =========================================================
+       28) CLICK HANDLING
+       ---------------------------------------------------------
+       Any element with data-open="article-id" can open the reader.
+       ========================================================= */
     function handleBookClicks(event) {
       const book = event.target.closest("[data-open]");
       if (!book) return;
@@ -1708,14 +1960,20 @@
     }
 
     /* =========================================================
-       EVENT BINDINGS
+       29) EVENT BINDINGS
        ========================================================= */
+
+    /* Featured shelf book clicks */
     heroBooks.addEventListener("click", handleBookClicks);
+
+    /* Library book clicks */
     archiveTrack.addEventListener("click", handleBookClicks);
 
+    /* Pagination */
     prevBtn.addEventListener("click", () => changePage(-1));
     nextBtn.addEventListener("click", () => changePage(1));
 
+    /* Search and year filter rerender library */
     searchInput.addEventListener("input", () => {
       currentPage = 0;
       renderArchive();
@@ -1726,36 +1984,45 @@
       renderArchive();
     });
 
+    /* Reader close */
     readerClose.addEventListener("click", closeReader);
 
+    /* Click outside modal to close */
     reader.addEventListener("click", (event) => {
       if (event.target === reader) closeReader();
     });
 
+    /* ESC closes modal */
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && reader.classList.contains("active")) {
         closeReader();
       }
     });
 
+    /* Bookmark toggle */
     bookmarkBtn.addEventListener("click", () => {
       if (!currentArticleId) return;
       toggleBookmark(currentArticleId);
       syncBookmarkState(currentArticleId);
     });
 
-    /* History only writes when source button is actually clicked */
-    readerSourceBtn.addEventListener("click", () => {
+    /* Read on Source popup window + history tracking */
+    readerSourceBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+
       const articleId = readerSourceBtn.dataset.articleId;
-      const article = articles.find(item => item.id === articleId);
+      const article = getArticleById(articleId);
       if (!article) return;
+
+      openCenteredPopup(article.source);
       addToHistory(article);
     });
 
+    /* Rerender archive heights on resize */
     window.addEventListener("resize", renderArchive);
 
     /* =========================================================
-       INITIAL PAGE RENDER
+       30) INITIAL PAGE RENDER
        ========================================================= */
     renderHero();
     renderYearFilter();
