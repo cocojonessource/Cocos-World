@@ -19,20 +19,18 @@
       --gold: #d9b165;
       --text: #562b83;
       --text-soft: #7d5aa6;
-      --panel: rgba(255, 255, 255, 0.58);
-      --panel-strong: rgba(255, 255, 255, 0.72);
-      --border: rgba(255, 255, 255, 0.62);
+      --panel: rgba(255, 255, 255, 0.60);
+      --panel-strong: rgba(255, 255, 255, 0.80);
+      --border: rgba(255, 255, 255, 0.68);
       --shadow: rgba(107, 47, 163, 0.12);
-      --shadow-strong: rgba(107, 47, 163, 0.2);
+      --shadow-strong: rgba(107, 47, 163, 0.22);
+      --shelf: linear-gradient(to bottom, #ead4ff 0%, #d5b6f1 55%, #b889da 100%);
+      --shelf-edge: rgba(98, 53, 140, 0.22);
     }
 
-    * {
-      box-sizing: border-box;
-    }
+    * { box-sizing: border-box; }
 
-    html {
-      scroll-behavior: smooth;
-    }
+    html { scroll-behavior: smooth; }
 
     body {
       margin: 0;
@@ -54,14 +52,14 @@
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 2000;
+      z-index: 2400;
       background: rgba(245, 234, 255, 0.78);
       backdrop-filter: blur(14px);
       border-bottom: 1px solid rgba(255,255,255,0.6);
     }
 
     .topbar-inner {
-      max-width: 1400px;
+      max-width: 1560px;
       margin: 0 auto;
       padding: 16px 20px;
       display: flex;
@@ -128,27 +126,90 @@
     }
 
     .page {
-      max-width: 1400px;
+      max-width: 1560px;
       margin: 0 auto;
-      padding: 34px 20px 70px;
+      padding: 28px 20px 70px;
     }
 
-    .hero {
+    .layout {
       display: grid;
-      grid-template-columns: minmax(0, 1.15fr) minmax(330px, 0.85fr);
-      gap: 30px;
-      align-items: center;
-      margin-bottom: 34px;
+      grid-template-columns: 270px minmax(0, 1fr);
+      gap: 26px;
+      align-items: start;
     }
 
-    .hero-left,
-    .hero-right,
-    .filters-wrap,
-    .archive-section {
-      position: relative;
+    .sidebar {
+      position: sticky;
+      top: 92px;
+      min-height: calc(100vh - 120px);
+      padding: 26px 22px;
+      border-radius: 30px;
+      background: rgba(255,255,255,0.68);
+      border: 1px solid var(--border);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 18px 40px var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 22px;
+      color: var(--lavender-deep);
+    }
+
+    .sidebar-header svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    .sidebar-title {
+      font-size: 22px;
+      line-height: 1.05;
+      font-family: Georgia, "Times New Roman", serif;
+      font-weight: 700;
+    }
+
+    .sidebar-links {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 100%;
+    }
+
+    .sidebar-link {
+      width: 100%;
+      padding: 13px 14px;
+      border-radius: 16px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--lavender-deep);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .sidebar-link:hover {
+      background: rgba(255,255,255,0.52);
+      transform: translateX(2px);
+    }
+
+    .sidebar-link.active {
+      background: rgba(255,255,255,0.86);
+      box-shadow: 0 10px 22px rgba(107,47,163,0.08);
+    }
+
+    .main {
+      min-width: 0;
     }
 
     .panel {
+      position: relative;
       background: var(--panel);
       border: 1px solid var(--border);
       border-radius: 30px;
@@ -156,14 +217,22 @@
       backdrop-filter: blur(14px);
     }
 
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.18fr) minmax(330px, 0.82fr);
+      gap: 30px;
+      align-items: center;
+      margin-bottom: 30px;
+    }
+
     .hero-left {
-      padding: 32px 26px 38px;
-      min-height: 560px;
+      min-height: 600px;
+      padding: 36px 28px 40px;
       overflow: hidden;
     }
 
     .hero-right {
-      padding: 34px 30px;
+      padding: 36px 32px;
     }
 
     .sparkle-field {
@@ -189,224 +258,6 @@
     @keyframes twinkle {
       0%, 100% { opacity: 0.25; transform: scale(0.9); }
       50% { opacity: 1; transform: scale(1.15); }
-    }
-
-    .shelf-glow {
-      position: absolute;
-      left: 50%;
-      bottom: 60px;
-      width: 78%;
-      height: 120px;
-      transform: translateX(-50%);
-      background: radial-gradient(circle, rgba(255,255,255,0.62) 0%, rgba(255,255,255,0.18) 45%, transparent 75%);
-      filter: blur(18px);
-      pointer-events: none;
-    }
-
-    .hero-books {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      gap: 26px;
-      min-height: 470px;
-      padding: 30px 6px 0;
-    }
-
-    .book {
-      position: relative;
-      width: 200px;
-      height: 300px;
-      border-radius: 18px 12px 12px 18px;
-      overflow: hidden;
-      box-shadow:
-        0 18px 30px rgba(81, 37, 125, 0.18),
-        0 8px 20px rgba(255,255,255,0.2);
-      transform: translateY(0);
-      transition: transform 0.26s ease, box-shadow 0.26s ease;
-      cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.48);
-      flex-shrink: 0;
-    }
-
-    .book:hover {
-      transform: translateY(-7px);
-      box-shadow:
-        0 24px 38px rgba(81, 37, 125, 0.22),
-        0 8px 24px rgba(255,255,255,0.28);
-    }
-
-    .book::before {
-      content: "";
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 14px;
-      height: 100%;
-      background: linear-gradient(to right, rgba(255,255,255,0.32), rgba(255,255,255,0.05));
-      z-index: 2;
-    }
-
-    .book::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to bottom, rgba(255,255,255,0.08), transparent 30%, rgba(0,0,0,0.08) 100%);
-      pointer-events: none;
-      z-index: 2;
-    }
-
-    .book-cover {
-      position: absolute;
-      inset: 0;
-      padding: 22px 18px 18px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      z-index: 1;
-    }
-
-    .featured-book {
-      width: 208px;
-      height: 314px;
-    }
-
-    .featured-book:nth-child(2) {
-      margin-bottom: 16px;
-    }
-
-    .featured-book:nth-child(3) {
-      margin-bottom: 8px;
-    }
-
-    .cover-vibe {
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.28), transparent 26%),
-        linear-gradient(145deg, #9e77d8 0%, #6e40ad 42%, #4e247e 100%);
-    }
-
-    .cover-byrdie {
-      background:
-        radial-gradient(circle at top right, rgba(255,255,255,0.38), transparent 24%),
-        linear-gradient(145deg, #f2d7ee 0%, #dbb5e8 44%, #a573cd 100%);
-    }
-
-    .cover-nylon {
-      background:
-        radial-gradient(circle at center top, rgba(255,255,255,0.26), transparent 24%),
-        linear-gradient(145deg, #b8b0f3 0%, #8a7ce1 45%, #5d4fc2 100%);
-    }
-
-    .cover-elle {
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.22), transparent 22%),
-        linear-gradient(145deg, #f3c6dd 0%, #d48ab7 45%, #8a4f8f 100%);
-    }
-
-    .cover-ap {
-      background:
-        radial-gradient(circle at bottom right, rgba(255,255,255,0.22), transparent 26%),
-        linear-gradient(145deg, #c8cff8 0%, #9aa9ec 42%, #6a6fbc 100%);
-    }
-
-    .cover-schon {
-      background:
-        radial-gradient(circle at top right, rgba(255,255,255,0.22), transparent 20%),
-        linear-gradient(145deg, #e9d9f7 0%, #c7a1df 48%, #8a60ab 100%);
-    }
-
-    .cover-bustle {
-      background:
-        radial-gradient(circle at top center, rgba(255,255,255,0.28), transparent 24%),
-        linear-gradient(145deg, #ffdfd9 0%, #e9b2ca 44%, #ac6a9d 100%);
-    }
-
-    .cover-rollingstone {
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.22), transparent 20%),
-        linear-gradient(145deg, #d4b4f4 0%, #a576d2 44%, #67358f 100%);
-    }
-
-    .cover-base {
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.24), transparent 20%),
-        linear-gradient(145deg, #cfb7ee 0%, #a580d2 50%, #7043a6 100%);
-    }
-
-    .cover-top {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 10px;
-    }
-
-    .cover-outlet {
-      display: inline-flex;
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      background: rgba(255,255,255,0.18);
-      color: rgba(255,255,255,0.96);
-      border: 1px solid rgba(255,255,255,0.16);
-      backdrop-filter: blur(4px);
-      max-width: max-content;
-    }
-
-    .cover-year {
-      font-size: 11px;
-      font-weight: 700;
-      color: rgba(255,255,255,0.82);
-      padding-top: 4px;
-    }
-
-    .cover-center {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
-
-    .cover-kicker {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 13px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: rgba(255,255,255,0.82);
-    }
-
-    .cover-title {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 30px;
-      line-height: 0.95;
-      color: rgba(255,255,255,0.98);
-      text-shadow: 0 4px 16px rgba(43, 13, 70, 0.18);
-    }
-
-    .cover-sub {
-      font-size: 13px;
-      line-height: 1.45;
-      color: rgba(255,255,255,0.9);
-      max-width: 90%;
-    }
-
-    .cover-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: end;
-      gap: 10px;
-      font-size: 11px;
-      color: rgba(255,255,255,0.86);
-    }
-
-    .spine-mark {
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
     }
 
     .hero-title {
@@ -449,16 +300,300 @@
       color: var(--lavender-deep);
     }
 
+    .hero-books-wrap {
+      position: relative;
+      z-index: 2;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+
+    .hero-books {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 48px;
+      min-height: 460px;
+      padding: 22px 28px 0;
+    }
+
+    .featured-book-wrap {
+      position: relative;
+      flex: 1 1 0;
+      min-width: 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-end;
+      min-height: 420px;
+    }
+
+    .featured-shadow-side {
+      position: absolute;
+      bottom: 28px;
+      left: calc(50% + 22px);
+      width: 220px;
+      height: 380px;
+      border-radius: 20px;
+      background: linear-gradient(180deg, rgba(107,47,163,0.12), rgba(107,47,163,0.24));
+      filter: blur(16px);
+      opacity: 0.42;
+      transform: translateX(-50%) skewY(-4deg);
+      pointer-events: none;
+    }
+
+    .featured-shelf {
+      position: relative;
+      width: calc(100% - 52px);
+      margin: -8px auto 0;
+      height: 18px;
+      border-radius: 14px;
+      background: var(--shelf);
+      box-shadow:
+        0 6px 0 rgba(255,255,255,0.42) inset,
+        0 -2px 0 rgba(131,78,183,0.08) inset,
+        0 16px 30px rgba(98,53,140,0.16);
+      border: 1px solid rgba(255,255,255,0.5);
+    }
+
+    .featured-shelf::after {
+      content: "";
+      position: absolute;
+      left: 2%;
+      right: 2%;
+      bottom: -7px;
+      height: 8px;
+      border-radius: 999px;
+      background: rgba(98,53,140,0.14);
+      filter: blur(10px);
+    }
+
+    .book {
+      position: relative;
+      width: 206px;
+      height: 346px;
+      border-radius: 8px;
+      overflow: hidden;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.48);
+      box-shadow:
+        0 22px 40px rgba(81, 37, 125, 0.18),
+        0 10px 22px rgba(255,255,255,0.18);
+      transition: transform 0.26s ease, box-shadow 0.26s ease;
+      flex-shrink: 0;
+      background: linear-gradient(145deg, #d5bae9 0%, #9f76c6 55%, #6f469f 100%);
+    }
+
+    .book:hover {
+      transform: translateY(-7px);
+      box-shadow:
+        0 30px 44px rgba(81, 37, 125, 0.24),
+        0 12px 26px rgba(255,255,255,0.24);
+    }
+
+    .book::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 16px;
+      height: 100%;
+      background:
+        linear-gradient(to right,
+          rgba(255,255,255,0.38) 0%,
+          rgba(255,255,255,0.16) 28%,
+          rgba(85,42,130,0.18) 65%,
+          rgba(255,255,255,0.04) 100%);
+      box-shadow: inset -1px 0 0 rgba(62, 25, 98, 0.14);
+      z-index: 3;
+    }
+
+    .book::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.05), transparent 28%, rgba(0,0,0,0.10) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .book-cover {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      padding: 16px 16px 16px 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .book-cover.has-image::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(33, 12, 50, 0.18), rgba(33, 12, 50, 0.58));
+      z-index: 0;
+    }
+
+    .book-cover.has-image > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .featured-book {
+      width: 220px;
+      height: 372px;
+    }
+
+    .reader-book {
+      width: 184px;
+      height: 300px;
+      margin-bottom: 20px;
+    }
+
+    .archive-book {
+      width: 100%;
+      height: 332px;
+    }
+
+    .cover-schon {
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.18), transparent 22%),
+        linear-gradient(145deg, #e6d3f7 0%, #c393da 42%, #8858aa 100%);
+    }
+
+    .cover-nylon {
+      background:
+        radial-gradient(circle at top center, rgba(255,255,255,0.18), transparent 22%),
+        linear-gradient(145deg, #cfc9ff 0%, #9c91ea 45%, #6155bb 100%);
+    }
+
+    .cover-bustle {
+      background:
+        radial-gradient(circle at top center, rgba(255,255,255,0.20), transparent 24%),
+        linear-gradient(145deg, #ffe1dd 0%, #ecb6c6 42%, #b56a9b 100%);
+    }
+
+    .cover-vibe {
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.18), transparent 24%),
+        linear-gradient(145deg, #9e77d8 0%, #6e40ad 42%, #4e247e 100%);
+    }
+
+    .cover-byrdie {
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.20), transparent 24%),
+        linear-gradient(145deg, #f2d7ee 0%, #dbb5e8 44%, #a573cd 100%);
+    }
+
+    .cover-elle {
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.18), transparent 22%),
+        linear-gradient(145deg, #f3c6dd 0%, #d48ab7 45%, #8a4f8f 100%);
+    }
+
+    .cover-ap {
+      background:
+        radial-gradient(circle at bottom right, rgba(255,255,255,0.18), transparent 26%),
+        linear-gradient(145deg, #c8cff8 0%, #9aa9ec 42%, #6a6fbc 100%);
+    }
+
+    .cover-rollingstone {
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.18), transparent 20%),
+        linear-gradient(145deg, #d4b4f4 0%, #a576d2 44%, #67358f 100%);
+    }
+
+    .cover-base {
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.18), transparent 20%),
+        linear-gradient(145deg, #cfb7ee 0%, #a580d2 50%, #7043a6 100%);
+    }
+
+    .cover-top {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .cover-editorial,
+    .cover-author {
+      display: inline-flex;
+      max-width: 100%;
+      font-size: 11px;
+      line-height: 1.2;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.94);
+      text-shadow: 0 2px 8px rgba(29,10,44,0.22);
+    }
+
+    .cover-author {
+      font-size: 10px;
+      color: rgba(255,255,255,0.84);
+      letter-spacing: 0.06em;
+    }
+
+    .cover-center {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 12px;
+      flex: 1;
+    }
+
+    .cover-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(24px, 2.2vw, 34px);
+      line-height: 0.96;
+      color: rgba(255,255,255,0.98);
+      text-shadow: 0 4px 16px rgba(43, 13, 70, 0.22);
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .archive-book .cover-title {
+      font-size: clamp(22px, 1.8vw, 30px);
+    }
+
+    .reader-book .cover-title {
+      font-size: 24px;
+    }
+
+    .cover-footer {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 8px;
+      color: rgba(255,255,255,0.88);
+      font-size: 11px;
+    }
+
+    .cover-footnote {
+      font-size: 11px;
+      line-height: 1.35;
+      max-width: 92%;
+    }
+
     .divider {
-      margin: 16px auto 28px;
-      width: min(860px, 100%);
+      margin: 18px auto 28px;
+      width: min(960px, 100%);
       height: 1px;
       background: linear-gradient(to right, transparent, rgba(139,95,191,0.45), transparent);
     }
 
     .filters-wrap {
       padding: 18px;
-      margin-bottom: 22px;
+      margin-bottom: 18px;
     }
 
     .filters-top {
@@ -486,14 +621,14 @@
     }
 
     .filter-grid {
-      display: grid;
-      grid-template-columns: 2fr repeat(4, minmax(0, 1fr));
+      display: flex;
       gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
     }
 
-    .filter-grid input,
     .filter-grid select {
-      width: 100%;
+      width: min(240px, 100%);
       border: 1px solid rgba(107,47,163,0.12);
       background: rgba(255,255,255,0.92);
       border-radius: 16px;
@@ -503,38 +638,128 @@
       outline: none;
     }
 
+    .pagination-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 6px;
+      margin-bottom: 18px;
+      flex-wrap: wrap;
+    }
+
+    .page-count {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-soft);
+    }
+
+    .pager {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .pager-btn {
+      border: none;
+      background: rgba(255,255,255,0.94);
+      color: var(--lavender-deep);
+      padding: 12px 16px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(107,47,163,0.08);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .pager-btn:hover:not(:disabled) {
+      transform: translateY(-1px);
+    }
+
+    .pager-btn:disabled {
+      opacity: 0.42;
+      cursor: not-allowed;
+      transform: none;
+    }
+
     .archive-section {
       padding: 22px;
+      overflow: hidden;
+    }
+
+    .archive-stage {
+      position: relative;
+      min-height: 1730px;
+    }
+
+    .archive-track {
+      display: flex;
+      width: 100%;
+      transition: transform 0.46s ease;
+      will-change: transform;
+    }
+
+    .archive-page {
+      min-width: 100%;
+      flex: 0 0 100%;
     }
 
     .archive-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 18px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 26px 24px;
     }
 
     .archive-card {
+      position: relative;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      align-items: center;
+      min-width: 0;
     }
 
-    .archive-card .book {
+    .book-oval-shadow {
+      width: 80%;
+      height: 28px;
+      border-radius: 999px;
+      background: rgba(73, 31, 111, 0.28);
+      filter: blur(14px);
+      margin-top: 10px;
+      margin-bottom: -8px;
+      pointer-events: none;
+    }
+
+    .row-shelf {
       width: 100%;
-      height: 320px;
+      height: 18px;
+      border-radius: 16px;
+      background: var(--shelf);
+      border: 1px solid rgba(255,255,255,0.5);
+      box-shadow:
+        0 6px 0 rgba(255,255,255,0.42) inset,
+        0 -2px 0 rgba(131,78,183,0.08) inset,
+        0 14px 24px rgba(98,53,140,0.14);
+      margin-top: 6px;
+    }
+
+    .row-shelf-spacer {
+      width: 100%;
+      height: 4px;
     }
 
     .archive-meta {
+      width: 100%;
       display: flex;
       flex-direction: column;
       gap: 8px;
-      padding: 0 4px;
+      padding: 14px 2px 0;
     }
 
     .archive-title {
       margin: 0;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 24px;
+      font-size: 22px;
       line-height: 1.02;
       color: var(--lavender-deep);
     }
@@ -545,29 +770,19 @@
       color: var(--text-soft);
     }
 
-    .chips {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
-    .chip {
-      padding: 7px 10px;
-      border-radius: 999px;
-      font-size: 11px;
-      font-weight: 800;
-      letter-spacing: 0.03em;
-      background: rgba(255,255,255,0.7);
-      border: 1px solid rgba(255,255,255,0.82);
-      color: var(--lavender-deep);
-    }
-
     .empty-state {
       display: none;
       padding: 26px 10px 6px;
       text-align: center;
       color: var(--text-soft);
       font-size: 15px;
+    }
+
+    .footer {
+      padding: 26px 20px 18px;
+      text-align: center;
+      color: var(--text-soft);
+      font-size: 14px;
     }
 
     .reader {
@@ -587,20 +802,37 @@
     }
 
     .reader-shell {
-      width: min(1220px, 100%);
-      height: min(88vh, 860px);
+      position: relative;
+      width: min(1080px, 100%);
+      max-height: min(88vh, 860px);
       display: grid;
-      grid-template-columns: 370px minmax(0, 1fr);
-      background: rgba(249, 244, 255, 0.95);
+      grid-template-columns: 320px minmax(0, 1fr);
+      background: rgba(249, 244, 255, 0.97);
       border-radius: 28px;
       overflow: hidden;
       border: 1px solid rgba(255,255,255,0.76);
       box-shadow: 0 28px 80px rgba(34, 10, 52, 0.28);
     }
 
-    .reader-info {
-      position: relative;
-      padding: 28px 24px 24px;
+    .reader-close {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(255,255,255,0.96);
+      color: var(--lavender-deep);
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+      z-index: 5;
+      box-shadow: 0 10px 24px rgba(107,47,163,0.14);
+    }
+
+    .reader-left {
+      padding: 74px 24px 24px;
       background:
         radial-gradient(circle at top left, rgba(255,255,255,0.52), transparent 24%),
         linear-gradient(160deg, #f4e8ff 0%, #ecd9ff 52%, #e0c6f4 100%);
@@ -608,29 +840,14 @@
       overflow-y: auto;
     }
 
-    .reader-close {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      width: 38px;
-      height: 38px;
-      border-radius: 999px;
-      border: none;
-      background: rgba(255,255,255,0.92);
-      color: var(--lavender-deep);
-      font-size: 18px;
-      cursor: pointer;
-      box-shadow: 0 10px 24px rgba(107,47,163,0.14);
-    }
-
-    .reader-book {
-      width: 190px;
-      height: 278px;
-      margin-bottom: 18px;
+    .reader-right {
+      padding: 74px 34px 34px;
+      overflow-y: auto;
+      background: rgba(255,255,255,0.84);
     }
 
     .reader-kicker {
-      margin: 0 0 10px;
+      margin: 0 0 12px;
       font-size: 12px;
       font-weight: 800;
       letter-spacing: 0.08em;
@@ -639,148 +856,148 @@
     }
 
     .reader-title {
-      margin: 0 0 12px;
+      margin: 0 0 14px;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 36px;
+      font-size: 40px;
       line-height: 0.96;
       color: var(--lavender-deep);
     }
 
-    .reader-summary {
-      margin: 0 0 16px;
-      font-size: 15px;
-      line-height: 1.7;
-      color: var(--text-soft);
+    .reader-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
     }
 
-    .reader-links {
+    .reader-chip {
+      padding: 8px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      background: rgba(241,229,255,0.92);
+      color: var(--lavender-deep);
+      border: 1px solid rgba(167,129,209,0.18);
+    }
+
+    .reader-summary {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--text-soft);
+      white-space: pre-line;
+    }
+
+    .reader-actions {
       display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 16px;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 26px;
+      padding-top: 22px;
+      border-top: 1px solid rgba(107,47,163,0.08);
     }
 
     .reader-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      padding: 13px 16px;
+      padding: 14px 18px;
       border-radius: 999px;
       font-size: 13px;
       font-weight: 800;
-      border: 1px solid rgba(255,255,255,0.7);
-      background: rgba(255,255,255,0.9);
-      color: var(--lavender-deep);
-      cursor: pointer;
-    }
-
-    .reader-btn.primary {
+      border: none;
       background: linear-gradient(135deg, #f2bfd7, #c7a7ef);
       color: #4d246f;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(107,47,163,0.10);
+    }
+
+    .bookmark-btn {
+      background: transparent;
       border: none;
-    }
-
-    .reader-tags {
-      display: flex;
-      gap: 8px;
-      flex-wrap: wrap;
-      margin-top: 14px;
-    }
-
-    .reader-frame-wrap {
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-      background: rgba(255,255,255,0.82);
-    }
-
-    .reader-frame-top {
-      display: flex;
-      justify-content: space-between;
+      cursor: pointer;
+      display: inline-flex;
       align-items: center;
-      gap: 14px;
-      padding: 16px 18px;
-      border-bottom: 1px solid rgba(107,47,163,0.08);
-      background: rgba(255,255,255,0.76);
+      justify-content: center;
+      padding: 0;
     }
 
-    .reader-frame-title {
-      font-size: 13px;
-      font-weight: 800;
-      color: var(--lavender-deep);
+    .bookmark-icon {
+      width: 24px;
+      height: 24px;
+      fill: none;
+      stroke: var(--lavender-deep);
+      stroke-width: 1.6;
+      transition: fill 0.2s ease, stroke 0.2s ease, transform 0.15s ease;
     }
 
-    .reader-note {
-      font-size: 12px;
-      color: var(--text-soft);
-      text-align: right;
+    .bookmark-btn.active .bookmark-icon {
+      fill: var(--lavender-deep);
+      stroke: var(--lavender-deep);
     }
 
-    .reader-frame {
-      flex: 1;
-      width: 100%;
-      border: none;
-      background: white;
+    .bookmark-btn:hover .bookmark-icon {
+      transform: scale(1.05);
     }
 
-    .reader-fallback {
-      display: none;
-      padding: 24px;
-      color: var(--text-soft);
-      font-size: 14px;
-      line-height: 1.7;
-    }
+    @media (max-width: 1280px) {
+      .layout {
+        grid-template-columns: 240px minmax(0, 1fr);
+      }
 
-    .footer {
-      padding: 26px 20px 18px;
-      text-align: center;
-      color: var(--text-soft);
-      font-size: 14px;
-    }
-
-    @media (max-width: 1200px) {
       .archive-grid {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-
-      .filter-grid {
-        grid-template-columns: 1fr 1fr;
+        gap: 24px 18px;
       }
     }
 
-    @media (max-width: 1024px) {
+    @media (max-width: 1160px) {
       .hero {
         grid-template-columns: 1fr;
       }
 
       .hero-left {
-        min-height: auto;
+        min-height: 560px;
       }
 
-      .hero-books {
-        min-height: 0;
-        flex-wrap: wrap;
-        padding-top: 10px;
+      .archive-stage {
+        min-height: 1820px;
+      }
+    }
+
+    @media (max-width: 1024px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: relative;
+        top: auto;
+        min-height: auto;
       }
 
       .reader-shell {
         grid-template-columns: 1fr;
-        height: min(90vh, 980px);
       }
 
-      .reader-info {
+      .reader-left {
         border-right: none;
         border-bottom: 1px solid rgba(255,255,255,0.7);
       }
     }
 
-    @media (max-width: 820px) {
+    @media (max-width: 900px) {
       .archive-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
+
+      .archive-stage {
+        min-height: 2660px;
+      }
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 760px) {
       .topbar-inner {
         align-items: flex-start;
       }
@@ -790,18 +1007,24 @@
       }
 
       .page {
-        padding: 24px 14px 48px;
+        padding: 22px 14px 46px;
       }
 
       .hero-left,
       .hero-right,
       .filters-wrap,
-      .archive-section {
+      .archive-section,
+      .sidebar {
         border-radius: 24px;
+      }
+
+      .sidebar-title {
+        font-size: 20px;
       }
 
       .hero-left {
         padding: 24px 18px 28px;
+        min-height: auto;
       }
 
       .hero-right {
@@ -809,31 +1032,36 @@
       }
 
       .hero-books {
-        gap: 14px;
         justify-content: flex-start;
         overflow-x: auto;
-        padding-bottom: 8px;
+        gap: 18px;
+        padding: 10px 0 0;
+      }
+
+      .featured-book-wrap {
+        min-width: 220px;
+      }
+
+      .featured-shadow-side {
+        width: 200px;
+        height: 350px;
       }
 
       .featured-book {
-        width: 180px;
-        height: 280px;
-      }
-
-      .book .cover-title {
-        font-size: 26px;
-      }
-
-      .filter-grid {
-        grid-template-columns: 1fr;
+        width: 198px;
+        height: 338px;
       }
 
       .archive-grid {
         grid-template-columns: 1fr;
       }
 
-      .archive-card .book {
-        height: 290px;
+      .archive-stage {
+        min-height: 4760px;
+      }
+
+      .archive-book {
+        height: 336px;
       }
 
       .reader {
@@ -844,8 +1072,14 @@
         border-radius: 22px;
       }
 
+      .reader-left,
+      .reader-right {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
       .reader-title {
-        font-size: 30px;
+        font-size: 32px;
       }
     }
   </style>
@@ -873,106 +1107,123 @@
   </header>
 
   <main class="page">
-    <section class="hero">
-      <div class="hero-left panel">
-        <div class="sparkle-field" aria-hidden="true">
-          <span class="sparkle s2" style="left: 10%; top: 12%;"></span>
-          <span class="sparkle s1" style="left: 20%; top: 25%;"></span>
-          <span class="sparkle s3" style="left: 31%; top: 15%;"></span>
-          <span class="sparkle s1" style="left: 43%; top: 24%;"></span>
-          <span class="sparkle s2" style="left: 58%; top: 14%;"></span>
-          <span class="sparkle s3" style="left: 72%; top: 20%;"></span>
-          <span class="sparkle s1" style="left: 86%; top: 14%;"></span>
-          <span class="sparkle s2" style="left: 15%; top: 72%;"></span>
-          <span class="sparkle s1" style="left: 83%; top: 76%;"></span>
-          <span class="sparkle s3" style="left: 55%; top: 83%;"></span>
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M2 6c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v14c0-1.1-.9-2-2-2H4c-1.1 0-2-.9-2-2V6z"></path>
+            <path d="M22 6c0-1.1-.9-2-2-2h-6c-1.1 0-2 .9-2 2v14c0-1.1.9-2 2-2h6c1.1 0 2-.9 2-2V6z"></path>
+          </svg>
+          <div class="sidebar-title">My Coco Reads</div>
         </div>
 
-        <div class="hero-books" id="heroBooks"></div>
-        <div class="shelf-glow"></div>
-      </div>
+        <nav class="sidebar-links">
+          <a href="cocopress.html" class="sidebar-link active">Library</a>
+          <a href="reading-history.html" class="sidebar-link">Reading History</a>
+          <a href="bookmarks.html" class="sidebar-link">Bookmarks</a>
+        </nav>
+      </aside>
 
-      <div class="hero-right panel">
-        <h1 class="hero-title">CocoPress</h1>
-        <p class="hero-copy">
-          CocoPress is a curated editorial library dedicated to Coco Jones’s media world — a collection of cover stories, interviews, and defining press moments, preserved in one soft, living archive.
-        </p>
+      <div class="main">
+        <section class="hero">
+          <div class="hero-left panel">
+            <div class="sparkle-field" aria-hidden="true">
+              <span class="sparkle s2" style="left: 10%; top: 12%;"></span>
+              <span class="sparkle s1" style="left: 20%; top: 25%;"></span>
+              <span class="sparkle s3" style="left: 31%; top: 15%;"></span>
+              <span class="sparkle s1" style="left: 43%; top: 24%;"></span>
+              <span class="sparkle s2" style="left: 58%; top: 14%;"></span>
+              <span class="sparkle s3" style="left: 72%; top: 20%;"></span>
+              <span class="sparkle s1" style="left: 86%; top: 14%;"></span>
+              <span class="sparkle s2" style="left: 15%; top: 72%;"></span>
+              <span class="sparkle s1" style="left: 83%; top: 76%;"></span>
+              <span class="sparkle s3" style="left: 55%; top: 83%;"></span>
+            </div>
 
-        <div class="hero-note">Lavender editorial archive</div>
+            <div class="hero-books-wrap">
+              <div class="hero-books" id="heroBooks"></div>
+              <div class="featured-shelf"></div>
+            </div>
+          </div>
 
-        <a class="browse-link" href="#archive">Browse the archive ↓</a>
-      </div>
-    </section>
+          <div class="hero-right panel">
+            <h1 class="hero-title">CocoPress</h1>
+            <p class="hero-copy">
+              CocoPress is a curated editorial library dedicated to Coco Jones’s media world — a collection of cover stories, interviews, and defining press moments, preserved in one soft, living archive.
+            </p>
 
-    <div class="divider"></div>
+            <div class="hero-note">Lavender editorial archive</div>
 
-    <section class="filters-wrap panel" id="archive">
-      <div class="filters-top">
-        <div>
-          <h2 class="section-title">Press Library</h2>
-          <p class="section-copy">
-            Browse by year, era, outlet, or type — then open each piece inside CocoPress.
-          </p>
+            <a class="browse-link" href="#archive">Browse the archive ↓</a>
+          </div>
+        </section>
+
+        <div class="divider"></div>
+
+        <section class="filters-wrap panel" id="archive">
+          <div class="filters-top">
+            <div>
+              <h2 class="section-title">Press Library</h2>
+              <p class="section-copy">
+                Twelve books at a time, arranged across shelf rows. JSON wiring for images, search, and summaries can drop into this layout later.
+              </p>
+            </div>
+          </div>
+
+          <div class="filter-grid">
+            <select id="yearFilter">
+              <option value="all">All Years</option>
+            </select>
+          </div>
+
+          <div class="pagination-row">
+            <div class="page-count" id="pageCount">Page 1 of 1</div>
+
+            <div class="pager">
+              <button class="pager-btn" id="prevBtn" type="button">← Previous</button>
+              <button class="pager-btn" id="nextBtn" type="button">Next →</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="archive-section panel">
+          <div class="archive-stage" id="archiveStage">
+            <div class="archive-track" id="archiveTrack"></div>
+          </div>
+          <div class="empty-state" id="emptyState">No press pieces matched that year.</div>
+        </section>
+
+        <div class="footer">
+          CocoPress — a lavender editorial archive inside Coco’s World.
         </div>
       </div>
-
-      <div class="filter-grid">
-        <input type="text" id="searchInput" placeholder="Search title, outlet, or description..." />
-        <select id="yearFilter">
-          <option value="all">All Years</option>
-        </select>
-        <select id="eraFilter">
-          <option value="all">All Eras</option>
-        </select>
-        <select id="typeFilter">
-          <option value="all">All Types</option>
-        </select>
-        <select id="outletFilter">
-          <option value="all">All Outlets</option>
-        </select>
-      </div>
-    </section>
-
-    <section class="archive-section panel">
-      <div class="archive-grid" id="archiveGrid"></div>
-      <div class="empty-state" id="emptyState">No press pieces matched those filters.</div>
-    </section>
-
-    <div class="footer">
-      CocoPress — a lavender editorial archive inside Coco’s World.
     </div>
   </main>
 
   <div class="reader" id="reader">
     <div class="reader-shell">
-      <div class="reader-info">
-        <button class="reader-close" id="readerClose" aria-label="Close">×</button>
+      <button class="reader-close" id="readerClose" aria-label="Close">×</button>
 
+      <div class="reader-left">
         <div id="readerBookMount"></div>
-
-        <p class="reader-kicker" id="readerKicker"></p>
-        <h2 class="reader-title" id="readerTitle"></h2>
-        <p class="reader-summary" id="readerSummary"></p>
-
-        <div class="reader-tags" id="readerTags"></div>
-
-        <div class="reader-links">
-          <a class="reader-btn primary" id="readerSourceBtn" href="#" target="_blank" rel="noopener noreferrer">Read at Source</a>
-          <button class="reader-btn" id="readerTryEmbed">Reload Reader</button>
-        </div>
       </div>
 
-      <div class="reader-frame-wrap">
-        <div class="reader-frame-top">
-          <div class="reader-frame-title" id="readerFrameLabel">Article Reader</div>
-          <div class="reader-note">
-            Some publishers may block in-site display. If that happens, use “Read at Source.”
-          </div>
-        </div>
+      <div class="reader-right">
+        <p class="reader-kicker" id="readerKicker"></p>
+        <h2 class="reader-title" id="readerTitle"></h2>
 
-        <iframe class="reader-frame" id="readerFrame" title="CocoPress Reader"></iframe>
-        <div class="reader-fallback" id="readerFallback">
-          This source may not allow full in-site display. Use the source button on the left to open the article directly.
+        <div class="reader-meta" id="readerMeta"></div>
+
+        <p class="reader-summary" id="readerSummary"></p>
+
+        <div class="reader-actions">
+          <a class="reader-btn" id="readerSourceBtn" href="#" target="_blank" rel="noopener noreferrer">Read on Source</a>
+
+          <button class="bookmark-btn" id="bookmarkBtn" aria-label="Bookmark">
+            <svg viewBox="0 0 24 24" class="bookmark-icon" aria-hidden="true">
+              <path d="M6 3h12v18l-6-4-6 4V3z"></path>
+            </svg>
+          </button>
         </div>
       </div>
     </div>
@@ -981,166 +1232,184 @@
   <script>
     const articles = [
       {
-        id: "vibe",
-        title: "More Than Hilary Banks",
-        fullTitle: "Coco Jones Is More Than Hilary Banks",
-        outlet: "Vibe",
-        year: "2022",
-        era: "Pre-Why Not More",
-        type: "Interview",
-        summary: "An early editorial piece centered on identity, music ambition, and how Coco was positioning herself beyond one defining role.",
-        url: "https://www.vibe.com/features/editorial/coco-jones-caliber-interview-1234654510/",
-        cover: "cover-vibe",
-        featured: true
-      },
-      {
-        id: "byrdie",
-        title: "Beauty, Ritual, and Ease",
-        fullTitle: "Coco Jones on Her Beauty Routine, Favorite Hairstyle, and More",
-        outlet: "Byrdie",
-        year: "2025",
-        era: "Why Not More Era",
-        type: "Beauty",
-        summary: "A softer lifestyle conversation that expands CocoPress beyond music-only coverage and gives the page tonal range.",
-        url: "https://www.byrdie.com/coco-jones-interview-11790049",
-        cover: "cover-byrdie",
+        id: "schon",
+        title: "A Schön! Interview",
+        fullTitle: "interview | coco jones | Schön! Magazine",
+        editorial: "Schön! Magazine",
+        author: "Editorial Feature",
+        year: "2024",
+        summary: "Schön! frames Coco through a fashion-editorial lens, centering poise, image, and the way her presence moves between softness and precision. It reads less like a quick update and more like a mood piece — one that positions her as someone the camera already understands. The feature helps widen CocoPress beyond music-only coverage and gives the archive a stronger magazine texture.",
+        source: "https://schonmagazine.com/interview-coco-jones/",
+        cover: "cover-schon",
+        image: "",
         featured: true
       },
       {
         id: "nylon",
         title: "Works for Herself",
         fullTitle: "Coco Jones Works For Herself",
-        outlet: "Nylon",
+        editorial: "Nylon",
+        author: "Nylon Staff",
         year: "2024",
-        era: "Why Not More Era",
-        type: "Feature",
-        summary: "A modern profile framed around autonomy, direction, and the energy leading into her debut album chapter.",
-        url: "https://www.nylon.com/entertainment/coco-jones-2024-debut-album",
+        summary: "This profile focuses on autonomy, momentum, and the kind of self-definition that matters when an artist is entering a debut-album chapter. Nylon positions Coco as someone building direction from the inside out — not just reacting to attention, but shaping what comes next. The piece feels modern, intentional, and key to understanding her current era.",
+        source: "https://www.nylon.com/entertainment/coco-jones-2024-debut-album",
         cover: "cover-nylon",
+        image: "",
         featured: true
+      },
+      {
+        id: "bustle",
+        title: "Life After Disney",
+        fullTitle: "Coco Jones On Super Bowl, Engagement, Life After Disney & 'Bel-Air' S4",
+        editorial: "Bustle",
+        author: "Bustle Interview",
+        year: "2025",
+        summary: "Bustle gives a wider lifestyle-and-career snapshot, touching image, television, momentum, and what this chapter is opening up next. It’s useful because it pulls multiple parts of Coco’s public life into one place and shows how her visibility is expanding beyond a single lane. It reads like a bridge between celebrity profile and career check-in.",
+        source: "https://www.bustle.com/entertainment/coco-jones-super-bowl-performance-why-not-more-new-album-engagement-bel-air-interview",
+        cover: "cover-bustle",
+        image: "",
+        featured: true
+      },
+      {
+        id: "vibe",
+        title: "More Than Hilary Banks",
+        fullTitle: "Coco Jones Is More Than Hilary Banks",
+        editorial: "Vibe",
+        author: "Vibe Editorial",
+        year: "2022",
+        summary: "An earlier editorial centered on identity and ambition, with emphasis on who Coco is beyond one defining role. The feature matters because it captures a stage where she was still being explained to some audiences while already thinking bigger than that framing. It’s a strong archive piece for tracking how her narrative widened.",
+        source: "https://www.vibe.com/features/editorial/coco-jones-caliber-interview-1234654510/",
+        cover: "cover-vibe",
+        image: "",
+        featured: false
+      },
+      {
+        id: "byrdie",
+        title: "Beauty, Ritual, and Ease",
+        fullTitle: "Coco Jones on Her Beauty Routine, Favorite Hairstyle, and More",
+        editorial: "Byrdie",
+        author: "Beauty Interview",
+        year: "2025",
+        summary: "Byrdie shifts the focus into routine, presentation, and beauty language, which helps diversify the library beyond performance and album talk. The piece gives CocoPress tonal variety because it reveals how editorial coverage also builds an artist’s image through softness, detail, and lifestyle framing.",
+        source: "https://www.byrdie.com/coco-jones-interview-11790049",
+        cover: "cover-byrdie",
+        image: "",
+        featured: false
       },
       {
         id: "elle-2025",
         title: "Why Not More",
         fullTitle: "Coco Jones Pays Tribute to Black Women: ‘We Thrive Through the Most Unfair Odds’",
-        outlet: "Elle",
+        editorial: "Elle",
+        author: "Elle Interview",
         year: "2025",
-        era: "Why Not More Era",
-        type: "Interview",
-        summary: "An Elle conversation tied to the debut album, boundaries, colorism, and the emotional architecture behind this era.",
-        url: "https://www.elle.com/culture/music/a64640841/coco-jones-why-not-more-interview/",
+        summary: "Elle ties the debut album to bigger emotional and cultural framing, especially around boundaries, Black womanhood, and pressure. It works as a defining-era piece because it lets the album chapter speak through more than promotion alone. The interview feels anchored in meaning rather than just rollout language.",
+        source: "https://www.elle.com/culture/music/a64640841/coco-jones-why-not-more-interview/",
         cover: "cover-elle",
+        image: "",
         featured: false
       },
       {
         id: "ap-why-not-more",
         title: "Proud of the Debut",
         fullTitle: "Coco Jones says she's 'proud' of debut album 'Why Not More?'",
-        outlet: "AP News",
+        editorial: "AP News",
+        author: "Associated Press",
         year: "2025",
-        era: "Why Not More Era",
-        type: "Feature",
-        summary: "A concise AP piece centered on the debut album and the fearless framing behind Why Not More.",
-        url: "https://apnews.com/video/coco-jones-says-shes-proud-of-debut-album-why-not-more-8935463c04e543b7aa75c6be67397bb6",
+        summary: "A concise AP piece focused on the debut album and the pride attached to finally delivering it. This entry is useful in the library because it captures the straightforward public-facing framing of the project without a lot of extra styling. It functions as a clean milestone record.",
+        source: "https://apnews.com/video/coco-jones-says-shes-proud-of-debut-album-why-not-more-8935463c04e543b7aa75c6be67397bb6",
         cover: "cover-ap",
-        featured: false
-      },
-      {
-        id: "schon",
-        title: "A Schön! Interview",
-        fullTitle: "interview | coco jones | Schön! Magazine",
-        outlet: "Schön! Magazine",
-        year: "2024",
-        era: "Why Not More Era",
-        type: "Editorial",
-        summary: "A fashion-editorial entry that gives the library a more magazine-forward texture.",
-        url: "https://schonmagazine.com/interview-coco-jones/",
-        cover: "cover-schon",
-        featured: false
-      },
-      {
-        id: "bustle",
-        title: "Life After Disney",
-        fullTitle: "Coco Jones On Super Bowl, Engagement, Life After Disney & 'Bel-Air' S4",
-        outlet: "Bustle",
-        year: "2025",
-        era: "Why Not More Era",
-        type: "Interview",
-        summary: "A wide-ranging piece that touches image, momentum, television, and where this chapter is taking her next.",
-        url: "https://www.bustle.com/entertainment/coco-jones-super-bowl-performance-why-not-more-new-album-engagement-bel-air-interview",
-        cover: "cover-bustle",
+        image: "",
         featured: false
       },
       {
         id: "rollingstone",
         title: "Inside the Green Room",
         fullTitle: "Coco Jones Reflects on Success, R&B for The Green Room",
-        outlet: "Rolling Stone",
+        editorial: "Rolling Stone",
+        author: "Rolling Stone",
         year: "2024",
-        era: "Why Not More Era",
-        type: "Interview",
-        summary: "A music-forward stop focused on success, self-definition, and the way Coco speaks about her place in R&B.",
-        url: "https://www.rollingstone.com/music/music-news/coco-jones-rolling-stone-the-green-room-interview-1234961544/",
+        summary: "Rolling Stone leans into music identity and success language, with attention to how Coco sees herself within R&B. The value of this piece is that it records her own framing of genre, growth, and placement at a time when the public conversation around her was expanding. It feels closer to industry conversation than beauty or fashion coverage.",
+        source: "https://www.rollingstone.com/music/music-news/coco-jones-rolling-stone-the-green-room-interview-1234961544/",
         cover: "cover-rollingstone",
+        image: "",
         featured: false
       },
       {
         id: "elle-2024",
         title: "Winning Her First Grammy",
         fullTitle: "Coco Jones on Winning Her First Grammy, Career Goals, and Beyoncé",
-        outlet: "Elle",
+        editorial: "Elle",
+        author: "Elle Feature",
         year: "2024",
-        era: "Breakthrough Era",
-        type: "Interview",
-        summary: "A milestone-focused Elle interview centered on ambition, recognition, and the scale of Coco’s upward movement.",
-        url: "https://www.elle.com/culture/music/a60539065/coco-jones-interview-2024/",
+        summary: "This feature is milestone-driven, centered on recognition, ambition, and what it means to hit a major career marker while still clearly reaching upward. It belongs in the archive because it captures a breakthrough moment without pretending the story is finished.",
+        source: "https://www.elle.com/culture/music/a60539065/coco-jones-interview-2024/",
         cover: "cover-elle",
+        image: "",
         featured: false
       }
     ];
 
-    const heroBooks = document.getElementById("heroBooks");
-    const archiveGrid = document.getElementById("archiveGrid");
-    const emptyState = document.getElementById("emptyState");
+    const ITEMS_PER_PAGE = 12;
 
-    const searchInput = document.getElementById("searchInput");
+    const heroBooks = document.getElementById("heroBooks");
     const yearFilter = document.getElementById("yearFilter");
-    const eraFilter = document.getElementById("eraFilter");
-    const typeFilter = document.getElementById("typeFilter");
-    const outletFilter = document.getElementById("outletFilter");
+    const archiveTrack = document.getElementById("archiveTrack");
+    const archiveStage = document.getElementById("archiveStage");
+    const pageCount = document.getElementById("pageCount");
+    const prevBtn = document.getElementById("prevBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const emptyState = document.getElementById("emptyState");
 
     const reader = document.getElementById("reader");
     const readerClose = document.getElementById("readerClose");
     const readerBookMount = document.getElementById("readerBookMount");
     const readerKicker = document.getElementById("readerKicker");
     const readerTitle = document.getElementById("readerTitle");
+    const readerMeta = document.getElementById("readerMeta");
     const readerSummary = document.getElementById("readerSummary");
-    const readerTags = document.getElementById("readerTags");
     const readerSourceBtn = document.getElementById("readerSourceBtn");
-    const readerTryEmbed = document.getElementById("readerTryEmbed");
-    const readerFrame = document.getElementById("readerFrame");
-    const readerFallback = document.getElementById("readerFallback");
-    const readerFrameLabel = document.getElementById("readerFrameLabel");
+    const bookmarkBtn = document.getElementById("bookmarkBtn");
 
-    function buildBookMarkup(article, isReader = false, isFeatured = false) {
-      const bookClass = isReader ? "reader-book" : isFeatured ? "featured-book" : "";
+    let currentPage = 0;
+    let currentArticleId = null;
+    let filteredArticles = [];
+
+    function chunkArray(array, size) {
+      const chunks = [];
+      for (let i = 0; i < array.length; i += size) {
+        chunks.push(array.slice(i, i + size));
+      }
+      return chunks;
+    }
+
+    function buildBookMarkup(article, mode = "archive") {
+      const classes = ["book"];
+      if (mode === "featured") classes.push("featured-book");
+      if (mode === "reader") classes.push("reader-book");
+      if (mode === "archive") classes.push("archive-book");
+
+      const coverClasses = ["book-cover", article.cover || "cover-base"];
+      const style = article.image ? `style="background-image:url('${article.image}');"` : "";
+      if (article.image) coverClasses.push("has-image");
+
       return `
-        <div class="book ${bookClass}" data-open="${article.id}">
-          <div class="book-cover ${article.cover || "cover-base"}">
-            <div class="cover-top">
-              <span class="cover-outlet">${article.outlet}</span>
-              <span class="cover-year">${article.year}</span>
-            </div>
+        <div class="${mode === "featured" ? "featured-book-wrap" : ""}">
+          ${mode === "featured" ? `<div class="featured-shadow-side"></div>` : ""}
+          <div class="${classes.join(" ")}" data-open="${article.id}">
+            <div class="${coverClasses.join(" ")}" ${style}>
+              <div class="cover-top">
+                <span class="cover-editorial">${article.editorial}</span>
+                <span class="cover-author">${article.author}</span>
+              </div>
 
-            <div class="cover-center">
-              <div class="cover-kicker">${article.type}</div>
-              <h3 class="cover-title">${article.title}</h3>
-              <div class="cover-sub">${article.summary}</div>
-            </div>
+              <div class="cover-center">
+                <h3 class="cover-title">${article.title}</h3>
+              </div>
 
-            <div class="cover-footer">
-              <span>${article.era}</span>
-              <span class="spine-mark">CocoPress</span>
+              <div class="cover-footer">
+                <span class="cover-footnote">Coco editorial archive</span>
+              </div>
             </div>
           </div>
         </div>
@@ -1148,152 +1417,218 @@
     }
 
     function renderHero() {
-      heroBooks.innerHTML = articles
-        .filter(article => article.featured)
-        .map(article => buildBookMarkup(article, false, true))
-        .join("");
+      const featuredOrder = ["schon", "nylon", "bustle"];
+      const featured = featuredOrder
+        .map(id => articles.find(article => article.id === id))
+        .filter(Boolean);
+
+      heroBooks.innerHTML = featured.map(article => buildBookMarkup(article, "featured")).join("");
     }
 
-    function renderFilters() {
+    function renderYearFilter() {
       const years = [...new Set(articles.map(article => article.year))].sort((a, b) => b.localeCompare(a));
-      const eras = [...new Set(articles.map(article => article.era))];
-      const types = [...new Set(articles.map(article => article.type))];
-      const outlets = [...new Set(articles.map(article => article.outlet))];
-
-      years.forEach(year => yearFilter.insertAdjacentHTML("beforeend", `<option value="${year}">${year}</option>`));
-      eras.forEach(era => eraFilter.insertAdjacentHTML("beforeend", `<option value="${era}">${era}</option>`));
-      types.forEach(type => typeFilter.insertAdjacentHTML("beforeend", `<option value="${type}">${type}</option>`));
-      outlets.forEach(outlet => outletFilter.insertAdjacentHTML("beforeend", `<option value="${outlet}">${outlet}</option>`));
+      years.forEach(year => {
+        yearFilter.insertAdjacentHTML("beforeend", `<option value="${year}">${year}</option>`);
+      });
     }
 
-    function currentFilters() {
-      return {
-        search: searchInput.value.trim().toLowerCase(),
-        year: yearFilter.value,
-        era: eraFilter.value,
-        type: typeFilter.value,
-        outlet: outletFilter.value
-      };
+    function getFilteredArticles() {
+      const year = yearFilter.value;
+      return articles.filter(article => year === "all" || article.year === year);
     }
 
-    function matches(article, filters) {
-      const haystack = [
-        article.title,
-        article.fullTitle,
-        article.outlet,
-        article.summary,
-        article.type,
-        article.era,
-        article.year
-      ].join(" ").toLowerCase();
+    function createArchivePageMarkup(pageArticles) {
+      const rows = chunkArray(pageArticles, 3);
 
-      const searchMatch = !filters.search || haystack.includes(filters.search);
-      const yearMatch = filters.year === "all" || article.year === filters.year;
-      const eraMatch = filters.era === "all" || article.era === filters.era;
-      const typeMatch = filters.type === "all" || article.type === filters.type;
-      const outletMatch = filters.outlet === "all" || article.outlet === filters.outlet;
+      return `
+        <div class="archive-page">
+          ${rows.map((row, rowIndex) => `
+            <div class="archive-grid-row">
+              <div class="archive-grid">
+                ${row.map(article => `
+                  <article class="archive-card">
+                    ${buildBookMarkup(article, "archive")}
+                    <div class="book-oval-shadow"></div>
+                    <div class="archive-meta">
+                      <h3 class="archive-title">${article.title}</h3>
+                      <div class="archive-line">${article.editorial}</div>
+                      <div class="archive-line">${article.author}</div>
+                    </div>
+                  </article>
+                `).join("")}
+              </div>
 
-      return searchMatch && yearMatch && eraMatch && typeMatch && outletMatch;
+              ${rowIndex < rows.length - 1 ? `
+                <div class="row-shelf"></div>
+                <div class="row-shelf-spacer"></div>
+              ` : `
+                <div class="row-shelf"></div>
+              `}
+            </div>
+          `).join("")}
+        </div>
+      `;
+    }
+
+    function updateArchiveHeight(pagesLength) {
+      if (window.innerWidth <= 760) {
+        archiveStage.style.minHeight = pagesLength ? "4760px" : "100px";
+      } else if (window.innerWidth <= 900) {
+        archiveStage.style.minHeight = pagesLength ? "2660px" : "100px";
+      } else {
+        archiveStage.style.minHeight = pagesLength ? "1730px" : "100px";
+      }
     }
 
     function renderArchive() {
-      const filters = currentFilters();
-      const visibleArticles = articles.filter(article => matches(article, filters));
+      filteredArticles = getFilteredArticles();
+      const pages = chunkArray(filteredArticles, ITEMS_PER_PAGE);
 
-      archiveGrid.innerHTML = visibleArticles.map(article => `
-        <article class="archive-card">
-          ${buildBookMarkup(article)}
-          <div class="archive-meta">
-            <h3 class="archive-title">${article.title}</h3>
-            <div class="archive-line">${article.outlet} • ${article.year}</div>
-            <div class="archive-line">${article.summary}</div>
-            <div class="chips">
-              <span class="chip">${article.type}</span>
-              <span class="chip">${article.era}</span>
-            </div>
-          </div>
-        </article>
-      `).join("");
+      emptyState.style.display = filteredArticles.length ? "none" : "block";
+      archiveTrack.innerHTML = pages.map(createArchivePageMarkup).join("");
+      updateArchiveHeight(pages.length);
 
-      emptyState.style.display = visibleArticles.length ? "none" : "block";
+      if (!pages.length) {
+        currentPage = 0;
+        pageCount.textContent = "Page 0 of 0";
+        prevBtn.disabled = true;
+        nextBtn.disabled = true;
+        archiveTrack.style.transform = "translateX(0)";
+        return;
+      }
+
+      currentPage = Math.min(currentPage, pages.length - 1);
+      archiveTrack.style.transform = `translateX(-${currentPage * 100}%)`;
+      pageCount.textContent = `Page ${currentPage + 1} of ${pages.length}`;
+      prevBtn.disabled = currentPage === 0;
+      nextBtn.disabled = currentPage === pages.length - 1;
+    }
+
+    function changePage(direction) {
+      const pagesLength = chunkArray(filteredArticles, ITEMS_PER_PAGE).length;
+      currentPage = Math.max(0, Math.min(currentPage + direction, pagesLength - 1));
+      archiveTrack.style.transform = `translateX(-${currentPage * 100}%)`;
+      pageCount.textContent = `Page ${currentPage + 1} of ${pagesLength}`;
+      prevBtn.disabled = currentPage === 0;
+      nextBtn.disabled = currentPage === pagesLength - 1;
+    }
+
+    function getBookmarks() {
+      return JSON.parse(localStorage.getItem("cocoBookmarks") || "[]");
+    }
+
+    function saveBookmarks(items) {
+      localStorage.setItem("cocoBookmarks", JSON.stringify(items));
+    }
+
+    function isBookmarked(id) {
+      return getBookmarks().includes(id);
+    }
+
+    function toggleBookmark(id) {
+      const saved = getBookmarks();
+      if (saved.includes(id)) {
+        saveBookmarks(saved.filter(item => item !== id));
+      } else {
+        saveBookmarks([...saved, id]);
+      }
+    }
+
+    function addToHistory(article) {
+      const current = JSON.parse(localStorage.getItem("cocoReadingHistory") || "[]");
+      const filtered = current.filter(item => item.id !== article.id);
+      const newEntry = {
+        id: article.id,
+        title: article.title,
+        editorial: article.editorial,
+        author: article.author,
+        year: article.year,
+        source: article.source,
+        image: article.image || "",
+        viewedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem("cocoReadingHistory", JSON.stringify([newEntry, ...filtered].slice(0, 100)));
+    }
+
+    function syncBookmarkState(id) {
+      currentArticleId = id;
+      bookmarkBtn.classList.toggle("active", isBookmarked(id));
     }
 
     function openReader(id) {
       const article = articles.find(item => item.id === id);
       if (!article) return;
 
-      readerBookMount.innerHTML = buildBookMarkup(article, true, false);
-      readerKicker.textContent = `${article.outlet} • ${article.year}`;
-      readerTitle.textContent = article.fullTitle;
+      readerBookMount.innerHTML = buildBookMarkup(article, "reader");
+      readerKicker.textContent = `${article.editorial} • ${article.year}`;
+      readerTitle.textContent = article.fullTitle || article.title;
       readerSummary.textContent = article.summary;
-      readerFrameLabel.textContent = `${article.outlet} Reader`;
-      readerSourceBtn.href = article.url;
-
-      readerTags.innerHTML = `
-        <span class="chip">${article.type}</span>
-        <span class="chip">${article.era}</span>
-        <span class="chip">${article.outlet}</span>
+      readerMeta.innerHTML = `
+        <span class="reader-chip">${article.editorial}</span>
+        <span class="reader-chip">${article.author}</span>
+        <span class="reader-chip">${article.year}</span>
       `;
 
-      loadReader(article.url);
+      readerSourceBtn.href = article.source;
+      readerSourceBtn.dataset.articleId = article.id;
+      syncBookmarkState(article.id);
+
       reader.classList.add("active");
       document.body.style.overflow = "hidden";
     }
 
-    function loadReader(url) {
-      readerFallback.style.display = "none";
-      readerFrame.style.display = "block";
-      readerFrame.src = "about:blank";
-
-      setTimeout(() => {
-        readerFrame.src = url;
-      }, 40);
-
-      setTimeout(() => {
-        readerFallback.style.display = "block";
-      }, 2400);
-    }
-
     function closeReader() {
       reader.classList.remove("active");
-      readerFrame.src = "about:blank";
       document.body.style.overflow = "";
+      currentArticleId = null;
     }
 
-    function bindOpeners() {
-      document.addEventListener("click", (event) => {
-        const book = event.target.closest("[data-open]");
-        if (!book) return;
-        openReader(book.dataset.open);
-      });
+    function handleArchiveClicks(event) {
+      const book = event.target.closest("[data-open]");
+      if (!book) return;
+      openReader(book.dataset.open);
     }
 
-    [searchInput, yearFilter, eraFilter, typeFilter, outletFilter].forEach(control => {
-      control.addEventListener("input", renderArchive);
-      control.addEventListener("change", renderArchive);
+    archiveTrack.addEventListener("click", handleArchiveClicks);
+    heroBooks.addEventListener("click", handleArchiveClicks);
+
+    prevBtn.addEventListener("click", () => changePage(-1));
+    nextBtn.addEventListener("click", () => changePage(1));
+
+    yearFilter.addEventListener("change", () => {
+      currentPage = 0;
+      renderArchive();
     });
 
     readerClose.addEventListener("click", closeReader);
+
     reader.addEventListener("click", (event) => {
       if (event.target === reader) closeReader();
     });
 
     document.addEventListener("keydown", (event) => {
-      if (event.key === "Escape" && reader.classList.contains("active")) {
-        closeReader();
-      }
+      if (event.key === "Escape" && reader.classList.contains("active")) closeReader();
     });
 
-    readerTryEmbed.addEventListener("click", () => {
-      const currentUrl = readerSourceBtn.href;
-      if (!currentUrl) return;
-      loadReader(currentUrl);
+    bookmarkBtn.addEventListener("click", () => {
+      if (!currentArticleId) return;
+      toggleBookmark(currentArticleId);
+      syncBookmarkState(currentArticleId);
     });
+
+    readerSourceBtn.addEventListener("click", () => {
+      const articleId = readerSourceBtn.dataset.articleId;
+      const article = articles.find(item => item.id === articleId);
+      if (!article) return;
+      addToHistory(article);
+    });
+
+    window.addEventListener("resize", renderArchive);
 
     renderHero();
-    renderFilters();
+    renderYearFilter();
     renderArchive();
-    bindOpeners();
   </script>
 </body>
 </html>
