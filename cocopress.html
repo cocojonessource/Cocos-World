@@ -512,7 +512,7 @@
 }
     .control-row {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) 220px;
+      grid-template-columns: minmax(0, 1fr) 220px 220px;
       gap: 12px;
       align-items: center;
     }
@@ -1003,9 +1003,12 @@
             <select id="yearFilter" class="year-filter">
               <option value="all">All Years</option>
             </select>
+            <select id="sortFilter" class="year-filter">
+              <option value="desc">Newest First</option>
+              <option value="asc">Oldest First</option>
+            </select>
           </div>
         </section>
-
         <!-- =====================================================
              LIBRARY SECTION
              -----------------------------------------------------
@@ -1098,6 +1101,7 @@ let libraryData = [];
    4 rows per page.
    ========================================================= */
 const ITEMS_PER_PAGE = 16;
+let sortOrder = 'desc'; // default = newest first
 const ITEMS_PER_ROW = 4;
 
 const FEATURED_IDS = [
@@ -1141,9 +1145,10 @@ async function loadLibraryData() {
     /* =========================================================
        18) DOM LOOKUPS
        ========================================================= */
-    const heroBooks = document.getElementById('heroBooks');
+   const heroBooks = document.getElementById('heroBooks');
     const searchInput = document.getElementById('searchInput');
     const yearFilter = document.getElementById('yearFilter');
+    const sortFilter = document.getElementById('sortFilter');
     const archiveTrack = document.getElementById('archiveTrack');
     const emptyState = document.getElementById('emptyState');
 
@@ -1240,14 +1245,23 @@ async function loadLibraryData() {
        ---------------------------------------------------------
        No popup warnings. Instant filtering only.
        ========================================================= */
-    function getFilteredArticles() {
+   function getFilteredArticles() {
       const selectedYear = yearFilter.value;
       const query = searchInput.value.trim().toLowerCase();
-      return libraryData.filter(article => {
+
+      const filtered = libraryData.filter(article => {
         const yearMatch = selectedYear === 'all' || String(article.year) === selectedYear;
         const searchMatch = !query || article.searchBlob.includes(query);
         return yearMatch && searchMatch;
       });
+
+      filtered.sort((a, b) => {
+        const dateA = new Date(a.date || a.year || '1900');
+        const dateB = new Date(b.date || b.year || '1900');
+        return sortOrder === 'desc' ? dateB - dateA : dateA - dateB;
+      });
+
+      return filtered;
     }
 
     /* =========================================================
@@ -1426,6 +1440,12 @@ async function loadLibraryData() {
     });
 
     yearFilter.addEventListener('change', () => {
+      currentPage = 0;
+      renderArchive();
+    });
+
+    sortFilter.addEventListener('change', () => {
+      sortOrder = sortFilter.value;
       currentPage = 0;
       renderArchive();
     });
