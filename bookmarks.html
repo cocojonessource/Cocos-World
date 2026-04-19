@@ -1021,37 +1021,34 @@
     /* Use the SAME library data and summaries from your CocoPress page.
        I kept the same structure so bookmarks.html can display saved IDs exactly the same way. */
 
-    const libraryData = [
+    /* Pull the real library from your JSON file instead of hardcoding books here */
+let libraryData = [];
+let summariesData = {};
 
-    const summariesData = {
-      "schon": {
-        summary: "Schön! frames Coco through a fashion-editorial lens, centering poise, image, and presence. It reads like a mood piece more than a quick update, which makes it useful for the archive because it preserves how editorial media helps shape public perception beyond music alone."
-      },
-      "nylon": {
-        summary: "Nylon centers autonomy, momentum, and the way Coco appears to be defining the next stage of her career on her own terms. It feels modern and directional, making it one of the strongest pieces for understanding this chapter of her press presence."
-      },
-      "bustle": {
-        summary: "Bustle gives a broader celebrity-and-career snapshot, touching television, visibility, and the way different parts of Coco’s public life intersect. It works well in the library because it captures breadth rather than just one narrow angle."
-      },
-      "vibe": {
-        summary: "An earlier editorial centered on identity and ambition, especially around being understood beyond one defining role. It matters because it captures a point when Coco was already aiming past the frame some people still wanted to keep her in."
-      },
-      "byrdie": {
-        summary: "Byrdie shifts the focus toward beauty, routine, and softness, which gives the archive variety beyond music and milestone coverage. It shows how lifestyle media also contributes to building an artist’s image."
-      },
-      "elle-2025": {
-        summary: "Elle ties the debut album era to larger emotional and cultural framing, especially around pressure, Black womanhood, and resilience. It helps the archive feel grounded in meaning rather than pure publicity."
-      },
-      "ap-why-not-more": {
-        summary: "A concise AP piece focused on the debut album and the straightforward public framing around it. This one is useful because it acts as a clean milestone record inside the library."
-      },
-      "rollingstone": {
-        summary: "Rolling Stone leans into genre, placement, and the language of artistic success. It works well for the archive because it captures how Coco is discussed inside a more music-centered frame."
-      },
-      "elle-2024": {
-        summary: "This feature is centered on recognition, ambition, and what it means to hit a major milestone while still clearly reaching upward. It belongs in the archive because it captures a breakthrough without pretending the journey is complete."
-      }
-    };
+async function loadLibraryData() {
+  const response = await fetch("cocopress-library.json");
+  const rawLibraryData = await response.json();
+
+  libraryData = rawLibraryData.map(item => ({
+    id: item.id,
+    title: item.title,
+    fullTitle: item.fullTitle || item.title,
+    editorial: item.outlet || "",
+    author: item.author || item.outlet || "",
+    year: item.year || "",
+    source: item.url || "",
+    image: item.cover || "",
+    cover: "cover-base",
+    summary: item.summary || ""
+  }));
+
+  summariesData = Object.fromEntries(
+    libraryData.map(item => [
+      item.id,
+      { summary: item.summary || "" }
+    ])
+  );
+}
 
     const booksGrid = document.getElementById("booksGrid");
     const emptyState = document.getElementById("emptyState");
@@ -1205,21 +1202,15 @@ function getBookmarkedArticles() {
       emptyState.style.display = "none";
 
       booksGrid.innerHTML = bookmarkedArticles.map(article => `
-        <article class="archive-card">
-          ${buildBookMarkup(article)}
-          <div class="book-oval-shadow"></div>
+  <article class="archive-card">
+    ${buildBookMarkup(article)}
+    <div class="book-oval-shadow"></div>
 
-          <div class="archive-meta">
-            <h3 class="archive-title">${article.title}</h3>
-            <div class="archive-line">${article.editorial}</div>
-            <div class="archive-line">${article.author}</div>
-          </div>
-
-          <button class="remove-inline" type="button" data-remove="${article.id}">
-            Remove from Bookmarks
-          </button>
-        </article>
-      `).join("");
+    <button class="remove-inline" type="button" data-remove="${article.id}">
+      Remove from Bookmarks
+    </button>
+  </article>
+`).join("");
     }
 
     function addToHistory(article) {
@@ -1332,9 +1323,18 @@ function getBookmarkedArticles() {
     });
 
     searchInput.addEventListener("input", renderBookmarks);
-    yearFilter.addEventListener("change", renderBookmarks);
+yearFilter.addEventListener("change", renderBookmarks);
 
+loadLibraryData()
+  .then(() => {
     renderBookmarks();
+  })
+  .catch((error) => {
+    console.error("Failed to load cocopress-library.json", error);
+    booksGrid.innerHTML = "";
+    emptyState.style.display = "block";
+    emptyState.textContent = "Could not load bookmark library.";
+  });
   </script>
 </body>
 </html>
