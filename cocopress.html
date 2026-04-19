@@ -458,11 +458,37 @@
   pointer-events: none;
   z-index: 2;
 }
-    .featured-book {
+   .featured-book {
       width: var(--featured-book-width);
       height: var(--featured-book-height);
       max-width: 100%;
-    }
+      position: relative;
+      z-index: 1;
+}
+
+/* glow behind featured books */
+.featured-book::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: -18px;
+      transform: translateX(-50%);
+      width: 80%;
+      height: 36px;
+      border-radius: 999px;
+
+      background: radial-gradient(
+        ellipse at center,
+        rgba(186, 132, 255, 0.65) 0%,
+        rgba(186, 132, 255, 0.35) 40%,
+        rgba(186, 132, 255, 0.08) 70%,
+        transparent 100%
+      );
+
+      filter: blur(12px);
+      z-index: -1;
+      pointer-events: none;
+}
     .archive-book {
       width: var(--library-book-width);
       height: var(--library-book-height);
