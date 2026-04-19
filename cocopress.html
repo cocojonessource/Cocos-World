@@ -277,8 +277,37 @@
        Wider, thicker, no shadows.
        ========================================================= */
     .featured-wrap {
+  position: relative;
   padding: 26px 28px 34px;
   margin-bottom: 50px;
+  z-index: 1;
+}
+
+/* glow ring */
+.featured-wrap::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 34px;
+  background: linear-gradient(
+    135deg,
+    rgba(255, 182, 255, 0.6),
+    rgba(190, 150, 255, 0.6),
+    rgba(255, 210, 240, 0.6)
+  );
+  filter: blur(14px);
+  opacity: 0.75;
+  z-index: -1;
+}
+
+/* soft inner highlight (optional but makes it feel real) */
+.featured-wrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  border: 1px solid rgba(255,255,255,0.55);
+  pointer-events: none;
 }
     .source-recs-wrap {
   display: inline-flex;
