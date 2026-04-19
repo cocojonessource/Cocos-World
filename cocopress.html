@@ -353,22 +353,20 @@
 }
 
 .book::before {
-  display: none;
-}
-     .book::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(to bottom, rgba(255,255,255,0.06), transparent 28%, rgba(0,0,0,0.10) 100%);
-      pointer-events: none;
-      z-index: 2;
-    }
-
-  filter: blur(3px);
-  opacity: 0.85;
-
-  z-index: 4;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(26, 8, 43, 0.42) 0%,
+    rgba(26, 8, 43, 0.22) 38%,
+    rgba(255, 255, 255, 0.14) 72%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  z-index: 3;
   pointer-events: none;
 }
     .featured-book {
