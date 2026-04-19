@@ -1171,62 +1171,68 @@
     let currentArticleId = null;
 
     function getBookmarks() {
-      return JSON.parse(localStorage.getItem("cocoBookmarks") || "[]");
-    }
+  return JSON.parse(localStorage.getItem("cocoBookmarks") || "[]");
+}
 
-    function saveBookmarks(items) {
-      localStorage.setItem("cocoBookmarks", JSON.stringify(items));
-    }
+function saveBookmarks(items) {
+  localStorage.setItem("cocoBookmarks", JSON.stringify(items));
+}
 
-    function removeBookmark(id) {
-      const updated = getBookmarks().filter(item => item !== id);
-      saveBookmarks(updated);
-    }
+const bookmarkIdAliases = {
+  "schon-2023": "schon",
+  "nylon-2024": "nylon",
+  "bustle-2025-why-not-coco-jones": "bustle",
+  "vibe-2022-caliber": "vibe",
+  "byrdie-2025": "byrdie",
+  "elle-2025-why-not-more": "elle-2025",
+  "ap-why-not-more": "ap-why-not-more",
+  "rollingstone-2024": "rollingstone",
+  "elle-2024": "elle-2024"
+};
 
-    function getArticleById(id) {
-      const base = libraryData.find(item => item.id === id);
-      if (!base) return null;
+function normalizeBookmarkId(id) {
+  return bookmarkIdAliases[id] || id;
+}
 
-      const summaryEntry = summariesData[id] || { summary: "" };
+function removeBookmark(id) {
+  const normalizedTarget = normalizeBookmarkId(id);
 
-      return {
-        ...base,
-        summary: summaryEntry.summary || ""
-      };
-    }
+  const updated = getBookmarks().filter(item => {
+    return normalizeBookmarkId(item) !== normalizedTarget;
+  });
 
-    function buildBookMarkup(article, mode = "grid") {
-      const classes = ["book"];
-      if (mode === "reader") classes.push("reader-book");
+  saveBookmarks(updated);
+}
 
-      const coverClasses = ["book-cover", article.cover || "cover-base"];
-      const style = article.image ? `style="background-image:url('${article.image}');"` : "";
-      if (article.image) coverClasses.push("has-image");
+function getArticleById(id) {
+  const normalizedId = normalizeBookmarkId(id);
 
-      return `
-        <div class="${classes.join(" ")}" data-open="${article.id}">
-          <div class="${coverClasses.join(" ")}" ${style}>
-            <div class="cover-top">
-              <span class="cover-editorial">${article.editorial || ""}</span>
-              <span class="cover-author">${article.author || ""}</span>
-            </div>
+  const base = libraryData.find(item => item.id === normalizedId);
+  if (!base) return null;
 
-            <div class="cover-center">
-              <h3 class="cover-title">${article.title || ""}</h3>
-            </div>
+  const summaryEntry =
+    summariesData[normalizedId] ||
+    summariesData[id] ||
+    { summary: "" };
 
-            <div class="cover-footer"></div>
-          </div>
-        </div>
-      `;
-    }
+  return {
+    ...base,
+    summary: summaryEntry.summary || ""
+  };
+}
 
-    function getBookmarkedArticles() {
-      return getBookmarks()
-        .map(id => getArticleById(id))
-        .filter(Boolean);
-    }
+function getBookmarkedArticles() {
+  const seen = new Set();
 
+  return getBookmarks()
+    .map(id => getArticleById(id))
+    .filter(Boolean)
+    .filter(article => {
+      if (seen.has(article.id)) return false;
+      seen.add(article.id);
+      return true;
+    });
+}
     function renderYearFilter() {
       const bookmarked = getBookmarkedArticles();
       const years = [...new Set(bookmarked.map(article => article.year))].sort((a, b) => b.localeCompare(a));
