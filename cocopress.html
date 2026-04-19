@@ -1112,7 +1112,7 @@ const FEATURED_IDS = [
    Loads JSON file and prepares it for the app.
    ========================================================= */
 async function loadLibraryData() {
-  const response = await fetch('./data/cocopress.json', { cache: 'no-store' });
+  const response = await fetch('/Cocos-World/data/cocopress.json', { cache: 'no-store' });
 
   if (!response.ok) {
     throw new Error('Failed to load cocopress-data.json');
