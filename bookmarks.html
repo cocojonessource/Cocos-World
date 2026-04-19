@@ -1026,7 +1026,12 @@ let libraryData = [];
 let summariesData = {};
 
 async function loadLibraryData() {
-  const response = await fetch("cocopress-library.json");
+  const response = await fetch("./data/cocopress.json", { cache: "no-store" });
+
+  if (!response.ok) {
+    throw new Error(`HTTP ${response.status} loading ./data/cocopress.json`);
+  }
+
   const rawLibraryData = await response.json();
 
   libraryData = rawLibraryData.map(item => ({
@@ -1048,6 +1053,8 @@ async function loadLibraryData() {
       { summary: item.summary || "" }
     ])
   );
+
+  console.log("Loaded bookmark library from ./data/cocopress.json", libraryData.length);
 }
 
     const booksGrid = document.getElementById("booksGrid");
@@ -1330,10 +1337,10 @@ loadLibraryData()
     renderBookmarks();
   })
   .catch((error) => {
-    console.error("Failed to load cocopress-library.json", error);
+    console.error("Failed to load ./data/cocopress.json", error);
     booksGrid.innerHTML = "";
     emptyState.style.display = "block";
-    emptyState.textContent = "Could not load bookmark library.";
+    emptyState.textContent = "Could not load ./data/cocopress.json";
   });
   </script>
 </body>
