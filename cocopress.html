@@ -577,7 +577,7 @@
     .archive-card {
   position: relative;
   min-width: 0;
-  padding-bottom: 18px;
+  padding-bottom: 8px;
 }
 
 .archive-card::after {
@@ -594,6 +594,11 @@
   z-index: 0;
 }
 
+.archive-card > .book {
+  position: relative;
+  z-index: 1;
+}
+
 .archive-card > .book,
 .archive-card > .archive-meta {
   position: relative;
@@ -602,17 +607,12 @@
     .row-shelf {
   display: none;
 }
-    .archive-meta {
-      padding: 10px 2px 0;
-      color: var(--text-soft);
-    }
-    .archive-line {
-      font-size: 12px;
-      line-height: 1.4;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
+   .archive-meta {
+  display: none;
+}
+.archive-line {
+  display: none;
+}
     .empty-state {
       display: none;
       padding: 18px 10px 4px;
