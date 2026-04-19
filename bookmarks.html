@@ -392,16 +392,18 @@
     }
 
     .book-cover {
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-      padding: 16px 16px 18px 28px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      background-size: cover;
-      background-position: center;
-    }
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  padding: 16px 16px 18px 28px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-size: contain;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: #eadbf8;
+}
 
     .book-cover.has-image::before {
       content: "";
