@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Bookmarks — Coco's World</title>
+
+  <style>
+    :root {
+      --bg-1: #f8f0ff;
+      --bg-2: #eddfff;
+      --bg-3: #dcc4f3;
+
+      --lavender: #8b5fbf;
+      --lavender-deep: #6b2fa3;
+      --lavender-soft: #b695db;
+
+      --pink: #f2bfd7;
+      --pink-soft: #ffe4f0;
+      --pink-scribble: #ef8ec2;
+
+      --white: #ffffff;
+      --gold: #d9b165;
+
+      --text: #562b83;
+      --text-soft: #7d5aa6;
+
+      --panel: rgba(255, 255, 255, 0.58);
+      --border: rgba(255, 255, 255, 0.64);
+
+      --shadow: rgba(107, 47, 163, 0.12);
+      --shadow-strong: rgba(107, 47, 163, 0.22);
+
+      --shelf-top: #efdfff;
+      --shelf-mid: #d7b7f0;
+      --shelf-bottom: #b984db;
+
+      --book-radius: 8px;
+      --sidebar-width: 180px;
+      --reader-width: 1260px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at 15% 12%, rgba(255,255,255,0.75), transparent 20%),
+        radial-gradient(circle at 85% 18%, rgba(255,255,255,0.42), transparent 22%),
+        radial-gradient(circle at 70% 70%, rgba(255,255,255,0.25), transparent 24%),
+        linear-gradient(to bottom, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button,
+    input,
+    select {
+      font: inherit;
+    }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 2500;
+      background: rgba(245, 234, 255, 0.78);
+      backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(255,255,255,0.6);
+    }
+
+    .topbar-inner {
+      max-width: 1450px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--lavender-deep);
+    }
+
+    .anchor-home {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.92);
+      color: var(--gold);
+      border: 1px solid rgba(255,255,255,0.8);
+      box-shadow: 0 8px 18px rgba(107, 47, 163, 0.1);
+      flex-shrink: 0;
+    }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--lavender-deep);
+    }
+
+    .nav a {
+      position: relative;
+      opacity: 0.92;
+    }
+
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(to right, var(--pink), var(--lavender));
+      transform: scaleX(0);
+      transform-origin: center;
+      transition: transform 0.22s ease;
+    }
+
+    .nav a:hover::after,
+    .nav a.active::after {
+      transform: scaleX(1);
+    }
+
+    .page {
+      max-width: 1450px;
+      margin: 0 auto;
+      padding: 28px 20px 70px;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    .main {
+      min-width: 0;
+    }
+
+    .sidebar {
+      position: sticky;
+      top: 92px;
+      min-height: calc(100vh - 116px);
+      padding: 22px 16px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.52);
+      border: 1px solid rgba(255,255,255,0.65);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 18px 40px var(--shadow);
+    }
+
+    .sidebar-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 16px;
+      color: var(--lavender-deep);
+    }
+
+    .sidebar-header svg {
+      width: 21px;
+      height: 21px;
+      stroke: currentColor;
+      stroke-width: 1.65;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    .sidebar-title {
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 20px;
+      line-height: 1.05;
+      font-weight: 700;
+    }
+
+    .sidebar-links {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      width: 100%;
+    }
+
+    .sidebar-link {
+      display: block;
+      width: 100%;
+      padding: 11px 11px;
+      border-radius: 14px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--lavender-deep);
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .sidebar-link:hover {
+      background: rgba(255,255,255,0.50);
+      transform: translateX(1px);
+    }
+
+    .sidebar-link.active {
+      background: rgba(255,255,255,0.85);
+      box-shadow: 0 10px 22px rgba(107,47,163,0.08);
+    }
+
+    .page-header {
+      margin-bottom: 18px;
+      padding-top: 4px;
+      text-align: center;
+    }
+
+    .hero-title {
+      margin: 0 0 12px;
+      font-family: "Brush Script MT", "Segoe Script", cursive;
+      font-size: clamp(34px, 4vw, 52px);
+      line-height: 1;
+      color: var(--lavender-deep);
+      transform: none;
+      text-align: center;
+    }
+
+    .hero-copy {
+      margin: 0 auto;
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--text-soft);
+      max-width: 760px;
+      text-align: center;
+    }
+
+    .panel {
+      position: relative;
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 30px;
+      box-shadow: 0 18px 40px var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .controls-wrap {
+      padding: 18px;
+      margin-bottom: 18px;
+    }
+
+    .control-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 220px;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .search-input,
+    .year-filter {
+      width: 100%;
+      border: 1px solid rgba(107,47,163,0.12);
+      background: rgba(255,255,255,0.92);
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-size: 14px;
+      color: var(--lavender-deep);
+      outline: none;
+    }
+
+    .bookmarks-shelf-wrap {
+      position: relative;
+      padding: 28px 28px 34px;
+      overflow: hidden;
+    }
+
+    .sparkle-field {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      border-radius: 30px;
+    }
+
+    .sparkle {
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 0 10px rgba(255,255,255,0.8);
+      animation: twinkle 3.2s ease-in-out infinite;
+    }
+
+    .sparkle.s1 { width: 3px; height: 3px; }
+    .sparkle.s2 { width: 4px; height: 4px; animation-duration: 2.8s; }
+    .sparkle.s3 { width: 5px; height: 5px; animation-duration: 3.6s; }
+
+    @keyframes twinkle {
+      0%, 100% { opacity: 0.25; transform: scale(0.9); }
+      50% { opacity: 1; transform: scale(1.15); }
+    }
+
+    .bookmarks-stage {
+      position: relative;
+      z-index: 2;
+      min-height: 520px;
+    }
+
+    .books-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 28px 24px;
+      align-items: end;
+    }
+
+    .archive-card {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 0;
+    }
+
+    .book {
+      position: relative;
+      width: 100%;
+      max-width: 208px;
+      height: 350px;
+      border-radius: var(--book-radius);
+      overflow: hidden;
+      box-shadow:
+        0 18px 30px rgba(81, 37, 125, 0.18),
+        0 8px 20px rgba(255,255,255,0.2);
+      transform: translateY(0);
+      transition: transform 0.26s ease, box-shadow 0.26s ease;
+      cursor: pointer;
+      border: 1px solid rgba(255,255,255,0.48);
+      flex-shrink: 0;
+      z-index: 1;
+      background: linear-gradient(145deg, #cfb7ee 0%, #a580d2 50%, #7043a6 100%);
+    }
+
+    .book:hover {
+      transform: translateY(-7px);
+      box-shadow:
+        0 24px 38px rgba(81, 37, 125, 0.22),
+        0 8px 24px rgba(255,255,255,0.28);
+    }
+
+    .book::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 16px;
+      height: 100%;
+      background:
+        linear-gradient(to right,
+          rgba(255,255,255,0.42) 0%,
+          rgba(255,255,255,0.22) 18%,
+          rgba(96, 51, 142, 0.24) 62%,
+          rgba(255,255,255,0.04) 100%);
+      box-shadow: inset -1px 0 0 rgba(65, 28, 104, 0.16);
+      z-index: 3;
+    }
+
+    .book::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, rgba(255,255,255,0.06), transparent 28%, rgba(0,0,0,0.10) 100%);
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    .book-cover {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      padding: 16px 16px 18px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .book-cover.has-image::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, rgba(36,16,54,0.14), rgba(36,16,54,0.58));
+      z-index: 0;
+    }
+
+    .book-cover.has-image > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .reader-book {
+      width: 205px;
+      height: 330px;
+      margin-bottom: 18px;
+    }
+
+    .cover-schon {
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.22), transparent 20%),
+        linear-gradient(145deg, #e9d9f7 0%, #c7a1df 48%, #8a60ab 100%);
+    }
+
+    .cover-nylon {
+      background:
+        radial-gradient(circle at center top, rgba(255,255,255,0.22), transparent 24%),
+        linear-gradient(145deg, #b8b0f3 0%, #8a7ce1 45%, #5d4fc2 100%);
+    }
+
+    .cover-bustle {
+      background:
+        radial-gradient(circle at top center, rgba(255,255,255,0.26), transparent 24%),
+        linear-gradient(145deg, #ffdfd9 0%, #e9b2ca 44%, #ac6a9d 100%);
+    }
+
+    .cover-vibe {
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.28), transparent 26%),
+        linear-gradient(145deg, #9e77d8 0%, #6e40ad 42%, #4e247e 100%);
+    }
+
+    .cover-byrdie {
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.38), transparent 24%),
+        linear-gradient(145deg, #f2d7ee 0%, #dbb5e8 44%, #a573cd 100%);
+    }
+
+    .cover-elle {
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.22), transparent 22%),
+        linear-gradient(145deg, #f3c6dd 0%, #d48ab7 45%, #8a4f8f 100%);
+    }
+
+    .cover-ap {
+      background:
+        radial-gradient(circle at bottom right, rgba(255,255,255,0.22), transparent 26%),
+        linear-gradient(145deg, #c8cff8 0%, #9aa9ec 42%, #6a6fbc 100%);
+    }
+
+    .cover-rollingstone {
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.22), transparent 20%),
+        linear-gradient(145deg, #d4b4f4 0%, #a576d2 44%, #67358f 100%);
+    }
+
+    .cover-base {
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.24), transparent 20%),
+        linear-gradient(145deg, #cfb7ee 0%, #a580d2 50%, #7043a6 100%);
+    }
+
+    .cover-top {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 5px;
+    }
+
+    .cover-editorial {
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.96);
+      text-shadow: 0 2px 8px rgba(29,10,44,0.22);
+      line-height: 1.2;
+      max-width: 100%;
+    }
+
+    .cover-author {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.84);
+      line-height: 1.25;
+      max-width: 100%;
+    }
+
+    .cover-center {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      flex: 1;
+      padding-top: 82px;
+      padding-bottom: 8px;
+    }
+
+    .cover-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(22px, 1.8vw, 30px);
+      line-height: 0.96;
+      color: rgba(255,255,255,0.98);
+      text-shadow: 0 4px 16px rgba(43, 13, 70, 0.22);
+      word-break: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .cover-footer {
+      min-height: 8px;
+    }
+
+    .book-oval-shadow {
+      width: 82%;
+      height: 28px;
+      border-radius: 999px;
+      background: rgba(73, 31, 111, 0.28);
+      filter: blur(14px);
+      margin-top: 12px;
+      margin-bottom: -6px;
+      pointer-events: none;
+    }
+
+    .archive-meta {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      padding: 14px 2px 0;
+      text-align: center;
+    }
+
+    .archive-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 22px;
+      line-height: 1.02;
+      color: var(--lavender-deep);
+    }
+
+    .archive-line {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-soft);
+    }
+
+    .remove-inline {
+      margin-top: 12px;
+      border: none;
+      background: rgba(255,255,255,0.94);
+      color: var(--lavender-deep);
+      padding: 10px 14px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(107,47,163,0.08);
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    .remove-inline:hover {
+      transform: translateY(-1px);
+    }
+
+    .large-shelf {
+      width: 100%;
+      height: 18px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, var(--shelf-top), var(--shelf-mid) 58%, var(--shelf-bottom));
+      border: 1px solid rgba(255,255,255,0.52);
+      box-shadow:
+        0 4px 0 rgba(255,255,255,0.40) inset,
+        0 14px 24px rgba(98,53,140,0.14);
+      margin-top: 34px;
+      position: relative;
+    }
+
+    .large-shelf::after {
+      content: "";
+      position: absolute;
+      left: 3%;
+      right: 3%;
+      bottom: -10px;
+      height: 10px;
+      border-radius: 999px;
+      background: rgba(86, 43, 131, 0.14);
+      filter: blur(10px);
+    }
+
+    .empty-state {
+      display: none;
+      padding: 80px 20px 70px;
+      text-align: center;
+      color: var(--text-soft);
+      font-size: 16px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .footer {
+      padding: 26px 20px 18px;
+      text-align: center;
+      color: var(--text-soft);
+      font-size: 14px;
+    }
+
+    .reader {
+      position: fixed;
+      inset: 0;
+      z-index: 4000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: rgba(44, 20, 67, 0.56);
+      backdrop-filter: blur(12px);
+    }
+
+    .reader.active {
+      display: flex;
+    }
+
+    .reader-shell {
+      position: relative;
+      width: min(var(--reader-width), 100%);
+      height: min(92vh, 920px);
+      display: grid;
+      grid-template-columns: 320px minmax(0, 1fr);
+      background: rgba(249, 244, 255, 0.97);
+      border-radius: 28px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.76);
+      box-shadow: 0 28px 80px rgba(34, 10, 52, 0.28);
+    }
+
+    .reader-close {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      border: none;
+      background: rgba(255,255,255,0.96);
+      color: var(--lavender-deep);
+      font-size: 18px;
+      font-weight: 800;
+      cursor: pointer;
+      z-index: 6;
+      box-shadow: 0 10px 24px rgba(107,47,163,0.14);
+    }
+
+    .reader-left {
+      position: relative;
+      padding: 76px 24px 24px;
+      background:
+        radial-gradient(circle at 22% 14%, rgba(255,255,255,0.72), transparent 24%),
+        radial-gradient(circle at 84% 20%, rgba(255,255,255,0.34), transparent 22%),
+        linear-gradient(160deg, #f4e8ff 0%, #ecd9ff 52%, #e0c6f4 100%);
+      border-right: 1px solid rgba(255,255,255,0.7);
+      overflow-y: auto;
+    }
+
+    .reader-book-display {
+      position: relative;
+      min-height: 430px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      padding-top: 16px;
+    }
+
+    .reader-book-glow {
+      position: absolute;
+      top: 56px;
+      width: 220px;
+      height: 300px;
+      border-radius: 30px;
+      background: rgba(130, 86, 190, 0.22);
+      filter: blur(30px);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .reader-book-shelf {
+      width: 210px;
+      height: 14px;
+      border-radius: 999px;
+      background: linear-gradient(to bottom, var(--shelf-top), var(--shelf-mid) 58%, var(--shelf-bottom));
+      border: 1px solid rgba(255,255,255,0.52);
+      box-shadow:
+        0 4px 0 rgba(255,255,255,0.40) inset,
+        0 12px 20px rgba(98,53,140,0.14);
+      margin-top: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .reader-side-label {
+      margin-top: 22px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      text-align: center;
+    }
+
+    .reader-right {
+      padding: 78px 42px 34px;
+      overflow-y: auto;
+      background: rgba(255,255,255,0.84);
+    }
+
+    .reader-kicker {
+      margin: 0 0 12px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+    }
+
+    .reader-title {
+      margin: 0 0 14px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 44px;
+      line-height: 0.96;
+      color: var(--lavender-deep);
+    }
+
+    .reader-meta {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+    }
+
+    .reader-chip {
+      padding: 8px 11px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.03em;
+      background: rgba(241,229,255,0.92);
+      color: var(--lavender-deep);
+      border: 1px solid rgba(167,129,209,0.18);
+    }
+
+    .reader-summary {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.95;
+      color: var(--text-soft);
+      white-space: pre-line;
+      max-width: 780px;
+    }
+
+    .reader-actions {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      margin-top: 30px;
+      padding-top: 24px;
+      border-top: 1px solid rgba(107,47,163,0.08);
+      flex-wrap: wrap;
+    }
+
+    .reader-btn,
+    .reader-remove {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 14px 18px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 10px 24px rgba(107,47,163,0.10);
+    }
+
+    .reader-btn {
+      background: linear-gradient(135deg, #f2bfd7, #c7a7ef);
+      color: #4d246f;
+    }
+
+    .reader-remove {
+      background: rgba(255,255,255,0.94);
+      color: var(--lavender-deep);
+    }
+
+    @media (max-width: 1024px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: relative;
+        top: auto;
+        min-height: auto;
+      }
+
+      .reader-shell {
+        grid-template-columns: 1fr;
+      }
+
+      .reader-left {
+        border-right: none;
+        border-bottom: 1px solid rgba(255,255,255,0.7);
+      }
+    }
+
+    @media (max-width: 900px) {
+      .books-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar-inner {
+        align-items: flex-start;
+      }
+
+      .brand {
+        font-size: 24px;
+      }
+
+      .page {
+        padding: 22px 14px 46px;
+      }
+
+      .sidebar,
+      .controls-wrap,
+      .bookmarks-shelf-wrap {
+        border-radius: 24px;
+      }
+
+      .control-row {
+        grid-template-columns: 1fr;
+      }
+
+      .books-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .reader {
+        padding: 10px;
+      }
+
+      .reader-shell {
+        width: 100%;
+        height: min(94vh, 940px);
+        border-radius: 22px;
+      }
+
+      .reader-left,
+      .reader-right {
+        padding-left: 18px;
+        padding-right: 18px;
+      }
+
+      .reader-title {
+        font-size: 34px;
+      }
+
+      .reader-summary {
+        font-size: 16px;
+        line-height: 1.85;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <a class="anchor-home" href="index.html">⚓</a>
+        <span>Coco's World</span>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="#">Music</a>
+        <a href="#">CocoStream</a>
+        <a href="cocopress.html" class="active">CocoPress</a>
+        <a href="#">Updates</a>
+        <a href="#">Calendar</a>
+        <a href="#">Games</a>
+        <a href="story.html">Story</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidebar-header">
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M2 6c0-1.1.9-2 2-2h6c1.1 0 2 .9 2 2v14c0-1.1-.9-2-2-2H4c-1.1 0-2-.9-2-2V6z"></path>
+            <path d="M22 6c0-1.1-.9-2-2-2h-6c-1.1 0-2 .9-2 2v14c0-1.1-.9-2 2-2h6c1.1 0 2-.9 2-2V6z"></path>
+          </svg>
+          <div class="sidebar-title">My Coco Reads</div>
+        </div>
+
+        <nav class="sidebar-links">
+          <a href="cocopress.html" class="sidebar-link">Library</a>
+          <a href="reading-history.html" class="sidebar-link">Reading History</a>
+          <a href="bookmarks.html" class="sidebar-link active">Bookmarks</a>
+        </nav>
+      </aside>
+
+      <div class="main">
+        <section class="page-header">
+          <h1 class="hero-title">Bookmarks</h1>
+          <p class="hero-copy">
+            Your saved CocoPress reads, all kept on one shelf.
+          </p>
+        </section>
+
+        <section class="controls-wrap panel">
+          <div class="control-row">
+            <input
+              type="text"
+              id="searchInput"
+              class="search-input"
+              placeholder="Search bookmarked title, editorial, author, or summary..."
+            />
+
+            <select id="yearFilter" class="year-filter">
+              <option value="all">All Years</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="bookmarks-shelf-wrap panel">
+          <div class="sparkle-field" aria-hidden="true">
+            <span class="sparkle s2" style="left: 10%; top: 12%;"></span>
+            <span class="sparkle s1" style="left: 20%; top: 25%;"></span>
+            <span class="sparkle s3" style="left: 31%; top: 15%;"></span>
+            <span class="sparkle s1" style="left: 43%; top: 24%;"></span>
+            <span class="sparkle s2" style="left: 58%; top: 14%;"></span>
+            <span class="sparkle s3" style="left: 72%; top: 20%;"></span>
+            <span class="sparkle s1" style="left: 86%; top: 14%;"></span>
+            <span class="sparkle s2" style="left: 15%; top: 72%;"></span>
+            <span class="sparkle s1" style="left: 83%; top: 76%;"></span>
+            <span class="sparkle s3" style="left: 55%; top: 83%;"></span>
+          </div>
+
+          <div class="bookmarks-stage">
+            <div class="books-grid" id="booksGrid"></div>
+
+            <div class="empty-state" id="emptyState">
+              No bookmarks yet.
+            </div>
+
+            <div class="large-shelf"></div>
+          </div>
+        </section>
+
+        <div class="footer">
+          CocoPress — your saved shelf.
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <div class="reader" id="reader">
+    <div class="reader-shell">
+      <button class="reader-close" id="readerClose" aria-label="Close">×</button>
+
+      <div class="reader-left">
+        <div class="reader-book-display">
+          <div class="reader-book-glow"></div>
+          <div id="readerBookMount"></div>
+          <div class="reader-book-shelf"></div>
+          <div class="reader-side-label">Saved bookmark</div>
+        </div>
+      </div>
+
+      <div class="reader-right">
+        <p class="reader-kicker" id="readerKicker"></p>
+        <h2 class="reader-title" id="readerTitle"></h2>
+        <div class="reader-meta" id="readerMeta"></div>
+        <p class="reader-summary" id="readerSummary"></p>
+
+        <div class="reader-actions">
+          <a class="reader-btn" id="readerSourceBtn" href="#" rel="noopener noreferrer">
+            Read on Source
+          </a>
+          <button class="reader-remove" id="readerRemoveBtn" type="button">
+            Remove from Bookmarks
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* Use the SAME library data and summaries from your CocoPress page.
+       I kept the same structure so bookmarks.html can display saved IDs exactly the same way. */
+
+    const libraryData = [
+      {
+        id: "schon",
+        title: "A Schön! Interview",
+        fullTitle: "interview | coco jones | Schön! Magazine",
+        editorial: "Schön! Magazine",
+        author: "Schön! Magazine",
+        year: "2024",
+        source: "https://schonmagazine.com/interview-coco-jones/",
+        image: "",
+        cover: "cover-schon"
+      },
+      {
+        id: "nylon",
+        title: "Works for Herself",
+        fullTitle: "Coco Jones Works For Herself",
+        editorial: "Nylon",
+        author: "Nylon",
+        year: "2024",
+        source: "https://www.nylon.com/entertainment/coco-jones-2024-debut-album",
+        image: "",
+        cover: "cover-nylon"
+      },
+      {
+        id: "bustle",
+        title: "Life After Disney",
+        fullTitle: "Coco Jones On Super Bowl, Engagement, Life After Disney & 'Bel-Air' S4",
+        editorial: "Bustle",
+        author: "Bustle",
+        year: "2025",
+        source: "https://www.bustle.com/entertainment/coco-jones-super-bowl-performance-why-not-more-new-album-engagement-bel-air-interview",
+        image: "",
+        cover: "cover-bustle"
+      },
+      {
+        id: "vibe",
+        title: "More Than Hilary Banks",
+        fullTitle: "Coco Jones Is More Than Hilary Banks",
+        editorial: "Vibe",
+        author: "Vibe",
+        year: "2022",
+        source: "https://www.vibe.com/features/editorial/coco-jones-caliber-interview-1234654510/",
+        image: "",
+        cover: "cover-vibe"
+      },
+      {
+        id: "byrdie",
+        title: "Beauty, Ritual, and Ease",
+        fullTitle: "Coco Jones on Her Beauty Routine, Favorite Hairstyle, and More",
+        editorial: "Byrdie",
+        author: "Byrdie",
+        year: "2025",
+        source: "https://www.byrdie.com/coco-jones-interview-11790049",
+        image: "",
+        cover: "cover-byrdie"
+      },
+      {
+        id: "elle-2025",
+        title: "Why Not More",
+        fullTitle: "Coco Jones Pays Tribute to Black Women: ‘We Thrive Through the Most Unfair Odds’",
+        editorial: "Elle",
+        author: "Elle",
+        year: "2025",
+        source: "https://www.elle.com/culture/music/a64640841/coco-jones-why-not-more-interview/",
+        image: "",
+        cover: "cover-elle"
+      },
+      {
+        id: "ap-why-not-more",
+        title: "Proud of the Debut",
+        fullTitle: "Coco Jones says she's 'proud' of debut album 'Why Not More?'",
+        editorial: "AP News",
+        author: "AP News",
+        year: "2025",
+        source: "https://apnews.com/video/coco-jones-says-shes-proud-of-debut-album-why-not-more-8935463c04e543b7aa75c6be67397bb6",
+        image: "",
+        cover: "cover-ap"
+      },
+      {
+        id: "rollingstone",
+        title: "Inside the Green Room",
+        fullTitle: "Coco Jones Reflects on Success, R&B for The Green Room",
+        editorial: "Rolling Stone",
+        author: "Rolling Stone",
+        year: "2024",
+        source: "https://www.rollingstone.com/music/music-news/coco-jones-rolling-stone-the-green-room-interview-1234961544/",
+        image: "",
+        cover: "cover-rollingstone"
+      },
+      {
+        id: "elle-2024",
+        title: "Winning Her First Grammy",
+        fullTitle: "Coco Jones on Winning Her First Grammy, Career Goals, and Beyoncé",
+        editorial: "Elle",
+        author: "Elle",
+        year: "2024",
+        source: "https://www.elle.com/culture/music/a60539065/coco-jones-interview-2024/",
+        image: "",
+        cover: "cover-elle"
+      }
+    ];
+
+    const summariesData = {
+      "schon": {
+        summary: "Schön! frames Coco through a fashion-editorial lens, centering poise, image, and presence. It reads like a mood piece more than a quick update, which makes it useful for the archive because it preserves how editorial media helps shape public perception beyond music alone."
+      },
+      "nylon": {
+        summary: "Nylon centers autonomy, momentum, and the way Coco appears to be defining the next stage of her career on her own terms. It feels modern and directional, making it one of the strongest pieces for understanding this chapter of her press presence."
+      },
+      "bustle": {
+        summary: "Bustle gives a broader celebrity-and-career snapshot, touching television, visibility, and the way different parts of Coco’s public life intersect. It works well in the library because it captures breadth rather than just one narrow angle."
+      },
+      "vibe": {
+        summary: "An earlier editorial centered on identity and ambition, especially around being understood beyond one defining role. It matters because it captures a point when Coco was already aiming past the frame some people still wanted to keep her in."
+      },
+      "byrdie": {
+        summary: "Byrdie shifts the focus toward beauty, routine, and softness, which gives the archive variety beyond music and milestone coverage. It shows how lifestyle media also contributes to building an artist’s image."
+      },
+      "elle-2025": {
+        summary: "Elle ties the debut album era to larger emotional and cultural framing, especially around pressure, Black womanhood, and resilience. It helps the archive feel grounded in meaning rather than pure publicity."
+      },
+      "ap-why-not-more": {
+        summary: "A concise AP piece focused on the debut album and the straightforward public framing around it. This one is useful because it acts as a clean milestone record inside the library."
+      },
+      "rollingstone": {
+        summary: "Rolling Stone leans into genre, placement, and the language of artistic success. It works well for the archive because it captures how Coco is discussed inside a more music-centered frame."
+      },
+      "elle-2024": {
+        summary: "This feature is centered on recognition, ambition, and what it means to hit a major milestone while still clearly reaching upward. It belongs in the archive because it captures a breakthrough without pretending the journey is complete."
+      }
+    };
+
+    const booksGrid = document.getElementById("booksGrid");
+    const emptyState = document.getElementById("emptyState");
+    const searchInput = document.getElementById("searchInput");
+    const yearFilter = document.getElementById("yearFilter");
+
+    const reader = document.getElementById("reader");
+    const readerClose = document.getElementById("readerClose");
+    const readerBookMount = document.getElementById("readerBookMount");
+    const readerKicker = document.getElementById("readerKicker");
+    const readerTitle = document.getElementById("readerTitle");
+    const readerMeta = document.getElementById("readerMeta");
+    const readerSummary = document.getElementById("readerSummary");
+    const readerSourceBtn = document.getElementById("readerSourceBtn");
+    const readerRemoveBtn = document.getElementById("readerRemoveBtn");
+
+    let currentArticleId = null;
+
+    function getBookmarks() {
+      return JSON.parse(localStorage.getItem("cocoBookmarks") || "[]");
+    }
+
+    function saveBookmarks(items) {
+      localStorage.setItem("cocoBookmarks", JSON.stringify(items));
+    }
+
+    function removeBookmark(id) {
+      const updated = getBookmarks().filter(item => item !== id);
+      saveBookmarks(updated);
+    }
+
+    function getArticleById(id) {
+      const base = libraryData.find(item => item.id === id);
+      if (!base) return null;
+
+      const summaryEntry = summariesData[id] || { summary: "" };
+
+      return {
+        ...base,
+        summary: summaryEntry.summary || ""
+      };
+    }
+
+    function buildBookMarkup(article, mode = "grid") {
+      const classes = ["book"];
+      if (mode === "reader") classes.push("reader-book");
+
+      const coverClasses = ["book-cover", article.cover || "cover-base"];
+      const style = article.image ? `style="background-image:url('${article.image}');"` : "";
+      if (article.image) coverClasses.push("has-image");
+
+      return `
+        <div class="${classes.join(" ")}" data-open="${article.id}">
+          <div class="${coverClasses.join(" ")}" ${style}>
+            <div class="cover-top">
+              <span class="cover-editorial">${article.editorial || ""}</span>
+              <span class="cover-author">${article.author || ""}</span>
+            </div>
+
+            <div class="cover-center">
+              <h3 class="cover-title">${article.title || ""}</h3>
+            </div>
+
+            <div class="cover-footer"></div>
+          </div>
+        </div>
+      `;
+    }
+
+    function getBookmarkedArticles() {
+      return getBookmarks()
+        .map(id => getArticleById(id))
+        .filter(Boolean);
+    }
+
+    function renderYearFilter() {
+      const bookmarked = getBookmarkedArticles();
+      const years = [...new Set(bookmarked.map(article => article.year))].sort((a, b) => b.localeCompare(a));
+
+      yearFilter.innerHTML = `<option value="all">All Years</option>`;
+      years.forEach(year => {
+        yearFilter.insertAdjacentHTML("beforeend", `<option value="${year}">${year}</option>`);
+      });
+    }
+
+    function getFilteredBookmarks() {
+      const selectedYear = yearFilter.value;
+      const searchValue = searchInput.value.trim().toLowerCase();
+
+      return getBookmarkedArticles().filter(article => {
+        const yearMatch = selectedYear === "all" || article.year === selectedYear;
+
+        const haystack = [
+          article.title,
+          article.fullTitle,
+          article.editorial,
+          article.author,
+          article.summary,
+          article.year
+        ].join(" ").toLowerCase();
+
+        const searchMatch = !searchValue || haystack.includes(searchValue);
+
+        return yearMatch && searchMatch;
+      });
+    }
+
+    function renderBookmarks() {
+      renderYearFilter();
+
+      const bookmarkedArticles = getFilteredBookmarks();
+
+      if (!bookmarkedArticles.length) {
+        booksGrid.innerHTML = "";
+        emptyState.style.display = "block";
+        return;
+      }
+
+      emptyState.style.display = "none";
+
+      booksGrid.innerHTML = bookmarkedArticles.map(article => `
+        <article class="archive-card">
+          ${buildBookMarkup(article)}
+          <div class="book-oval-shadow"></div>
+
+          <div class="archive-meta">
+            <h3 class="archive-title">${article.title}</h3>
+            <div class="archive-line">${article.editorial}</div>
+            <div class="archive-line">${article.author}</div>
+          </div>
+
+          <button class="remove-inline" type="button" data-remove="${article.id}">
+            Remove from Bookmarks
+          </button>
+        </article>
+      `).join("");
+    }
+
+    function addToHistory(article) {
+      const current = JSON.parse(localStorage.getItem("cocoReadingHistory") || "[]");
+      const filtered = current.filter(item => item.id !== article.id);
+
+      const newEntry = {
+        id: article.id,
+        title: article.title,
+        editorial: article.editorial,
+        author: article.author,
+        year: article.year,
+        source: article.source,
+        image: article.image || "",
+        viewedAt: new Date().toISOString()
+      };
+
+      localStorage.setItem(
+        "cocoReadingHistory",
+        JSON.stringify([newEntry, ...filtered].slice(0, 100))
+      );
+    }
+
+    function openCenteredPopup(url) {
+      const width = 960;
+      const height = 760;
+      const left = window.screenX + (window.outerWidth - width) / 2;
+      const top = window.screenY + (window.outerHeight - height) / 2;
+
+      return window.open(
+        url,
+        "cocoReaderPopup",
+        `width=${width},height=${height},top=${top},left=${left},resizable=yes,scrollbars=yes`
+      );
+    }
+
+    function openReader(id) {
+      const article = getArticleById(id);
+      if (!article) return;
+
+      currentArticleId = id;
+
+      readerBookMount.innerHTML = buildBookMarkup(article, "reader");
+      readerKicker.textContent = `${article.editorial} • ${article.year}`;
+      readerTitle.textContent = article.fullTitle || article.title;
+      readerSummary.textContent = article.summary || "Summary coming soon.";
+
+      readerMeta.innerHTML = `
+        <span class="reader-chip">${article.editorial}</span>
+        <span class="reader-chip">${article.author}</span>
+        <span class="reader-chip">${article.year}</span>
+      `;
+
+      readerSourceBtn.href = article.source;
+      readerSourceBtn.dataset.articleId = article.id;
+
+      reader.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeReader() {
+      reader.classList.remove("active");
+      document.body.style.overflow = "";
+      currentArticleId = null;
+    }
+
+    booksGrid.addEventListener("click", (event) => {
+      const removeBtn = event.target.closest("[data-remove]");
+      if (removeBtn) {
+        removeBookmark(removeBtn.dataset.remove);
+        renderBookmarks();
+        return;
+      }
+
+      const book = event.target.closest("[data-open]");
+      if (book) {
+        openReader(book.dataset.open);
+      }
+    });
+
+    readerClose.addEventListener("click", closeReader);
+
+    reader.addEventListener("click", (event) => {
+      if (event.target === reader) closeReader();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && reader.classList.contains("active")) {
+        closeReader();
+      }
+    });
+
+    readerSourceBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+
+      const articleId = readerSourceBtn.dataset.articleId;
+      const article = getArticleById(articleId);
+      if (!article) return;
+
+      openCenteredPopup(article.source);
+      addToHistory(article);
+    });
+
+    readerRemoveBtn.addEventListener("click", () => {
+      if (!currentArticleId) return;
+
+      removeBookmark(currentArticleId);
+      closeReader();
+      renderBookmarks();
+    });
+
+    searchInput.addEventListener("input", renderBookmarks);
+    yearFilter.addEventListener("change", renderBookmarks);
+
+    renderBookmarks();
+  </script>
+</body>
+</html>
