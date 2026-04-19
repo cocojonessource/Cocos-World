@@ -12,33 +12,33 @@
        Keeping the overall CocoPress palette from your current file,
        but stripping shadows and tightening proportions.
        ========================================================= */
-    :root {
-      --bg-1: #f8f0ff;
-      --bg-2: #eddfff;
-      --bg-3: #dcc4f3;
-      --lavender-deep: #6b2fa3;
-      --lavender: #8b5fbf;
-      --lavender-soft: #b695db;
-      --pink: #f2bfd7;
-      --pink-soft: #ffe4f0;
-      --pink-scribble: #ef8ec2;
-      --text: #562b83;
-      --text-soft: #7d5aa6;
-      --white: #ffffff;
-      --gold: #d9b165;
-      --panel: rgba(255,255,255,0.72);
-      --border: rgba(255,255,255,0.76);
-      --sidebar-width: 188px;
-      --book-radius: 10px;
-      --featured-book-width: 258px;
-      --featured-book-height: 414px;
-      --library-book-width: 100%;
-      --library-book-height: 290px;
-      --reader-width: 1040px;
-      --shelf-top: #efdfff;
-      --shelf-mid: #d7b7f0;
-      --shelf-bottom: #b984db;
-    }
+   :root {
+  --bg-1: #f8f0ff;
+  --bg-2: #eddfff;
+  --bg-3: #dcc4f3;
+  --lavender-deep: #6b2fa3;
+  --lavender: #8b5fbf;
+  --lavender-soft: #b695db;
+  --pink: #f2bfd7;
+  --pink-soft: #ffe4f0;
+  --pink-scribble: #ef8ec2;
+  --text: #562b83;
+  --text-soft: #7d5aa6;
+  --white: #ffffff;
+  --gold: #d9b165;
+  --panel: rgba(255,255,255,0.72);
+  --border: rgba(255,255,255,0.76);
+  --sidebar-width: 226px;
+  --book-radius: 10px;
+  --featured-book-width: 258px;
+  --featured-book-height: 414px;
+  --library-book-width: 100%;
+  --library-book-height: 290px;
+  --reader-width: 1040px;
+  --shelf-top: #efdfff;
+  --shelf-mid: #d7b7f0;
+  --shelf-bottom: #b984db;
+}
 
     /* =========================================================
        2) GLOBAL RESET
@@ -165,68 +165,76 @@
        Uses the same narrow vertical idea, with outline icons/mechanics.
        ========================================================= */
     .sidebar {
-      position: sticky;
-      top: 92px;
-      min-height: calc(100vh - 116px);
-      padding: 20px 14px;
-      border-radius: 24px;
-      background: rgba(255,255,255,0.62);
-      border: 1px solid rgba(255,255,255,0.8);
-      backdrop-filter: blur(10px);
-    }
-    .sidebar-header {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      margin-bottom: 16px;
-      color: var(--lavender-deep);
-    }
-    .sidebar-header svg {
-      width: 21px;
-      height: 21px;
-      stroke: currentColor;
-      stroke-width: 1.7;
-      fill: none;
-      flex-shrink: 0;
-    }
-    .sidebar-title {
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 20px;
-      line-height: 1.05;
-      font-weight: 700;
-    }
-    .sidebar-links {
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      width: 100%;
-    }
-    .sidebar-link {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      width: 100%;
-      padding: 11px 10px;
-      border-radius: 14px;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--lavender-deep);
-      border: 1px solid transparent;
-      transition: background 0.2s ease, border-color 0.2s ease;
-    }
-    .sidebar-link svg {
-      width: 18px;
-      height: 18px;
-      stroke: currentColor;
-      stroke-width: 1.7;
-      fill: none;
-      flex-shrink: 0;
-    }
-    .sidebar-link:hover,
-    .sidebar-link.active {
-      background: rgba(255,255,255,0.82);
-      border-color: rgba(107,47,163,0.1);
-    }
+  position: sticky;
+  top: 92px;
+  min-height: calc(100vh - 116px);
+  padding: 24px 18px 28px;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.62);
+  border: 1px solid rgba(255,255,255,0.8);
+  backdrop-filter: blur(10px);
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 20px;
+  color: var(--lavender-deep);
+}
+
+.sidebar-header svg {
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  fill: none;
+  flex-shrink: 0;
+  margin-top: 4px;
+}
+
+.sidebar-title {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 18px;
+  line-height: 1.1;
+  font-weight: 700;
+}
+
+.sidebar-links {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+}
+
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--lavender-deep);
+  border: 1px solid transparent;
+  transition: background 0.2s ease, border-color 0.2s ease;
+}
+
+.sidebar-link svg {
+  width: 16px;
+  height: 16px;
+  stroke: currentColor;
+  stroke-width: 1.7;
+  fill: none;
+  flex-shrink: 0;
+}
+
+.sidebar-link:hover,
+.sidebar-link.active {
+  background: rgba(255,255,255,0.82);
+  border-color: rgba(107,47,163,0.1);
+}
 
     /* =========================================================
        7) PAGE HEADER
