@@ -12,27 +12,27 @@
        Keeping the overall CocoPress palette from your current file,
        but stripping shadows and tightening proportions.
        ========================================================= */
- :root {
-  --bg-1: #fcf7ff;
-  --bg-2: #f1e4ff;
-  --bg-3: #dcc8f4;
+:root {
+  --bg-1: #ead2ff;
+  --bg-2: #c995f2;
+  --bg-3: #f2a9d0;
 
-  --lavender-deep: #5f2c91;
-  --lavender: #8d63c7;
-  --lavender-soft: #c7afe8;
+  --lavender-deep: #4f1f82;
+  --lavender: #7e49bb;
+  --lavender-soft: #bb94e6;
 
-  --pink: #f0bfd8;
-  --pink-soft: #ffe7f2;
-  --pink-scribble: #d96cab;
+  --pink: #ec9fca;
+  --pink-soft: #ffd5ea;
+  --pink-scribble: #cf5da1;
 
-  --text: #4f276f;
-  --text-soft: #755496;
+  --text: #4a206e;
+  --text-soft: #6e4a92;
 
   --white: #ffffff;
   --gold: #d9b165;
 
-  --panel: rgba(248, 241, 255, 0.84);
-  --border: rgba(255,255,255,0.82);
+  --panel: rgba(255, 241, 251, 0.72);
+  --border: rgba(255,255,255,0.76);
 
   --sidebar-width: 226px;
   --book-radius: 10px;
@@ -46,23 +46,21 @@
   --shelf-mid: #be8ef0;
   --shelf-bottom: #8752bd;
 }
-
     /* =========================================================
        2) GLOBAL RESET
        ========================================================= */
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(circle at 15% 12%, rgba(255,255,255,0.75), transparent 20%),
-        radial-gradient(circle at 85% 18%, rgba(255,255,255,0.42), transparent 22%),
-        radial-gradient(circle at 70% 70%, rgba(255,255,255,0.25), transparent 24%),
-        linear-gradient(to bottom, var(--bg-1) 0%, var(--bg-2) 45%, var(--bg-3) 100%);
-      overflow-x: hidden;
-    }
+   body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 14% 10%, rgba(255,255,255,0.22), transparent 18%),
+    radial-gradient(circle at 84% 16%, rgba(255,255,255,0.12), transparent 20%),
+    linear-gradient(to bottom, #e5c2ff 0%, #bb7fe8 48%, #ec97c6 100%);
+  overflow-x: hidden;
+}
     a { color: inherit; text-decoration: none; }
     button, input, select { font: inherit; }
 
@@ -158,14 +156,20 @@
        No shadows by request.
        ========================================================= */
     .panel {
-      position: relative;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      backdrop-filter: blur(12px);
-      overflow: hidden;
-    }
+  position: relative;
+  background: rgba(255, 241, 251, 0.68);
+  border: 1px solid rgba(255,255,255,0.72);
+  border-radius: 28px;
+  backdrop-filter: blur(12px);
+  overflow: hidden;
+}
+.controls-wrap {
+  background: rgba(243, 224, 255, 0.76);
+}
 
+.archive-section {
+  background: rgba(234, 210, 255, 0.68);
+}
     /* =========================================================
        6) SIDEBAR
        ---------------------------------------------------------
@@ -272,9 +276,9 @@
        Wider, thicker, no shadows.
        ========================================================= */
     .featured-wrap {
-      padding: 26px 28px 34px;
-      margin-bottom: 18px;
-    }
+  padding: 26px 28px 34px;
+  margin-bottom: 42px;
+}
     .source-recs-wrap {
       display: inline-flex;
       flex-direction: column;
@@ -766,11 +770,8 @@
        13) FOOTER
        ========================================================= */
     .footer {
-      padding: 22px 20px 10px;
-      text-align: center;
-      color: var(--text-soft);
-      font-size: 14px;
-    }
+  display: none;
+}
 
     /* =========================================================
        14) RESPONSIVE
@@ -911,7 +912,7 @@
           </div>
         </section>
 
-        <div class="footer">CocoPress — a lavender editorial archive inside Coco’s World.</div>
+        <div class="footer"></div>
       </div>
     </div>
   </main>
