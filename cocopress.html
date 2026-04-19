@@ -35,7 +35,7 @@
   --border: rgba(255,255,255,0.80);
 
   --sidebar-width: 226px;
-  --book-radius: 10px;
+  --book-radius: 15px;
   --featured-book-width: 238px;
   --featured-book-height: 384px;
   --library-book-width: 100%;
@@ -363,12 +363,12 @@
   border-radius: var(--book-radius);
   overflow: visible;
   cursor: pointer;
-  border: 1px solid rgba(255,255,255,0.48);
+  border: 1.5px solid rgba(255,255,255,0.72);
   background: linear-gradient(145deg, #cfb7ee 0%, #a580d2 50%, #7043a6 100%);
   width: 100%;
   box-shadow:
     0 18px 30px rgba(81, 37, 125, 0.18),
-    0 8px 20px rgba(255,255,255,0.2);
+    0 8px 20px rgba(255,255,255,0.25);
   transform: translateY(0);
   transition: transform 0.26s ease, box-shadow 0.26s ease;
   z-index: 1;
@@ -385,15 +385,15 @@
   position: absolute;
   left: 0;
   top: 0;
-  width: 16px;
+  width: 18px;
   height: 100%;
   background:
     linear-gradient(to right,
-      rgba(255,255,255,0.42) 0%,
-      rgba(255,255,255,0.22) 18%,
-      rgba(96, 51, 142, 0.24) 62%,
-      rgba(255,255,255,0.04) 100%);
-  box-shadow: inset -1px 0 0 rgba(65, 28, 104, 0.16);
+      rgba(255,255,255,0.22) 0%,
+      rgba(52, 20, 86, 0.34) 16%,
+      rgba(33, 10, 58, 0.56) 52%,
+      rgba(255,255,255,0.05) 100%);
+  box-shadow: inset -1px 0 0 rgba(24, 8, 43, 0.34);
   z-index: 3;
 }
 
@@ -431,6 +431,7 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  border-radius: calc(var(--book-radius) - 1px);
 }
     .book-cover::after {
       content: "";
