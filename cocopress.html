@@ -13,26 +13,26 @@
        but stripping shadows and tightening proportions.
        ========================================================= */
 :root {
-  --bg-1: #ead2ff;
-  --bg-2: #c995f2;
-  --bg-3: #f2a9d0;
+  --bg-1: #efe2fb;
+  --bg-2: #dcc3f2;
+  --bg-3: #c8a7ea;
 
-  --lavender-deep: #4f1f82;
-  --lavender: #7e49bb;
-  --lavender-soft: #bb94e6;
+  --lavender-deep: #5b2c8b;
+  --lavender: #7f56b5;
+  --lavender-soft: #c5ace6;
 
-  --pink: #ec9fca;
-  --pink-soft: #ffd5ea;
-  --pink-scribble: #cf5da1;
+  --pink: #efb8d4;
+  --pink-soft: #ffe3f0;
+  --pink-scribble: #d96cab;
 
-  --text: #4a206e;
-  --text-soft: #6e4a92;
+  --text: #4f276f;
+  --text-soft: #755496;
 
   --white: #ffffff;
   --gold: #d9b165;
 
-  --panel: rgba(255, 241, 251, 0.72);
-  --border: rgba(255,255,255,0.76);
+  --panel: rgba(248, 241, 255, 0.78);
+  --border: rgba(255,255,255,0.80);
 
   --sidebar-width: 226px;
   --book-radius: 10px;
@@ -56,9 +56,10 @@
   font-family: Arial, sans-serif;
   color: var(--text);
   background:
-    radial-gradient(circle at 14% 10%, rgba(255,255,255,0.22), transparent 18%),
-    radial-gradient(circle at 84% 16%, rgba(255,255,255,0.12), transparent 20%),
-    linear-gradient(to bottom, #e5c2ff 0%, #bb7fe8 48%, #ec97c6 100%);
+    radial-gradient(circle at 15% 12%, rgba(255,255,255,0.34), transparent 20%),
+    radial-gradient(circle at 85% 18%, rgba(255,255,255,0.18), transparent 22%),
+    radial-gradient(circle at 70% 70%, rgba(255,255,255,0.10), transparent 24%),
+    linear-gradient(to bottom, #efe2fb 0%, #dcc3f2 52%, #c8a7ea 100%);
   overflow-x: hidden;
 }
     a { color: inherit; text-decoration: none; }
@@ -421,9 +422,10 @@
        Search bar stays. No popup warning behavior.
        ========================================================= */
     .controls-wrap {
-      padding: 18px;
-      margin-bottom: 18px;
-    }
+  padding: 16px 18px;
+  margin-top: 28px;
+  margin-bottom: 20px;
+}
     .control-row {
       display: grid;
       grid-template-columns: minmax(0, 1fr) 220px;
@@ -450,8 +452,9 @@
        Track is clipped so next page edges never show.
        ========================================================= */
     .archive-section {
-      padding: 20px 22px 22px;
-    }
+  padding: 18px 20px 22px;
+  margin-top: 14px;
+}
     .library-topbar,
     .library-footer {
       display: flex;
