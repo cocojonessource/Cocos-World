@@ -1221,6 +1221,32 @@ function getArticleById(id) {
   };
 }
 
+function buildBookMarkup(article, mode = "grid") {
+  const classes = ["book"];
+  if (mode === "reader") classes.push("reader-book");
+
+  const coverClasses = ["book-cover", article.cover || "cover-base"];
+  const style = article.image ? `style="background-image:url('${article.image}');"` : "";
+  if (article.image) coverClasses.push("has-image");
+
+  return `
+    <div class="${classes.join(" ")}" data-open="${article.id}">
+      <div class="${coverClasses.join(" ")}" ${style}>
+        <div class="cover-top">
+          <span class="cover-editorial">${article.editorial || ""}</span>
+          <span class="cover-author">${article.author || ""}</span>
+        </div>
+
+        <div class="cover-center">
+          <h3 class="cover-title">${article.title || ""}</h3>
+        </div>
+
+        <div class="cover-footer"></div>
+      </div>
+    </div>
+  `;
+}
+
 function getBookmarkedArticles() {
   const seen = new Set();
 
