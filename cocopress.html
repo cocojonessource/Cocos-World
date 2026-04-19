@@ -36,8 +36,8 @@
 
   --sidebar-width: 226px;
   --book-radius: 10px;
-  --featured-book-width: 238px;
-  --featured-book-height: 384px;
+  --featured-book-width: 150px;
+  --featured-book-height: 250px;
   --library-book-width: 100%;
   --library-book-height: 290px;
   --reader-width: 1040px;
@@ -158,13 +158,18 @@
        No shadows by request.
        ========================================================= */
     .panel {
-      position: relative;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 28px;
-      backdrop-filter: blur(12px);
-      overflow: hidden;
-    }
+  position: relative;
+  background: rgba(255,255,255,0.65);
+  border: 1px solid rgba(255,255,255,0.75);
+  border-radius: 30px;
+}
+    .controls-wrap {
+  background: rgba(255,255,255,0.75);
+}
+
+.archive-section {
+  background: rgba(245,230,255,0.65);
+}
 
     /* =========================================================
        6) SIDEBAR
@@ -272,9 +277,21 @@
        Wider, thicker, no shadows.
        ========================================================= */
     .featured-wrap {
-      padding: 26px 28px 34px;
-      margin-bottom: 18px;
-    }
+  position: relative;
+  padding: 32px 30px 36px;
+  margin-bottom: 28px;
+  min-height: 420px;
+  overflow: hidden;
+
+  background: linear-gradient(
+    180deg,
+    rgba(210,170,255,0.35) 0%,
+    rgba(170,120,235,0.45) 100%
+  );
+
+  border: 1px solid rgba(255,255,255,0.9);
+  box-shadow: 0 20px 50px rgba(90,40,140,0.25);
+}
     .source-recs-wrap {
       display: inline-flex;
       flex-direction: column;
