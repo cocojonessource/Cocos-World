@@ -361,7 +361,7 @@
     .book {
   position: relative;
   border-radius: var(--book-radius);
-  overflow: hidden;
+  overflow: visible;
   cursor: pointer;
   border: 1px solid rgba(255,255,255,0.48);
   background: linear-gradient(145deg, #cfb7ee 0%, #a580d2 50%, #7043a6 100%);
@@ -380,7 +380,18 @@
     0 24px 38px rgba(81, 37, 125, 0.22),
     0 8px 24px rgba(255,255,255,0.28);
 }
-
+.book::after {
+  content: "";
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: -12px;
+  height: 12px;
+  border-radius: 999px;
+  background: rgba(86, 43, 131, 0.18);
+  filter: blur(10px);
+  z-index: 0;
+}
 .book::before {
   content: "";
   position: absolute;
@@ -576,8 +587,30 @@
       gap: 16px 18px;
     }
     .archive-card {
-      min-width: 0;
-    }
+  position: relative;
+  min-width: 0;
+  padding-bottom: 18px;
+}
+
+.archive-card::after {
+  content: "";
+  position: absolute;
+  left: 10%;
+  right: 10%;
+  bottom: 2px;
+  height: 18px;
+  border-radius: 999px;
+  background: rgba(73, 31, 111, 0.28);
+  filter: blur(14px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.archive-card > .book,
+.archive-card > .archive-meta {
+  position: relative;
+  z-index: 1;
+}
     .row-shelf {
   display: none;
 }
