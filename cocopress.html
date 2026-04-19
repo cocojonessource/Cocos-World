@@ -343,14 +343,32 @@
        small bold title near bottom, author under title.
        ========================================================= */
     .book {
-      position: relative;
-      border-radius: var(--book-radius);
-      overflow: hidden;
-      cursor: pointer;
-      border: 1px solid rgba(255,255,255,0.78);
-      background: #d9c2f2;
-      width: 100%;
-    }
+  position: relative;
+  border-radius: var(--book-radius);
+  overflow: hidden;
+  cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.78);
+  background: #d9c2f2;
+  width: 100%;
+}
+
+.book::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 12px;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    rgba(26, 8, 43, 0.42) 0%,
+    rgba(26, 8, 43, 0.22) 38%,
+    rgba(255, 255, 255, 0.14) 72%,
+    rgba(255, 255, 255, 0) 100%
+  );
+  z-index: 3;
+  pointer-events: none;
+}
     .featured-book {
       width: var(--featured-book-width);
       height: var(--featured-book-height);
