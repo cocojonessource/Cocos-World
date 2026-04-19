@@ -301,13 +301,6 @@
   font-weight: 700;
   letter-spacing: 0.02em;
   transform: rotate(-3deg);
-
-  overflow: hidden;
-  white-space: nowrap;
-  width: 0;
-  border-right: 3px solid rgba(217,108,171,0.95);
-
-  animation: writeText 1.4s steps(14, end) forwards;
 }
 
 .scribble-heart {
@@ -322,12 +315,6 @@
   stroke-width: 6;
   stroke-linecap: round;
   stroke-linejoin: round;
-
-  stroke-dasharray: 260;
-  stroke-dashoffset: 260;
-
-  animation: drawHeart 0.9s ease forwards;
-  animation-delay: 1s;
 }
 
 .scribble-lines {
@@ -342,43 +329,11 @@
   margin-top: 4px;
   border-radius: 999px;
   background: var(--pink-scribble);
-
-  opacity: 0;
-  transform: scaleX(0);
-  transform-origin: left;
+  opacity: 0.95;
 }
 
-.scribble-lines span:nth-child(1) {
-  width: 100%;
-  animation: drawLine 0.35s ease forwards;
-  animation-delay: 1.4s;
-}
-
-.scribble-lines span:nth-child(2) {
-  width: 86%;
-  animation: drawLine 0.35s ease forwards;
-  animation-delay: 1.55s;
-}
-
-@keyframes writeText {
-  from { width: 0; }
-  to { width: 245px; }
-}
-
-@keyframes drawHeart {
-  to { stroke-dashoffset: 0; }
-}
-
-@keyframes drawLine {
-  from {
-    opacity: 0;
-    transform: scaleX(0);
-  }
-  to {
-    opacity: 0.95;
-    transform: scaleX(1);
-  }
-}
+.scribble-lines span:nth-child(1) { width: 100%; }
+.scribble-lines span:nth-child(2) { width: 86%; }
     .featured-stage {
   min-height: 0;
 }
