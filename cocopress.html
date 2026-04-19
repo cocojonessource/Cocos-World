@@ -298,18 +298,31 @@
     }
     .scribble-lines span:nth-child(1) { width: 100%; }
     .scribble-lines span:nth-child(2) { width: 86%; }
-    .featured-stage { min-height: 0; }
-    .hero-books {
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 28px;
-      align-items: end;
-    }
-    .featured-book-slot {
-      min-width: 0;
-      display: flex;
-      justify-content: center;
-    }
+    .featured-stage {
+  min-height: 0;
+}
+
+.hero-books {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 28px;
+  align-items: end;
+  margin-bottom: 18px;
+}
+
+.featured-book-slot {
+  min-width: 0;
+  display: flex;
+  justify-content: center;
+}
+
+.featured-shelf {
+  width: 100%;
+  height: 10px;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, var(--shelf-top), var(--shelf-mid) 58%, var(--shelf-bottom));
+  border: 1px solid rgba(255,255,255,0.52);
+}
 
     /* =========================================================
        9) BOOK CARD LOOK
@@ -491,13 +504,8 @@
       min-width: 0;
     }
     .row-shelf {
-      width: 100%;
-      height: 14px;
-      border-radius: 999px;
-      background: linear-gradient(to bottom, var(--shelf-top), var(--shelf-mid) 58%, var(--shelf-bottom));
-      border: 1px solid rgba(255,255,255,0.52);
-      margin: 10px 0 12px;
-    }
+  display: none;
+}
     .archive-meta {
       padding: 10px 2px 0;
       color: var(--text-soft);
@@ -851,9 +859,9 @@
             <div class="scribble-lines" aria-hidden="true"><span></span><span></span></div>
           </div>
           <div class="featured-stage">
-            <div class="hero-books" id="heroBooks"></div>
-          </div>
-        </section>
+  <div class="hero-books" id="heroBooks"></div>
+  <div class="featured-shelf"></div>
+</div>
 
         <!-- =====================================================
              SEARCH + YEAR FILTER
