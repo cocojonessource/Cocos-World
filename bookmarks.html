@@ -323,20 +323,44 @@
       min-height: 520px;
     }
 
-    .books-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
-      gap: 28px 24px;
-      align-items: end;
-    }
+   .books-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
 
-    .archive-card {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      min-width: 0;
-    }
+.books-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 26px 24px;
+  align-items: end;
+}
+
+.archive-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 0;
+}
+
+.row-shelf {
+  width: 100%;
+  height: 16px;
+  border-radius: 999px;
+  background: linear-gradient(to bottom, var(--shelf-top), var(--shelf-mid) 58%, var(--shelf-bottom));
+  border: 1px solid rgba(255,255,255,0.52);
+  box-shadow:
+    0 4px 0 rgba(255,255,255,0.40) inset,
+    0 14px 24px rgba(98,53,140,0.14);
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+
+.row-shelf-spacer {
+  width: 100%;
+  height: 8px;
+}
 
     .book {
       position: relative;
@@ -833,13 +857,13 @@
       }
     }
 
-    @media (max-width: 900px) {
-      .books-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    }
+   @media (max-width: 900px) {
+  .books-row {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
 
-    @media (max-width: 760px) {
+@media (max-width: 760px) {
       .topbar-inner {
         align-items: flex-start;
       }
@@ -862,9 +886,9 @@
         grid-template-columns: 1fr;
       }
 
-      .books-grid {
-        grid-template-columns: 1fr;
-      }
+      .books-row {
+  grid-template-columns: 1fr;
+}
 
       .reader {
         padding: 10px;
@@ -976,8 +1000,6 @@
             <div class="empty-state" id="emptyState">
               No bookmarks yet.
             </div>
-
-            <div class="large-shelf"></div>
           </div>
         </section>
 
@@ -1210,15 +1232,26 @@ function getBookmarkedArticles() {
 
       emptyState.style.display = "none";
 
-      booksGrid.innerHTML = bookmarkedArticles.map(article => `
-  <article class="archive-card">
-    ${buildBookMarkup(article)}
-    <div class="book-oval-shadow"></div>
+      const rows = [];
+for (let i = 0; i < bookmarkedArticles.length; i += 3) {
+  rows.push(bookmarkedArticles.slice(i, i + 3));
+}
 
-    <button class="remove-inline" type="button" data-remove="${article.id}">
-      Remove from Bookmarks
-    </button>
-  </article>
+booksGrid.innerHTML = rows.map((row, rowIndex) => `
+  <div class="books-row">
+    ${row.map(article => `
+      <article class="archive-card">
+        ${buildBookMarkup(article)}
+        <div class="book-oval-shadow"></div>
+
+        <button class="remove-inline" type="button" data-remove="${article.id}">
+          Remove from Bookmarks
+        </button>
+      </article>
+    `).join("")}
+  </div>
+  <div class="row-shelf"></div>
+  ${rowIndex < rows.length - 1 ? `<div class="row-shelf-spacer"></div>` : ``}
 `).join("");
     }
 
