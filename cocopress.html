@@ -5,6 +5,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>CocoPress — Coco's World</title>
 
+  <!-- MOBILE REDIRECT -->
+  <script>
+    if (window.innerWidth <= 760 && !window.location.pathname.includes('cocopress-mobile.html')) {
+      window.location.replace('cocopress-mobile.html');
+    }
+  </script>
+
   <style>
     /* =========================================================
        1) ROOT COLORS + SIZING
