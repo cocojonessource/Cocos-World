@@ -938,29 +938,28 @@
     }
 
     async function progressToNext() {
-      if (isReplaying || completed) return;
-      if (activeIndex >= chapters.length - 1) return;
+  if (isReplaying || completed) return;
+  if (activeIndex >= chapters.length - 1) return;
 
-      const current = activeIndex;
-      const next = current + 1;
+  const current = activeIndex;
+  const next = current + 1;
 
-      lines[current].classList.add("visible");
-      document.querySelectorAll(`[data-line="${current + 1}"]`).forEach(item => {
-        item.classList.add("visible");
-      });
+  lineEffects[current].forEach(item => {
+    item.classList.add("visible");
+  });
 
-      await sleep(900);
+  await sleep(900);
 
-      highestUnlocked = Math.max(highestUnlocked, next);
-      activeIndex = next;
+  highestUnlocked = Math.max(highestUnlocked, next);
+  activeIndex = next;
 
-      if (next === chapters.length - 1) {
-        completeStory();
-        return;
-      }
+  if (next === chapters.length - 1) {
+    completeStory();
+    return;
+  }
 
-      refreshUI();
-    }
+  refreshUI();
+}
 
     stars.forEach((star, index) => {
       star.addEventListener("click", async () => {
@@ -1010,22 +1009,21 @@
       await sleep(450);
 
       for (let i = 0; i < lines.length; i++) {
-        activeIndex = i;
-        refreshUI();
-        await sleep(500);
+  activeIndex = i;
+  refreshUI();
+  await sleep(500);
 
-        lines[i].classList.add("visible");
-        document.querySelectorAll(`[data-line="${i + 1}"]`).forEach(item => {
-          item.classList.add("visible");
-        });
+  lineEffects[i].forEach(item => {
+    item.classList.add("visible");
+  });
 
-        await sleep(900);
+  await sleep(900);
 
-        highestUnlocked = i + 1;
-        activeIndex = i + 1;
-        refreshUI();
-        await sleep(520);
-      }
+  highestUnlocked = i + 1;
+  activeIndex = i + 1;
+  refreshUI();
+  await sleep(520);
+}
 
       completeStory();
       isReplaying = false;
