@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CocoPress Mobile — Coco's World</title>
+
+  <style>
+    :root {
+      --radius-xl: 28px;
+      --radius-lg: 22px;
+      --radius-md: 18px;
+      --radius-pill: 999px;
+
+      --font-main: Arial, sans-serif;
+      --font-serif: Georgia, "Times New Roman", serif;
+
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+      --footer-height: 88px;
+    }
+
+    /* ===============================
+       DARK MODE DEFAULT
+    =============================== */
+    body[data-theme="dark"] {
+      --bg-1: #140d28;
+      --bg-2: #1d1238;
+      --bg-3: #2a1750;
+      --bg-4: #10091f;
+
+      --panel: rgba(39, 24, 72, 0.78);
+      --panel-border: rgba(255,255,255,0.08);
+
+      --text: #f4ecff;
+      --text-soft: #cbb8ec;
+      --text-dim: #a48ecb;
+
+      --accent: #c89cff;
+      --accent-2: #8f6df2;
+      --accent-3: #f0b6de;
+
+      --button-text: #180f2f;
+      --button-bg: linear-gradient(135deg, #f0b6de 0%, #c89cff 52%, #8f6df2 100%);
+
+      --toggle-track: rgba(255,255,255,0.14);
+      --toggle-thumb: #ffffff;
+
+      --footer-bg: rgba(22, 14, 42, 0.92);
+      --footer-border: rgba(255,255,255,0.08);
+
+      --dot-off: rgba(255,255,255,0.16);
+      --dot-on: #f3e6ff;
+
+      --shadow-soft: rgba(0,0,0,0.28);
+      --shadow-strong: rgba(0,0,0,0.42);
+
+      --cover-overlay-top: rgba(13, 8, 24, 0.12);
+      --cover-overlay-bottom: rgba(13, 8, 24, 0.82);
+    }
+
+    /* ===============================
+       LIGHT MODE
+    =============================== */
+    body[data-theme="light"] {
+      --bg-1: #f4eaff;
+      --bg-2: #ead8fb;
+      --bg-3: #d9bdf3;
+      --bg-4: #f8efff;
+
+      --panel: rgba(255, 248, 255, 0.72);
+      --panel-border: rgba(255,255,255,0.6);
+
+      --text: #4f276f;
+      --text-soft: #7c57a0;
+      --text-dim: #9779b3;
+
+      --accent: #9d73d8;
+      --accent-2: #c07bc5;
+      --accent-3: #f0b6de;
+
+      --button-text: #3e1f5e;
+      --button-bg: linear-gradient(135deg, #f0b6de 0%, #ddb6fb 52%, #ba93f1 100%);
+
+      --toggle-track: rgba(79,39,111,0.12);
+      --toggle-thumb: #ffffff;
+
+      --footer-bg: rgba(248, 240, 255, 0.92);
+      --footer-border: rgba(79,39,111,0.08);
+
+      --dot-off: rgba(79,39,111,0.14);
+      --dot-on: #6d42a0;
+
+      --shadow-soft: rgba(96, 54, 136, 0.12);
+      --shadow-strong: rgba(96, 54, 136, 0.18);
+
+      --cover-overlay-top: rgba(255,255,255,0.05);
+      --cover-overlay-bottom: rgba(51, 28, 73, 0.68);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: var(--font-main);
+      color: var(--text);
+      background:
+        radial-gradient(circle at 18% 12%, rgba(255,255,255,0.14), transparent 18%),
+        radial-gradient(circle at 82% 16%, rgba(255,255,255,0.10), transparent 18%),
+        radial-gradient(circle at 70% 72%, rgba(255,255,255,0.07), transparent 22%),
+        linear-gradient(to bottom, var(--bg-1) 0%, var(--bg-2) 38%, var(--bg-3) 72%, var(--bg-4) 100%);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      padding-bottom: calc(var(--footer-height) + var(--safe-bottom) + 10px);
+      transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      font: inherit;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 18px 16px 26px;
+    }
+
+    .mobile-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .brand-wrap {
+      min-width: 0;
+    }
+
+    .brand-title {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: 31px;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      color: var(--text);
+    }
+
+    .brand-sub {
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .theme-toggle {
+      flex-shrink: 0;
+      border: 1px solid var(--panel-border);
+      background: var(--toggle-track);
+      border-radius: var(--radius-pill);
+      width: 58px;
+      height: 34px;
+      padding: 4px;
+      position: relative;
+      cursor: pointer;
+      transition: background 0.25s ease, border-color 0.25s ease;
+    }
+
+    .theme-toggle-thumb {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      background: var(--toggle-thumb);
+      box-shadow: 0 6px 14px rgba(0,0,0,0.16);
+      transition: transform 0.25s ease;
+    }
+
+    body[data-theme="light"] .theme-toggle-thumb {
+      transform: translateX(24px);
+    }
+
+    .featured-panel {
+      position: relative;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      border-radius: 34px;
+      box-shadow: 0 18px 40px var(--shadow-soft);
+      backdrop-filter: blur(16px);
+      padding: 18px 16px 20px;
+      overflow: hidden;
+    }
+
+    .featured-panel::before {
+      content: "";
+      position: absolute;
+      inset: -40% auto auto -20%;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.05);
+      filter: blur(18px);
+      pointer-events: none;
+    }
+
+    .featured-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 16px;
+      gap: 12px;
+    }
+
+    .featured-label {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin: 0;
+    }
+
+    .featured-count {
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-dim);
+      margin: 0;
+    }
+
+    .carousel-viewport {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .carousel-track {
+      display: flex;
+      transition: transform 0.32s ease;
+      will-change: transform;
+    }
+
+    .slide {
+      flex: 0 0 100%;
+      min-width: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .cover-card {
+      position: relative;
+      width: min(100%, 320px);
+      aspect-ratio: 1 / 1;
+      border-radius: 30px;
+      overflow: hidden;
+      background:
+        linear-gradient(145deg, #cfb7ee 0%, #a580d2 50%, #7043a6 100%);
+      box-shadow:
+        0 20px 34px var(--shadow-soft),
+        0 10px 24px rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.14);
+      cursor: pointer;
+    }
+
+    .cover-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, var(--cover-overlay-top) 0%, transparent 38%, var(--cover-overlay-bottom) 100%);
+      z-index: 1;
+    }
+
+    .cover-image {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      z-index: 0;
+    }
+
+    .cover-fallback {
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.22), transparent 20%),
+        linear-gradient(145deg, #cfb7ee 0%, #a580d2 50%, #7043a6 100%);
+      z-index: 0;
+    }
+
+    .cover-content {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 18px 18px 18px 18px;
+    }
+
+    .cover-author {
+      margin: 0;
+      align-self: flex-start;
+      max-width: 82%;
+      font-size: 12px;
+      line-height: 1.3;
+      font-weight: 400;
+      color: rgba(255,255,255,0.92);
+      text-shadow: 0 2px 10px rgba(0,0,0,0.24);
+    }
+
+    .cover-title {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: clamp(27px, 7vw, 40px);
+      line-height: 0.95;
+      color: #ffffff;
+      text-shadow: 0 6px 18px rgba(0,0,0,0.24);
+      letter-spacing: -0.02em;
+      word-break: break-word;
+    }
+
+    .slide-meta {
+      width: min(100%, 320px);
+      margin-top: 16px;
+      text-align: left;
+    }
+
+    .slide-kicker {
+      margin: 0 0 5px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .slide-outlet {
+      margin: 0;
+      font-size: 16px;
+      line-height: 1.35;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .slide-button {
+      margin-top: 16px;
+      border: none;
+      border-radius: var(--radius-pill);
+      padding: 14px 18px;
+      width: min(100%, 320px);
+      background: var(--button-bg);
+      color: var(--button-text);
+      font-size: 14px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 14px 26px var(--shadow-soft);
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .slide-button:active {
+      transform: scale(0.985);
+    }
+
+    .carousel-dots {
+      display: flex;
+      justify-content: center;
+      gap: 8px;
+      margin-top: 18px;
+    }
+
+    .carousel-dot {
+      appearance: none;
+      border: none;
+      width: 28px;
+      height: 5px;
+      border-radius: 999px;
+      background: var(--dot-off);
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.2s ease, transform 0.2s ease;
+    }
+
+    .carousel-dot.active {
+      background: var(--dot-on);
+      transform: scaleX(1.06);
+    }
+
+    .mobile-footer {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 3000;
+      background: var(--footer-bg);
+      backdrop-filter: blur(18px);
+      border-top: 1px solid var(--footer-border);
+      padding: 10px 14px calc(10px + var(--safe-bottom));
+    }
+
+    .mobile-footer-inner {
+      width: 100%;
+      max-width: 480px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      align-items: end;
+    }
+
+    .footer-link {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      min-height: 56px;
+      color: var(--text-dim);
+      transition: color 0.2s ease, transform 0.2s ease;
+    }
+
+    .footer-link.active {
+      color: var(--text);
+    }
+
+    .footer-link svg {
+      width: 24px;
+      height: 24px;
+      stroke: currentColor;
+      stroke-width: 1.8;
+      fill: none;
+      flex-shrink: 0;
+    }
+
+    .footer-label {
+      font-size: 11px;
+      line-height: 1;
+      font-weight: 500;
+      text-align: center;
+    }
+
+    .reader {
+      position: fixed;
+      inset: 0;
+      z-index: 5000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 12px;
+      background: rgba(17, 10, 30, 0.68);
+      backdrop-filter: blur(14px);
+    }
+
+    .reader.active {
+      display: flex;
+    }
+
+    .reader-shell {
+      position: relative;
+      width: min(100%, 420px);
+      max-height: 92vh;
+      overflow-y: auto;
+      border-radius: 28px;
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      box-shadow: 0 26px 60px var(--shadow-strong);
+      padding: 18px 16px 18px;
+      backdrop-filter: blur(18px);
+    }
+
+    .reader-close {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      border: 1px solid var(--panel-border);
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      font-size: 22px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    .reader-cover {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 24px;
+      overflow: hidden;
+      position: relative;
+      margin-bottom: 16px;
+      background:
+        linear-gradient(145deg, #cfb7ee 0%, #a580d2 50%, #7043a6 100%);
+    }
+
+    .reader-cover::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background:
+        linear-gradient(to bottom, var(--cover-overlay-top) 0%, transparent 35%, var(--cover-overlay-bottom) 100%);
+      z-index: 1;
+    }
+
+    .reader-cover img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .reader-cover-text {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .reader-author {
+      margin: 0;
+      font-size: 12px;
+      font-weight: 400;
+      color: rgba(255,255,255,0.94);
+    }
+
+    .reader-cover-title {
+      margin: 0;
+      font-family: var(--font-serif);
+      font-size: clamp(28px, 8vw, 40px);
+      line-height: 0.95;
+      color: #fff;
+    }
+
+    .reader-kicker {
+      margin: 0 0 6px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+
+    .reader-title {
+      margin: 0 0 12px;
+      font-family: var(--font-serif);
+      font-size: 30px;
+      line-height: 0.96;
+      color: var(--text);
+    }
+
+    .reader-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .reader-chip {
+      padding: 8px 11px;
+      border-radius: 999px;
+      border: 1px solid var(--panel-border);
+      background: rgba(255,255,255,0.08);
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-soft);
+    }
+
+    .reader-summary {
+      margin: 0;
+      font-size: 15px;
+      line-height: 1.85;
+      color: var(--text-soft);
+      white-space: pre-line;
+    }
+
+    .reader-actions {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .reader-btn,
+    .bookmark-btn {
+      border: none;
+      border-radius: var(--radius-pill);
+      padding: 14px 16px;
+      font-size: 13px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    .reader-btn {
+      background: var(--button-bg);
+      color: var(--button-text);
+      flex: 1 1 180px;
+    }
+
+    .bookmark-btn {
+      background: rgba(255,255,255,0.08);
+      color: var(--text);
+      border: 1px solid var(--panel-border);
+      min-width: 120px;
+    }
+
+    .bookmark-btn.active {
+      background: rgba(255,255,255,0.16);
+    }
+
+    @media (max-width: 360px) {
+      .brand-title {
+        font-size: 28px;
+      }
+
+      .cover-title,
+      .reader-cover-title {
+        font-size: 26px;
+      }
+
+      .slide-outlet {
+        font-size: 15px;
+      }
+    }
+  </style>
+</head>
+<body data-theme="dark">
+  <main class="page">
+    <header class="mobile-header">
+      <div class="brand-wrap">
+        <h1 class="brand-title">CocoPress</h1>
+        <div class="brand-sub">Mobile Library</div>
+      </div>
+
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle light and dark mode" type="button">
+        <div class="theme-toggle-thumb"></div>
+      </button>
+    </header>
+
+    <section class="featured-panel">
+      <div class="featured-head">
+        <p class="featured-label">Featured</p>
+        <p class="featured-count" id="featuredCount">1 / 5</p>
+      </div>
+
+      <div class="carousel-viewport">
+        <div class="carousel-track" id="carouselTrack"></div>
+      </div>
+
+      <div class="carousel-dots" id="carouselDots"></div>
+    </section>
+  </main>
+
+  <nav class="mobile-footer" aria-label="CocoPress mobile navigation">
+    <div class="mobile-footer-inner">
+      <a href="reading-history.html" class="footer-link">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 5.5c0-.83.67-1.5 1.5-1.5H11v15H4.5A1.5 1.5 0 0 1 3 17.5v-12z"></path>
+          <path d="M21 5.5c0-.83-.67-1.5-1.5-1.5H13v15h6.5a1.5 1.5 0 0 0 1.5-1.5v-12z"></path>
+        </svg>
+        <span class="footer-label">Reading History</span>
+      </a>
+
+      <a href="cocopress-mobile.html" class="footer-link active" aria-current="page">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M3 7h5v10H3z"></path>
+          <path d="M9.5 5h5v12h-5z"></path>
+          <path d="M16 8h5v9h-5z"></path>
+        </svg>
+        <span class="footer-label">Library</span>
+      </a>
+
+      <a href="bookmarks.html" class="footer-link">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <path d="M6 3h12v18l-6-4-6 4V3z"></path>
+        </svg>
+        <span class="footer-label">Bookmarks</span>
+      </a>
+    </div>
+  </nav>
+
+  <div class="reader" id="reader">
+    <div class="reader-shell">
+      <button class="reader-close" id="readerClose" aria-label="Close">×</button>
+
+      <div class="reader-cover" id="readerCover"></div>
+
+      <p class="reader-kicker" id="readerKicker"></p>
+      <h2 class="reader-title" id="readerTitle"></h2>
+      <div class="reader-meta" id="readerMeta"></div>
+      <p class="reader-summary" id="readerSummary"></p>
+
+      <div class="reader-actions">
+        <button class="reader-btn" id="readerSourceBtn" type="button">Read on Source</button>
+        <button class="bookmark-btn" id="bookmarkBtn" type="button">Bookmark</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /* ===============================
+       FEATURED MOBILE IDS
+       desktop 4 + stylecaster
+    =============================== */
+    const FEATURED_IDS = [
+      "vibe-2025-passion-of-coco-jones",
+      "teenvogue-2023-cover-story",
+      "nylon-2024",
+      "bustle-2025-why-not-coco-jones",
+      "stylecaster-2025-coco-jones-music"
+    ];
+
+    const THEME_KEY = "cocoPressMobileTheme";
+    const BOOKMARKS_KEY = "cocoBookmarks";
+    const HISTORY_KEY = "cocoReadingHistory";
+
+    let libraryData = [];
+    let featuredArticles = [];
+    let currentSlide = 0;
+    let currentArticleId = null;
+
+    const carouselTrack = document.getElementById("carouselTrack");
+    const carouselDots = document.getElementById("carouselDots");
+    const featuredCount = document.getElementById("featuredCount");
+
+    const themeToggle = document.getElementById("themeToggle");
+
+    const reader = document.getElementById("reader");
+    const readerClose = document.getElementById("readerClose");
+    const readerCover = document.getElementById("readerCover");
+    const readerKicker = document.getElementById("readerKicker");
+    const readerTitle = document.getElementById("readerTitle");
+    const readerMeta = document.getElementById("readerMeta");
+    const readerSummary = document.getElementById("readerSummary");
+    const readerSourceBtn = document.getElementById("readerSourceBtn");
+    const bookmarkBtn = document.getElementById("bookmarkBtn");
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    function isRealAuthor(article) {
+      return !!(article.author && article.author.trim() && article.author.trim() !== article.outlet?.trim());
+    }
+
+    function getBookmarks() {
+      try {
+        return JSON.parse(localStorage.getItem(BOOKMARKS_KEY) || "[]");
+      } catch {
+        return [];
+      }
+    }
+
+    function saveBookmarks(items) {
+      localStorage.setItem(BOOKMARKS_KEY, JSON.stringify(items));
+    }
+
+    function isBookmarked(id) {
+      return getBookmarks().includes(id);
+    }
+
+    function syncBookmarkButton(id) {
+      const active = isBookmarked(id);
+      bookmarkBtn.classList.toggle("active", active);
+      bookmarkBtn.textContent = active ? "Bookmarked" : "Bookmark";
+    }
+
+    function toggleBookmark(id) {
+      const items = getBookmarks();
+      if (items.includes(id)) {
+        saveBookmarks(items.filter(item => item !== id));
+      } else {
+        saveBookmarks([...items, id]);
+      }
+      syncBookmarkButton(id);
+    }
+
+    function addToReadingHistory(article) {
+      let current = [];
+      try {
+        current = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
+      } catch {
+        current = [];
+      }
+
+      const filtered = current.filter(item => item.id !== article.id);
+      const next = [{
+        id: article.id,
+        title: article.title,
+        outlet: article.outlet,
+        author: article.author,
+        year: article.year,
+        url: article.url,
+        cover: article.coverImage,
+        viewedAt: new Date().toISOString()
+      }, ...filtered].slice(0, 100);
+
+      localStorage.setItem(HISTORY_KEY, JSON.stringify(next));
+    }
+
+    function openCenteredPopup(url) {
+      const width = 980;
+      const height = 760;
+      const left = window.screenX + Math.max(0, (window.outerWidth - width) / 2);
+      const top = window.screenY + Math.max(0, (window.outerHeight - height) / 2);
+      window.open(
+        url,
+        "cocoPressMobileSourcePopup",
+        `width=${width},height=${height},left=${left},top=${top},resizable=yes,scrollbars=yes`
+      );
+    }
+
+    function getArticleById(id) {
+      return libraryData.find(item => item.id === id) || null;
+    }
+
+    async function loadLibraryData() {
+      /* if your repo path requires the older desktop fetch path,
+         swap this line back to /Cocos-World/data/cocopress.json */
+      const response = await fetch("./data/cocopress.json", { cache: "no-store" });
+
+      if (!response.ok) {
+        throw new Error("Failed to load ./data/cocopress.json");
+      }
+
+      const rawLibraryData = await response.json();
+
+      libraryData = rawLibraryData.map(item => {
+        const coverImage = (item.cover && /^https?:/i.test(item.cover)) ? item.cover : "";
+        return {
+          ...item,
+          coverImage
+        };
+      });
+
+      featuredArticles = FEATURED_IDS.map(getArticleById).filter(Boolean);
+    }
+
+    function buildSlideMarkup(article, index) {
+      const authorHtml = isRealAuthor(article)
+        ? `<p class="cover-author">${escapeHtml(article.author)}</p>`
+        : `<div></div>`;
+
+      const imageHtml = article.coverImage
+        ? `<img class="cover-image" src="${escapeHtml(article.coverImage)}" alt="${escapeHtml(article.title)}">`
+        : `<div class="cover-fallback"></div>`;
+
+      return `
+        <article class="slide" data-slide-index="${index}">
+          <div class="cover-card" data-open="${escapeHtml(article.id)}">
+            ${imageHtml}
+
+            <div class="cover-content">
+              ${authorHtml}
+              <h2 class="cover-title">${escapeHtml(article.title)}</h2>
+            </div>
+          </div>
+
+          <div class="slide-meta">
+            <p class="slide-kicker">Source’s Recs</p>
+            <p class="slide-outlet">${escapeHtml(article.outlet || "")}</p>
+          </div>
+
+          <button class="slide-button" type="button" data-read="${escapeHtml(article.id)}">
+            Read on Source
+          </button>
+        </article>
+      `;
+    }
+
+    function renderCarousel() {
+      carouselTrack.innerHTML = featuredArticles.map(buildSlideMarkup).join("");
+
+      carouselDots.innerHTML = featuredArticles.map((_, index) => `
+        <button
+          class="carousel-dot ${index === currentSlide ? "active" : ""}"
+          type="button"
+          aria-label="Go to featured slide ${index + 1}"
+          data-dot="${index}">
+        </button>
+      `).join("");
+
+      updateCarouselPosition();
+    }
+
+    function updateCarouselPosition() {
+      carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
+
+      const dots = carouselDots.querySelectorAll(".carousel-dot");
+      dots.forEach((dot, index) => {
+        dot.classList.toggle("active", index === currentSlide);
+      });
+
+      featuredCount.textContent = `${currentSlide + 1} / ${featuredArticles.length}`;
+    }
+
+    function goToSlide(index) {
+      currentSlide = Math.max(0, Math.min(index, featuredArticles.length - 1));
+      updateCarouselPosition();
+    }
+
+    function buildReaderCover(article) {
+      const authorHtml = isRealAuthor(article)
+        ? `<p class="reader-author">${escapeHtml(article.author)}</p>`
+        : `<div></div>`;
+
+      const imageHtml = article.coverImage
+        ? `<img src="${escapeHtml(article.coverImage)}" alt="${escapeHtml(article.title)}">`
+        : "";
+
+      readerCover.innerHTML = `
+        ${imageHtml}
+        <div class="reader-cover-text">
+          ${authorHtml}
+          <h3 class="reader-cover-title">${escapeHtml(article.title)}</h3>
+        </div>
+      `;
+    }
+
+    function openReader(id) {
+      const article = getArticleById(id);
+      if (!article) return;
+
+      currentArticleId = article.id;
+
+      buildReaderCover(article);
+      readerKicker.textContent = "Source’s Recs";
+      readerTitle.textContent = article.fullTitle || article.title || "";
+      readerSummary.textContent = article.summary || "Summary coming soon.";
+
+      const chips = [
+        article.outlet ? `<span class="reader-chip">${escapeHtml(article.outlet)}</span>` : "",
+        isRealAuthor(article) ? `<span class="reader-chip">${escapeHtml(article.author)}</span>` : "",
+        article.year ? `<span class="reader-chip">${escapeHtml(article.year)}</span>` : ""
+      ].join("");
+
+      readerMeta.innerHTML = chips;
+      syncBookmarkButton(article.id);
+
+      reader.classList.add("active");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeReader() {
+      reader.classList.remove("active");
+      document.body.style.overflow = "";
+      currentArticleId = null;
+    }
+
+    function readArticle(id) {
+      const article = getArticleById(id);
+      if (!article || !article.url) return;
+
+      addToReadingHistory(article);
+      openCenteredPopup(article.url);
+    }
+
+    function applySavedTheme() {
+      const savedTheme = localStorage.getItem(THEME_KEY);
+      if (savedTheme === "light" || savedTheme === "dark") {
+        document.body.setAttribute("data-theme", savedTheme);
+      } else {
+        document.body.setAttribute("data-theme", "dark");
+      }
+    }
+
+    function toggleTheme() {
+      const currentTheme = document.body.getAttribute("data-theme");
+      const nextTheme = currentTheme === "dark" ? "light" : "dark";
+      document.body.setAttribute("data-theme", nextTheme);
+      localStorage.setItem(THEME_KEY, nextTheme);
+    }
+
+    themeToggle.addEventListener("click", toggleTheme);
+
+    carouselDots.addEventListener("click", (event) => {
+      const dot = event.target.closest("[data-dot]");
+      if (!dot) return;
+      goToSlide(Number(dot.dataset.dot));
+    });
+
+    carouselTrack.addEventListener("click", (event) => {
+      const readBtn = event.target.closest("[data-read]");
+      if (readBtn) {
+        readArticle(readBtn.dataset.read);
+        return;
+      }
+
+      const cover = event.target.closest("[data-open]");
+      if (cover) {
+        openReader(cover.dataset.open);
+      }
+    });
+
+    readerClose.addEventListener("click", closeReader);
+
+    reader.addEventListener("click", (event) => {
+      if (event.target === reader) closeReader();
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape" && reader.classList.contains("active")) {
+        closeReader();
+      }
+    });
+
+    readerSourceBtn.addEventListener("click", () => {
+      if (!currentArticleId) return;
+      readArticle(currentArticleId);
+    });
+
+    bookmarkBtn.addEventListener("click", () => {
+      if (!currentArticleId) return;
+      toggleBookmark(currentArticleId);
+    });
+
+    let touchStartX = 0;
+    let touchEndX = 0;
+
+    carouselTrack.addEventListener("touchstart", (event) => {
+      touchStartX = event.changedTouches[0].clientX;
+    }, { passive: true });
+
+    carouselTrack.addEventListener("touchend", (event) => {
+      touchEndX = event.changedTouches[0].clientX;
+      const delta = touchStartX - touchEndX;
+
+      if (Math.abs(delta) < 40) return;
+
+      if (delta > 0) {
+        goToSlide(currentSlide + 1);
+      } else {
+        goToSlide(currentSlide - 1);
+      }
+    }, { passive: true });
+
+    async function init() {
+      applySavedTheme();
+
+      try {
+        await loadLibraryData();
+        renderCarousel();
+      } catch (error) {
+        console.error("CocoPress mobile failed to load:", error);
+        carouselTrack.innerHTML = `
+          <article class="slide">
+            <div class="cover-card">
+              <div class="cover-fallback"></div>
+              <div class="cover-content">
+                <div></div>
+                <h2 class="cover-title">Could not load CocoPress.</h2>
+              </div>
+            </div>
+
+            <div class="slide-meta">
+              <p class="slide-kicker">Source’s Recs</p>
+              <p class="slide-outlet">Check your JSON path.</p>
+            </div>
+          </article>
+        `;
+        carouselDots.innerHTML = "";
+        featuredCount.textContent = "0 / 0";
+      }
+    }
+
+    init();
+  </script>
+</body>
+</html>
