@@ -951,165 +951,15 @@
       .reader-left { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.78); }
     }
     @media (max-width: 760px) {
-
-  /* hide desktop sidebar + featured */
-  .sidebar,
-  .featured-wrap,
-  .library-topbar,
-  .library-footer {
-    display: none;
-  }
-
-  .page {
-    padding: 18px 12px 90px; /* extra bottom space for nav */
-  }
-
-  /* =========================
-     MOBILE SEARCH BUTTON
-     ========================= */
-  .mobile-top-tools {
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 10px;
-  }
-
-  .mobile-search-toggle {
-    width: 42px;
-    height: 42px;
-    border-radius: 999px;
-    border: none;
-    background: rgba(255,255,255,0.9);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .mobile-search-toggle svg {
-    width: 22px;
-    height: 22px;
-    stroke: var(--lavender-deep);
-    stroke-width: 2;
-    fill: none;
-  }
-
-  /* =========================
-     MOBILE FEATURED HERO
-     ========================= */
-  .mobile-featured-wrap {
-    display: block;
-    padding: 16px;
-    margin-bottom: 18px;
-    overflow: hidden;
-  }
-
-  .mobile-featured-track {
-    display: flex;
-    gap: 14px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-  }
-
-  .mobile-featured-track::-webkit-scrollbar {
-    display: none;
-  }
-
-  .mobile-featured-track .book {
-    flex: 0 0 100%;
-    scroll-snap-align: center;
-  }
-
-  .mobile-featured-dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 12px;
-  }
-
-  .mobile-featured-dots span {
-    width: 30px;
-    height: 4px;
-    border-radius: 999px;
-    background: rgba(255,255,255,0.4);
-  }
-
-  .mobile-featured-dots .active {
-    background: white;
-  }
-
-  /* =========================
-     MOBILE LIBRARY (SWIPE ROWS)
-     ========================= */
-  .archive-viewport {
-    overflow: visible;
-  }
-
-  .archive-track {
-    display: block;
-    transform: none !important;
-  }
-
-  .archive-page {
-    margin-bottom: 18px;
-  }
-
-  .archive-grid {
-    display: flex;
-    gap: 12px;
-    overflow-x: auto;
-    padding-bottom: 12px;
-  }
-
-  .archive-grid::-webkit-scrollbar {
-    display: none;
-  }
-
-  .archive-card {
-    flex: 0 0 120px; /* book size */
-  }
-
-  .archive-book {
-    height: 200px;
-  }
-
-  /* =========================
-     MOBILE BOTTOM NAV
-     ========================= */
-  .mobile-bottom-nav {
-    position: fixed;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 64px;
-    background: white;
-    border-top: 1px solid rgba(0,0,0,0.08);
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    z-index: 9999;
-  }
-
-  .mobile-bottom-link {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    font-size: 11px;
-    font-weight: 700;
-    color: var(--lavender-deep);
-  }
-
-  .mobile-bottom-link svg {
-    width: 20px;
-    height: 20px;
-    stroke: currentColor;
-    stroke-width: 1.8;
-    fill: none;
-    margin-bottom: 2px;
-  }
-
-  .mobile-bottom-link.active {
-    color: var(--pink-scribble);
-  }
-}
+      .page { padding: 22px 14px 46px; }
+      .control-row { grid-template-columns: 1fr; }
+      .hero-books { grid-template-columns: 1fr; }
+      .archive-grid { grid-template-columns: 1fr; }
+      .featured-book { width: 250px; height: 400px; }
+      .reader-right { padding: 54px 18px 22px; }
+      .reader-title { font-size: 32px; }
+      .reader-summary { font-size: 15px; line-height: 1.8; }
+    }
   </style>
 </head>
 <body>
@@ -1169,26 +1019,6 @@
           <h1 class="hero-title">CocoPress</h1>
           <p class="hero-copy">A curated reading library for Coco Jones interviews, editorials, and defining press moments all in one place.</p>
         </section>
-        <!-- =====================================================
-     MOBILE SEARCH BUTTON + MOBILE FEATURED HERO
-     -----------------------------------------------------
-     This only becomes visible on phone.
-     Desktop will still use the regular featured section.
-     ===================================================== -->
-<section class="mobile-top-tools">
-  <button class="mobile-search-toggle" id="mobileSearchToggle" type="button" aria-label="Open search">
-    <svg viewBox="0 0 24 24" aria-hidden="true">
-      <circle cx="11" cy="11" r="7"></circle>
-      <path d="M20 20l-3.5-3.5"></path>
-    </svg>
-  </button>
-</section>
-
-<section class="mobile-featured-wrap panel" id="mobileFeaturedWrap">
-  <div class="mobile-featured-track" id="mobileFeaturedTrack"></div>
-
-  <div class="mobile-featured-dots" id="mobileFeaturedDots"></div>
-</section>
 
         <!-- =====================================================
              FEATURED SECTION
@@ -1449,56 +1279,13 @@ async function loadLibraryData() {
        Forces the approved four featured books.
        ========================================================= */
     function renderHero() {
-  const featuredArticles = FEATURED_IDS.map(getArticleById).filter(Boolean);
-
-  /* desktop featured books */
-  heroBooks.innerHTML = featuredArticles.map(article => `
-    <div class="featured-book-slot">
-      ${buildBookMarkup(article, 'featured')}
-    </div>
-  `).join('');
-
-  /* mobile featured slider */
-  const mobileFeaturedTrack = document.getElementById('mobileFeaturedTrack');
-  const mobileFeaturedDots = document.getElementById('mobileFeaturedDots');
-
-  if (!mobileFeaturedTrack || !mobileFeaturedDots) return;
-
-  mobileFeaturedTrack.innerHTML = featuredArticles.map(article => `
-    ${buildBookMarkup(article, 'featured')}
-  `).join('');
-
-  mobileFeaturedDots.innerHTML = featuredArticles.map((_, index) => `
-    <span class="${index === 0 ? 'active' : ''}"></span>
-  `).join('');
-
-  const dotItems = Array.from(mobileFeaturedDots.querySelectorAll('span'));
-
-  function updateMobileDots() {
-    const cards = Array.from(mobileFeaturedTrack.children);
-    if (!cards.length) return;
-
-    const trackLeft = mobileFeaturedTrack.getBoundingClientRect().left;
-    let closestIndex = 0;
-    let closestDistance = Infinity;
-
-    cards.forEach((card, index) => {
-      const cardLeft = card.getBoundingClientRect().left;
-      const distance = Math.abs(cardLeft - trackLeft);
-      if (distance < closestDistance) {
-        closestDistance = distance;
-        closestIndex = index;
-      }
-    });
-
-    dotItems.forEach((dot, index) => {
-      dot.classList.toggle('active', index === closestIndex);
-    });
-  }
-
-  mobileFeaturedTrack.addEventListener('scroll', updateMobileDots, { passive: true });
-  updateMobileDots();
-}
+      const featuredArticles = FEATURED_IDS.map(getArticleById).filter(Boolean);
+      heroBooks.innerHTML = featuredArticles.map(article => `
+        <div class="featured-book-slot">
+          ${buildBookMarkup(article, 'featured')}
+        </div>
+      `).join('');
+    }
 
     /* =========================================================
        23) YEAR FILTER
@@ -1539,31 +1326,28 @@ async function loadLibraryData() {
        Shelves render between rows.
        ========================================================= */
     function createArchivePageMarkup(pageArticles) {
-  const isMobile = window.innerWidth <= 760;
-  const rowSize = isMobile ? 7 : ITEMS_PER_ROW;
-  const rows = chunkArray(pageArticles, rowSize);
-
-  return `
-    <div class="archive-page">
-      ${rows.map((row, rowIndex) => `
-        <div class="archive-grid-row">
-          <div class="archive-grid">
-            ${row.map(article => `
-              <article class="archive-card">
-                ${buildBookMarkup(article, 'archive')}
-                <div class="archive-meta">
-                  <div class="archive-line">${escapeHtml(article.outlet || '')}</div>
-                  <div class="archive-line">${escapeHtml(article.year || '')}</div>
-                </div>
-              </article>
-            `).join('')}
-          </div>
-          ${rowIndex < rows.length - 1 ? '<div class="row-shelf"></div>' : ''}
+      const rows = chunkArray(pageArticles, ITEMS_PER_ROW);
+      return `
+        <div class="archive-page">
+          ${rows.map((row, rowIndex) => `
+            <div class="archive-grid-row">
+              <div class="archive-grid">
+                ${row.map(article => `
+                  <article class="archive-card">
+                    ${buildBookMarkup(article, 'archive')}
+                    <div class="archive-meta">
+                      <div class="archive-line">${escapeHtml(article.outlet || '')}</div>
+                      <div class="archive-line">${escapeHtml(article.year || '')}</div>
+                    </div>
+                  </article>
+                `).join('')}
+              </div>
+              ${rowIndex < rows.length - 1 ? '<div class="row-shelf"></div>' : ''}
+            </div>
+          `).join('')}
         </div>
-      `).join('')}
-    </div>
-  `;
-}
+      `;
+    }
 
     /* =========================================================
        26) PAGINATION DISPLAY
@@ -1592,30 +1376,15 @@ async function loadLibraryData() {
        27) LIBRARY RENDER
        ========================================================= */
     function renderArchive() {
-  filteredArticles = getFilteredArticles();
+      filteredArticles = getFilteredArticles();
+      const pages = chunkArray(filteredArticles, ITEMS_PER_PAGE);
+      currentPage = Math.min(currentPage, Math.max(0, pages.length - 1));
 
-  const isMobile = window.innerWidth <= 760;
-
-  emptyState.style.display = filteredArticles.length ? 'none' : 'block';
-
-  if (isMobile) {
-    /* MOBILE: no pagination, show everything */
-    archiveTrack.innerHTML = createArchivePageMarkup(filteredArticles);
-    archiveTrack.style.transform = 'none';
-
-    /* hide pagination text manually */
-    pageCountTop.textContent = '';
-    pageCountBottom.textContent = '';
-  } else {
-    /* DESKTOP: keep original behavior */
-    const pages = chunkArray(filteredArticles, ITEMS_PER_PAGE);
-    currentPage = Math.min(currentPage, Math.max(0, pages.length - 1));
-
-    archiveTrack.innerHTML = pages.map(createArchivePageMarkup).join('');
-    archiveTrack.style.transform = `translateX(-${currentPage * 100}%)`;
-    syncPagination(pages.length);
-  }
-}
+      emptyState.style.display = filteredArticles.length ? 'none' : 'block';
+      archiveTrack.innerHTML = pages.map(createArchivePageMarkup).join('');
+      archiveTrack.style.transform = `translateX(-${currentPage * 100}%)`;
+      syncPagination(pages.length);
+    }
 
     /* =========================================================
        28) BOOKMARK STORAGE
@@ -1773,16 +1542,5 @@ async function initCocoPress() {
 
 initCocoPress();
   </script>
-  </script>
-
-<!-- MOBILE NAV (paste this) -->
-<nav class="mobile-bottom-nav">
-  <a href="reading-history.html">History</a>
-  <a href="cocopress.html">Library</a>
-  <a href="bookmarks.html">Bookmarks</a>
-</nav>
-
-</body>
-</html>
 </body>
 </html>
