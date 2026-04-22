@@ -1271,12 +1271,6 @@ function updateCarouselPosition() {
     return;
   }
 
-  const cover = event.target.closest("[data-open]");
-  if (cover) {
-    openReader(cover.dataset.open);
-  }
-});
-
 libraryRows.addEventListener("click", (event) => {
   const book = event.target.closest("[data-library-open]");
   if (!book) return;
