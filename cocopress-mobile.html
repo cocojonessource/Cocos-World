@@ -1075,13 +1075,6 @@
       readerTitle.textContent = article.title || "";
       readerSummary.textContent = article.summary || "Summary coming soon.";
 
-      const chips = [
-        article.outlet ? `<span class="reader-chip">${escapeHtml(article.outlet)}</span>` : "",
-        isRealAuthor(article) ? `<span class="reader-chip">${escapeHtml(article.author)}</span>` : "",
-        article.year ? `<span class="reader-chip">${escapeHtml(article.year)}</span>` : ""
-      ].join("");
-
-      readerMeta.innerHTML = chips;
       syncBookmarkButton(article.id);
 
       reader.classList.add("active");
