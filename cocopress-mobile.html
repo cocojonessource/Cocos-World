@@ -480,35 +480,37 @@
     }
 
     .reader {
-      position: fixed;
-      inset: 0;
-      z-index: 5000;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 12px;
-      background: rgba(17, 10, 30, 0.68);
-      backdrop-filter: blur(14px);
-    }
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  background: rgba(17, 10, 30, 0.68);
+  backdrop-filter: blur(14px);
+}
 
-    .reader.active {
-      display: flex;
-    }
+.reader.active {
+  display: flex;
+}
 
-    .reader-shell {
-      position: relative;
-      width: min(100%, 420px);
-      max-height: 92vh;
-      overflow-y: auto;
-      border-radius: 28px;
-      background: var(--panel);
-      border: 1px solid var(--panel-border);
-      box-shadow: 0 26px 60px var(--shadow-strong);
-      padding: 18px 16px 18px;
-      backdrop-filter: blur(18px);
-    }
+.reader-shell {
+  position: relative;
+  width: min(100%, 420px);
+  height: min(94vh, 820px);
+  border-radius: 30px;
+  background: var(--panel);
+  border: 1px solid var(--panel-border);
+  box-shadow: 0 26px 60px var(--shadow-strong);
+  padding: 18px 16px 18px;
+  backdrop-filter: blur(18px);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
 
-    .reader-close {
+.reader-close {
   position: absolute;
   top: 12px;
   left: 12px;
@@ -521,23 +523,32 @@
   font-size: 22px;
   line-height: 1;
   cursor: pointer;
+  z-index: 5;
 }
 
-.reader-book-row {
+.reader-top {
+  flex: 0 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 38px;
+}
+
+.reader-book-wrap {
+  width: 100%;
   display: flex;
   align-items: flex-start;
   justify-content: center;
   gap: 14px;
-  margin-top: 34px;
-  margin-bottom: 6px;
+  margin-bottom: 16px;
 }
 
 .reader-book {
   position: relative;
   width: 150px;
-  height: 230px;
+  height: 228px;
   border-radius: 14px;
-  overflow: visible;
+  overflow: hidden;
   border: 1.5px solid rgba(255,255,255,0.72);
   background: linear-gradient(145deg, #cfb7ee 0%, #a580d2 50%, #7043a6 100%);
   box-shadow:
@@ -561,7 +572,6 @@
       rgba(255,255,255,0.04) 100%);
   box-shadow: inset -1px 0 0 rgba(65, 28, 104, 0.16);
   z-index: 3;
-  border-radius: 14px 0 0 14px;
 }
 
 .reader-book::after {
@@ -572,14 +582,11 @@
     linear-gradient(to bottom, rgba(255,255,255,0.06), transparent 28%, rgba(0,0,0,0.10) 100%);
   pointer-events: none;
   z-index: 2;
-  border-radius: 14px;
 }
 
 .reader-cover {
   position: absolute;
   inset: 0;
-  border-radius: 12px;
-  overflow: hidden;
   z-index: 1;
   background:
     linear-gradient(145deg, #cfb7ee 0%, #a580d2 50%, #7043a6 100%);
@@ -631,73 +638,86 @@
   letter-spacing: -0.02em;
 }
 
-    .reader-kicker {
-  margin: 18px 0 8px;
+.reader-title-wrap {
+  width: 100%;
+  text-align: center;
+}
+
+.reader-kicker {
+  margin: 0 0 6px;
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+
+.reader-small-title {
+  margin: 0 0 10px;
   font-family: var(--font-serif);
   font-size: 18px;
   line-height: 1.2;
   font-weight: 600;
   color: var(--text);
   text-align: center;
-  letter-spacing: -0.01em;
-  text-transform: none;
+  max-width: 280px;
+  margin-left: auto;
+  margin-right: auto;
+  word-break: break-word;
+  overflow-wrap: anywhere;
 }
-    .reader-small-title {
-  margin: 0 0 8px;
-  font-family: var(--font-serif);
-  font-size: 16px;
-  line-height: 1.2;
-  font-weight: 500;
+
+.reader-meta {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin: 0 0 12px;
+}
+
+.reader-chip {
+  padding: 8px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--panel-border);
+  background: rgba(255,255,255,0.08);
+  font-size: 11px;
+  font-weight: 700;
   color: var(--text-soft);
-  text-align: center;
 }
+
 .reader-divider {
-  width: 60%;
+  width: min(100%, 280px);
   height: 1px;
   background: rgba(255,255,255,0.15);
-  margin: 0 auto 18px;
+  margin: 0 auto 14px;
 }
-    .reader-title {
-      margin: 0 0 12px;
-      font-family: var(--font-serif);
-      font-size: 30px;
-      line-height: 0.96;
-      color: var(--text);
-    }
 
-    .reader-meta {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 18px;
-    }
+.reader-summary-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 0 4px 8px;
+}
 
-    .reader-chip {
-      padding: 8px 11px;
-      border-radius: 999px;
-      border: 1px solid var(--panel-border);
-      background: rgba(255,255,255,0.08);
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--text-soft);
-    }
+.reader-summary {
+  margin: 0;
+  font-size: 17px;
+  line-height: 1.8;
+  color: var(--text-soft);
+  white-space: pre-line;
+  text-align: left;
+}
 
-    .reader-summary {
-      margin: 0;
-      font-size: 15px;
-      line-height: 1.85;
-      color: var(--text-soft);
-      white-space: pre-line;
-    }
+.reader-actions {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: center;
+  margin-top: 14px;
+  padding-top: 12px;
+}
 
-    .reader-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-      margin-top: 20px;
-    }
-
-    .reader-btn,
+.reader-btn,
 .bookmark-btn {
   border: none;
   font-size: 13px;
@@ -707,10 +727,11 @@
 
 .reader-btn {
   border-radius: var(--radius-pill);
-  padding: 14px 16px;
+  padding: 14px 18px;
+  width: 100%;
+  max-width: 280px;
   background: var(--button-bg);
   color: var(--button-text);
-  flex: 0 1 220px;
 }
 
 .bookmark-btn {
@@ -720,7 +741,6 @@
   border-radius: 999px;
   background: transparent;
   color: var(--text);
-  border: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -816,26 +836,28 @@
   <div class="reader-shell">
     <button class="reader-close" id="readerClose" aria-label="Close">×</button>
 
-    <div class="reader-book-row">
-      <div class="reader-book" id="readerCover"></div>
+    <div class="reader-top">
+      <div class="reader-book-wrap">
+        <div class="reader-book" id="readerCover"></div>
 
-      <button class="bookmark-btn" id="bookmarkBtn" type="button" aria-label="Bookmark">
-        <svg viewBox="0 0 24 24" class="bookmark-icon" aria-hidden="true">
-          <path d="M6 3h12v18l-6-4-6 4V3z"></path>
-        </svg>
-      </button>
+        <button class="bookmark-btn" id="bookmarkBtn" type="button" aria-label="Bookmark">
+          <svg viewBox="0 0 24 24" class="bookmark-icon" aria-hidden="true">
+            <path d="M6 3h12v18l-6-4-6 4V3z"></path>
+          </svg>
+        </button>
+      </div>
+
+      <div class="reader-title-wrap">
+        <p class="reader-kicker" id="readerKicker"></p>
+        <h3 class="reader-small-title" id="readerTitle"></h3>
+        <div class="reader-meta" id="readerMeta"></div>
+        <div class="reader-divider"></div>
+      </div>
     </div>
 
-    <div class="reader-mini-head">
-  <p class="reader-kicker" id="readerKicker"></p>
-<h2 class="reader-title" id="readerTitle"></h2>
-
-<div class="reader-meta" id="readerMeta"></div>
-
-<p class="reader-summary" id="readerSummary"></p>
-</div>
-
-    <p class="reader-summary" id="readerSummary"></p>
+    <div class="reader-summary-wrap">
+      <p class="reader-summary" id="readerSummary"></p>
+    </div>
 
     <div class="reader-actions">
       <button class="reader-btn" id="readerSourceBtn" type="button">Read on Source</button>
