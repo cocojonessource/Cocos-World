@@ -527,29 +527,23 @@
   display: flex;
   align-items: flex-start;
   justify-content: center;
-  gap: 10px;
+  gap: 14px;
   margin-top: 34px;
   margin-bottom: 6px;
 }
 
-function buildReaderCover(article) {
-  const authorHtml = isRealAuthor(article)
-    ? `<p class="reader-author">${escapeHtml(article.author)}</p>`
-    : `<div></div>`;
-
-  const imageHtml = article.coverImage
-    ? `<img src="${escapeHtml(article.coverImage)}" alt="${escapeHtml(article.title)}">`
-    : "";
-
-  readerCover.innerHTML = `
-    <div class="reader-cover">
-      ${imageHtml}
-      <div class="reader-cover-text">
-        ${authorHtml}
-        <h3 class="reader-cover-title">${escapeHtml(article.title)}</h3>
-      </div>
-    </div>
-  `;
+.reader-book {
+  position: relative;
+  width: 150px;
+  height: 230px;
+  border-radius: 14px;
+  overflow: visible;
+  border: 1.5px solid rgba(255,255,255,0.72);
+  background: linear-gradient(145deg, #cfb7ee 0%, #a580d2 50%, #7043a6 100%);
+  box-shadow:
+    0 18px 30px rgba(81, 37, 125, 0.18),
+    0 8px 20px rgba(255,255,255,0.22);
+  flex-shrink: 0;
 }
 
 .reader-book::before {
@@ -599,12 +593,13 @@ function buildReaderCover(article) {
     linear-gradient(to bottom, var(--cover-overlay-top) 0%, transparent 35%, var(--cover-overlay-bottom) 100%);
   z-index: 1;
 }
+
 .reader-cover img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
 }
 
 .reader-cover-text {
@@ -1051,20 +1046,23 @@ function buildReaderCover(article) {
       updateCarouselPosition();
     }
 
-    .reader-book {
-  position: relative;
-  width: 88px;
-  height: 138px;
-  border-radius: 10px;
-  overflow: hidden;
-  border: 1.5px solid rgba(255,255,255,0.72);
-  background: linear-gradient(145deg, #cfb7ee 0%, #a580d2 50%, #7043a6 100%);
-  box-shadow:
-    0 12px 22px rgba(81, 37, 125, 0.16),
-    0 6px 14px rgba(255,255,255,0.18);
-  flex-shrink: 0;
-  margin: 0 auto;
-}
+    function buildReaderCover(article) {
+      const authorHtml = isRealAuthor(article)
+        ? `<p class="reader-author">${escapeHtml(article.author)}</p>`
+        : `<div></div>`;
+
+      const imageHtml = article.coverImage
+        ? `<img src="${escapeHtml(article.coverImage)}" alt="${escapeHtml(article.title)}">`
+        : "";
+
+      readerCover.innerHTML = `
+        ${imageHtml}
+        <div class="reader-cover-text">
+          ${authorHtml}
+          <h3 class="reader-cover-title">${escapeHtml(article.title)}</h3>
+        </div>
+      `;
+    }
 
     function openReader(id) {
       const article = getArticleById(id);
@@ -1077,6 +1075,13 @@ function buildReaderCover(article) {
       readerTitle.textContent = article.title || "";
       readerSummary.textContent = article.summary || "Summary coming soon.";
 
+      const chips = [
+        article.outlet ? `<span class="reader-chip">${escapeHtml(article.outlet)}</span>` : "",
+        isRealAuthor(article) ? `<span class="reader-chip">${escapeHtml(article.author)}</span>` : "",
+        article.year ? `<span class="reader-chip">${escapeHtml(article.year)}</span>` : ""
+      ].join("");
+
+      readerMeta.innerHTML = chips;
       syncBookmarkButton(article.id);
 
       reader.classList.add("active");
