@@ -1159,7 +1159,66 @@ let currentLibraryYear = "all";
         </article>
       `;
     }
+function renderLibraryYearOptions() {
+  const years = [...new Set(libraryData.map(item => String(item.year || "")).filter(Boolean))]
+    .sort((a, b) => Number(b) - Number(a));
 
+  libraryYearSelect.innerHTML = `
+    <option value="all">All Years</option>
+    ${years.map(year => `<option value="${year}">${year}</option>`).join("")}
+  `;
+}
+
+function getSortedLibraryArticles() {
+  let items = [...libraryData];
+
+  if (currentLibraryYear !== "all") {
+    items = items.filter(item => String(item.year || "") === currentLibraryYear);
+  }
+
+  items.sort((a, b) => {
+    const aVal = String(a.date || a.year || "");
+    const bVal = String(b.date || b.year || "");
+
+    return currentLibrarySort === "asc"
+      ? aVal.localeCompare(bVal)
+      : bVal.localeCompare(aVal);
+  });
+
+  return items;
+}
+
+function buildLibraryBookMarkup(article) {
+  const imageHtml = article.coverImage
+    ? `<img src="${article.coverImage}" alt="${article.title}">`
+    : "";
+
+  return `
+    <article class="library-book" data-library-open="${article.id}">
+      <div class="library-book-cover">
+        ${imageHtml}
+      </div>
+      <p class="library-book-title">${article.title || ""}</p>
+    </article>
+  `;
+}
+
+function renderLibraryRows() {
+  libraryArticles = getSortedLibraryArticles();
+
+  const rows = [];
+  for (let i = 0; i < libraryArticles.length; i += 7) {
+    rows.push(libraryArticles.slice(i, i + 7));
+  }
+
+  libraryRows.innerHTML = rows.map(row => `
+    <div class="library-row">
+      <div class="library-shelf">
+        ${row.map(buildLibraryBookMarkup).join("")}
+      </div>
+    </div>
+  `).join("");
+}
       function renderCarousel() {
   carouselTrack.innerHTML = featuredArticles.map(buildSlideMarkup).join("");
 
