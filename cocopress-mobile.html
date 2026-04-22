@@ -603,10 +603,12 @@
 
 .reader-cover img {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+  top: 50%;
+  left: 50%;
+  width: 85%;
+  height: 85%;
+  object-fit: contain;
+  transform: translate(-50%, -50%);
 }
 
 .reader-cover-text {
