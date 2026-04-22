@@ -1078,22 +1078,24 @@
     }
 
     function buildReaderCover(article) {
-      const authorHtml = isRealAuthor(article)
-        ? `<p class="reader-author">${escapeHtml(article.author)}</p>`
-        : `<div></div>`;
+  const authorHtml = isRealAuthor(article)
+    ? `<p class="reader-author">${escapeHtml(article.author)}</p>`
+    : `<div></div>`;
 
-      const imageHtml = article.coverImage
-        ? `<img src="${escapeHtml(article.coverImage)}" alt="${escapeHtml(article.title)}">`
-        : "";
+  const imageHtml = article.coverImage
+    ? `<img src="${escapeHtml(article.coverImage)}" alt="${escapeHtml(article.title)}">`
+    : "";
 
-      readerCover.innerHTML = `
-        ${imageHtml}
-        <div class="reader-cover-text">
-          ${authorHtml}
-          <h3 class="reader-cover-title">${escapeHtml(article.title)}</h3>
-        </div>
-      `;
-    }
+  readerCover.innerHTML = `
+    <div class="reader-cover">
+      ${imageHtml}
+      <div class="reader-cover-text">
+        ${authorHtml}
+        <h3 class="reader-cover-title">${escapeHtml(article.title)}</h3>
+      </div>
+    </div>
+  `;
+}
 
     function openReader(id) {
       const article = getArticleById(id);
