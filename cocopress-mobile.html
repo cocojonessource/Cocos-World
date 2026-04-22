@@ -1129,97 +1129,38 @@ let currentLibraryYear = "all";
     }
 
     function buildSlideMarkup(article, index) {
-      const authorHtml = isRealAuthor(article)
-        ? `<p class="cover-author">${escapeHtml(article.author)}</p>`
-        : `<div></div>`;
+  const authorHtml = isRealAuthor(article)
+    ? `<p class="cover-author">${escapeHtml(article.author)}</p>`
+    : `<div></div>`;
 
-      const imageHtml = article.coverImage
-        ? `<img class="cover-image" src="${escapeHtml(article.coverImage)}" alt="${escapeHtml(article.title)}">`
-        : `<div class="cover-fallback"></div>`;
-
-      return `
-        <article class="slide" data-slide-index="${index}">
-          <div class="cover-card" data-open="${escapeHtml(article.id)}">
-            ${imageHtml}
-
-            <div class="cover-content">
-              ${authorHtml}
-              <h2 class="cover-title">${escapeHtml(article.title)}</h2>
-            </div>
-          </div>
-
-          <div class="slide-meta">
-  <p class="slide-kicker">Source’s Recs</p>
-  <p class="slide-outlet">by ${escapeHtml(article.outlet || "")}</p>
-</div>
-
-          <button class="slide-button" type="button" data-open="${escapeHtml(article.id)}">
-            Preview
-          </button>
-        </article>
-      `;
-    }
-function renderLibraryYearOptions() {
-  const years = [...new Set(libraryData.map(item => String(item.year || "")).filter(Boolean))]
-    .sort((a, b) => Number(b) - Number(a));
-
-  libraryYearSelect.innerHTML = `
-    <option value="all">All Years</option>
-    ${years.map(year => `<option value="${year}">${year}</option>`).join("")}
-  `;
-}
-
-function getSortedLibraryArticles() {
-  let items = [...libraryData];
-
-  if (currentLibraryYear !== "all") {
-    items = items.filter(item => String(item.year || "") === currentLibraryYear);
-  }
-
-  items.sort((a, b) => {
-    const aVal = String(a.date || a.year || "");
-    const bVal = String(b.date || b.year || "");
-
-    return currentLibrarySort === "asc"
-      ? aVal.localeCompare(bVal)
-      : bVal.localeCompare(aVal);
-  });
-
-  return items;
-}
-
-function buildLibraryBookMarkup(article) {
   const imageHtml = article.coverImage
-    ? `<img src="${article.coverImage}" alt="${article.title}">`
-    : "";
+    ? `<img class="cover-image" src="${escapeHtml(article.coverImage)}" alt="${escapeHtml(article.title)}">`
+    : `<div class="cover-fallback"></div>`;
 
   return `
-    <article class="library-book" data-library-open="${article.id}">
-      <div class="library-book-cover">
+    <article class="slide" data-slide-index="${index}">
+      <div class="cover-card" data-open="${escapeHtml(article.id)}">
         ${imageHtml}
+
+        <div class="cover-content">
+          ${authorHtml}
+          <h2 class="cover-title">${escapeHtml(article.title)}</h2>
+        </div>
       </div>
-      <p class="library-book-title">${article.title || ""}</p>
+
+      <div class="slide-meta">
+        <p class="slide-kicker">Source’s Recs</p>
+        <p class="slide-outlet">by ${escapeHtml(article.outlet || "")}</p>
+      </div>
+
+      <button class="slide-button" type="button" data-open="${escapeHtml(article.id)}">
+        Preview
+      </button>
     </article>
   `;
 }
 
-function renderLibraryRows() {
-  libraryArticles = getSortedLibraryArticles();
-
-  const rows = [];
-  for (let i = 0; i < libraryArticles.length; i += 7) {
-    rows.push(libraryArticles.slice(i, i + 7));
-  }
-
-  libraryRows.innerHTML = rows.map(row => `
-    <div class="library-row">
-      <div class="library-shelf">
-        ${row.map(buildLibraryBookMarkup).join("")}
-      </div>
-    </div>
-  `).join("");
-}
-      function renderCarousel() {
+function renderCarousel() {
   carouselTrack.innerHTML = featuredArticles.map(buildSlideMarkup).join("");
 
   carouselDots.innerHTML = featuredArticles.map((_, index) => `
@@ -1234,7 +1175,7 @@ function renderLibraryRows() {
   updateCarouselPosition();
 }
 
-    function updateCarouselPosition() {
+function updateCarouselPosition() {
       carouselTrack.style.transform = `translateX(-${currentSlide * 100}%)`;
 
       const dots = carouselDots.querySelectorAll(".carousel-dot");
