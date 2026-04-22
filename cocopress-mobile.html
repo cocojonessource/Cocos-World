@@ -225,30 +225,21 @@
     .featured-head {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   margin-bottom: 16px;
 }
 
 .featured-label {
   margin: 0;
-  font-family: "Comic Sans MS", "Trebuchet MS", cursive;
-  font-size: 25px;
-  line-height: 1;
-  font-weight: 700;
-  letter-spacing: 0.01em;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   color: #d96cab;
-  transform: rotate(-3deg);
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
 }
 
 .featured-label::after {
-  content: "♡";
-  font-size: 24px;
-  line-height: 1;
-  color: #d96cab;
-  transform: rotate(10deg);
+  content: "";
 }
 
 .featured-count {
@@ -1017,8 +1008,8 @@
   <p class="slide-outlet">by ${escapeHtml(article.outlet || "")}</p>
 </div>
 
-          <button class="slide-button" type="button" data-read="${escapeHtml(article.id)}">
-            Read on Source
+          <button class="slide-button" type="button" data-open="${escapeHtml(article.id)}">
+            Preview
           </button>
         </article>
       `;
@@ -1136,11 +1127,11 @@
     });
 
     carouselTrack.addEventListener("click", (event) => {
-      const readBtn = event.target.closest("[data-read]");
-      if (readBtn) {
-        readArticle(readBtn.dataset.read);
+      const previewBtn = event.target.closest("[data-open]");
+      if (previewBtn) {
+        openReader(previewBtn.dataset.open);
         return;
-      }
+}
 
       const cover = event.target.closest("[data-open]");
       if (cover) {
