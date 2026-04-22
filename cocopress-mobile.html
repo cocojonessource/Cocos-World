@@ -1047,28 +1047,19 @@
 }
 
     function openReader(id) {
-      const article = getArticleById(id);
-      if (!article) return;
+  const article = getArticleById(id);
+  if (!article) return;
 
-      currentArticleId = article.id;
+  currentArticleId = article.id;
 
-      buildReaderCover(article);
-      readerKicker.textContent = "Source’s Recs";
-      readerTitle.textContent = article.title || "";
-      readerSummary.textContent = article.summary || "Summary coming soon.";
+  buildReaderCover(article);
+  readerTitle.textContent = article.title || "";
+  readerSummary.textContent = article.summary || "Summary coming soon.";
+  syncBookmarkButton(article.id);
 
-      const chips = [
-        article.outlet ? `<span class="reader-chip">${escapeHtml(article.outlet)}</span>` : "",
-        isRealAuthor(article) ? `<span class="reader-chip">${escapeHtml(article.author)}</span>` : "",
-        article.year ? `<span class="reader-chip">${escapeHtml(article.year)}</span>` : ""
-      ].join("");
-
-      readerMeta.innerHTML = chips;
-      syncBookmarkButton(article.id);
-
-      reader.classList.add("active");
-      document.body.style.overflow = "hidden";
-    }
+  reader.classList.add("active");
+  document.body.style.overflow = "hidden";
+}
 
     function closeReader() {
       reader.classList.remove("active");
