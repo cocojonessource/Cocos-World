@@ -1315,34 +1315,133 @@
       }
     }, { passive: true });
 
-    async function init() {
-      applySavedTheme();
+    const libraryRows = document.getElementById("libraryRows");
+const libraryFilterBtn = document.getElementById("libraryFilterBtn");
+const libraryFilterMenu = document.getElementById("libraryFilterMenu");
+const libraryFilterOptions = Array.from(document.querySelectorAll(".library-filter-option"));
 
-      try {
-        await loadLibraryData();
-        renderCarousel();
-      } catch (error) {
-        console.error("CocoPress mobile failed to load:", error);
-        carouselTrack.innerHTML = `
-          <article class="slide">
-            <div class="cover-card">
-              <div class="cover-fallback"></div>
-              <div class="cover-content">
-                <div></div>
-                <h2 class="cover-title">Could not load CocoPress.</h2>
-              </div>
-            </div>
+let librarySortMode = "desc";
 
-            <div class="slide-meta">
-              <p class="slide-kicker">Source’s Recs</p>
-              <p class="slide-outlet">Check your JSON path.</p>
-            </div>
-          </article>
-        `;
-        carouselDots.innerHTML = "";
-        featuredCount.textContent = "0 / 0";
-      }
-    }
+function sortLibraryItems(items, mode = "desc") {
+  const sorted = [...items];
+
+  if (mode === "asc") {
+    sorted.sort((a, b) => String(a.year || "").localeCompare(String(b.year || "")) || String(a.title || "").localeCompare(String(b.title || "")));
+    return sorted;
+  }
+
+  if (mode === "year") {
+    sorted.sort((a, b) => String(b.year || "").localeCompare(String(a.year || "")) || String(a.title || "").localeCompare(String(b.title || "")));
+    return sorted;
+  }
+
+  sorted.sort((a, b) => String(b.year || "").localeCompare(String(a.year || "")) || String(b.date || "").localeCompare(String(a.date || "")) || String(a.title || "").localeCompare(String(b.title || "")));
+  return sorted;
+}
+
+function chunkIntoRows(items, size) {
+  const rows = [];
+  for (let i = 0; i < items.length; i += size) {
+    rows.push(items.slice(i, i + size));
+  }
+  return rows;
+}
+
+function buildLibraryItemMarkup(article) {
+  const imageHtml = article.coverImage
+    ? `<img src="${escapeHtml(article.coverImage)}" alt="${escapeHtml(article.title)}">`
+    : "";
+
+  return `
+    <button class="library-item" type="button" data-open="${escapeHtml(article.id)}">
+      <div class="library-magazine">
+        ${imageHtml}
+      </div>
+      <div class="library-item-title">${escapeHtml(article.title || "")}</div>
+    </button>
+  `;
+}
+
+function renderLibraryRows() {
+  const sortedItems = sortLibraryItems(libraryData, librarySortMode);
+  const rows = chunkIntoRows(sortedItems, 7);
+
+  libraryRows.innerHTML = rows.map(row => `
+    <div class="library-row">
+      <div class="library-strip">
+        ${row.map(buildLibraryItemMarkup).join("")}
+      </div>
+    </div>
+  `).join("");
+}
+
+function setLibrarySort(mode) {
+  librarySortMode = mode;
+
+  libraryFilterOptions.forEach(option => {
+    option.classList.toggle("active", option.dataset.sort === mode);
+  });
+
+  renderLibraryRows();
+  libraryFilterMenu.hidden = true;
+}
+
+libraryFilterBtn.addEventListener("click", () => {
+  libraryFilterMenu.hidden = !libraryFilterMenu.hidden;
+});
+
+libraryFilterOptions.forEach(option => {
+  option.addEventListener("click", () => {
+    setLibrarySort(option.dataset.sort);
+  });
+});
+
+libraryRows.addEventListener("click", (event) => {
+  const item = event.target.closest("[data-open]");
+  if (!item) return;
+  openReader(item.dataset.open);
+});
+
+document.addEventListener("click", (event) => {
+  if (
+    !libraryFilterMenu.hidden &&
+    !libraryFilterMenu.contains(event.target) &&
+    !libraryFilterBtn.contains(event.target)
+  ) {
+    libraryFilterMenu.hidden = true;
+  }
+});
+
+async function init() {
+  applySavedTheme();
+
+  try {
+    await loadLibraryData();
+    renderCarousel();
+    renderLibraryRows();
+  } catch (error) {
+    console.error("CocoPress mobile failed to load:", error);
+    carouselTrack.innerHTML = `
+      <article class="slide">
+        <div class="cover-card">
+          <div class="cover-fallback"></div>
+          <div class="cover-content">
+            <div></div>
+            <h2 class="cover-title">Could not load CocoPress.</h2>
+          </div>
+        </div>
+
+        <div class="slide-meta">
+          <p class="slide-kicker">Source’s Recs</p>
+          <p class="slide-outlet">Check your JSON path.</p>
+        </div>
+      </article>
+    `;
+    carouselDots.innerHTML = "";
+    featuredCount.textContent = "0 / 0";
+    libraryRows.innerHTML = "";
+  }
+}
 
     init();
   </script>
