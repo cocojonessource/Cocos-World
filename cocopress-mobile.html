@@ -747,17 +747,35 @@
     </header>
 
     <section class="featured-panel">
-      <div class="featured-head">
-        <p class="featured-label">Featured</p>
-        <p class="featured-count" id="featuredCount">1 / 5</p>
-      </div>
+  <div class="featured-head">
+    <p class="featured-label">Featured</p>
+    <p class="featured-count" id="featuredCount">1 / 5</p>
+  </div>
 
-      <div class="carousel-viewport">
-        <div class="carousel-track" id="carouselTrack"></div>
-      </div>
+  <div class="carousel-viewport">
+    <div class="carousel-track" id="carouselTrack"></div>
+  </div>
 
-      <div class="carousel-dots" id="carouselDots"></div>
-    </section>
+  <div class="carousel-dots" id="carouselDots"></div>
+</section>
+
+<section class="library-section" id="librarySection">
+  <div class="library-head">
+    <h2 class="library-title">Library</h2>
+
+    <button class="library-filter-btn" id="libraryFilterBtn" type="button" aria-label="Open library filters">
+      Filter
+    </button>
+  </div>
+
+  <div class="library-filter-menu" id="libraryFilterMenu" hidden>
+    <button class="library-filter-option active" type="button" data-sort="desc">Descending</button>
+    <button class="library-filter-option" type="button" data-sort="asc">Ascending</button>
+    <button class="library-filter-option" type="button" data-sort="year">Year</button>
+  </div>
+
+  <div class="library-rows" id="libraryRows"></div>
+</section>
   </main>
 
   <nav class="mobile-footer" aria-label="CocoPress mobile navigation">
