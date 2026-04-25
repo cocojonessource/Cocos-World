@@ -1,0 +1,666 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Updates — Coco's World</title>
+
+  <style>
+    :root {
+      --bg: #f8e9f0;
+      --primary: #4a1f6b;
+      --secondary: #7a4c9f;
+      --accent: #c85c8e;
+      --gold: #d4af37;
+      --white: #ffffff;
+      --paper: #fff8fc;
+      --lavender: #eadcff;
+      --shadow: rgba(74, 31, 107, 0.16);
+      --shadow-strong: rgba(74, 31, 107, 0.24);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      color: var(--primary);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.55), transparent 28%),
+        radial-gradient(circle at 82% 18%, rgba(255,255,255,0.35), transparent 24%),
+        linear-gradient(to bottom, #fff8fb 0%, var(--bg) 35%, #ffeaf1 100%);
+      overflow-x: hidden;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(255, 209, 220, 0.92);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255,255,255,0.45);
+    }
+
+    .topbar-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 16px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      font-weight: 700;
+    }
+
+    .anchor-home {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      background: var(--white);
+      border: 1px solid rgba(212, 168, 87, 0.45);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold);
+    }
+
+    .nav {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+      font-size: 15px;
+      font-weight: 700;
+    }
+
+    .nav a {
+      position: relative;
+    }
+
+    .nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -5px;
+      width: 100%;
+      height: 2px;
+      background: var(--accent);
+      transform: scaleX(0);
+      transition: transform 0.22s ease;
+    }
+
+    .nav a:hover::after,
+    .nav a.active::after {
+      transform: scaleX(1);
+    }
+
+    .page {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 36px 20px 70px;
+    }
+
+    .hero {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .hero h1 {
+      margin: 0 0 12px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(52px, 7vw, 92px);
+      line-height: 0.9;
+    }
+
+    .hero p {
+      max-width: 740px;
+      margin: 0 auto;
+      font-size: 17px;
+      line-height: 1.75;
+      color: var(--secondary);
+    }
+
+    .updates-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 360px;
+      gap: 24px;
+      align-items: start;
+    }
+
+    .scrapbook-shell {
+      position: relative;
+      min-height: 690px;
+      border-radius: 34px;
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.62), rgba(255,238,247,0.78)),
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.8), transparent 22%);
+      border: 1px solid rgba(255,255,255,0.75);
+      box-shadow: 0 18px 42px var(--shadow);
+      overflow: hidden;
+      padding: 28px;
+    }
+
+    .scrapbook-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 5;
+    }
+
+    .scrapbook-title {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 34px;
+    }
+
+    .spread-controls {
+      display: flex;
+      gap: 10px;
+    }
+
+    .spread-btn {
+      border: none;
+      background: var(--white);
+      color: var(--primary);
+      border-radius: 999px;
+      padding: 10px 14px;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 8px 18px var(--shadow);
+    }
+
+    .spread-window {
+      overflow: hidden;
+      width: 100%;
+    }
+
+    .spread-track {
+      display: flex;
+      transition: transform 0.38s ease;
+    }
+
+    .spread {
+      flex: 0 0 100%;
+      min-height: 590px;
+      position: relative;
+    }
+
+    .scrap {
+      position: absolute;
+      cursor: pointer;
+      transition: transform 0.22s ease, box-shadow 0.22s ease;
+    }
+
+    .scrap:hover {
+      transform: translateY(-4px) rotate(var(--rotate));
+      box-shadow: 0 18px 34px var(--shadow-strong);
+    }
+
+    .photo-scrap {
+      width: 300px;
+      background: var(--white);
+      padding: 12px 12px 46px;
+      box-shadow: 0 14px 26px var(--shadow);
+      transform: rotate(var(--rotate));
+    }
+
+    .photo-box {
+      height: 250px;
+      border-radius: 8px;
+      background:
+        linear-gradient(135deg, #d8b4f4, #f4bad8);
+      overflow: hidden;
+    }
+
+    .photo-box img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .photo-caption {
+      position: absolute;
+      left: 18px;
+      right: 18px;
+      bottom: 14px;
+      font-family: "Comic Sans MS", "Trebuchet MS", cursive;
+      font-size: 18px;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .note-scrap {
+      width: 270px;
+      padding: 24px 22px;
+      background: #fff4bb;
+      box-shadow: 0 14px 26px var(--shadow);
+      transform: rotate(var(--rotate));
+      border-radius: 4px;
+    }
+
+    .note-date {
+      font-size: 12px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      color: var(--accent);
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+
+    .note-title {
+      margin: 0 0 10px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .note-copy {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--secondary);
+    }
+
+    .headline-scrap {
+      width: 340px;
+      padding: 20px 22px;
+      background: var(--paper);
+      border: 1px solid rgba(74,31,107,0.08);
+      border-radius: 18px;
+      box-shadow: 0 14px 26px var(--shadow);
+      transform: rotate(var(--rotate));
+    }
+
+    .headline-tag {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      background: var(--lavender);
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .headline-scrap h3 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 30px;
+      line-height: 1.02;
+    }
+
+    .tape {
+      position: absolute;
+      width: 88px;
+      height: 26px;
+      background: rgba(255,255,255,0.56);
+      border: 1px solid rgba(255,255,255,0.7);
+      transform: rotate(-8deg);
+      top: -12px;
+      left: 40%;
+      backdrop-filter: blur(2px);
+    }
+
+    .simple-panel {
+      border-radius: 30px;
+      background: rgba(255,255,255,0.62);
+      border: 1px solid rgba(255,255,255,0.75);
+      box-shadow: 0 18px 42px var(--shadow);
+      padding: 22px;
+      position: sticky;
+      top: 96px;
+    }
+
+    .simple-panel h2 {
+      margin: 0 0 6px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 34px;
+    }
+
+    .simple-panel p {
+      margin: 0 0 18px;
+      color: var(--secondary);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .update-list {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .update-item {
+      border: none;
+      text-align: left;
+      width: 100%;
+      padding: 15px;
+      border-radius: 18px;
+      background: rgba(255,248,252,0.88);
+      color: var(--primary);
+      cursor: pointer;
+    }
+
+    .update-item-date {
+      display: block;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .update-item-title {
+      display: block;
+      font-size: 15px;
+      line-height: 1.25;
+      font-weight: 800;
+    }
+
+    .reader {
+      position: fixed;
+      inset: 0;
+      z-index: 4000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      background: rgba(48, 20, 70, 0.62);
+      backdrop-filter: blur(12px);
+    }
+
+    .reader.active {
+      display: flex;
+    }
+
+    .reader-card {
+      width: min(720px, 100%);
+      border-radius: 30px;
+      background: rgba(255,250,253,0.98);
+      padding: 34px;
+      box-shadow: 0 30px 80px rgba(32,10,50,0.28);
+      position: relative;
+    }
+
+    .reader-close {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      border: none;
+      width: 38px;
+      height: 38px;
+      border-radius: 999px;
+      background: var(--lavender);
+      color: var(--primary);
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .reader-date {
+      margin: 0 0 10px;
+      font-size: 12px;
+      font-weight: 900;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .reader-title {
+      margin: 0 0 16px;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 42px;
+      line-height: 0.98;
+    }
+
+    .reader-copy {
+      margin: 0;
+      font-size: 17px;
+      line-height: 1.8;
+      color: var(--secondary);
+    }
+
+    @media (max-width: 1000px) {
+      .updates-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .simple-panel {
+        position: relative;
+        top: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <a class="anchor-home" href="index.html">⚓</a>
+        <span>Coco's World</span>
+      </div>
+
+      <nav class="nav">
+        <a href="index.html">Home</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="#">Music</a>
+        <a href="media.html">Media</a>
+        <a href="updates.html" class="active">Updates</a>
+        <a href="#">Calendar</a>
+        <a href="#">Games</a>
+        <a href="story.html">Story</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <section class="hero">
+      <h1>Updates</h1>
+      <p>A living scrapbook of what’s new in Coco’s World — performances, press moments, announcements, site updates, and everything fans should keep up with.</p>
+    </section>
+
+    <section class="updates-layout">
+      <div class="scrapbook-shell">
+        <div class="scrapbook-head">
+          <h2 class="scrapbook-title">Latest Spread</h2>
+          <div class="spread-controls">
+            <button class="spread-btn" id="prevSpread">←</button>
+            <button class="spread-btn" id="nextSpread">→</button>
+          </div>
+        </div>
+
+        <div class="spread-window">
+          <div class="spread-track" id="spreadTrack">
+            <div class="spread">
+              <article class="scrap photo-scrap" style="left: 28px; top: 34px; --rotate: -4deg;" data-id="ut">
+                <div class="tape"></div>
+                <div class="photo-box"></div>
+                <div class="photo-caption">performance night</div>
+              </article>
+
+              <article class="scrap headline-scrap" style="right: 44px; top: 70px; --rotate: 3deg;" data-id="album">
+                <div class="tape"></div>
+                <span class="headline-tag">Music</span>
+                <h3>Why Not More? marks a major debut era.</h3>
+              </article>
+
+              <article class="scrap note-scrap" style="left: 330px; top: 355px; --rotate: 5deg;" data-id="press">
+                <div class="note-date">Apr 24</div>
+                <h3 class="note-title">New press added</h3>
+                <p class="note-copy">Fresh CocoPress entries were added to the reading library.</p>
+              </article>
+
+              <article class="scrap headline-scrap" style="left: 38px; bottom: 36px; --rotate: -2deg;" data-id="calendar">
+                <span class="headline-tag">Calendar</span>
+                <h3>Upcoming appearances are being tracked.</h3>
+              </article>
+            </div>
+
+            <div class="spread">
+              <article class="scrap note-scrap" style="left: 70px; top: 70px; --rotate: -3deg;" data-id="site">
+                <div class="note-date">Site Update</div>
+                <h3 class="note-title">CocoStream planning</h3>
+                <p class="note-copy">The watch section is being shaped around featured videos and curated rows.</p>
+              </article>
+
+              <article class="scrap photo-scrap" style="right: 80px; top: 90px; --rotate: 4deg;" data-id="gallery">
+                <div class="tape"></div>
+                <div class="photo-box"></div>
+                <div class="photo-caption">gallery archive soon</div>
+              </article>
+
+              <article class="scrap headline-scrap" style="left: 260px; bottom: 70px; --rotate: -2deg;" data-id="story">
+                <span class="headline-tag">Story</span>
+                <h3>Coco’s Star Path is becoming the guided biography hub.</h3>
+              </article>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="simple-panel">
+        <h2>Quick Updates</h2>
+        <p>For people who just want the clean version.</p>
+
+        <div class="update-list" id="updateList"></div>
+      </aside>
+    </section>
+  </main>
+
+  <div class="reader" id="reader">
+    <div class="reader-card">
+      <button class="reader-close" id="readerClose">×</button>
+      <p class="reader-date" id="readerDate"></p>
+      <h2 class="reader-title" id="readerTitle"></h2>
+      <p class="reader-copy" id="readerCopy"></p>
+    </div>
+  </div>
+
+  <script>
+    const updates = [
+      {
+        id: "ut",
+        date: "Apr 2026",
+        title: "Coco Jones performs at UT Arlington",
+        copy: "A new performance moment has been added to Coco’s World. This update can link out to a full performance recap, gallery folder, or video page later."
+      },
+      {
+        id: "album",
+        date: "Album Era",
+        title: "Why Not More? era highlight",
+        copy: "This update space can track album milestones, release anniversaries, chart moments, and major rollout memories without feeling like a plain news feed."
+      },
+      {
+        id: "press",
+        date: "Apr 24",
+        title: "New CocoPress entries added",
+        copy: "Fresh written interviews, editorials, and press moments can be announced here whenever the CocoPress library gets updated."
+      },
+      {
+        id: "calendar",
+        date: "Calendar",
+        title: "Upcoming appearances are being tracked",
+        copy: "For users who need dates quickly, this update can point them toward the Calendar section instead of forcing the scrapbook page to do everything."
+      },
+      {
+        id: "site",
+        date: "Site Update",
+        title: "CocoStream planning",
+        copy: "CocoStream can become the video side of the archive, with featured videos, interviews, performances, and era-specific rows."
+      },
+      {
+        id: "gallery",
+        date: "Archive",
+        title: "Gallery archive coming soon",
+        copy: "The gallery can hold photo folders by year, event, era, and visual theme while Updates announces what was newly added."
+      },
+      {
+        id: "story",
+        date: "Story",
+        title: "Coco’s Star Path expands",
+        copy: "The Story page can keep growing into a guided biography experience with chapters, milestones, and interactive constellation navigation."
+      }
+    ];
+
+    const spreadTrack = document.getElementById("spreadTrack");
+    const prevSpread = document.getElementById("prevSpread");
+    const nextSpread = document.getElementById("nextSpread");
+    const updateList = document.getElementById("updateList");
+
+    const reader = document.getElementById("reader");
+    const readerClose = document.getElementById("readerClose");
+    const readerDate = document.getElementById("readerDate");
+    const readerTitle = document.getElementById("readerTitle");
+    const readerCopy = document.getElementById("readerCopy");
+
+    let currentSpread = 0;
+    const totalSpreads = 2;
+
+    function openUpdate(id) {
+      const item = updates.find(update => update.id === id);
+      if (!item) return;
+
+      readerDate.textContent = item.date;
+      readerTitle.textContent = item.title;
+      readerCopy.textContent = item.copy;
+      reader.classList.add("active");
+    }
+
+    function renderQuickList() {
+      updateList.innerHTML = updates.map(update => `
+        <button class="update-item" type="button" data-id="${update.id}">
+          <span class="update-item-date">${update.date}</span>
+          <span class="update-item-title">${update.title}</span>
+        </button>
+      `).join("");
+    }
+
+    function updateSpread() {
+      spreadTrack.style.transform = `translateX(-${currentSpread * 100}%)`;
+    }
+
+    prevSpread.addEventListener("click", () => {
+      currentSpread = Math.max(0, currentSpread - 1);
+      updateSpread();
+    });
+
+    nextSpread.addEventListener("click", () => {
+      currentSpread = Math.min(totalSpreads - 1, currentSpread + 1);
+      updateSpread();
+    });
+
+    document.addEventListener("click", event => {
+      const target = event.target.closest("[data-id]");
+      if (!target) return;
+      openUpdate(target.dataset.id);
+    });
+
+    readerClose.addEventListener("click", () => {
+      reader.classList.remove("active");
+    });
+
+    reader.addEventListener("click", event => {
+      if (event.target === reader) {
+        reader.classList.remove("active");
+      }
+    });
+
+    renderQuickList();
+  </script>
+</body>
+</html>
