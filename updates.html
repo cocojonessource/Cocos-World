@@ -7,381 +7,417 @@
 
   <style>
     :root {
-      --bg: #f8e9f0;
-      --primary: #4a1f6b;
-      --secondary: #7a4c9f;
-      --accent: #c85c8e;
-      --gold: #d4af37;
+      --pink-1: #fff2fb;
+      --pink-2: #ffd4ed;
+      --pink-3: #f7a8d9;
+      --lav-1: #f3e7ff;
+      --lav-2: #d8b9ff;
+      --lav-3: #b98af4;
+
+      --deep: #5b247f;
+      --soft: #8b5fb2;
+      --hot-pink: #f08ac6;
       --white: #ffffff;
-      --paper: #fff8fc;
-      --lavender: #eadcff;
-      --shadow: rgba(74, 31, 107, 0.16);
-      --shadow-strong: rgba(74, 31, 107, 0.24);
+
+      --shadow: rgba(91, 36, 127, 0.16);
+      --shadow-strong: rgba(91, 36, 127, 0.28);
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
+      min-height: 100vh;
       font-family: Arial, sans-serif;
-      color: var(--primary);
-      background:
-        radial-gradient(circle at top left, rgba(255,255,255,0.55), transparent 28%),
-        radial-gradient(circle at 82% 18%, rgba(255,255,255,0.35), transparent 24%),
-        linear-gradient(to bottom, #fff8fb 0%, var(--bg) 35%, #ffeaf1 100%);
+      color: var(--deep);
       overflow-x: hidden;
+      background:
+        radial-gradient(circle at 14% 18%, rgba(255, 156, 215, 0.72), transparent 22%),
+        radial-gradient(circle at 84% 26%, rgba(207, 164, 255, 0.62), transparent 25%),
+        radial-gradient(circle at 48% 70%, rgba(255, 190, 230, 0.48), transparent 26%),
+        radial-gradient(circle at 12% 86%, rgba(193, 141, 255, 0.42), transparent 24%),
+        linear-gradient(135deg, #fff7fc 0%, #ffe3f3 32%, #f4e4ff 65%, #fff1f9 100%);
     }
 
-    a { color: inherit; text-decoration: none; }
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    body::before {
+      background:
+        radial-gradient(circle at 18% 30%, rgba(255, 122, 199, 0.34), transparent 18%),
+        radial-gradient(circle at 78% 78%, rgba(255, 132, 202, 0.34), transparent 20%),
+        radial-gradient(circle at 64% 22%, rgba(172, 117, 255, 0.22), transparent 18%);
+      filter: blur(42px);
+      opacity: 1;
+    }
+
+    body::after {
+      background:
+        linear-gradient(90deg, rgba(255,255,255,0.38), transparent 18%, transparent 82%, rgba(255,255,255,0.34)),
+        linear-gradient(to bottom, rgba(255,255,255,0.38), transparent 22%, transparent 78%, rgba(255,225,245,0.36));
+      opacity: 0.78;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .dream-orb {
+      position: fixed;
+      border-radius: 999px;
+      filter: blur(28px);
+      opacity: 0.65;
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    .orb-1 {
+      width: 240px;
+      height: 240px;
+      left: 4%;
+      top: 18%;
+      background: rgba(255, 130, 204, 0.74);
+    }
+
+    .orb-2 {
+      width: 300px;
+      height: 300px;
+      right: 8%;
+      bottom: 10%;
+      background: rgba(197, 145, 255, 0.64);
+    }
+
+    .orb-3 {
+      width: 190px;
+      height: 190px;
+      left: 30%;
+      bottom: 14%;
+      background: rgba(255, 186, 231, 0.78);
+    }
+
+    .floating-heart {
+      position: fixed;
+      color: rgba(244, 116, 190, 0.28);
+      font-size: 90px;
+      filter: blur(7px);
+      pointer-events: none;
+      z-index: -1;
+      transform: rotate(-10deg);
+    }
+
+    .heart-1 {
+      left: 12%;
+      top: 56%;
+    }
+
+    .heart-2 {
+      right: 12%;
+      top: 62%;
+      color: rgba(178, 123, 244, 0.26);
+      transform: rotate(12deg);
+    }
+
+    .heart-3 {
+      right: 26%;
+      top: 18%;
+      font-size: 64px;
+      color: rgba(255, 137, 204, 0.24);
+    }
 
     .topbar {
       position: sticky;
       top: 0;
-      z-index: 1000;
-      background: rgba(255, 209, 220, 0.92);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid rgba(255,255,255,0.45);
+      z-index: 50;
+      background: rgba(255, 232, 246, 0.72);
+      backdrop-filter: blur(18px);
+      border-bottom: 1px solid rgba(255,255,255,0.7);
     }
 
     .topbar-inner {
-      max-width: 1400px;
+      max-width: 1350px;
       margin: 0 auto;
-      padding: 16px 20px;
+      padding: 16px 22px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 20px;
-      flex-wrap: wrap;
     }
 
     .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
       font-family: Georgia, "Times New Roman", serif;
       font-size: 28px;
-      font-weight: 700;
-    }
-
-    .anchor-home {
-      width: 40px;
-      height: 40px;
-      border-radius: 999px;
-      background: var(--white);
-      border: 1px solid rgba(212, 168, 87, 0.45);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      color: var(--gold);
+      font-weight: 800;
+      color: var(--deep);
     }
 
     .nav {
       display: flex;
-      gap: 18px;
-      flex-wrap: wrap;
-      font-size: 15px;
-      font-weight: 700;
+      align-items: center;
+      gap: 22px;
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--deep);
     }
 
-    .nav a {
-      position: relative;
-    }
-
-    .nav a::after {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: -5px;
-      width: 100%;
-      height: 2px;
-      background: var(--accent);
-      transform: scaleX(0);
-      transition: transform 0.22s ease;
-    }
-
-    .nav a:hover::after,
-    .nav a.active::after {
-      transform: scaleX(1);
+    .nav a.active {
+      color: var(--hot-pink);
+      border-bottom: 2px solid var(--hot-pink);
+      padding-bottom: 4px;
     }
 
     .page {
-      max-width: 1400px;
+      width: min(1180px, calc(100% - 40px));
       margin: 0 auto;
-      padding: 36px 20px 70px;
+      padding: 48px 0 80px;
     }
 
-    .hero {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .hero h1 {
-      margin: 0 0 12px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: clamp(52px, 7vw, 92px);
-      line-height: 0.9;
-    }
-
-    .hero p {
-      max-width: 740px;
-      margin: 0 auto;
-      font-size: 17px;
-      line-height: 1.75;
-      color: var(--secondary);
-    }
-
-    .updates-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 360px;
-      gap: 24px;
-      align-items: start;
-    }
-
-    .scrapbook-shell {
+    .updates-frame {
       position: relative;
-      min-height: 690px;
-      border-radius: 34px;
+      min-height: 740px;
+      padding: 34px;
       background:
-        linear-gradient(135deg, rgba(255,255,255,0.62), rgba(255,238,247,0.78)),
-        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.8), transparent 22%);
-      border: 1px solid rgba(255,255,255,0.75);
-      box-shadow: 0 18px 42px var(--shadow);
+        linear-gradient(135deg, rgba(255,255,255,0.72), rgba(255,239,249,0.58)),
+        radial-gradient(circle at 20% 20%, rgba(255,255,255,0.85), transparent 24%);
+      border: 1px solid rgba(255,255,255,0.86);
+      box-shadow:
+        0 30px 90px rgba(91, 36, 127, 0.16),
+        inset 0 0 60px rgba(255,255,255,0.54);
+      backdrop-filter: blur(18px);
       overflow: hidden;
-      padding: 28px;
     }
 
-    .scrapbook-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 18px;
+    .updates-frame::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(241, 143, 207, 0.28);
+      pointer-events: none;
+    }
+
+    .hero-row {
+      display: grid;
+      grid-template-columns: 1fr 360px;
+      gap: 32px;
       position: relative;
-      z-index: 5;
+      z-index: 2;
     }
 
-    .scrapbook-title {
-      margin: 0;
+    .scrapbook-area {
+      position: relative;
+      min-height: 660px;
+      padding: 22px;
+    }
+
+    .page-title {
+      margin: 0 0 8px;
       font-family: Georgia, "Times New Roman", serif;
-      font-size: 34px;
+      font-size: 76px;
+      line-height: 0.9;
+      color: var(--deep);
     }
 
-    .spread-controls {
-      display: flex;
-      gap: 10px;
+    .page-subtitle {
+      margin: 0 0 28px;
+      font-size: 16px;
+      color: var(--soft);
     }
 
-    .spread-btn {
-      border: none;
-      background: var(--white);
-      color: var(--primary);
-      border-radius: 999px;
-      padding: 10px 14px;
-      font-weight: 800;
-      cursor: pointer;
-      box-shadow: 0 8px 18px var(--shadow);
-    }
-
-    .spread-window {
-      overflow: hidden;
-      width: 100%;
-    }
-
-    .spread-track {
-      display: flex;
-      transition: transform 0.38s ease;
-    }
-
-    .spread {
-      flex: 0 0 100%;
-      min-height: 590px;
+    .scrapbook-stage {
       position: relative;
+      height: 510px;
     }
 
     .scrap {
       position: absolute;
+      background: rgba(255,255,255,0.86);
+      border: 1px solid rgba(255,255,255,0.88);
+      box-shadow: 0 20px 34px var(--shadow);
+      backdrop-filter: blur(10px);
       cursor: pointer;
-      transition: transform 0.22s ease, box-shadow 0.22s ease;
     }
 
-    .scrap:hover {
-      transform: translateY(-4px) rotate(var(--rotate));
-      box-shadow: 0 18px 34px var(--shadow-strong);
-    }
-
-    .photo-scrap {
+    .main-polaroid {
       width: 300px;
-      background: var(--white);
-      padding: 12px 12px 46px;
-      box-shadow: 0 14px 26px var(--shadow);
-      transform: rotate(var(--rotate));
+      padding: 14px 14px 58px;
+      left: 0;
+      top: 20px;
+      transform: rotate(-4deg);
     }
 
-    .photo-box {
-      height: 250px;
-      border-radius: 8px;
+    .photo-placeholder {
+      height: 300px;
       background:
-        linear-gradient(135deg, #d8b4f4, #f4bad8);
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,0.52), transparent 20%),
+        linear-gradient(135deg, #c591f4, #f0a8d5);
+      border-radius: 4px;
       overflow: hidden;
     }
 
-    .photo-box img {
+    .photo-placeholder img {
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
     }
 
-    .photo-caption {
+    .polaroid-caption {
       position: absolute;
-      left: 18px;
-      right: 18px;
-      bottom: 14px;
+      left: 22px;
+      right: 22px;
+      bottom: 18px;
       font-family: "Comic Sans MS", "Trebuchet MS", cursive;
-      font-size: 18px;
-      color: var(--accent);
-      font-weight: 700;
+      font-size: 20px;
+      line-height: 1.15;
+      color: var(--deep);
+      text-align: center;
     }
 
-    .note-scrap {
-      width: 270px;
-      padding: 24px 22px;
-      background: #fff4bb;
-      box-shadow: 0 14px 26px var(--shadow);
-      transform: rotate(var(--rotate));
-      border-radius: 4px;
+    .paper-note {
+      width: 275px;
+      padding: 24px;
+      left: 330px;
+      top: 70px;
+      transform: rotate(2deg);
+      border-radius: 8px;
     }
 
-    .note-date {
+    .small-video {
+      width: 260px;
+      left: 250px;
+      top: 300px;
+      padding: 12px 12px 18px;
+      background: rgba(225, 197, 255, 0.76);
+      transform: rotate(1deg);
+      border-radius: 10px;
+    }
+
+    .pink-note {
+      width: 245px;
+      left: 20px;
+      bottom: 0;
+      padding: 26px 24px;
+      background: rgba(255, 192, 223, 0.78);
+      transform: rotate(-3deg);
+      border-radius: 8px;
+    }
+
+    .note-kicker {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--hot-pink);
       font-size: 12px;
       font-weight: 900;
-      letter-spacing: 0.08em;
-      color: var(--accent);
       text-transform: uppercase;
-      margin-bottom: 10px;
+      letter-spacing: 0.08em;
     }
 
     .note-title {
-      margin: 0 0 10px;
+      margin: 0;
       font-family: Georgia, "Times New Roman", serif;
       font-size: 28px;
-      line-height: 1;
+      line-height: 1.02;
     }
 
     .note-copy {
-      margin: 0;
+      margin: 12px 0 0;
+      color: var(--soft);
       font-size: 14px;
       line-height: 1.55;
-      color: var(--secondary);
-    }
-
-    .headline-scrap {
-      width: 340px;
-      padding: 20px 22px;
-      background: var(--paper);
-      border: 1px solid rgba(74,31,107,0.08);
-      border-radius: 18px;
-      box-shadow: 0 14px 26px var(--shadow);
-      transform: rotate(var(--rotate));
-    }
-
-    .headline-tag {
-      display: inline-block;
-      margin-bottom: 10px;
-      padding: 7px 10px;
-      border-radius: 999px;
-      background: var(--lavender);
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .headline-scrap h3 {
-      margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 30px;
-      line-height: 1.02;
     }
 
     .tape {
       position: absolute;
-      width: 88px;
-      height: 26px;
-      background: rgba(255,255,255,0.56);
-      border: 1px solid rgba(255,255,255,0.7);
-      transform: rotate(-8deg);
-      top: -12px;
-      left: 40%;
+      width: 96px;
+      height: 28px;
+      background: rgba(255,255,255,0.55);
+      border: 1px solid rgba(255,255,255,0.72);
+      top: -13px;
+      left: 38%;
+      transform: rotate(-7deg);
       backdrop-filter: blur(2px);
     }
 
-    .simple-panel {
-      border-radius: 30px;
+    .quick-panel {
+      min-height: 660px;
+      padding: 26px;
+      border-radius: 34px;
       background: rgba(255,255,255,0.62);
-      border: 1px solid rgba(255,255,255,0.75);
-      box-shadow: 0 18px 42px var(--shadow);
-      padding: 22px;
-      position: sticky;
-      top: 96px;
+      border: 1px solid rgba(255,255,255,0.85);
+      box-shadow: 0 28px 70px var(--shadow);
+      backdrop-filter: blur(20px);
     }
 
-    .simple-panel h2 {
-      margin: 0 0 6px;
-      font-family: Georgia, "Times New Roman", serif;
-      font-size: 34px;
-    }
-
-    .simple-panel p {
+    .quick-panel h2 {
       margin: 0 0 18px;
-      color: var(--secondary);
-      font-size: 14px;
-      line-height: 1.6;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: 40px;
+      color: var(--deep);
     }
 
-    .update-list {
+    .quick-list {
       display: flex;
       flex-direction: column;
-      gap: 12px;
+      gap: 14px;
     }
 
-    .update-item {
-      border: none;
-      text-align: left;
+    .quick-item {
       width: 100%;
-      padding: 15px;
-      border-radius: 18px;
-      background: rgba(255,248,252,0.88);
-      color: var(--primary);
+      border: none;
+      border-radius: 20px;
+      padding: 16px;
+      display: grid;
+      grid-template-columns: 62px 1fr;
+      gap: 14px;
+      align-items: center;
+      text-align: left;
+      background: rgba(255, 244, 251, 0.78);
+      color: var(--deep);
       cursor: pointer;
     }
 
-    .update-item-date {
-      display: block;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 6px;
+    .quick-date {
+      border-radius: 14px;
+      padding: 10px 6px;
+      background: rgba(235, 207, 255, 0.72);
+      text-align: center;
+      font-size: 13px;
+      line-height: 1.2;
+      font-weight: 800;
     }
 
-    .update-item-title {
+    .quick-title {
       display: block;
       font-size: 15px;
-      line-height: 1.25;
-      font-weight: 800;
+      font-weight: 900;
+      line-height: 1.2;
+    }
+
+    .quick-summary {
+      display: block;
+      margin-top: 5px;
+      font-size: 12px;
+      color: var(--soft);
+      line-height: 1.35;
     }
 
     .reader {
       position: fixed;
       inset: 0;
-      z-index: 4000;
+      z-index: 100;
       display: none;
       align-items: center;
       justify-content: center;
       padding: 20px;
-      background: rgba(48, 20, 70, 0.62);
-      backdrop-filter: blur(12px);
+      background: rgba(58, 23, 83, 0.42);
+      backdrop-filter: blur(16px);
     }
 
     .reader.active {
@@ -389,11 +425,12 @@
     }
 
     .reader-card {
-      width: min(720px, 100%);
-      border-radius: 30px;
-      background: rgba(255,250,253,0.98);
+      width: min(680px, 100%);
+      border-radius: 34px;
+      background: rgba(255, 248, 253, 0.96);
+      box-shadow: 0 30px 90px var(--shadow-strong);
+      border: 1px solid rgba(255,255,255,0.9);
       padding: 34px;
-      box-shadow: 0 30px 80px rgba(32,10,50,0.28);
       position: relative;
     }
 
@@ -401,248 +438,203 @@
       position: absolute;
       top: 16px;
       right: 16px;
+      width: 40px;
+      height: 40px;
       border: none;
-      width: 38px;
-      height: 38px;
       border-radius: 999px;
-      background: var(--lavender);
-      color: var(--primary);
-      font-size: 22px;
+      background: rgba(235,207,255,0.8);
+      color: var(--deep);
+      font-size: 24px;
       cursor: pointer;
     }
 
-    .reader-date {
+    .reader-type {
       margin: 0 0 10px;
+      color: var(--hot-pink);
       font-size: 12px;
       font-weight: 900;
-      color: var(--accent);
       letter-spacing: 0.08em;
       text-transform: uppercase;
     }
 
     .reader-title {
-      margin: 0 0 16px;
+      margin: 0 0 14px;
       font-family: Georgia, "Times New Roman", serif;
       font-size: 42px;
-      line-height: 0.98;
+      line-height: 1;
     }
 
-    .reader-copy {
+    .reader-summary {
       margin: 0;
+      color: var(--soft);
       font-size: 17px;
       line-height: 1.8;
-      color: var(--secondary);
     }
 
-    @media (max-width: 1000px) {
-      .updates-layout {
+    @media (max-width: 980px) {
+      .hero-row {
         grid-template-columns: 1fr;
       }
 
-      .simple-panel {
-        position: relative;
-        top: auto;
+      .quick-panel {
+        min-height: auto;
       }
     }
   </style>
 </head>
 
 <body>
+  <div class="dream-orb orb-1"></div>
+  <div class="dream-orb orb-2"></div>
+  <div class="dream-orb orb-3"></div>
+  <div class="floating-heart heart-1">♡</div>
+  <div class="floating-heart heart-2">♡</div>
+  <div class="floating-heart heart-3">♡</div>
+
   <header class="topbar">
     <div class="topbar-inner">
-      <div class="brand">
-        <a class="anchor-home" href="index.html">⚓</a>
-        <span>Coco's World</span>
-      </div>
+      <a class="brand" href="index.html">Coco's World</a>
 
       <nav class="nav">
         <a href="index.html">Home</a>
-        <a href="gallery.html">Gallery</a>
-        <a href="#">Music</a>
-        <a href="media.html">Media</a>
-        <a href="updates.html" class="active">Updates</a>
-        <a href="#">Calendar</a>
-        <a href="#">Games</a>
+        <a href="cocopress.html">CocoPress</a>
+        <a href="#">CocoStream</a>
         <a href="story.html">Story</a>
+        <a href="updates.html" class="active">Updates</a>
+        <a href="gallery.html">Gallery</a>
+        <a href="#">Calendar</a>
       </nav>
     </div>
   </header>
 
   <main class="page">
-    <section class="hero">
-      <h1>Updates</h1>
-      <p>A living scrapbook of what’s new in Coco’s World — performances, press moments, announcements, site updates, and everything fans should keep up with.</p>
-    </section>
+    <section class="updates-frame">
+      <div class="hero-row">
+        <div class="scrapbook-area">
+          <h1 class="page-title">Updates</h1>
+          <p class="page-subtitle">all the latest from Coco’s World</p>
 
-    <section class="updates-layout">
-      <div class="scrapbook-shell">
-        <div class="scrapbook-head">
-          <h2 class="scrapbook-title">Latest Spread</h2>
-          <div class="spread-controls">
-            <button class="spread-btn" id="prevSpread">←</button>
-            <button class="spread-btn" id="nextSpread">→</button>
-          </div>
+          <div class="scrapbook-stage" id="scrapbookStage"></div>
         </div>
 
-        <div class="spread-window">
-          <div class="spread-track" id="spreadTrack">
-            <div class="spread">
-              <article class="scrap photo-scrap" style="left: 28px; top: 34px; --rotate: -4deg;" data-id="ut">
-                <div class="tape"></div>
-                <div class="photo-box"></div>
-                <div class="photo-caption">performance night</div>
-              </article>
-
-              <article class="scrap headline-scrap" style="right: 44px; top: 70px; --rotate: 3deg;" data-id="album">
-                <div class="tape"></div>
-                <span class="headline-tag">Music</span>
-                <h3>Why Not More? marks a major debut era.</h3>
-              </article>
-
-              <article class="scrap note-scrap" style="left: 330px; top: 355px; --rotate: 5deg;" data-id="press">
-                <div class="note-date">Apr 24</div>
-                <h3 class="note-title">New press added</h3>
-                <p class="note-copy">Fresh CocoPress entries were added to the reading library.</p>
-              </article>
-
-              <article class="scrap headline-scrap" style="left: 38px; bottom: 36px; --rotate: -2deg;" data-id="calendar">
-                <span class="headline-tag">Calendar</span>
-                <h3>Upcoming appearances are being tracked.</h3>
-              </article>
-            </div>
-
-            <div class="spread">
-              <article class="scrap note-scrap" style="left: 70px; top: 70px; --rotate: -3deg;" data-id="site">
-                <div class="note-date">Site Update</div>
-                <h3 class="note-title">CocoStream planning</h3>
-                <p class="note-copy">The watch section is being shaped around featured videos and curated rows.</p>
-              </article>
-
-              <article class="scrap photo-scrap" style="right: 80px; top: 90px; --rotate: 4deg;" data-id="gallery">
-                <div class="tape"></div>
-                <div class="photo-box"></div>
-                <div class="photo-caption">gallery archive soon</div>
-              </article>
-
-              <article class="scrap headline-scrap" style="left: 260px; bottom: 70px; --rotate: -2deg;" data-id="story">
-                <span class="headline-tag">Story</span>
-                <h3>Coco’s Star Path is becoming the guided biography hub.</h3>
-              </article>
-            </div>
-          </div>
-        </div>
+        <aside class="quick-panel">
+          <h2>Updates</h2>
+          <div class="quick-list" id="quickList"></div>
+        </aside>
       </div>
-
-      <aside class="simple-panel">
-        <h2>Quick Updates</h2>
-        <p>For people who just want the clean version.</p>
-
-        <div class="update-list" id="updateList"></div>
-      </aside>
     </section>
   </main>
 
   <div class="reader" id="reader">
     <div class="reader-card">
       <button class="reader-close" id="readerClose">×</button>
-      <p class="reader-date" id="readerDate"></p>
+      <p class="reader-type" id="readerType"></p>
       <h2 class="reader-title" id="readerTitle"></h2>
-      <p class="reader-copy" id="readerCopy"></p>
+      <p class="reader-summary" id="readerSummary"></p>
     </div>
   </div>
 
   <script>
-    const updates = [
-      {
-        id: "ut",
-        date: "Apr 2026",
-        title: "Coco Jones performs at UT Arlington",
-        copy: "A new performance moment has been added to Coco’s World. This update can link out to a full performance recap, gallery folder, or video page later."
-      },
-      {
-        id: "album",
-        date: "Album Era",
-        title: "Why Not More? era highlight",
-        copy: "This update space can track album milestones, release anniversaries, chart moments, and major rollout memories without feeling like a plain news feed."
-      },
-      {
-        id: "press",
-        date: "Apr 24",
-        title: "New CocoPress entries added",
-        copy: "Fresh written interviews, editorials, and press moments can be announced here whenever the CocoPress library gets updated."
-      },
-      {
-        id: "calendar",
-        date: "Calendar",
-        title: "Upcoming appearances are being tracked",
-        copy: "For users who need dates quickly, this update can point them toward the Calendar section instead of forcing the scrapbook page to do everything."
-      },
-      {
-        id: "site",
-        date: "Site Update",
-        title: "CocoStream planning",
-        copy: "CocoStream can become the video side of the archive, with featured videos, interviews, performances, and era-specific rows."
-      },
-      {
-        id: "gallery",
-        date: "Archive",
-        title: "Gallery archive coming soon",
-        copy: "The gallery can hold photo folders by year, event, era, and visual theme while Updates announces what was newly added."
-      },
-      {
-        id: "story",
-        date: "Story",
-        title: "Coco’s Star Path expands",
-        copy: "The Story page can keep growing into a guided biography experience with chapters, milestones, and interactive constellation navigation."
-      }
-    ];
-
-    const spreadTrack = document.getElementById("spreadTrack");
-    const prevSpread = document.getElementById("prevSpread");
-    const nextSpread = document.getElementById("nextSpread");
-    const updateList = document.getElementById("updateList");
+    const scrapbookStage = document.getElementById("scrapbookStage");
+    const quickList = document.getElementById("quickList");
 
     const reader = document.getElementById("reader");
     const readerClose = document.getElementById("readerClose");
-    const readerDate = document.getElementById("readerDate");
+    const readerType = document.getElementById("readerType");
     const readerTitle = document.getElementById("readerTitle");
-    const readerCopy = document.getElementById("readerCopy");
+    const readerSummary = document.getElementById("readerSummary");
 
-    let currentSpread = 0;
-    const totalSpreads = 2;
+    let updates = [];
+
+    function escapeHtml(value) {
+      return String(value || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+    }
+
+    async function loadUpdates() {
+      const response = await fetch("./data/updates.json", { cache: "no-store" });
+
+      if (!response.ok) {
+        throw new Error("Could not load ./data/updates.json");
+      }
+
+      updates = await response.json();
+      renderUpdates();
+    }
+
+    function buildImage(item) {
+      if (!item.image) {
+        return `<div class="photo-placeholder"></div>`;
+      }
+
+      return `
+        <div class="photo-placeholder">
+          <img src="${escapeHtml(item.image)}" alt="${escapeHtml(item.title)}">
+        </div>
+      `;
+    }
+
+    function renderUpdates() {
+      const first = updates[0];
+      const second = updates[1];
+      const third = updates[2];
+
+      scrapbookStage.innerHTML = `
+        ${first ? `
+          <article class="scrap main-polaroid" data-id="${escapeHtml(first.id)}">
+            <div class="tape"></div>
+            ${buildImage(first)}
+            <div class="polaroid-caption">${escapeHtml(first.title)}</div>
+          </article>
+        ` : ""}
+
+        ${second ? `
+          <article class="scrap paper-note" data-id="${escapeHtml(second.id)}">
+            <div class="tape"></div>
+            <span class="note-kicker">${escapeHtml(second.type)}</span>
+            <h3 class="note-title">${escapeHtml(second.title)}</h3>
+            <p class="note-copy">${escapeHtml(second.summary)}</p>
+          </article>
+        ` : ""}
+
+        ${third ? `
+          <article class="scrap small-video" data-id="${escapeHtml(third.id)}">
+            <span class="note-kicker">${escapeHtml(third.type)}</span>
+            ${buildImage(third)}
+            <p class="note-copy">${escapeHtml(third.summary)}</p>
+          </article>
+        ` : ""}
+
+        <article class="scrap pink-note">
+          <span class="note-kicker">Coco Says</span>
+          <h3 class="note-title">“every stage is a new story.”</h3>
+        </article>
+      `;
+
+      quickList.innerHTML = updates.map(item => `
+        <button class="quick-item" type="button" data-id="${escapeHtml(item.id)}">
+          <span class="quick-date">${escapeHtml(item.date)}</span>
+          <span>
+            <span class="quick-title">${escapeHtml(item.title)}</span>
+            <span class="quick-summary">${escapeHtml(item.summary)}</span>
+          </span>
+        </button>
+      `).join("");
+    }
 
     function openUpdate(id) {
       const item = updates.find(update => update.id === id);
       if (!item) return;
 
-      readerDate.textContent = item.date;
-      readerTitle.textContent = item.title;
-      readerCopy.textContent = item.copy;
+      readerType.textContent = `${item.type || "Update"} · ${item.date || ""}`;
+      readerTitle.textContent = item.title || "";
+      readerSummary.textContent = item.summary || "";
       reader.classList.add("active");
     }
-
-    function renderQuickList() {
-      updateList.innerHTML = updates.map(update => `
-        <button class="update-item" type="button" data-id="${update.id}">
-          <span class="update-item-date">${update.date}</span>
-          <span class="update-item-title">${update.title}</span>
-        </button>
-      `).join("");
-    }
-
-    function updateSpread() {
-      spreadTrack.style.transform = `translateX(-${currentSpread * 100}%)`;
-    }
-
-    prevSpread.addEventListener("click", () => {
-      currentSpread = Math.max(0, currentSpread - 1);
-      updateSpread();
-    });
-
-    nextSpread.addEventListener("click", () => {
-      currentSpread = Math.min(totalSpreads - 1, currentSpread + 1);
-      updateSpread();
-    });
 
     document.addEventListener("click", event => {
       const target = event.target.closest("[data-id]");
@@ -660,7 +652,10 @@
       }
     });
 
-    renderQuickList();
+    loadUpdates().catch(error => {
+      console.error(error);
+      scrapbookStage.innerHTML = `<p class="note-copy">Updates could not load.</p>`;
+    });
   </script>
 </body>
 </html>
