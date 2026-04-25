@@ -1,0 +1,32 @@
+[
+  {
+    "id": "ut-arlington",
+    "date": "APR 24",
+    "year": "2026",
+    "type": "Performance",
+    "title": "Coco performs at UT Arlington!",
+    "summary": "Photos, highlights, and moments from the show.",
+    "image": "",
+    "link": "#"
+  },
+  {
+    "id": "new-photos",
+    "date": "APR 22",
+    "year": "2026",
+    "type": "Gallery",
+    "title": "New behind the scenes photos",
+    "summary": "Arlington show day moments have been added.",
+    "image": "",
+    "link": "#"
+  },
+  {
+    "id": "cocopress-added",
+    "date": "APR 20",
+    "year": "2026",
+    "type": "CocoPress",
+    "title": "New CocoPress entries added",
+    "summary": "Fresh interviews and press moments were added to the library.",
+    "image": "",
+    "link": "cocopress.html"
+  }
+]
